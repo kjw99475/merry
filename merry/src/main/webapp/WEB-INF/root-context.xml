@@ -22,10 +22,11 @@
     <bean id="hikariConfig" class="com.zaxxer.hikari.HikariConfig">
         <property name="driverClassName" value="org.mariadb.jdbc.Driver"></property>
         <!--강의실용-->
-<!--        <property name="jdbcUrl" value="jdbc:mariadb://10.41.1.65:3306/verry"></property>-->
+        <property name="jdbcUrl" value="jdbc:mariadb://10.41.1.65:3306/merry"></property>
         <!--각자 로컬용-->
-                <property name="jdbcUrl" value="jdbc:mariadb://localhost:3306/employees"></property>
-        <property name="username" value="root"></property>
+<!--                <property name="jdbcUrl" value="jdbc:mariadb://localhost:3306/merry"></property>-->
+<!--        <property name="username" value="root"></property>-->
+        <property name="username" value="verry"></property>
         <property name="password" value="1234"></property>
         <property name="dataSourceProperties">
             <props>
