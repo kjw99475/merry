@@ -7,16 +7,16 @@
             <div class="col-lg-4 col-md-6">
                 <div class="footer-box about-widget">
                     <h2 class="widget-title">About us</h2>
-                    <p>Ut enim ad minim veniam perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae.</p>
+                    <p>Merry에 대한 소개를 간략하게 적어볼까요?</p>
                 </div>
             </div>
             <div class="col-lg-4 col-md-6">
                 <div class="footer-box get-in-touch">
                     <h2 class="widget-title">Get in Touch</h2>
                     <ul>
-                        <li>34/8, East Hukupara, Gifirtok, Sadan.</li>
-                        <li>support@fruitkha.com</li>
-                        <li>+00 111 222 3333</li>
+                        <li>23, Digital-ro 9-gil, Geumcheon-gu, Seoul, Republic of Korea</li>
+                        <li>support@merryme.com</li>
+                        <li>02.222.2222</li>
                     </ul>
                 </div>
             </div>
@@ -24,15 +24,14 @@
                 <div class="footer-box pages">
                     <h2 class="widget-title">Pages</h2>
                     <ul>
-                        <li><a href="index.html">Home</a></li>
-                        <li><a href="about.html">About</a></li>
-                        <li><a href="services.html">Shop</a></li>
-                        <li><a href="news.html">News</a></li>
-                        <li><a href="contact.html">Contact</a></li>
+                        <li><a href="/">Home</a></li>
+                        <li><a href="#">선생님</a></li>
+                        <li><a href="#">강의</a></li>
+                        <li><a href="#">커뮤니티</a></li>
+                        <li><a href="#">나의 학습방</a></li>
                     </ul>
                 </div>
             </div>
-
         </div>
     </div>
 </div>
