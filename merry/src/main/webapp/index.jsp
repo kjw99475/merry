@@ -13,7 +13,8 @@
     <title>Merry</title>
 
     <!-- favicon -->
-    <link rel="shortcut icon" type="image/png" href="/resources/assets/img/merry_favicon.ico">
+    <link rel="shortcut icon" type="image/x-icon" href="/resources/assets/img/merry_favicon.ico">
+    <link rel="icon" type="image/x-icon" href="/resources/assets/img/merry_favicon.ico">
     <!-- google font -->
     <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,700" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Poppins:400,700&display=swap" rel="stylesheet">

@@ -48,20 +48,20 @@
                                 <c:when test="${not empty sessionScope.member_id}">
                                     <c:if test="${sessionScope.member_type eq 'A'}">
                                         <li><a href="/admin/list"><i class="fas fa-user"></i> 관리자페이지</a></li>
-                                        <li><a href="/member/logout"><small style="text-decoration: underline">로그아웃</small></a></li>
+                                        <li><a href="/login/logout"><small style="text-decoration: underline">로그아웃</small></a></li>
                                     </c:if>
                                     <c:if test="${sessionScope.member_type eq 'B'}">
                                         <li><a href="/my/list"><i class="fas fa-user"></i> 마이페이지</a></li>
-                                        <li><a href="/member/logout"><small style="text-decoration: underline">로그아웃</small></a></li>
+                                        <li><a href="/login/logout"><small style="text-decoration: underline">로그아웃</small></a></li>
                                     </c:if>
                                     <c:if test="${sessionScope.member_type eq 'T'}">
                                         <li><a href="/teacher/manage/list"><i class="fas fa-user"></i> 선생님페이지</a></li>
-                                        <li><a href="/member/logout"><small style="text-decoration: underline">로그아웃</small></a></li>
+                                        <li><a href="/login/logout"><small style="text-decoration: underline">로그아웃</small></a></li>
                                     </c:if>
                                 </c:when>
                                 <c:otherwise>
                                     <c:if test="${sessionScope.member_id == null}">
-                                        <li><a href="/member/login"><small style="text-decoration: underline">로그인</small></a></li>
+                                        <li><a href="/login/login"><small style="text-decoration: underline">로그인</small></a></li>
                                     </c:if>
                                 </c:otherwise>
                             </c:choose>

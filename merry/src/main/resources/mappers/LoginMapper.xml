@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org/DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.fullstack.merry.mapper.LoginMapper">
+
+    <select id="login_info" resultType="org.fullstack.merry.domain.MemberVO">
+        SELECT member_idx, member_id, pwd, name, email, birthday, addr, addr_detail, zipcode, phone
+               , reg_date, modify_date, member_type, member_state
+        FROM member
+        WHERE member_id = #{member_id}
+    </select>
+
+    <!-- 패스워드 변경-->
+    <update id="change_pwd">
+        UPDATE member
+        SET pwd = #{pwd}
+        WHERE member_id = #{member_id}
+    </update>
+
+
+<!--    &lt;!&ndash;아이디 찾기&ndash;&gt;-->
+<!--    <select id="search_id" resultType="String">-->
+<!--        SELECT member_id-->
+<!--        FROM tbl_member-->
+<!--        WHERE name = #{name} and email = #{email} and member_state = "Y"-->
+<!--    </select>-->
+<!--    &lt;!&ndash;    비밀번호 찾기&ndash;&gt;-->
+<!--    <select id="search_pwd">-->
+<!--        SELECT count(*)-->
+<!--        FROM tbl_member-->
+<!--        WHERE name = #{name} and email = #{email} and member_id = #{member_id} and member_state = "Y"-->
+<!--    </select>-->
+
+
+</mapper>
