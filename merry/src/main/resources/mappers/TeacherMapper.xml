@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org/DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.fullstack.merry.mapper.TeacherMapper">
+<select id="noticeList" resultType="org.fullstack.merry.domain.NoticeVO">
+    SELECT notice_title, notice_content, notice_reg_date
+    FROM notice
+    WHERE notice_type = 't'
+    AND member_idx = ${M_idx}
+</select>
+</mapper>
