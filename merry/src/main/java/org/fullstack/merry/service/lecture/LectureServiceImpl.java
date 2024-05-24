@@ -30,7 +30,8 @@ public class LectureServiceImpl implements LectureServiceIf{
         LectureVO lectureVO = modelMapper.map(lectureDTO, LectureVO.class);
         int result = lectureMapper.regist(lectureVO);
         log.info(lectureVO.getLec_idx());
-        int idx = lectureVO.getLec_idx();
+        int idx = 0;
+        idx = lectureVO.getLec_idx();
         return idx;
     }
 

@@ -59,7 +59,11 @@ ${lectureDTO.member_name}<br>
 </c:forEach>
 </ul>
 
-
+<button type="button" onclick="location.href='/lecture/modify?lec_idx=${lectureDTO.lec_idx}'">수정하기</button>
+<form action="/lecture/delete" id="frmDelete">
+    <input type="hidden" value="${lectureDTO.lec_idx}">
+    <button type="button" onclick="deleteOK()">삭제하기</button>
+</form>
 <!--================ 본문 end =================-->
 
 <!--================ 푸터 Start =================-->
@@ -86,6 +90,16 @@ ${lectureDTO.member_name}<br>
 <script src="/resources/assets/js/sticker.js"></script>
 <!-- main js -->
 <script src="/resources/assets/js/main.js"></script>
+
+<script>
+    function deleteOK() {
+        const frmDelete = document.querySelector("#frmDelete");
+        let deleteYN = confirm("삭제하시겠습니까?");
+        if (deleteYN) {
+            frmDelete.submit();
+        }
+    }
+</script>
 
 </body>
 </html>
