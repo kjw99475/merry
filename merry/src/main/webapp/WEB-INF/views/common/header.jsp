@@ -9,7 +9,7 @@
                     <!-- logo -->
                     <div class="site-logo">
                         <a href="index.html">
-                            <img src="assets/img/logo.png" alt="logo">
+                            <img src="/resources/assets/img/logo.png" alt="logo">
                         </a>
                     </div>
                     <!-- logo -->
