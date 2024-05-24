@@ -33,6 +33,7 @@ public class MemberDTO {
     private LocalDate modify_date;
     private String member_type;
     private String member_state;
+    private String subject;
 
 
 //    private String phone_0;
