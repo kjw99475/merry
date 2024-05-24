@@ -41,115 +41,144 @@
     <link rel="stylesheet" href="/resources/assets/css/main.css">
     <!-- responsive -->
     <link rel="stylesheet" href="/resources/assets/css/responsive.css">
-
+    <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+    <script>
+        function address() {
+            new daum.Postcode({
+                oncomplete: function (data) {
+                    document.getElementById("zipcode").value=data.zonecode;
+                    document.getElementById("addr").value = data.address;
+                    document.getElementById("addr_detail").focus();
+                }
+            }).open();
+        }
+    </script>
 </head>
 <body>
-<div id="container">
+<div id="container" class="pt-150">
     <%@ include file="/WEB-INF/views/common/header.jsp" %>
-    <h1 style="width: 75%; margin: 0 auto 20px; text-align: center;">회원가입</h1>
-    <form name="frmJoin" id="frmJoin" method="post" action="/member/join">
-        <div class="list-group w1024">
-            <div class="list-group-item list-group-item-action" style="margin-bottom: 24px;" aria-current="true">
-                <div class="d-flex w-100 justify-content-center" style="margin-bottom: 8px; padding-bottom: 4px;">
-                    <div class="mb-1">
-                        <div class="mb-3" >
-                            <div class="input-group">
-                                <span class="input-group-text">아이디</span>
-                                <input type="text" name="user_id" id="user_id" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default" value="${memberDTO.user_id}" maxlength="20">
-                            </div>
-                            <div id="div_err_user_id" style="display: none"></div>
-                        </div>
-                        <div class="mb-3">
-                            <div class="input-group">
-                                <span class="input-group-text">이름</span>
-                                <input type="text" name="name" id="name" value="${memberDTO.name}" maxlength="20" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default">
-                            </div>
-                            <div id="div_err_name" style="display: none"></div>
-                        </div>
-                        <div class="mb-3">
-                            <div class="input-group">
-                                <span class="input-group-text">비밀번호</span>
-                                <input type="password" name="pwd" id="pwd" value="${memberDTO.pwd}" maxlength="300" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default">
-                            </div>
-                            <div id="div_err_pwd" style="display: none"></div>
-                        </div>
-                        <div class="mb-3">
-                            <div class="input-group">
-                                <input type="text" class="form-control" name="email_id" id="email_id" placeholder="이메일 아이디" aria-label="email_id" value="${memberDTO.email_id}">
-                                <span class="input-group-text">@</span>
-                                <input type="text" class="form-control" name="email_domain" id="email_domain"  placeholder="도메인 이름" aria-label="email_domain" value="${memberDTO.email_domain}">
-                            </div>
-                            <div id="div_err_email" style="display: none"></div>
-                        </div>
-                        <div class="mb-3">
-                            <div class="input-group">
-                                <span class="input-group-text">생년월일</span>
-                                <input type="date" class="form-control" name="birthday" id="birthday" value="${memberDTO.birthday}"/>
-                            </div>
-                            <div id="div_err_birthday" style="display: none"></div>
-                        </div>
-                        <div class="mb-3">
-                            <div class="input-group">
-                                <input type="text" class="form-control" name="jumin_0" id="jumin_0" placeholder="주민등록번호 앞 6자리" aria-label="jumin_0" value="${memberDTO.jumin_0}">
-                                <input type="text" class="form-control" name="jumin_1" id="jumin_1"  placeholder="주민등록번호 뒤 7자리" aria-label="jumin_1" value="${memberDTO.jumin_1}">
-                            </div>
-                            <div id="div_err_jumin" style="display: none"></div>
-                        </div>
-                        <div class="mb-3">
-                            <div class="input-group">
-                                <span class="input-group-text">주소1</span>
-                                <input type="text" name="addr1" id="addr1" value="${memberDTO.addr1}" maxlength="100" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default">
-                            </div>
-                            <div id="div_err_addr1" style="display: none"></div>
-                        </div>
-                        <div class="mb-3">
-                            <div class="input-group">
-                                <span class="input-group-text">주소2</span>
-                                <input type="text" name="addr2" id="addr2" value="${memberDTO.addr2}" maxlength="100" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default">
-                            </div>
-                            <div id="div_err_addr2" style="display: none"></div>
-                        </div>
-                        <div class="input-group mb-3">
-                            <span class="input-group-text">관심사항</span>
-                            <div class="form-control">
-                                <div class="form-check form-check-inline" style="vertical-align: middle">
-                                    <input class="form-check-input" type="checkbox" name="interest" id="interest_0" value="스포츠" <c:out value="${memberDTO.interest.contains(\"스포츠\") ? 'checked' : ''}"/>>
-                                    <label class="form-check-label" for="interest_0">스포츠</label>
+        <div class="row">
+            <div class="col-lg-8 offset-lg-2 text-center">
+                <div class="section-title">
+                    <h3>Join</h3>
+                </div>
+            </div>
+        </div>
+        <form name="frmJoin" id="frmJoin" method="post" action="/member/join">
+            <div class="list-group w1024">
+                <div style="margin-bottom: 24px;" aria-current="true">
+                    <div class="d-flex w-100 justify-content-center" style="margin-bottom: 8px; padding-bottom: 4px;">
+                        <div class="mb-1">
+                            <div class="mb-3" >
+                                <div class="input-group">
+                                    <span class="input-group-text">아이디</span>
+                                    <input type="text" name="member_id" id="member_id" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default" value="${memberDTO.user_id}" maxlength="20">
                                 </div>
-                                <div class="form-check form-check-inline" style="vertical-align: middle">
-                                    <input class="form-check-input" type="checkbox" name="interest" id="interest_1" value="여행" <c:out value="${memberDTO.interest.contains(\"여행\") ? 'checked' : ''}"/>>
-                                    <label class="form-check-label" for="interest_1">여행</label>
+                                <div id="div_err_member_id" style="display: none"></div>
+                            </div>
+                            <div class="mb-3">
+                                <div class="input-group">
+                                    <span class="input-group-text">이름</span>
+                                    <input type="text" name="name" id="name" value="${memberDTO.name}" maxlength="20" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default">
                                 </div>
-                                <div class="form-check form-check-inline" style="vertical-align: middle">
-                                    <input class="form-check-input" type="checkbox" name="interest" id="interest_2" value="영화" <c:out value="${memberDTO.interest.contains(\"영화\") ? 'checked' : ''}"/>>
-                                    <label class="form-check-label" for="interest_2">영화</label>
+                                <div id="div_err_name" style="display: none"></div>
+                            </div>
+                            <div class="mb-3">
+                                <div class="input-group">
+                                    <span class="input-group-text">비밀번호</span>
+                                    <input type="password" name="pwd" id="pwd" value="${memberDTO.pwd}" maxlength="300" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default">
                                 </div>
-                                <div class="form-check form-check-inline" style="vertical-align: middle">
-                                    <input class="form-check-input" type="checkbox" name="interest" id="interest_3" value="음악" <c:out value="${memberDTO.interest.contains(\"음악\") ? 'checked' : ''}"/>>
-                                    <label class="form-check-label" for="interest_3">음악</label>
+                                <div id="div_err_pwd" style="display: none"></div>
+                            </div>
+                            <div class="mb-3">
+                                <div class="input-group">
+                                    <span class="input-group-text">이메일</span>
+                                    <input type="text" class="form-control" name="email_id" id="email_id" placeholder="아이디" aria-label="email_id" value="${memberDTO.email_id}">
+                                    <span class="input-group-text">@</span>
+                                    <input type="text" class="form-control" name="email_domain" id="email_domain" value="${memberDTO.email_domain}" readonly/>
+                                    <select class="col-4" name="domain_list" id="domain_list" value="${memberDTO.email_domain}">
+                                        <option value="">선택</option>
+                                        <option value="gmail.com">gmail.com</option>
+                                        <option value="naver.com">naver.com</option>
+                                        <option value="hanmail.net">hanmail.net</option>
+                                        <option value="nate.com">nate.com</option>
+                                        <option value="direct">직접 입력</option>
+                                    </select>
                                 </div>
+                                <div id="div_err_email" style="display: none"></div>
+                            </div>
+                            <div class="mb-3">
+                                <div class="input-group">
+                                    <span class="input-group-text">생년월일</span>
+                                    <input type="date" class="form-control" name="birthday" id="birthday" value="${memberDTO.birthday}"/>
+                                </div>
+                                <div id="div_err_birthday" style="display: none"></div>
+                            </div>
+                            <div class="mb-3">
+                                <div class="input-group">
+                                    <span class="input-group-text">핸드폰번호</span>
+                                    <select class="col-3" name="phone_0" id="phone_0" value="${memberDTO.phone_0}">
+                                        <option value="">선택</option>
+                                        <option value="010">010</option>
+                                        <option value="011">011</option>
+                                        <option value="016">016</option>
+                                        <option value="017">017</option>
+                                        <option value="018">018</option>
+                                    </select>
+                                    <span class="input-group-text">-</span>
+                                    <input type="text" class="form-control" name="phone_1" id="phone_1" aria-label="email_id" value="${memberDTO.phone_1}">
+                                    <span class="input-group-text">-</span>
+                                    <input type="text" class="form-control" name="phone_2" id="phone_2" value="${memberDTO.phone_2}"/>
+                                </div>
+                                <div id="div_err_phone" style="display: none"></div>
+                            </div>
+                            <div class="mb-3">
+                                <div class="input-group">
+                                    <span class="input-group-text">우편번호</span>
+                                    <input type="text" class="form-control" name="zipcode" id="zipcode" onclick="address()" value="${memberDTO.zipcode}"/>
+                                </div>
+                                <div id="div_err_zipcode" style="display: none"></div>
+                            </div>
+                            <div class="mb-3">
+                                <div class="input-group">
+                                    <span class="input-group-text">주소</span>
+                                    <input type="text" class="form-control" name="addr" id="addr" onclick="address()" value="${memberDTO.addr}"/>
+                                </div>
+                                <span id="div_err_addr"></span>
+                            </div>
+                            <div class="mb-3">
+                                <div class="input-group">
+                                    <span class="input-group-text">상세주소</span>
+                                    <input type="text" class="form-control" name="addr_detail" id="addr_detail" value="${memberDTO.addr_detail}"/>
+                                </div>
+                                <span id="div_err_addr_detail"></span>
                             </div>
                         </div>
-                        <div class="mb-3">
-                            <div class="input-group">
-                                <span class="input-group-text">직업코드</span>
-                                <input type="text" name="job_code" id="job_code" value="${memberDTO.job_code}" maxlength="2" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default">
-                            </div>
-                            <div id="div_err_job_code" style="display: none"></div>
-                        </div>
+                    </div>
+                    <div class="checkbox mb-3 text-center">
+                        <button class="btn orange-btn bordered-btn" type="submit" id="btnLogin">가입완료</button>
+                        <button class="btn black-outline-btn" type="reset">초기화</button>
+                        <button class="btn red-outline-btn" type="button" onclick="location.href='/login/login';">가입취소</button>
                     </div>
                 </div>
             </div>
-            <div class="mb-5">
-                <button type="submit" class="btn btn-outline-primary btn-sm">가입완료</button>
-                <button type="reset" class="btn btn-outline-secondary btn-sm">초기화</button>
-                <button type="button" class="btn btn-outline-danger btn-sm" onclick="location.href='/'">가입취소</button>
-            </div>
-        </div>
-    </form>
+        </form>
     <%@ include file="/WEB-INF/views/common/footer.jsp" %>
 </div>
 <script src="/resources/js/bootstrap.bundle.min.js"></script>
+<script>
+    const domainDOM = document.getElementById("email_domain");
+    const domainListDOM = document.getElementById("domain_list");
+
+    domainListDOM.addEventListener("change", function(e) {
+        if (e.target.value !== "direct") {
+            domainDOM.value = e.target.value;
+        } else {
+            domainDOM.value = "";
+            domainDOM.disabled = false;
+        }
+    })
+</script>
 <script>
     const serverValiseResult = {};
     <c:forEach items="${errors}" var="err">
