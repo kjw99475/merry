@@ -68,7 +68,7 @@
 
         <!--================ 사이드바 start =================-->
         <jsp:include page="/WEB-INF/views/common/admin_sidebar.jsp">
-            <jsp:param name="menuGubun" value="bbs_board"/>
+            <jsp:param name="menuGubun" value="bbs_notice"/>
         </jsp:include>
         <!--================ 사이드바 end =================-->
 
@@ -83,19 +83,70 @@
 
                         </div>
                         <div class="contact-form">
-                            <form id="frm_" name="frm_" method="post" action="/admin/board/regist">
-                                <input type="hidden" name="board_writer" value="${sessionScope.name}">
-                                <input type="hidden" name="member_idx" value="${sessionScope.member_idx}">
+                            <form id="frm_" name="frm_" method="post" action="/admin/notice/modify" enctype="multipart/form-data">
+                                <input type="hidden" name="notice_idx" value="${noticeDTO.notice_idx}" id="notice_idx">
 
-<%--                                <label for="board_title">제목</label>--%>
-                                <input type="text" class="form-control" placeholder="제목을 입력해주세요" name="board_title" id="board_title">
+<%--                                <label for="notice_title">제목</label>--%>
+                                <input type="text" class="form-control" placeholder="제목을 입력해주세요" name="notice_title" id="notice_title" value="${noticeDTO.notice_title}">
 
-                                <textarea class="mt-3" name="board_content" id="content" ></textarea>
+                                <textarea class="mt-3" name="notice_content" id="content" >${noticeDTO.notice_content}</textarea>
 
-                                <div class="row justify-content-end mt-3">
+                                <c:if test="${noticeDTO.notice_org_file_name != null and noticeDTO.notice_org_file_name != '' }">
+                                    <div class="mt-4">
+                                        <span id="fileView">
+                                            <label>첨부파일 : </label>${noticeDTO.notice_org_file_name}<button class="btn text-danger" type="button" id="btnDelete" onclick="askDelete()">X</button>
+                                        </span>
+                                        <input type="hidden" name="upload" id="upload" value="${noticeDTO.notice_org_file_name}">
+                                        <input type="hidden" name="upload2" id="upload2" value="${noticeDTO.notice_save_file_name}">
+                                    </div>
+                                </c:if>
+                                <script>
+                                    function askDelete() {
+                                        let deleteYN = confirm("파일을 정말 삭제하시겠습니까? 삭제 후 취소를 원할 시 재업로드 하셔야 합니다.");
+                                        if (deleteYN) {
+                                            deleteShare();
+                                        }
+                                    }
+
+                                    function deleteShare(){
+                                        event.preventDefault();
+                                        event.stopPropagation();
+                                        var notice_idx = $('#notice_idx').val();
+                                        var spanInner = $('#fileView');
+
+                                        $.ajax({
+                                            url:'/admin/notice/deleteFile',
+                                            type:'post',
+                                            data:{notice_idx:notice_idx},
+                                            noticeType : 'text',
+                                            success:function(result){
+                                                spanInner.remove();
+                                                $('#upload').val('');
+                                                $('#upload2').val('');
+                                                console.log("upload : " + upload);
+                                                console.log("upload2 : " + upload2);
+                                                console.log(result);
+                                            },
+                                            error : function(xhr, status, error) {
+                                                console.log("xhr! : " + xhr);
+                                                console.log("status! : " + status);
+                                                console.log("error! : " + error);
+                                            }
+                                        })
+                                    }
+                                </script>
+
+                                <div class="col-lg-12 mt-4">
+                                    <label for="content">파일 재업로드</label>
+                                    <input type="file" name="file" id="file" class="form-control" multiple>
+                                </div>
+
+
+                                <div class="row justify-content-between mt-3">
+                                    <button type="button" class="btn btn-outline-merry" onclick="location.href='/admin/notice/list'">목록</button>
                                     <div>
-                                        <button type="button" class="btn btn-outline-merry" onclick="location.href='/admin/board/list'">취소</button>
-                                        <button type="submit" class="btn btn-merry">등록</button>
+                                        <button type="button" class="btn btn-outline-merry" onclick="location.href='/admin/notice/view?notice_idx=${noticeDTO.notice_idx}'">취소</button>
+                                        <button type="submit" class="btn btn-merry">수정 완료</button>
                                     </div>
                                 </div>
                             </form>
@@ -124,7 +175,7 @@
     <!--================ 푸터 End =================-->
 
     <!-- jquery -->
-    <script src="/resources/assets/js/jquery-1.11.3.min.js"></script>
+    <script src="/resources/assets/js/jquery-3.7.1.min.js"></script>
     <!-- bootstrap -->
     <script src="/resources/assets/bootstrap/js/bootstrap.min.js"></script>
     <!-- count down -->

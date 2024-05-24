@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/schema/mybatis-3-mapper.dtd">
+<mapper namespace="org.fullstack.merry.mapper.InfoMapper">
+    <sql id="whereCondition">
+        <where>
+            <if test=' search_word != null and search_word != "" '>
+                <choose>
+                    <when test="type == 0">
+                        AND info_title LIKE CONCAT('%', #{search_word}, '%')
+                    </when>
+                    <when test="type == 1">
+                        AND info_content LIKE CONCAT('%', #{search_word}, '%')
+                    </when>
+                </choose>
+            </if>
+        </where>
+    </sql>
+
+
+    <select id="ListByPage" resultType="org.fullstack.merry.domain.InfoVO">
+        SELECT info_idx, info_title, info_content, info_org_file_name, info_save_file_name, info_type, info_reg_date, info_modify_date, member_idx
+        FROM info
+        <include refid="whereCondition"></include>
+        ORDER BY info_idx DESC
+        LIMIT #{page_skip_count}, #{page_size}
+    </select>
+
+    <select id="TotalCount">
+        SELECT COUNT(*)
+        FROM info
+        <include refid="whereCondition"></include>
+    </select>
+
+    <select id="view" resultType="org.fullstack.merry.domain.InfoVO">
+        SELECT info_idx, info_title, info_content, info_org_file_name, info_save_file_name, info_type, info_reg_date, info_modify_date, member_idx
+        FROM info
+        WHERE info_idx = #{info_idx}
+    </select>
+
+    <insert id="regist" parameterType="org.fullstack.merry.domain.InfoVO" useGeneratedKeys="true" keyProperty="info_idx" keyColumn="info_idx">
+        INSERT INTO info (info_title, info_content, info_org_file_name, info_save_file_name, info_type, info_reg_date, member_idx)
+        VALUES(#{info_title}, #{info_content}, #{info_org_file_name}, #{info_save_file_name}, #{info_type}, NOW(), #{member_idx})
+    </insert>
+
+    <update id="modify">
+        UPDATE info SET
+        info_title = #{info_title}
+        , info_content = #{info_content}
+        , info_org_file_name = #{info_org_file_name}
+        , info_save_file_name = #{info_save_file_name}
+        , info_type = #{info_type}
+        , info_modify_date = NOW()
+        WHERE info_idx = #{info_idx}
+    </update>
+
+    <delete id="delete">
+        DELETE
+        FROM info
+        WHERE info_idx = #{info_idx}
+    </delete>
+
+</mapper>

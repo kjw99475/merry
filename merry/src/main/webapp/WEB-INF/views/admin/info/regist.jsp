@@ -68,7 +68,7 @@
 
         <!--================ 사이드바 start =================-->
         <jsp:include page="/WEB-INF/views/common/admin_sidebar.jsp">
-            <jsp:param name="menuGubun" value="bbs_board"/>
+            <jsp:param name="menuGubun" value="bbs_info"/>
         </jsp:include>
         <!--================ 사이드바 end =================-->
 
@@ -83,18 +83,19 @@
 
                         </div>
                         <div class="contact-form">
-                            <form id="frm_" name="frm_" method="post" action="/admin/board/regist">
-                                <input type="hidden" name="board_writer" value="${sessionScope.name}">
+                            <form id="frm_" name="frm_" method="post" action="/admin/info/regist" enctype="multipart/form-data">
                                 <input type="hidden" name="member_idx" value="${sessionScope.member_idx}">
 
-<%--                                <label for="board_title">제목</label>--%>
-                                <input type="text" class="form-control" placeholder="제목을 입력해주세요" name="board_title" id="board_title">
+<%--                                <label for="info_title">제목</label>--%>
+                                <input type="text" class="form-control" placeholder="제목을 입력해주세요" name="info_title" id="info_title">
 
-                                <textarea class="mt-3" name="board_content" id="content" ></textarea>
+                                <textarea class="mt-3" name="info_content" id="content" ></textarea>
+
+                                <input type="file" name="file" id="file" multiple>
 
                                 <div class="row justify-content-end mt-3">
                                     <div>
-                                        <button type="button" class="btn btn-outline-merry" onclick="location.href='/admin/board/list'">취소</button>
+                                        <button type="button" class="btn btn-outline-merry" onclick="location.href='/admin/info/list'">취소</button>
                                         <button type="submit" class="btn btn-merry">등록</button>
                                     </div>
                                 </div>

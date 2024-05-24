@@ -35,20 +35,7 @@
     <!-- responsive -->
     <link rel="stylesheet" href="/resources/assets/css/responsive.css">
 
-    <script src="https://cdn.tiny.cloud/1/wjuflumw0txwktnvnufwfo5lj04kqmup66rnaj1jf6pnwv5d/tinymce/7/tinymce.min.js" referrerpolicy="origin"></script>
-    <script>
-        tinymce.init({
-            selector: 'textarea#content',
-            plugins: [
-                'advlist','autolink',
-                'lists','link','image','charmap','preview','anchor','searchreplace','visualblocks'
-                ,'fullscreen','insertdatetime','media','table','help','wordcount'
-            ],
-            toolbar: 'undo redo | formatpainter casechange blocks | bold italic backcolor | ' +
-                'alignleft aligncenter alignright alignjustify | ' +
-                'bullist numlist checklist outdent indent | removeformat | a11ycheck code table help'
-        });
-    </script>
+
 </head>
 <body>
 
@@ -68,7 +55,7 @@
 
         <!--================ 사이드바 start =================-->
         <jsp:include page="/WEB-INF/views/common/admin_sidebar.jsp">
-            <jsp:param name="menuGubun" value="bbs_board"/>
+            <jsp:param name="menuGubun" value="bbs_notice"/>
         </jsp:include>
         <!--================ 사이드바 end =================-->
 
@@ -82,20 +69,36 @@
                             <h2></h2>
 
                         </div>
+                        <div id="form_status"></div>
                         <div class="contact-form">
-                            <form id="frm_" name="frm_" method="post" action="/admin/board/regist">
-                                <input type="hidden" name="board_writer" value="${sessionScope.name}">
-                                <input type="hidden" name="member_idx" value="${sessionScope.member_idx}">
+                            <form id="frm_" name="frm_" method="post" action="/admin/notice/delete">
+                                    <input type="hidden" name="notice_idx" value="${noticeDTO.notice_idx}">
+<%--                                <label for="notice_title">제목</label>--%>
+                                <div><span class="font-weight-bold">제목 : </span>${noticeDTO.notice_title}</div>
 
-<%--                                <label for="board_title">제목</label>--%>
-                                <input type="text" class="form-control" placeholder="제목을 입력해주세요" name="board_title" id="board_title">
+                                <div class="overflow-auto mt-4" style="max-height: 500px;">${noticeDTO.notice_content}</div>
 
-                                <textarea class="mt-3" name="board_content" id="content" ></textarea>
+                                <c:if test="${noticeDTO.notice_org_file_name != null and noticeDTO.notice_org_file_name != '' }" >
+                                    <div class="mt-4">
+                                        <label>첨부파일 : </label>
+                                        <span><a href="/admin/notice/download?notice_idx=${noticeDTO.notice_idx}" target="_blank">${noticeDTO.notice_org_file_name}</a></span>
+                                    </div>
+                                </c:if>
 
-                                <div class="row justify-content-end mt-3">
+                                <div class="row justify-content-between mt-3">
+                                    <button type="button" class="btn btn-outline-merry" onclick="delete_();">삭제</button>
+                                    <script>
+                                        const frm = document.querySelector("#frm_");
+                                        function delete_() {
+                                            let chk_del = confirm("삭제하시겠습니까?");
+                                            if(chk_del) {
+                                                frm.submit();
+                                            }
+                                        }
+                                    </script>
                                     <div>
-                                        <button type="button" class="btn btn-outline-merry" onclick="location.href='/admin/board/list'">취소</button>
-                                        <button type="submit" class="btn btn-merry">등록</button>
+                                        <button type="button" class="btn btn-outline-merry" onclick="location.href='/admin/notice/list'">목록</button>
+                                        <button type="button" class="btn btn-merry" onclick="location.href='/admin/notice/modify?notice_idx=${noticeDTO.notice_idx}'">수정</button>
                                     </div>
                                 </div>
                             </form>

@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/schema/mybatis-3-mapper.dtd">
+<mapper namespace="org.fullstack.merry.mapper.DataMapper">
+    <sql id="whereCondition">
+        <where>
+            <if test=' search_word != null and search_word != "" '>
+                <choose>
+                    <when test="type == 0">
+                        AND data_title LIKE CONCAT('%', #{search_word}, '%')
+                    </when>
+                    <when test="type == 1">
+                        AND data_content LIKE CONCAT('%', #{search_word}, '%')
+                    </when>
+                </choose>
+            </if>
+        </where>
+    </sql>
+
+
+    <select id="ListByPage" resultType="org.fullstack.merry.domain.DataVO">
+        SELECT data_idx, data_title, data_content, data_org_file_name, data_save_file_name, data_type, data_reg_date, data_modify_date, member_idx
+        FROM data
+        <include refid="whereCondition"></include>
+        ORDER BY data_idx DESC
+        LIMIT #{page_skip_count}, #{page_size}
+    </select>
+
+    <select id="TotalCount">
+        SELECT COUNT(*)
+        FROM data
+        <include refid="whereCondition"></include>
+    </select>
+
+    <select id="view" resultType="org.fullstack.merry.domain.DataVO">
+        SELECT data_idx, data_title, data_content, data_org_file_name, data_save_file_name, data_type, data_reg_date, data_modify_date, member_idx
+        FROM data
+        WHERE data_idx = #{data_idx}
+    </select>
+
+    <insert id="regist" parameterType="org.fullstack.merry.domain.DataVO" useGeneratedKeys="true" keyProperty="data_idx" keyColumn="data_idx">
+        INSERT INTO data (data_title, data_content, data_org_file_name, data_save_file_name, data_type, data_reg_date, member_idx)
+        VALUES(#{data_title}, #{data_content}, #{data_org_file_name}, #{data_save_file_name}, #{data_type}, NOW(), #{member_idx})
+    </insert>
+
+    <update id="modify">
+        UPDATE data SET
+        data_title = #{data_title}
+        , data_content = #{data_content}
+        , data_org_file_name = #{data_org_file_name}
+        , data_save_file_name = #{data_save_file_name}
+        , data_type = #{data_type}
+        , data_modify_date = NOW()
+        WHERE data_idx = #{data_idx}
+    </update>
+
+    <delete id="delete">
+        DELETE
+        FROM data
+        WHERE data_idx = #{data_idx}
+    </delete>
+
+</mapper>

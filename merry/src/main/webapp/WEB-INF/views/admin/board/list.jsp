@@ -160,7 +160,7 @@
                             <c:if test="${(responseDTO.page_block_start+10)<=(responseDTO.total_page)}">
                         <li class="page-item">
                             </c:if>
-                            <a class="page-link" href="/bbs/boardList${responseDTO.linked_params}&page=${responseDTO.page_block_start+10}" aria-label="Next">
+                            <a class="page-link" href="/admin/board/list${responseDTO.linked_params}&page=${responseDTO.page_block_start+10}" aria-label="Next">
                                 <span aria-hidden="true">&raquo;</span>
                             </a>
                         </li>
