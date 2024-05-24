@@ -31,7 +31,7 @@ public class PageRequestDTO {
     @Builder.Default
     @PositiveOrZero
     @Min(value=1)
-    private int page_size=10;
+    private int page_size = 10;
     @Builder.Default
     @PositiveOrZero
     @Min(value=1)
@@ -43,7 +43,7 @@ public class PageRequestDTO {
     @Builder.Default
     @PositiveOrZero
     @Min(value=1)
-    private int page_block_size=10;
+    private int page_block_size = 10;
     @Builder.Default
     @PositiveOrZero
     @Min(value=1)
@@ -69,9 +69,6 @@ public class PageRequestDTO {
     private String member_id;
     private String page_flag;
 
-    public void setTotal_count(int total_count) {
-        this.total_count = total_count;
-    }
     public int getPage_skip_count() {
         return  (this.page-1)*this.page_size;
     }
