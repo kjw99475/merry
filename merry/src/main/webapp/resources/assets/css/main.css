@@ -2761,3 +2761,34 @@ li.nav-item a.nav-link.active {
   background-color: #F3A421;
   color: #fff;
 }
+
+.form-control {
+  display: block;
+  width: 100%;
+  padding: .375rem .75rem;
+  font-size: 1rem;
+  font-weight: 400;
+  line-height: 1.5;
+  color: var(--bs-body-color);
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  background-color: var(--bs-body-bg);
+  background-clip: padding-box;
+  border-radius:3px;
+  transition: border-color .15s ease-in-out, box-shadow .15s ease-in-out;
+}
+
+.btn-merry {
+  color: #000;
+  background-color: #F3A421;
+  border-color: #F3A421;
+  font-weight: bold;
+}
+
+.btn-outline-merry {
+  color: #000;
+  background-color: #fff;
+  border-color: #F3A421;
+  font-weight: bold;
+}

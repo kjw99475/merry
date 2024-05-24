@@ -11,6 +11,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
@@ -54,7 +55,12 @@ public class AdminController {
     }
 
     @GetMapping("/data/list")
-    public void GETdataList(@Valid PageRequestDTO pageRequestDTO,
+    public void GETdataList() {
+
+    }
+
+    @GetMapping("/board/list")
+    public void GETboardList(@Valid PageRequestDTO pageRequestDTO,
                             BindingResult bindingResult,
                             RedirectAttributes redirectAttributes,
                             Model model) {
@@ -68,5 +74,24 @@ public class AdminController {
 
         model.addAttribute("responseDTO", responseDTO);
     }
+
+    @GetMapping("/board/view")
+    public void GETboardView() {
+
+    }
+
+    @GetMapping("/board/regist")
+    public void GETboardRegist() {
+
+    }
+
+    @PostMapping("/board/regist")
+    public String POSTboardregist() {
+
+        return "redirect:/board/list";
+    }
+
+    @GetMapping("/board/modify")
+    public void GETboardModify() {}
 
 }

@@ -77,10 +77,10 @@
                     <a href="/admin/info/list" class="nav-link orange-text">교육정보 관리</a>
                 </li>
                 <li class="nav-item">
-                    <a href="/admin/data/list" class="nav-link active">자료실 관리</a>
+                    <a href="/admin/data/list" class="nav-link orange-text">자료실 관리</a>
                 </li>
                 <li class="nav-item">
-                    <a href="/admin/board/list" class="nav-link orange-text">자유게시판 관리</a>
+                    <a href="/admin/board/list" class="nav-link active">자유게시판 관리</a>
                 </li>
 
             </ul>
@@ -114,7 +114,7 @@
                     </div>
                     <!--================ 검색 end =================-->
                     <div class="row justify-content-end">
-                        <input type="button" class="btn btn-merry" onclick="location.href='/admin/data/regist'" value="등록">
+                        <input type="button" class="btn btn-merry" onclick="location.href='/admin/board/regist'" value="등록">
                     </div>
                 </div>
 
@@ -138,9 +138,9 @@
                             <c:forEach items="${responseDTO.dtoList}" var="bbsDTO" varStatus="loop">
                                 <tr>
                                     <th>${total_count -responseDTO.page_skip_count -loop.index}</th>
-                                    <td><a href="/admin/data/view?data_idx=${bbsDTO.data_idx}">${bbsDTO.data_title}</a></td>
-                                    <td>${bbsDTO.data_writer}</td>
-                                    <td>${bbsDTO.data_reg_date}</td>
+                                    <td><a href="/admin/board/view?board_idx=${bbsDTO.board_idx}">${bbsDTO.board_title}</a></td>
+                                    <td>${bbsDTO.board_writer}</td>
+                                    <td>${bbsDTO.board_reg_date}</td>
                                 </tr>
                             </c:forEach>
                         </c:when>
@@ -154,7 +154,7 @@
                 </table>
 
                 <!--================ 페이징 start =================-->
-
+                <div class="pagination-wrap">
                 <nav class="blog-pagination justify-content-center d-flex">
                     <ul class="pagination">
                         <c:if test="${responseDTO.page<=10}">
@@ -195,6 +195,7 @@
                         </li>
                     </ul>
                 </nav>
+                </div>
                 <!--================ 페이징 end =================-->
 
             </div>

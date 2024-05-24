@@ -79,6 +79,9 @@
                 <li class="nav-item">
                     <a href="/admin/data/list" class="nav-link orange-text">자료실 관리</a>
                 </li>
+                <li class="nav-item">
+                    <a href="/admin/board/list" class="nav-link orange-text">자유게시판 관리</a>
+                </li>
 
             </ul>
 
