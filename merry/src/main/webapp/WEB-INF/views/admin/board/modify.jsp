@@ -82,7 +82,6 @@
                             <h2></h2>
 
                         </div>
-                        <div id="form_status"></div>
                         <div class="contact-form">
                             <form id="frm_" name="frm_" method="post" action="/admin/board/modify">
                                 <input type="hidden" name="board_idx" value="${boardDTO.board_idx}">

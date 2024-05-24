@@ -17,6 +17,9 @@ public class InfoVO {
     private int info_idx;
     private String info_title;
     private String info_content;
+    private String info_org_file_name;
+    private String info_save_file_name;
+    private String info_type;
     private LocalDate info_reg_date;
     private LocalDate info_modify_date;
     private int member_idx;
