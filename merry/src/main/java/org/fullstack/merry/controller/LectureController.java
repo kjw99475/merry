@@ -34,7 +34,12 @@ public class LectureController {
     private final ChapterServiceIf chapterService;
 
     @GetMapping("/regist")
-    public void regist(Model model) {}
+    public void regist(HttpSession session, Model model) {
+
+        int member_idx = (int) session.getAttribute("member_idx");
+        String subject = lectureService.getSubject(member_idx);
+        model.addAttribute("subject", subject);
+    }
 
     @PostMapping("/regist")
     public String regist(@Valid LectureDTO lectureDTO,
@@ -122,6 +127,8 @@ public class LectureController {
     public String modify(@Valid LectureDTO lectureDTO,
                          BindingResult bindingResult,
                          RedirectAttributes redirectAttributes,
+                         @RequestParam(value = "upload", defaultValue = "") String upload,
+                         @RequestParam(value = "upload2", defaultValue = "") String upload2,
                          @RequestParam("lecImg") MultipartFile lecImg,
                          @RequestParam("chapVideos") List<MultipartFile> chapVideos,
                          HttpSession session,
@@ -134,15 +141,17 @@ public class LectureController {
 //            return "redirect:/lecture/regist";
 //        }
 
+
+
         String saveLecImg = "";
         if (lecImg != null && !lecImg.isEmpty()) {
             saveLecImg = FileUploadUtil.saveFile(lecImg, "D:\\java4\\merry\\merry\\src\\main\\webapp\\resources\\uploads\\lecture");
-            FileUploadUtil.deleteFile(lectureDTO.getLec_img(), "D:\\java4\\merry\\merry\\src\\main\\webapp\\resources\\uploads\\lecture");
+            FileUploadUtil.deleteFile(upload2, "D:\\java4\\merry\\merry\\src\\main\\webapp\\resources\\uploads\\lecture");
             lectureDTO.setLec_img(saveLecImg);
             lectureDTO.setLec_org_img(lecImg.getOriginalFilename());
         } else {
-            lectureDTO.setLec_img(lectureDTO.getLec_img());
-            lectureDTO.setLec_org_img(lectureDTO.getLec_org_img());
+            lectureDTO.setLec_img(upload2);
+            lectureDTO.setLec_org_img(upload);
         }
 
         int resultLectureIdx = lectureService.modify(lectureDTO);
@@ -193,5 +202,10 @@ public class LectureController {
         return "redirect:/lecture/view?lec_idx=" + lectureDTO.getLec_idx();
     }
 
+    @PostMapping("/delete")
+    public String String (@RequestParam("lec_idx") int lec_idx, Model model) {
+        lectureService.delete(lec_idx);
+        return "redirect:/lecture/view?lec_idx=" + lec_idx;
+    }
 
 }

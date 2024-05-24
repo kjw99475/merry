@@ -43,11 +43,17 @@
 <!--================ 헤더 start =================-->
 <jsp:include page="/WEB-INF/views/common/header.jsp"/>
 <!--================ 헤더 end =================-->
+강의 이미지 가져와주세여 ㅜㅜ lec_img 가져오시면 됩니다!
+찜버튼이랑 구매 버튼이랑 장바구니 버튼만 만들어 주시면 제가 이동 붙일게요!
+
+소개 / 목차 / qna / 자료실 버튼 만들어주시면 제가 이동 붙일게요!
+
 
 ${lectureDTO.lec_idx}<br>
 ${lectureDTO.lec_title}<br>
 ${lectureDTO.lec_content}<br>
 ${lectureDTO.lec_status}<br>
+
 ${lectureDTO.lec_reg_date}<br>
 ${lectureDTO.lec_modify_date}<br>
 ${lectureDTO.member_idx}<br>
@@ -60,10 +66,13 @@ ${lectureDTO.member_name}<br>
 </ul>
 
 <button type="button" onclick="location.href='/lecture/modify?lec_idx=${lectureDTO.lec_idx}'">수정하기</button>
-<form action="/lecture/delete" id="frmDelete">
-    <input type="hidden" value="${lectureDTO.lec_idx}">
+
+<c:if test="${lectureDTO.lec_status eq 'Y'}">
+<form action="/lecture/delete" id="frmDelete" method="post">
+    <input type="hidden" name="lec_idx" value="${lectureDTO.lec_idx}">
     <button type="button" onclick="deleteOK()">삭제하기</button>
 </form>
+</c:if>
 <!--================ 본문 end =================-->
 
 <!--================ 푸터 Start =================-->
@@ -94,7 +103,7 @@ ${lectureDTO.member_name}<br>
 <script>
     function deleteOK() {
         const frmDelete = document.querySelector("#frmDelete");
-        let deleteYN = confirm("삭제하시겠습니까?");
+        let deleteYN = confirm("정말 삭제하시겠습니까? \n 삭제하시면 리스트에 나타나지 않습니다.");
         if (deleteYN) {
             frmDelete.submit();
         }

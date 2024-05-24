@@ -21,6 +21,11 @@
                     </trim>
                 </foreach>
             </if>
+            <if test="subject_code != null">
+                <trim prefix="AND">
+                    lec_subject = #{subject_code}
+                </trim>
+            </if>
         </where>
     </sql>
 
@@ -53,6 +58,13 @@
         select count(*)
         from lecture
         <include refid="whereCondition"></include>
+    </select>
+
+    <select id="getSubject" resultType="String">
+        SELECT SUBJECT
+        FROM teacher t
+                 INNER JOIN MEMBER m ON t.member_idx = m.member_idx
+        WHERE m.member_idx = #{member_idx};
     </select>
 
 </mapper>

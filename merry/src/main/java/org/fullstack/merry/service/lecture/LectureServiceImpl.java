@@ -89,4 +89,9 @@ public class LectureServiceImpl implements LectureServiceIf{
     public int totalLecture(PageRequestDTO pageRequestDTO) {
         return lectureMapper.totalLecture(pageRequestDTO);
     }
+
+    @Override
+    public String getSubject(int member_idx) {
+        return lectureMapper.getSubject(member_idx);
+    }
 }

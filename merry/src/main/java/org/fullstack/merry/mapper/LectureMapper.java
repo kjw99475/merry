@@ -13,4 +13,5 @@ public interface LectureMapper {
     LectureDTO view(int lec_idx);
     List<LectureVO> lectureList(PageRequestDTO pageRequestDTO);
     int totalLecture(PageRequestDTO pageRequestDTO);
+    String getSubject(int member_idx);
 }
