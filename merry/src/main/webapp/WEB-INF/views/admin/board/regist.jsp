@@ -67,47 +67,16 @@
     height: 100vh;">
 
         <!--================ 사이드바 start =================-->
-
-        <div class="d-flex flex-column flex-shrink-0 p-3 bg-body-tertiary" >
-
-            <ul class="nav nav-pills flex-column mb-auto">
-
-                <li class="nav-item">
-                    <a href="/admin/member/list" class="nav-link black-text">회원 관리</a>
-                </li>
-
-                <li class="nav-item">
-                    <a href="/admin/teacher/list" class="nav-link black-text">선생님 관리</a>
-                </li>
-                <li class="nav-item">
-                    <a href="/admin/qna/list" class="nav-link black-text">1:1 문의 관리</a>
-                </li>
-                <li class="nav-item">
-                    <a href="/admin/lecture/list" class="nav-link black-text">강의 관리</a>
-                </li>
-                <li class="nav-item">
-                    <a href="/admin/notice/list" class="nav-link black-text">공지사항 관리</a>
-                </li>
-                <li class="nav-item">
-                    <a href="/admin/info/list" class="nav-link black-text">교육정보 관리</a>
-                </li>
-                <li class="nav-item">
-                    <a href="/admin/data/list" class="nav-link black-text">자료실 관리</a>
-                </li>
-                <li class="nav-item">
-                    <a href="/admin/board/list" class="nav-link active">자유게시판 관리</a>
-                </li>
-
-            </ul>
-
-        </div>
+        <jsp:include page="/WEB-INF/views/common/admin_sidebar.jsp">
+            <jsp:param name="menuGubun" value="bbs_board"/>
+        </jsp:include>
         <!--================ 사이드바 end =================-->
 
 
         <div>
             <div class="container">
 
-                <div class="row">
+                <div class="row mt-5">
                     <div class="col-lg-8 mb-5 mb-lg-0">
                         <div class="form-title">
                             <h2></h2>
@@ -115,8 +84,9 @@
                         </div>
                         <div id="form_status"></div>
                         <div class="contact-form">
-                            <form id="frm_" name="frm_" method="post" action="#">
-                                <input type="hidden" name="board_writer" value="admin">
+                            <form id="frm_" name="frm_" method="post" action="/admin/board/regist">
+                                <input type="hidden" name="board_writer" value="${sessionScope.name}}">
+                                <input type="hidden" name="member_idx" value="${sessionScope.member_idx}}">
 
 <%--                                <label for="board_title">제목</label>--%>
                                 <input type="text" class="form-control" placeholder="제목을 입력해주세요" name="board_title" id="board_title">
