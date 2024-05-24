@@ -85,10 +85,13 @@
                                 <img src="/resources/assets/img/avaters/avatar1.png" alt="">
                             </div>
                             <div class="client-meta">
-                                <h3>선생님 이름<span>과목명</span></h3>
+                                <h3>김금진 선생님<span>국어</span></h3>
                                 <p class="testimonial-body">
-                                    " 선생님 소개 내용 Sed ut perspiciatis unde omnis iste natus error veritatis et  quasi architecto beatae vitae dict eaque ipsa quae ab illo inventore Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium "
+                                    " 너의 국어 황금기- ALL 1등급으로 Gold Rush "
                                 </p>
+                            </div>
+                            <div class="col-lg-12 text-center mt-3">
+                                <a href="news.html" class="boxed-btn"><i class="fas fa-home"></i> 김금진 선생님</a>
                             </div>
                         </a>
                     </div>
@@ -98,10 +101,13 @@
                                 <img src="/resources/assets/img/avaters/avatar2.png" alt="">
                             </div>
                             <div class="client-meta">
-                                <h3>David Niph <span>Local shop owner</span></h3>
+                                <h3>김금진 선생님<span>국어</span></h3>
                                 <p class="testimonial-body">
-                                    " Sed ut perspiciatis unde omnis iste natus error veritatis et  quasi architecto beatae vitae dict eaque ipsa quae ab illo inventore Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium "
+                                    " 너의 국어 황금기- ALL 1등급으로 Gold Rush "
                                 </p>
+                            </div>
+                            <div class="col-lg-12 text-center mt-3">
+                                <a href="news.html" class="boxed-btn"><i class="fas fa-home"></i> 김금진 선생님</a>
                             </div>
                         </a>
                     </div>
@@ -111,10 +117,13 @@
                                 <img src="/resources/assets/img/avaters/avatar3.png" alt="">
                             </div>
                             <div class="client-meta">
-                                <h3>Jacob Sikim <span>Local shop owner</span></h3>
+                                <h3>김금진 선생님<span>국어</span></h3>
                                 <p class="testimonial-body">
-                                    " Sed ut perspiciatis unde omnis iste natus error veritatis et  quasi architecto beatae vitae dict eaque ipsa quae ab illo inventore Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium "
+                                    " 너의 국어 황금기- ALL 1등급으로 Gold Rush "
                                 </p>
+                            </div>
+                            <div class="col-lg-12 text-center mt-3">
+                                <a href="news.html" class="boxed-btn"><i class="fas fa-home"></i> 김금진 선생님</a>
                             </div>
                         </a>
                     </div>
@@ -144,7 +153,7 @@
                         <a href="single-product.html"><img src="/resources/assets/img/products/product-img-1.jpg" alt=""></a>
                     </div>
                     <h3>강의 제목</h3>
-                    <p class="product-price"><span>Per Kg</span> 85$ </p>
+                    <p class="product-price"><span>김금진 선생님</span> 110,000원</p>
                     <%--메인에서도 장바구니에 추가할 수 있게..? 이미지 클릭 시 강의 상세이동? // 아니면 그냥 전체영역 클릭이나 카트 버튼을 상세보기 버튼으로 수정--%>
                     <%--최신 등록순 3개 보여주기, 아니면 슬라이드로 10개 정도 보여주기, < > 로 이동하는.. --%>
                     <a href="cart.html" class="cart-btn"><i class="fas fa-shopping-cart"></i> Add to Cart</a>
@@ -155,8 +164,8 @@
                     <div class="product-image">
                         <a href="single-product.html"><img src="/resources/assets/img/products/product-img-2.jpg" alt=""></a>
                     </div>
-                    <h3>Berry</h3>
-                    <p class="product-price"><span>Per Kg</span> 70$ </p>
+                    <h3>강의 제목</h3>
+                    <p class="product-price"><span>김금진 선생님</span> 110,000원</p>
                     <a href="cart.html" class="cart-btn"><i class="fas fa-shopping-cart"></i> Add to Cart</a>
                 </div>
             </div>
@@ -165,15 +174,15 @@
                     <div class="product-image">
                         <a href="single-product.html"><img src="/resources/assets/img/products/product-img-3.jpg" alt=""></a>
                     </div>
-                    <h3>Lemon</h3>
-                    <p class="product-price"><span>Per Kg</span> 35$ </p>
+                    <h3>강의 제목</h3>
+                    <p class="product-price"><span>김금진 선생님</span> 110,000원</p>
                     <a href="cart.html" class="cart-btn"><i class="fas fa-shopping-cart"></i> Add to Cart</a>
                 </div>
             </div>
         </div>
         <div class="row">
             <div class="col-lg-12 text-center">
-                <a href="news.html" class="boxed-btn">More Lectures</a>
+                <a href="news.html" class="boxed-btn">강의 더보기</a>
             </div>
         </div>
     </div>
