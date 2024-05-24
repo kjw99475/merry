@@ -3,9 +3,8 @@ package org.fullstack.merry.service;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.fullstack.merry.domain.BoardVO;
-import org.fullstack.merry.dto.BoardDTO;
-import org.fullstack.merry.dto.MemberDTO;
-import org.fullstack.merry.dto.NoticeDTO;
+import org.fullstack.merry.dto.*;
+import org.fullstack.merry.dto.lecture.LectureDTO;
 import org.fullstack.merry.mapper.TeacherMapper;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
@@ -28,8 +27,24 @@ public class TeacherServiceImpl implements TeacherServiceIf {
     }
 
     @Override
-    public List<MemberDTO> memberList() {
-        List<MemberDTO> memberList = teacherMapper.memberList();
+    public List<TeacherDTO> teacherlist() {
+        List<TeacherDTO> memberList = teacherMapper.teacherlist().stream()
+                .map(vo->modelMapper.map(vo, TeacherDTO.class))
+                .collect(Collectors.toList());
         return memberList;
+    }
+    @Override
+    public List<LectureDTO> lectureList(String teacherIdx){
+        List<LectureDTO> LectureList = teacherMapper.lecturelist(teacherIdx).stream()
+                .map(vo->modelMapper.map(vo, LectureDTO.class))
+                .collect(Collectors.toList());
+        return LectureList;
+    }
+    @Override
+    public List<QnaDTO> qnaList(String teacher_idx){
+        List<QnaDTO> qnalist = teacherMapper.qnaList(teacher_idx).stream()
+                .map(vo->modelMapper.map(vo, QnaDTO.class))
+                .collect(Collectors.toList());
+        return qnalist;
     }
 }

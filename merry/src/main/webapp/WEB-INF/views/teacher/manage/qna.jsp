@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ page trimDirectiveWhitespaces="true" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 
 <html>
 <head>
@@ -48,30 +49,42 @@
 
 <!-- 선생님 섹션 -->
 <div class="container pt-100 mb-5">
-    <div class="row mt-5">
-        <div class="col-lg-8 offset-lg-2 text-center">
-            <div class="section-title">
-                <h3>선생님</h3>
-            </div>
-        </div>
+    <div class="mt-5">
+        <h1 style="width: 75%; margin: 0 auto 20px; text-align: center;">선생님 Q&A</h1>
     </div>
-    <div class="row">
-        <c:forEach var="list" items="${teacherlist}">
-            <div class="col-lg-3 col-md-6">
-                <div class="single-latest-news">
-                    <a href="manage/list?teacheridx=${list.member_idx}"><div class="latest-news-bg news-bg-1" style="background: url('/resources/assets/img/${list.teacher_image}'); background-size: 100% 100%">
-                    </div></a>
-                    <div class="news-text-box">
-                        <h3><a href="#">${list.intro}</a></h3>
-                        <p class="blog-meta border-bottom pb-1">
-                            <span class="author"><i class="fas fa-user"></i> ${list.teacher_name}</span>
-                            <span class="date"><i class="fas fa-calendar"></i>${list.subject}</span>
-                        </p>
-                    </div>
-                </div>
-            </div>
+    <div class="col-lg-12 text-right mt-3">
+        <a href="/teacher/regist" class="boxed-btn">글작성</a>
+    </div>
+    <table class="table">
+        <colgroup class="w-100">
+            <col class="w-5">
+            <col class="w-70">
+            <col class="w-10">
+            <col class="w-15">
+        </colgroup>
+
+        <thead>
+        <tr>
+            <th>no</th>
+            <th>답변여부</th>
+            <th>제목</th>
+            <th>작성자</th>
+            <th>작성일</th>
+        </tr>
+        </thead>
+        <tbody>
+        <c:forEach var="list" items="${qnaList}" varStatus="i">
+            <tr>
+                <td>${i.count}</td>
+                <td><c:if test="${list.qna_answer_yn eq 'Y'}">답변완료</c:if>
+                    <c:if test="${list.qna_answer_yn eq 'N'}">답변대기</c:if></td>
+                <td>${list.qna_title}</td>
+                <td>${list.qna_member_name}</td>
+                <td>${fn:substring(list.qna_reg_date, 0, 10)}</td>
+            </tr>
         </c:forEach>
-    </div>
+        </tbody>
+    </table>
     <div class="btn-toolbar justify-content-center" role="toolbar" aria-label="Toolbar with button groups">
         <div class="btn-group">
             <button type="button" class="btn btn-outline-merry">1</button>

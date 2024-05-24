@@ -10,10 +10,20 @@
         WHERE notice_type = 't'
           AND n.member_idx = ${M_Idx}
     </select>
-    <select id="teacherlist" resultType="org.fullstack.merry.dto.MemberDTO">
-        SELECT m.name, t.subject, m.teacher_intro
-        FROM teacher AS t
-        INNER JOIN member AS m
-        ON t.member_idx=m.member_idx
+    <select id="teacherlist" resultType="org.fullstack.merry.domain.TeacherVO">
+        SELECT SUBJECT,teacher_name, intro, teacher_image, member_idx
+        FROM teacher
+    </select>
+
+    <select id="lecturelist" resultType="org.fullstack.merry.domain.lecture.LectureVO">
+        SELECT lec_title, lec_img, lec_subject
+        FROM lecture
+        WHERE member_idx = ${teacherIdx}
+          AND lec_status != 'N'
+    </select>
+    <select id="qnaList" resultType="org.fullstack.merry.domain.QnaVO">
+        SELECT qna_answer_yn, qna_title, qna_member_name, qna_reg_date
+        FROM qna
+        WHERE qna_answer_idx = ${teacher_idx}
     </select>
 </mapper>
