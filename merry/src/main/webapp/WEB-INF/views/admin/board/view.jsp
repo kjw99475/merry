@@ -35,20 +35,7 @@
     <!-- responsive -->
     <link rel="stylesheet" href="/resources/assets/css/responsive.css">
 
-    <script src="https://cdn.tiny.cloud/1/wjuflumw0txwktnvnufwfo5lj04kqmup66rnaj1jf6pnwv5d/tinymce/7/tinymce.min.js" referrerpolicy="origin"></script>
-    <script>
-        tinymce.init({
-            selector: 'textarea#content',
-            plugins: [
-                'advlist','autolink',
-                'lists','link','image','charmap','preview','anchor','searchreplace','visualblocks'
-                ,'fullscreen','insertdatetime','media','table','help','wordcount'
-            ],
-            toolbar: 'undo redo | formatpainter casechange blocks | bold italic backcolor | ' +
-                'alignleft aligncenter alignright alignjustify | ' +
-                'bullist numlist checklist outdent indent | removeformat | a11ycheck code table help'
-        });
-    </script>
+
 </head>
 <body>
 
@@ -115,19 +102,27 @@
                         </div>
                         <div id="form_status"></div>
                         <div class="contact-form">
-                            <form id="frm_" name="frm_" method="post" action="#">
-                                <input type="hidden" name="board_idx" value="${boardDTO.board_idx}">
-
+                            <form id="frm_" name="frm_" method="post" action="/admin/board/delete">
+                                    <input type="hidden" name="board_idx" value="${boardDTO.board_idx}">
 <%--                                <label for="board_title">제목</label>--%>
-                                <input type="text" class="form-control" placeholder="제목을 입력해주세요" name="board_title" id="board_title" value="${boardDTO.board_title}">
+                                <div><span class="font-weight-bold">제목 : </span>${boardDTO.board_title}</div>
 
-                                <textarea class="mt-3" name="board_content" id="content" >${boardDTO.board_content}</textarea>
+                                <div class="overflow-auto mt-4" style="max-height: 500px;">${boardDTO.board_content}</div>
 
                                 <div class="row justify-content-between mt-3">
-                                    <button type="button" class="btn btn-outline-merry" onclick="location.href='/admin/board/list'">목록</button>
+                                    <button type="button" class="btn btn-outline-merry" onclick="delete_();">삭제</button>
+                                    <script>
+                                        const frm = document.querySelector("#frm_");
+                                        function delete_() {
+                                            let chk_del = confirm("삭제하시겠습니까?");
+                                            if(chk_del) {
+                                                frm.submit();
+                                            }
+                                        }
+                                    </script>
                                     <div>
-                                        <button type="button" class="btn btn-outline-merry" onclick="location.href='/admin/board/view?board_idx=${boardDTO.board_idx}'">취소</button>
-                                        <button type="submit" class="btn btn-merry">수정 완료</button>
+                                        <button type="button" class="btn btn-outline-merry" onclick="location.href='/admin/board/list'">목록</button>
+                                        <button type="button" class="btn btn-merry" onclick="location.href='/admin/board/modify?board_idx=${boardDTO.board_idx}'">수정</button>
                                     </div>
                                 </div>
                             </form>

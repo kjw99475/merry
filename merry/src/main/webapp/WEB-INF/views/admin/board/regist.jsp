@@ -116,18 +116,17 @@
                         <div id="form_status"></div>
                         <div class="contact-form">
                             <form id="frm_" name="frm_" method="post" action="#">
-                                <input type="hidden" name="board_idx" value="${boardDTO.board_idx}">
+                                <input type="hidden" name="board_writer" value="admin">
 
 <%--                                <label for="board_title">제목</label>--%>
-                                <input type="text" class="form-control" placeholder="제목을 입력해주세요" name="board_title" id="board_title" value="${boardDTO.board_title}">
+                                <input type="text" class="form-control" placeholder="제목을 입력해주세요" name="board_title" id="board_title">
 
-                                <textarea class="mt-3" name="board_content" id="content" >${boardDTO.board_content}</textarea>
+                                <textarea class="mt-3" name="board_content" id="content" ></textarea>
 
-                                <div class="row justify-content-between mt-3">
-                                    <button type="button" class="btn btn-outline-merry" onclick="location.href='/admin/board/list'">목록</button>
+                                <div class="row justify-content-end mt-3">
                                     <div>
-                                        <button type="button" class="btn btn-outline-merry" onclick="location.href='/admin/board/view?board_idx=${boardDTO.board_idx}'">취소</button>
-                                        <button type="submit" class="btn btn-merry">수정 완료</button>
+                                        <button type="button" class="btn btn-outline-merry" onclick="location.href='/admin/board/list'">취소</button>
+                                        <button type="submit" class="btn btn-merry">등록</button>
                                     </div>
                                 </div>
                             </form>

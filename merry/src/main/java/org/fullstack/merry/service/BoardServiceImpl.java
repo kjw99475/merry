@@ -39,26 +39,38 @@ public class BoardServiceImpl implements BoardServiceIf{
 
     @Override
     public int TotalCount(PageRequestDTO requestDTO) {
-        return 0;
+        int total_count = boardMapper.TotalCount(requestDTO);
+        return total_count;
     }
 
     @Override
     public BoardDTO view(int board_idx) {
-        return null;
+        BoardVO boardVO = boardMapper.view(board_idx);
+        BoardDTO boardDTO = modelMapper.map(boardVO, BoardDTO.class);
+        return boardDTO;
     }
 
     @Override
-    public int regist(BoardDTO board) {
-        return 0;
+    public int regist(BoardDTO boardDTO) {
+        BoardVO boardVO = modelMapper.map(boardDTO, BoardVO.class);
+        log.info("=============================");
+        log.info("bbsVO >>" + boardVO.toString());
+        int result = boardMapper.regist(boardVO);
+        log.info("result >>" + result);
+        log.info("=============================");
+        return boardVO.getBoard_idx();
     }
 
     @Override
-    public int modify(BoardDTO board) {
-        return 0;
+    public int modify(BoardDTO boardDTO) {
+        BoardVO boardVO = modelMapper.map(boardDTO, BoardVO.class);
+        int result = boardMapper.modify(boardVO);
+        return result;
     }
 
     @Override
     public int delete(int board_idx) {
-        return 0;
+        int result = boardMapper.delete(board_idx);
+        return result;
     }
 }
