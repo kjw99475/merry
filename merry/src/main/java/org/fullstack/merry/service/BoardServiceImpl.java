@@ -16,7 +16,7 @@ import java.util.stream.Collectors;
 @Log4j2
 @Service
 @RequiredArgsConstructor
-public class BaordServiceImpl implements BoardServiceIf{
+public class BoardServiceImpl implements BoardServiceIf{
     private final BoardMapper boardMapper;
     private final ModelMapper modelMapper;
 
