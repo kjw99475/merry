@@ -2824,10 +2824,27 @@ li.nav-item a.nav-link.active {
   border-color: #F3A421;
   font-weight: bold;
 }
+.btn-merry:hover {
+  color: #fff;
+  background-color: #F3A421;
+  border-color: #F3A421;
+  font-weight: bold;
+}
 
 .btn-outline-merry {
   color: #000;
   background-color: #fff;
   border-color: #F3A421;
   font-weight: bold;
+}
+
+.btn-outline-merry:hover {
+  color: #000;
+  background-color: #F3A421;
+  border-color: #F3A421;
+  font-weight: bold;
+}
+
+.black-text {
+  color:#000;
 }

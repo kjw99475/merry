@@ -52,7 +52,7 @@
         UPDATE board SET
         board_title = #{board_title}
         , board_content = #{board_content}
-        , modify_date = NOW()
+        , board_modify_date = NOW()
         WHERE board_idx = #{board_idx}
     </update>
 
