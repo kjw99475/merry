@@ -21,4 +21,6 @@ public class LectureVO {
     private int member_idx;
     private String lec_img;
     private String member_name;
+    private int lec_price;
+    private String lec_subject;
 }
