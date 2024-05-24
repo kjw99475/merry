@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.fullstack.merry.mapper.CalendarMapper">
+    <insert id="calendarRegist">
+        INSERT INTO calendar(groupId, title, content, writer, start, end, allday, textColor, backgroundColor)
+        VALUES (#{groupId}, #{title}, #{content}, 'test', #{start}, #{end}, #{allday}, #{textColor}, #{backgroundColor})
+    </insert>
+
+    <select id="calendarList">
+        SELECT * FROM calendar
+--         WHERE member_idx = 1
+    </select>
+
+    <select id="calendarView">
+        SELECT * FROM calendar
+        WHERE id = #{id}
+--         AND writer = #{writer}
+    </select>
+
+    <update id="calendarModify">
+        UPDATE calendar SET
+        title = #{title},
+        writer = #{writer},
+        start = #{start},
+        end = #{end},
+        textColor = #{textColor},
+        backgroundColor = #{backgroundColor}
+        WHERE id = #{id}
+    </update>
+
+    <delete id="calendarDelete">
+        DELETE FROM calendar
+        WHERE id = #{id}
+    </delete>
+</mapper>
