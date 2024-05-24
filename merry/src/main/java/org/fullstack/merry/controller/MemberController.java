@@ -2,6 +2,7 @@ package org.fullstack.merry.controller;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
+import org.fullstack.merry.dto.MemberDTO;
 import org.fullstack.merry.service.MemberServiceIf;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;

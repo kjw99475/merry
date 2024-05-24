@@ -1,5 +1,7 @@
 package org.fullstack.merry.service;
 
+import org.fullstack.merry.dto.MemberDTO;
+
 public interface MemberServiceIf {
 //    int join(MemberDTO memberDTO);
 

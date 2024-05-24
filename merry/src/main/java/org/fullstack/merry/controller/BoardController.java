@@ -1,4 +1,4 @@
 package org.fullstack.merry.controller;
 
-public class BbsController {
+public class BoardController {
 }

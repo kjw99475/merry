@@ -3,6 +3,7 @@ package org.fullstack.merry.service;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.fullstack.merry.domain.MemberVO;
+import org.fullstack.merry.dto.MemberDTO;
 import org.fullstack.merry.mapper.LoginMapper;
 import org.fullstack.merry.utils.TempPasswordUtil;
 import org.modelmapper.ModelMapper;

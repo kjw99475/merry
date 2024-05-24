@@ -2,7 +2,7 @@
 <!DOCTYPE mapper
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/schema/mybatis-3-mapper.dtd">
-<mapper namespace="org.fullstack.merry.merry.mapper.BoardMapper">
+<mapper namespace="org.fullstack.merry.mapper.BoardMapper">
 
     <sql id="whereCondition">
         <where>
@@ -23,7 +23,7 @@
     </sql>
 
 
-    <select id="ListByPage" resultType="org.fullstack4.merry.domain.BoardVO">
+    <select id="ListByPage" resultType="org.fullstack.merry.domain.BoardVO">
         SELECT board_idx, board_title, board_writer, board_content, board_reg_date, board_modify_date, member_idx
         FROM board
         <include refid="whereCondition"></include>

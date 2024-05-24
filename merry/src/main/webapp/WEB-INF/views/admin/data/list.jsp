@@ -88,23 +88,38 @@
 
         <div>
             <div class="container">
-                사이드바가 있는 페이지
-                내용을 넣어주세요
+                <div>
+                    <div>
+                        <form>
+                            <div class="row">
+                                <select name="type" class="form-control col-1" >
+                                    <option value="0">제목</option>
+                                    <option value="1" >내용</option>
+                                    <option value="2" >작성자</option>
+                                </select>
 
-                <table class="table">
-                    <colgroup class="w-100">
-                        <col class="w-5">
-                        <col class="w-70">
-                        <col class="w-10">
-                        <col class="w-15">
-                    </colgroup>
+                                <div class="col-8">
+                                    <input type="text" class="form-control" placeholder="Search" name="search_word" style="width: 100%" >
+                                </div>
+                                <div class="col-3">
+                                    <button type="submit" value="검색" class="btn btn-merry">asdf</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+
+
+
+
+                <table class="table w-100">
 
                     <thead>
                     <tr>
-                        <th>no</th>
-                        <th>제목</th>
-                        <th>작성자</th>
-                        <th>작성일</th>
+                        <th class="w-10">no</th>
+                        <th class="w-50">제목</th>
+                        <th class="w-30">작성자</th>
+                        <th class="w-10">작성일</th>
                     </tr>
                     </thead>
                     <tbody>
@@ -114,6 +129,24 @@
                         <td>작성자 입니다</td>
                         <td>2022-22-22</td>
                     </tr>
+                    <c:choose>
+                        <c:when test="${!empty responseDTO.dtoList}">
+                            <c:set value="${responseDTO.total_count}" var="total_count" />
+                            <c:forEach items="${responseDTO.dtoList}" var="bbsDTO" varStatus="loop">
+                                <tr>
+                                    <th>${total_count -responseDTO.page_skip_count -loop.index}</th>
+                                    <td><a href="/board/view?board_idx=${bbsDTO.board_idx}">${bbsDTO.board_title}</a></td>
+                                    <td>${bbsDTO.board_writer}</td>
+                                    <td>${bbsDTO.board_reg_date}</td>
+                                </tr>
+                            </c:forEach>
+                        </c:when>
+                        <c:otherwise>
+                            <tr class="bg-white text-center">
+                                <td colspan="4">등록된 글이 없습니다.</td>
+                            </tr>
+                        </c:otherwise>
+                    </c:choose>
                     </tbody>
                 </table>
 
