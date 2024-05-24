@@ -20,6 +20,7 @@ public class LectureVO {
     private LocalDateTime lec_modify_date;
     private int member_idx;
     private String lec_img;
+    private String lec_org_img;
     private String member_name;
     private int lec_price;
     private String lec_subject;

@@ -21,4 +21,5 @@ public class NoticeDTO {
     private LocalDate notice_reg_date;
     private LocalDate notice_modify_date;
     private int member_idx;
+    private String member_name;
 }

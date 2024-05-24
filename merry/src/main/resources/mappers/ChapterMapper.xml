@@ -5,8 +5,8 @@
 <mapper namespace="org.fullstack.merry.mapper.ChapterMapper">
 
     <insert id="regist">
-        insert into chapter(chap_title, chap_video, chap_time, lec_idx)
-        values(#{chap_title}, #{chap_video}, #{chap_time}, #{lec_idx})
+        insert into chapter(chap_title, chap_video, chap_time, lec_idx, chap_org_video)
+        values(#{chap_title}, #{chap_video}, #{chap_time}, #{lec_idx}, #{chap_org_video})
     </insert>
     <select id="view" resultType="org.fullstack.merry.domain.lecture.ChapterVO">
         select *
@@ -15,9 +15,13 @@
     </select>
     <update id="modify">
         update chapter
-        set chap_title=#{chap_title}, chap_video=#{chap_video}, chap_time=#{chap_time}
+        set chap_title=#{chap_title}, chap_video=#{chap_video}, chap_time=#{chap_time}, chap_org_video=#{chap_org_video}
         where chap_idx=#{chap_idx}
     </update>
+    <delete id="modifyAndDelete">
+        delete from chapter
+        where lec_idx = #{lec_idx}
+    </delete>
     <update id="delete">
         update chapter
         set chap_status="N"
@@ -27,7 +31,7 @@
         select *
         from chapter
         where lec_idx=#{lec_idx}
-        order by chap_idx desc
+        order by chap_idx asc
     </select>
     <select id="totalChapter">
         select count(*)
@@ -35,4 +39,7 @@
         where lec_idx=#{lec_idx}
     </select>
 
+    <delete id="realDelete">
+        delete from chapter where chap_idx=#{chap_idx}
+    </delete>
 </mapper>

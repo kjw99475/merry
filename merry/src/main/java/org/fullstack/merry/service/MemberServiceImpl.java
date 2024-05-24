@@ -12,8 +12,8 @@ import org.springframework.stereotype.Service;
 @Service
 @RequiredArgsConstructor
 public class MemberServiceImpl implements MemberServiceIf {
-//    private final MemberMapper memberMapper;
-//    private final ModelMapper modelMapper;
+    private final MemberMapper memberMapper;
+    private final ModelMapper modelMapper;
 //
 //    @Override
 //    public MemberDTO view(String user_id) {
@@ -35,20 +35,11 @@ public class MemberServiceImpl implements MemberServiceIf {
 //        return result;
 //    }
 
-//    @Override
-//    public int join(MemberDTO memberDTO) {
-//
-//        log.info("====================================");
-//        log.info("BbsServiceImpl >> regist(bbsDto : " + memberDTO.toString());
-//
-//        MemberVO memberVO = modelMapper.map(memberDTO, MemberVO.class);
-//        // vo.setUserId(dto.getUserId()) 이런 작업 대신에 해주는 것
-//        int result = memberMapper.join(memberVO);
-//
-//        log.info("MemberServiceImpl >> memberVO : " + memberVO.toString());
-//        log.info("MemberServiceImpl >> result : " + result);
-//        log.info("====================================");
-//        return result;
-//    }
+    @Override
+    public int join(MemberDTO memberDTO) {
+        MemberVO memberVO = modelMapper.map(memberDTO, MemberVO.class);
+        int result = memberMapper.join(memberVO);
+        return result;
+    }
 
 }
