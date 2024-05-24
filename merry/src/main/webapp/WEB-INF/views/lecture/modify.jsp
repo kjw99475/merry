@@ -74,47 +74,58 @@
 <div class="contact-form spad">
     <div class="container">
         <div class="row">
-            <form action="/lecture/regist" method="post" enctype="multipart/form-data">
+            <form action="/lecture/modify" method="post" enctype="multipart/form-data">
                 <%--    <input type="hidden" value="${sessionScope.name}" name="member_name">--%>
                 <%--    <input type="hidden" value="${sessionScope.member_idx}" name="member_idx">--%>
-                <input type="hidden" value="test" name="member_name">
-                <input type="hidden" value="1" name="member_idx">
+                <input type="hidden" value="${lectureDTO.member_name}" name="member_name">
+                <input type="hidden" value="${lectureDTO.member_idx}" name="member_idx">
+                <input type="hidden" value="${lectureDTO.lec_idx}" name="lec_idx">
 
                 <div class="col-lg-12 col-md-12">
                     <label>제목 : </label>
-                    <input type="text" name="lec_title"><br>
+                    <input type="text" name="lec_title" value="${lectureDTO.lec_title}"><br>
                 </div>
                 <label>내용 </label>
-                <textarea name="lec_content" id="content"></textarea><br>
-                <div id="orgImg"></div>
+                <textarea name="lec_content" id="content">${lectureDTO.lec_content}</textarea><br>
+                <img src="/resources/uploads/lecture/${lectureDTO.lec_img}" class="d-block rounded" height="100"
+                     width="100" id="preview"/>
                 <label>썸네일 : </label>
                 <input type="file" accept="image/png, image/jpeg" name="lecImg" onchange="readURL(this)"><br>
                 <label>가격 : </label>
-                <input type="text" name="lec_price"><br>
+                <input type="text" name="lec_price" value="${lectureDTO.lec_price}"><br>
 
                 목차<br>
                 <div id="chap">
-                    <div>
-                        <label>목차 제목 : </label>
-                        <input type="text" name="chapters[0].chap_title"> <br>
-                        <label>동영상 : </label>
-                        <input type="file" accept="video/*" name="chapVideos"><br>
-                        <label>동영상 길이(분)</label>
-                        <input type="text" name="chapters[0].chap_min"><br>
-                        <label>동영상 길이(초)</label>
-                        <input type="text" name="chapters[0].chap_second"><br>
-                    </div>
+                    <c:if test="${not empty ChapterList}">
+                        <c:forEach items="${ChapterList}" var="chapterDTO" varStatus="i">
+                            <div>
+                                <input type="hidden" value= id="chap_idx${i.index}">
+                                <label>목차 제목 : </label>
+                                <input type="text" name="chapters[${i.index}].chap_title" value="${chapterDTO.chap_title}" > <c:if test="${i.index != '0'}"> <button id="btnDeleteChapter" onclick="deleteC(${chapterDTO.chap_idx})">X</button> </c:if>  <br>
+                                <span>현재 동영상 : ${chapterDTO.chap_org_video}</span><br>
+                                <label>수정할 동영상 : </label>
+                                <input type="file" accept="video/*" name="chapVideos"><br>
+                                <label>동영상 길이(분)</label>
+                                <input type="text" name="chapters[${i.index}].chap_min" value="${chapterDTO.chap_time.substring(0,2)}"><br>
+                                <label>동영상 길이(초)</label>
+                                <input type="text" name="chapters[${i.index}].chap_second" value="${chapterDTO.chap_time.substring(5,6)}"><br>
+                            </div>
+                        </c:forEach>
+                    </c:if>
                 </div>
+                    <button type="button" onclick="createChap()">목차 추가</button>
+                    <button type="button" onclick="deleteChap()">목차 삭제</button>
 
-                <button type="button" onclick="createChap()">목차 추가</button>
-                <button type="button" onclick="deleteChap()">목차 삭제</button>
-
-                <button type="submit">등록하기</button>
-
+                    <button type="submit">등록하기</button>
             </form>
         </div>
+
+
+
+
     </div>
 </div>
+
 
 
 <!--================ 본문 end =================-->
@@ -150,17 +161,6 @@
         if (input.files && input.files[0]) {
             var reader = new FileReader();
             reader.onload = function (e) {
-                if (document.getElementById("preview") != null) {
-                    document.getElementById("preview").remove();
-                }
-                document.getElementById("orgImg");
-                let img = document.createElement("img");
-                img.height = 100;
-                img.width = 200;
-                img.alt = "미리보기";
-                img.id = "preview";
-                orgImg.append(img);
-
                 document.getElementById('preview').src = e.target.result;
             };
             reader.readAsDataURL(input.files[0]);
@@ -170,7 +170,10 @@
     }
 
     //목차 추가
-    let chapterIndex = 1;
+
+    let len = "${ChapterList.size()}";
+    let chapterIndex = len;
+
     function createChap() {
         let chapMake = document.createElement("div");
         chapMake.innerHTML = " <label>목차 제목 : </label>" + "<input type='text' name='chapters[" + chapterIndex + "].chap_title'> <br>" + " <label>동영상 : </label>"
@@ -188,13 +191,37 @@
     function deleteChap() {
         event.preventDefault();
         let list = document.querySelectorAll("#chap div");
+
         let target = list.length;
-        if (target < 2) {
+        if (target <= len) {
             alert("no");
             return;
         }
         list[target - 1].remove();
         chapterIndex--;
+    }
+
+    function deleteC(idx){
+        event.preventDefault();
+        event.stopPropagation();
+        var idx = idx; //id값이 "id"인 입력란의 값을 저장
+        $.ajax({
+            url:'/chapter/delete', //Controller에서 요청 받을 주소
+            type:'post', //POST 방식으로 전달
+            data:{chap_idx:idx},
+            dataType : 'text',
+            success:function(result){ //컨트롤러에서 넘어온 cnt값을 받는다
+                console.log(result);
+                window.location.reload();
+            },
+            error : function(xhr, status, error) {
+                console.log("xhr! : " + xhr);
+                console.log("status! : " + status);
+                console.log("error! : " + error);
+            }
+
+        })
+
     }
 
 </script>
