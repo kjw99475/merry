@@ -5,12 +5,15 @@ import lombok.extern.log4j.Log4j2;
 import org.fullstack.merry.domain.lecture.LectureVO;
 import org.fullstack.merry.dto.PageRequestDTO;
 import org.fullstack.merry.dto.PageResponseDTO;
+import org.fullstack.merry.dto.lecture.ChapterDTO;
 import org.fullstack.merry.dto.lecture.LectureDTO;
+import org.fullstack.merry.mapper.ChapterMapper;
 import org.fullstack.merry.mapper.LectureMapper;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -20,11 +23,28 @@ import java.util.stream.Collectors;
 public class LectureServiceImpl implements LectureServiceIf{
     private final LectureMapper lectureMapper;
     private final ModelMapper modelMapper;
+    private final ChapterMapper chapterMapper;
 
     @Override
     public int regist(LectureDTO lectureDTO) {
         LectureVO lectureVO = modelMapper.map(lectureDTO, LectureVO.class);
         int result = lectureMapper.regist(lectureVO);
+        log.info(lectureVO.getLec_idx());
+        int idx = lectureVO.getLec_idx();
+        return idx;
+    }
+
+    @Override
+    @Transactional
+    public int registLecAndChap(LectureDTO lectureDTO, ChapterDTO[] dtos) {
+        LectureVO lectureVO = modelMapper.map(lectureDTO, LectureVO.class);
+        int result = lectureMapper.regist(lectureVO);
+        List<Integer> resultChaps = new ArrayList<>();
+        for (ChapterDTO chapterDTO : dtos) {
+            chapterDTO.setLec_idx(lectureVO.getLec_idx());
+            resultChaps.add(chapterMapper.regist(chapterDTO));
+        }
+
         return result;
     }
 
