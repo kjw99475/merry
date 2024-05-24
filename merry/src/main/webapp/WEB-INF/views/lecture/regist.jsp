@@ -65,7 +65,7 @@
     </script>
 
 </head>
-<body class="pt-100">
+<body class="pt-150">
 
 <!--================ 헤더 start =================-->
 <jsp:include page="/WEB-INF/views/common/header.jsp"/>
@@ -75,15 +75,15 @@
     <div class="container">
         <div class="row">
             <form action="/lecture/regist" method="post" enctype="multipart/form-data">
-                <%--    <input type="hidden" value="${sessionScope.name}" name="member_name">--%>
-                <%--    <input type="hidden" value="${sessionScope.member_idx}" name="member_idx">--%>
-                <input type="hidden" value="test" name="member_name">
-                <input type="hidden" value="1" name="member_idx">
+                    <input type="hidden" value="${sessionScope.name}" name="member_name">
+                    <input type="hidden" value="${sessionScope.member_idx}" name="member_idx">
 
                 <div class="col-lg-12 col-md-12">
                     <label>제목 : </label>
-                    <input type="text" name="lec_title"><br>
+                    <input type="text" name="lec_title" id="title" value="[${subject}]"><br>
                 </div>
+                <label>카테고리</label>
+
                 <label>내용 </label>
                 <textarea name="lec_content" id="content"></textarea><br>
                 <div id="orgImg"></div>
@@ -99,10 +99,16 @@
                         <input type="text" name="chapters[0].chap_title"> <br>
                         <label>동영상 : </label>
                         <input type="file" accept="video/*" name="chapVideos"><br>
-                        <label>동영상 길이(분)</label>
-                        <input type="text" name="chapters[0].chap_min"><br>
-                        <label>동영상 길이(초)</label>
-                        <input type="text" name="chapters[0].chap_second"><br>
+                        <label>동영상 길이 (대략)</label>
+                        <select name="chapters[0].chap_time">
+                            <option value="10분 이내">10분 이내</option>
+                            <option value="20분 이내">20분 이내</option>
+                            <option value="30분 이내">30분 이내</option>
+                            <option value="40분 이내">40분 이내</option>
+                            <option value="50분 이내">50분 이내</option>
+                            <option value="60분 이내">60분 이내</option>
+                            <option value="60분 이내">60분 이상</option>
+                        </select>
                     </div>
                 </div>
 
@@ -171,13 +177,21 @@
 
     //목차 추가
     let chapterIndex = 1;
+
     function createChap() {
         let chapMake = document.createElement("div");
         chapMake.innerHTML = " <label>목차 제목 : </label>" + "<input type='text' name='chapters[" + chapterIndex + "].chap_title'> <br>" + " <label>동영상 : </label>"
-            + "<input type='file' accept='video/*' name='chapVideos'><br>" + "<label>동영상 길이(분)</label>"
-            + "<input type='text' name='chapters[" + chapterIndex + "].chap_min'><br>"
-            + " <label>동영상 길이(초)</label>"
-            + "<input type='text' name='chapters[" + chapterIndex + "].chap_second'><br>";
+            + "<input type='file' accept='video/*' name='chapVideos'><br>"
+            + "<label>동영상 길이 (대략)</label>"
+            + "<select name='chapters[" + chapterIndex + "].chap_time'>"
+            + "<option value='10분 이내'>10분 이내</option>"
+            +  "<option value='20분 이내'>20분 이내</option>"
+            +  "<option value='30분 이내'>30분 이내</option>"
+            +  "<option value='40분 이내'>40분 이내</option>"
+            +  "<option value='50분 이내'>50분 이내</option>"
+            +  "<option value='60분 이내'>60분 이내</option>"
+            +  "<option value='60분 이상'>60분 이상</option>"
+            + "</select>";
 
         let chap = document.getElementById("chap");
         chap.append(chapMake);
@@ -215,6 +229,7 @@
     <%--if (errorVideo) {--%>
     <%--    alert(errorVideo);--%>
     <%--}--%>
+
 </script>
 </body>
 </html>

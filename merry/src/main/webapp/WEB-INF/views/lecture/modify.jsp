@@ -75,11 +75,10 @@
     <div class="container">
         <div class="row">
             <form action="/lecture/modify" method="post" enctype="multipart/form-data">
-                <%--    <input type="hidden" value="${sessionScope.name}" name="member_name">--%>
-                <%--    <input type="hidden" value="${sessionScope.member_idx}" name="member_idx">--%>
                 <input type="hidden" value="${lectureDTO.member_name}" name="member_name">
                 <input type="hidden" value="${lectureDTO.member_idx}" name="member_idx">
                 <input type="hidden" value="${lectureDTO.lec_idx}" name="lec_idx">
+                    <input type="hidden" value="${lectureDTO.lec_subject}" name="lec_subject">
 
                 <div class="col-lg-12 col-md-12">
                     <label>제목 : </label>
@@ -91,6 +90,8 @@
                      width="100" id="preview"/>
                 <label>썸네일 : </label>
                 <input type="file" accept="image/png, image/jpeg" name="lecImg" onchange="readURL(this)"><br>
+                <input type="hidden" name="upload" value="${lectureDTO.lec_org_img}">
+                <input type="hidden" name="upload2" value="${lectureDTO.lec_img}">
                 <label>가격 : </label>
                 <input type="text" name="lec_price" value="${lectureDTO.lec_price}"><br>
 
@@ -105,10 +106,16 @@
                                 <span>현재 동영상 : ${chapterDTO.chap_org_video}</span><br>
                                 <label>수정할 동영상 : </label>
                                 <input type="file" accept="video/*" name="chapVideos"><br>
-                                <label>동영상 길이(분)</label>
-                                <input type="text" name="chapters[${i.index}].chap_min" value="${chapterDTO.chap_time.substring(0,2)}"><br>
-                                <label>동영상 길이(초)</label>
-                                <input type="text" name="chapters[${i.index}].chap_second" value="${chapterDTO.chap_time.substring(5,6)}"><br>
+                                <label>동영상 길이 (대략)</label>
+                                <select name="chapters[${i.index}].chap_time">
+                                    <option value="10분 이내">10분 이내</option>
+                                    <option value="20분 이내">20분 이내</option>
+                                    <option value="30분 이내">30분 이내</option>
+                                    <option value="40분 이내">40분 이내</option>
+                                    <option value="50분 이내">50분 이내</option>
+                                    <option value="60분 이내">60분 이내</option>
+                                    <option value="60분 이내">60분 이상</option>
+                                </select>
                             </div>
                         </c:forEach>
                     </c:if>
@@ -116,7 +123,8 @@
                     <button type="button" onclick="createChap()">목차 추가</button>
                     <button type="button" onclick="deleteChap()">목차 삭제</button>
 
-                    <button type="submit">등록하기</button>
+                    <button type="submit">수정하기</button>
+                <button type="button" onclick="location.href='/lecture/list'">목록으로</button>
             </form>
         </div>
 
@@ -177,10 +185,17 @@
     function createChap() {
         let chapMake = document.createElement("div");
         chapMake.innerHTML = " <label>목차 제목 : </label>" + "<input type='text' name='chapters[" + chapterIndex + "].chap_title'> <br>" + " <label>동영상 : </label>"
-            + "<input type='file' accept='video/*' name='chapVideos'><br>" + "<label>동영상 길이(분)</label>"
-            + "<input type='text' name='chapters[" + chapterIndex + "].chap_min'><br>"
-            + " <label>동영상 길이(초)</label>"
-            + "<input type='text' name='chapters[" + chapterIndex + "].chap_second'><br>";
+            + "<input type='file' accept='video/*' name='chapVideos'><br>"
+            + "<label>동영상 길이 (대략)</label>"
+            + "<select name='chapters[" + chapterIndex + "].chap_time'>"
+            + "<option value='10분 이내'>10분 이내</option>"
+            +  "<option value='20분 이내'>20분 이내</option>"
+            +  "<option value='30분 이내'>30분 이내</option>"
+            +  "<option value='40분 이내'>40분 이내</option>"
+            +  "<option value='50분 이내'>50분 이내</option>"
+            +  "<option value='60분 이내'>60분 이내</option>"
+            +  "<option value='60분 이상'>60분 이상</option>"
+            + "</select>";
 
         let chap = document.getElementById("chap");
         chap.append(chapMake);
@@ -194,7 +209,7 @@
 
         let target = list.length;
         if (target <= len) {
-            alert("no");
+            alert("목차는 1개 이상입니다. \n원래 있는 목차를 삭제하시려면 목차 제목 옆의 x 버튼을 눌러주세요.");
             return;
         }
         list[target - 1].remove();
