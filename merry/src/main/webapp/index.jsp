@@ -44,7 +44,7 @@
 
 <!--================ 본문 start =================-->
 <!-- hero area -->
-<div class="hero-area hero-bg">
+<div class="hero-area hero-bg pt-100">
     <div class="container">
         <div class="row">
             <div class="col-lg-9 offset-lg-2 text-center">
