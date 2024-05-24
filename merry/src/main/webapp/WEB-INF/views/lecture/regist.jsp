@@ -197,24 +197,24 @@
         chapterIndex--;
     }
 
-    //유효성
-    const errors = ${errors};
-    console.log("errors : {}", errors);
+    <%--//유효성--%>
+    <%--const errors = ${errors};--%>
+    <%--console.log("errors : {}", errors);--%>
 
-    let errMsg = "";
-    if (errors) {
-        for (let i =0; i<errors.length; i++) {
-            errMsg += `${errors[i].defaultMessage}\n`;
-        }
-        alert(errMsg);
-    }
+    <%--let errMsg = "";--%>
+    <%--if (errors) {--%>
+    <%--    for (let i =0; i<errors.length; i++) {--%>
+    <%--        errMsg += `${errors[i].defaultMessage}\n`;--%>
+    <%--    }--%>
+    <%--    alert(errMsg);--%>
+    <%--}--%>
 
-    //동영상 유효성
-    const errorVideo = ${errorVideo};
-    console.log(errorVideo);
-    if (errorVideo) {
-        alert(errorVideo);
-    }
+    <%--//동영상 유효성--%>
+    <%--const errorVideo = ${errorVideo};--%>
+    <%--console.log(errorVideo);--%>
+    <%--if (errorVideo) {--%>
+    <%--    alert(errorVideo);--%>
+    <%--}--%>
 </script>
 </body>
 </html>

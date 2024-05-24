@@ -31,29 +31,48 @@ public class ChapterServiceImpl implements ChapterServiceIf{
     }
 
     @Override
+    public int modifyAndDelete(int lec_idx) {
+        return chapterMapper.modifyAndDelete(lec_idx);
+    }
+
+    @Override
     public int delete(int chap_idx) {
         int result = chapterMapper.delete(chap_idx);
         return result;
     }
 
     @Override
-    public ChapterDTO view(int chapter_idx) {
+    public ChapterVO view(int chapter_idx) {
         ChapterVO chapterVO = chapterMapper.view(chapter_idx);
-        ChapterDTO chapterDTO = modelMapper.map(chapterVO, ChapterDTO.class);
-        return chapterDTO;
+        return chapterVO;
     }
 
+//    @Override
+//    public List<ChapterDTO> chapterList(int lec_idx) {
+//        List<ChapterVO> voList = chapterMapper.chapterList(lec_idx);
+//        List<ChapterDTO> dtoList = voList.stream()
+//                .map(vo->modelMapper.map(vo, ChapterDTO.class))
+//                .collect(Collectors.toList());
+//        log.info(voList);
+//        log.info(dtoList);
+//        return dtoList;
+//    }
+
     @Override
-    public List<ChapterDTO> chapterList(int lec_idx) {
+    public List<ChapterVO> chapterList(int lec_idx) {
         List<ChapterVO> voList = chapterMapper.chapterList(lec_idx);
-        List<ChapterDTO> dtoList = voList.stream()
-                .map(vo->modelMapper.map(vo, ChapterDTO.class))
-                .collect(Collectors.toList());
-        return dtoList;
+
+        log.info(voList);
+        return voList;
     }
 
     @Override
     public int totalChapter(int lec_idx) {
         return chapterMapper.totalChapter(lec_idx);
+    }
+
+    @Override
+    public int realDelete(int chap_idx){
+        return chapterMapper.realDelete(chap_idx);
     }
 }
