@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org/DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.fullstack.merry.mapper.TeacherMapper">
+    <select id="noticeList" resultType="org.fullstack.merry.dto.NoticeDTO">
+        SELECT notice_title, notice_content, notice_reg_date, m.name AS member_name
+        FROM notice AS n
+                 LEFT JOIN member AS m ON n.member_idx=m.member_idx
+        WHERE notice_type = 't'
+          AND n.member_idx = ${M_Idx}
+    </select>
+    <select id="teacherlist" resultType="org.fullstack.merry.dto.MemberDTO">
+        SELECT m.name, t.subject, m.teacher_intro
+        FROM teacher AS t
+        INNER JOIN member AS m
+        ON t.member_idx=m.member_idx
+    </select>
+</mapper>
