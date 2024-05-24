@@ -425,6 +425,16 @@ p:last-child {
   color: #fff;
 }
 
+.black-btn {
+  background-color: #051922;
+  color: #fff;
+}
+
+.black-btn:hover {
+  background-color: #F3A421;
+  color: #fff;
+}
+
 .orange-outline-btn {
   border-color: #F3A421;
   color: #F3A421;
@@ -435,15 +445,26 @@ p:last-child {
   color: #fff;
 }
 
-.black-btn {
+.red-outline-btn {
+  border-color: #f34821;
+  color: #f34821;
+}
+
+.red-outline-btn:hover {
+  background-color: #f34821;
+  color: #fff;
+}
+
+.black-outline-btn {
+  border-color: #051922;
+  color: #051922;
+}
+
+.black-outline-btn:hover {
   background-color: #051922;
   color: #fff;
 }
 
-.black-btn:hover {
-  background-color: #F3A421;
-  color: #fff;
-}
 
 .blue-bg {
   background-color: #162133;
