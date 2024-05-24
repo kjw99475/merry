@@ -4,7 +4,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.apache.ibatis.annotations.Param;
 import org.fullstack.merry.dto.MemberDTO;
-import org.fullstack.merry.google.LoginInfo;
+//import org.fullstack.merry.google.LoginInfo;
 import org.fullstack.merry.service.LoginServiceIf;
 import org.fullstack.merry.utils.CookieUtil;
 import org.springframework.stereotype.Controller;
@@ -100,19 +100,19 @@ public class LoginController {
     }
     /* 비밀 번호 찾기 구현,,? */
 
-    @GetMapping("/google")
-    public String getGoogleAuthUrl(HttpServletResponse resp) throws Exception {
-        log.info("google hi!");
-        LoginInfo loginInfo = new LoginInfo();
-        String id = loginInfo.getClient_id();
-        String pwd = loginInfo.getClient_pwd();
-        String key = loginInfo.getApi_key();
-        String redirectUrl = loginInfo.getRedirect_url();
-
-        String url = "https://accounts.google.com/o/oauth2/v2/auth?client_id=" + id + "&redirect_uri=" + redirectUrl + "&response_type=code" + "&scope=email profile";
-
-        return "redirect:" + url;
-    }
+//    @GetMapping("/google")
+//    public String getGoogleAuthUrl(HttpServletResponse resp) throws Exception {
+//        log.info("google hi!");
+//        LoginInfo loginInfo = new LoginInfo();
+//        String id = loginInfo.getClient_id();
+//        String pwd = loginInfo.getClient_pwd();
+//        String key = loginInfo.getApi_key();
+//        String redirectUrl = loginInfo.getRedirect_url();
+//
+//        String url = "https://accounts.google.com/o/oauth2/v2/auth?client_id=" + id + "&redirect_uri=" + redirectUrl + "&response_type=code" + "&scope=email profile";
+//
+//        return "redirect:" + url;
+//    }
 
 
 
