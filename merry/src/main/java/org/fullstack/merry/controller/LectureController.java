@@ -9,7 +9,6 @@ import org.fullstack.merry.dto.lecture.ChapterDTO;
 import org.fullstack.merry.dto.lecture.LectureDTO;
 import org.fullstack.merry.service.lecture.ChapterServiceIf;
 import org.fullstack.merry.service.lecture.LectureServiceIf;
-import org.graalvm.compiler.core.common.type.ArithmeticOpTable;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -44,23 +43,23 @@ public class LectureController {
                          HttpSession session,
                          Model model) {
         log.info("registPost");
-        log.info("lectureDTO: {}", lectureDTO);
 
-        if (bindingResult.hasErrors()) {
-            redirectAttributes.addFlashAttribute("errors", bindingResult.getAllErrors());
-            redirectAttributes.addFlashAttribute("lectureDTO", lectureDTO);
-            return "redirect:/lecture/regist";
-        }
+//        if (bindingResult.hasErrors()) {
+//            redirectAttributes.addFlashAttribute("errors", bindingResult.getAllErrors());
+//            redirectAttributes.addFlashAttribute("lectureDTO", lectureDTO);
+//            log.info("valid 오류");
+//            return "redirect:/lecture/regist";
+//        }
 
         String saveLecImg = "";
         if (lecImg != null && !lecImg.isEmpty()) {
             saveLecImg = FileUploadUtil.saveFile(lecImg, "D:\\java4\\merry\\merry\\src\\main\\webapp\\resources\\uploads\\lecture");
             lectureDTO.setLec_img(saveLecImg);
+            lectureDTO.setLec_org_img(lecImg.getOriginalFilename());
         }
 
         int resultLectureIdx = lectureService.regist(lectureDTO);
         log.info("resultLecture: {}", resultLectureIdx);
-
 
         List<ChapterDTO> chapterDTOList = lectureDTO.getChapters();
         String saveChapVideo = "";
@@ -70,6 +69,12 @@ public class LectureController {
                 if (chapVideos != null && i < chapVideos.size() && !chapVideos.get(i).isEmpty()) {
                     saveChapVideo = FileUploadUtil.saveFile(chapVideos.get(i), "D:\\java4\\merry\\merry\\src\\main\\webapp\\resources\\uploads\\lecture");
                     chapterDTOList.get(i).setChap_video(saveChapVideo);
+                    chapterDTOList.get(i).setChap_org_video(chapVideos.get(i).getOriginalFilename());
+                }
+                else {
+                    log.info("동영상 이슈");
+                    redirectAttributes.addFlashAttribute("errorVideo", "동영상을 넣어주세요.");
+                    return "redirect:/lecture/regist";
                 }
                 chapterDTOList.get(i).setLec_idx(resultLectureIdx);
                 chapterService.regist(chapterDTOList.get(i));
@@ -78,7 +83,7 @@ public class LectureController {
 
         log.info(chapterDTOList);
 
-        return null;
+        return "redirect:/lecture/list";
     }
 
     @GetMapping("/view")
@@ -100,5 +105,64 @@ public class LectureController {
 
         PageResponseDTO<LectureDTO> responseDTO = lectureService.lectureList(pageRequestDTO);
         model.addAttribute("responseDTO", responseDTO);
+    }
+
+    @GetMapping("/modify")
+    public void modify(@RequestParam(name="lec_idx", defaultValue = "0") int lec_idx, Model model) {
+        LectureDTO lectureDTO = lectureService.view(lec_idx);
+        List<ChapterDTO> chapterDTOList = chapterService.chapterList(lec_idx);
+        model.addAttribute("lectureDTO", lectureDTO);
+        model.addAttribute("ChapterList", chapterDTOList);
+    }
+
+    @PostMapping("/modify")
+    public String modify(@Valid LectureDTO lectureDTO,
+                         BindingResult bindingResult,
+                         RedirectAttributes redirectAttributes,
+                         @RequestParam("lecImg") MultipartFile lecImg,
+                         @RequestParam("chapVideos") List<MultipartFile> chapVideos,
+                         HttpSession session,
+                         Model model) {
+
+//        if (bindingResult.hasErrors()) {
+//            redirectAttributes.addFlashAttribute("errors", bindingResult.getAllErrors());
+//            redirectAttributes.addFlashAttribute("lectureDTO", lectureDTO);
+//            log.info("valid 오류");
+//            return "redirect:/lecture/regist";
+//        }
+
+        String saveLecImg = "";
+        if (lecImg != null && !lecImg.isEmpty()) {
+            saveLecImg = FileUploadUtil.saveFile(lecImg, "D:\\java4\\merry\\merry\\src\\main\\webapp\\resources\\uploads\\lecture");
+            lectureDTO.setLec_img(saveLecImg);
+        } else {
+            lectureDTO.setLec_img(lectureDTO.getLec_img());
+            lectureDTO.setLec_org_img(lectureDTO.getLec_org_img());
+        }
+
+        int resultLectureIdx = lectureService.modify(lectureDTO);
+        log.info("resultLecture: {}", resultLectureIdx);
+
+        List<ChapterDTO> chapterDTOList = lectureDTO.getChapters();
+        String saveChapVideo = "";
+        if (chapterDTOList != null && !chapterDTOList.isEmpty()) {
+            for (int i=0; i<chapterDTOList.size(); i++) {
+                saveChapVideo = "";
+                if (chapVideos != null && i < chapVideos.size() && !chapVideos.get(i).isEmpty()) {
+                    saveChapVideo = FileUploadUtil.saveFile(chapVideos.get(i), "D:\\java4\\merry\\merry\\src\\main\\webapp\\resources\\uploads\\lecture");
+                    chapterDTOList.get(i).setChap_video(saveChapVideo);
+                }
+                else {
+                    chapterDTOList.get(i).setChap_video(chapterDTOList.get(i).getChap_video());
+                    chapterDTOList.get(i).setChap_org_video(chapterDTOList.get(i).getChap_org_video());
+                }
+                chapterDTOList.get(i).setLec_idx(resultLectureIdx);
+                chapterService.regist(chapterDTOList.get(i));
+            }
+        }
+
+        log.info(chapterDTOList);
+
+        return "redirect:/lecture/view?lec_idx=" + lectureDTO.getLec_idx();
     }
 }
