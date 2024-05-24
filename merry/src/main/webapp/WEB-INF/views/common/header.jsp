@@ -38,23 +38,21 @@
                                     <li><a href="/bbs/list">자유게시판</a></li>
                                 </ul>
                             </li>
-
-
-                            <li><a href="">나의 학습방</a>
-                                <ul class="sub-menu">
-                                    <li><a href="/myedu/lecture/list">나의 강의실</a></li>
-                                    <li><a href="/myedu/lecture/list">내가 쓴 글</a></li>
-                                    <li><a href="/myedu/grade/list">성적표</a></li>
-                                    <li><a href="/myedu/plan/list">학습 계획표</a></li>
-                                </ul>
-                            </li>
                             <c:choose>
-                                <c:when test="${not empty sessionScope.member_id}">
+                                <c:when test="${!empty sessionScope.member_id}">
                                     <c:if test="${sessionScope.member_type eq 'A'}">
                                         <li><a href="/admin/list"><i class="fas fa-user"></i> 관리자페이지</a></li>
                                         <li><a href="/login/logout"><small style="text-decoration: underline">로그아웃</small></a></li>
                                     </c:if>
                                     <c:if test="${sessionScope.member_type eq 'B'}">
+                                        <li><a href="">나의 학습방</a>
+                                            <ul class="sub-menu">
+                                                <li><a href="/myedu/lecture/list">나의 강의실</a></li>
+                                                <li><a href="/myedu/lecture/list">내가 쓴 글</a></li>
+                                                <li><a href="/myedu/grade/list">성적표</a></li>
+                                                <li><a href="/myedu/plan/list">학습 계획표</a></li>
+                                            </ul>
+                                        </li>
                                         <li><a href="/my/list"><i class="fas fa-user"></i> 마이페이지</a></li>
                                         <li><a href="/login/logout"><small style="text-decoration: underline">로그아웃</small></a></li>
                                     </c:if>

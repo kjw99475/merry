@@ -44,95 +44,89 @@
 
 </head>
 <body>
-<div class="text-center d-flex align-items-center">
+<div class="text-center d-flex align-items-center pt-100">
     <main class="form-signin" style="width: 100%; max-width: 330px; margin: 50px auto;">
         <form name="frmLogin" id="frmLogin" method="post" action="/login/login">
             <input type="hidden" name="acc_url" id="acc_url" value="${acc_url}" />
             <a href="/"><img class="mb-4" src="/resources/assets/img/merry_logo.png" height="57"></a>
-            <h1 class="h3 mb-3 fw-normal">LOGIN</h1>
-            <div class="form-floating">
-                <c:choose>
-                    <c:when test="${!empty param.id}">
-                        <input type="text" class="form-control" name="member_id" id="member_id" value="${param.id}" maxlength="50"/>
-                    </c:when>
-                    <c:otherwise>
-                        <input type="text" class="form-control" name="member_id" id="member_id" value="${save_id}" maxlength="50"/>
-                    </c:otherwise>
-                </c:choose>
-                <label for="member_id">아이디를 입력해주세요.</label>
+            <div class="col-lg-8 offset-lg-2 text-center">
+                <div class="section-title mb-5">
+                    <h3>Login</h3>
+                </div>
             </div>
-            <div class="form-floating" style="margin-bottom: 10px;">
-                <input type="password" class="form-control" name="pwd" id="pwd" value="" maxlength="100"/>
-                <label for="pwd">비밀번호를 입력해주세요.</label>
+            <div class="form-floating d-flex">
+                <label for="member_id"><i class="fas fa-user mr-2" style="line-height: 33px;"></i></label>
+<%--                <label for="member_id"><i class="fas fa-user-check"></i>--%>
+                    <c:choose>
+                        <c:when test="${!empty param.id}">
+                            <input type="text" class="form-control" name="member_id" id="member_id" value="${param.id}" maxlength="50" placeholder="아이디를 입력해주세요."/>
+                        </c:when>
+                        <c:otherwise>
+                            <input type="text" class="form-control" name="member_id" id="member_id" value="${save_id}" maxlength="50" placeholder="아이디를 입력해주세요."/>
+                        </c:otherwise>
+                    </c:choose>
+            </div>
+            <div class="form-floating d-flex my-3">
+                <label for="pwd"><i class="fas fa-key mr-2" style="line-height: 33px;"></i></label>
+                <input type="password" class="form-control" name="pwd" id="pwd" value="" maxlength="100" placeholder="비밀번호를 입력해주세요."/>
             </div>
             <div class="checkbox mb-3">
                 <label style="margin-right: 10%"><input type="checkbox" name="save_id" id="save_id"
                         <c:out value="${!empty save_id ? 'checked' : ''}" />/> 아이디저장</label>
-                <button class="btn btn-outline-primary" type="button" id="btnPwd" onclick="location.href='/login/findPwd';">패스워드 찾기</button>
+                <button class="btn orange-outline-btn" type="button" id="btnPwd" onclick="location.href='/login/findPwd';">비밀번호 찾기</button>
             </div>
-            <button class="w-100 btn btn-lg btn-primary mb-3" type="submit" id="btnLogin">로그인</button>
-            <a href="/member/join" style="color: inherit; opacity: .65" ><small>회원가입</small></a>
+            <button class="w-100 btn btn-lg orange-btn mb-3 bordered-btn" type="submit" id="btnLogin" disabled>로그인</button>
+            <a href="/member/join" style="color: inherit; opacity: .65" ><span style="text-decoration: underline">회원가입</span></a>
         </form>
     </main>
 </div>
-<script src="/resources/js/bootstrap.bundle.min.js"></script>
 <script>
 
     if (${!empty err}) {
-        if (${param.try_count > 5}) alert("5회 이상 로그인 실패로 잠금 처리된 아이디입니다. 관리자에게 문의해 주세요.")
-        else if (${!empty param.try_count}) alert("${err} \n로그인 시도 ${param.try_count}회/5회")
-        else alert("${err}")
+        alert("${err}");
+        <%--if (${param.try_count > 5}) alert("5회 이상 로그인 실패로 잠금 처리된 아이디입니다. 관리자에게 문의해 주세요.")--%>
+        <%--else if (${!empty param.try_count}) alert("${err} \n로그인 시도 ${param.try_count}회/5회")--%>
+        <%--else alert("${err}")--%>
     }
 
     const btnLogin = document.getElementById("btnLogin");
     const frm = document.getElementById("frmLogin");
-    const idDOM = document.getElementById(("user_id"));
+    const idDOM = document.getElementById(("member_id"));
     const pwdDOM = document.getElementById("pwd");
 
-
-    const id_reg = /^[a-z0-9]+$/;
-    const pwd_reg = /^[a-zA-Z0-9!@#$%^*+=-]+$/;
-
-    idDOM.addEventListener("keyup", function(e){
-        if(!id_reg.test(this.value)){
-            this.value = this.value.replace(/[^a-z0-9]/g, '');
-            alert("영어 소문자 및 숫자만 입력이 가능합니다.");
-        }
-    });
-
-    pwdDOM.addEventListener("keyup", function(e){
-        if(!pwd_reg.test(this.value)){
-            this.value = this.value.replace(/[^a-zA-Z0-9!@#$%^*+=-]/g, '');
-            alert("영어+숫자+특수문자 조합으로 최소 8자리 이상만 허용됩니다.");
-        }
-    });
+    // const id_reg = /^[a-z0-9]+$/;
+    // const pwd_reg = /^[a-zA-Z0-9!@#$%^*+=-]+$/;
+    //
+    // idDOM.addEventListener("keyup", function(e){
+    //     if(!id_reg.test(this.value)){
+    //         this.value = this.value.replace(/[^a-z0-9]/g, '');
+    //         alert("영어 소문자 및 숫자만 입력이 가능합니다.");
+    //     }
+    // });
+    //
+    // pwdDOM.addEventListener("keyup", function(e){
+    //     if(!pwd_reg.test(this.value)){
+    //         this.value = this.value.replace(/[^a-zA-Z0-9!@#$%^*+=-]/g, '');
+    //         alert("영어+숫자+특수문자 조합으로 최소 8자리 이상만 허용됩니다.");
+    //     }
+    // });
 
     pwdDOM.addEventListener("input", function(e) {
-        if (e.target.value.length < 8) btnLogin.disabled = true;
-        else btnLogin.disabled = false;
+        if (e.target.value.length > 8) btnLogin.disabled = false;
+        else btnLogin.disabled = true;
     }, false)
 
-</script>
-<!-- jquery -->
-<script src="/resources/assets/js/jquery-1.11.3.min.js"></script>
-<!-- bootstrap -->
-<script src="/resources/assets/bootstrap/js/bootstrap.min.js"></script>
-<!-- count down -->
-<script src="/resources/assets/js/jquery.countdown.js"></script>
-<!-- isotope -->
-<script src="/resources/assets/js/jquery.isotope-3.0.6.min.js"></script>
-<!-- waypoints -->
-<script src="/resources/assets/js/waypoints.js"></script>
-<!-- owl carousel -->
-<script src="/resources/assets/js/owl.carousel.min.js"></script>
-<!-- magnific popup -->
-<script src="/resources/assets/js/jquery.magnific-popup.min.js"></script>
-<!-- mean menu -->
-<script src="/resources/assets/js/jquery.meanmenu.min.js"></script>
-<!-- sticker js -->
-<script src="/resources/assets/js/sticker.js"></script>
-<!-- main js -->
-<script src="/resources/assets/js/main.js"></script>
 
+</script>
+<script src="/resources/assets/js/jquery-1.11.3.min.js"></script>
+<script src="/resources/assets/bootstrap/js/bootstrap.min.js"></script>
+<script src="/resources/assets/js/jquery.countdown.js"></script>
+<script src="/resources/assets/js/jquery.isotope-3.0.6.min.js"></script>
+<script src="/resources/assets/js/waypoints.js"></script>
+<script src="/resources/assets/js/owl.carousel.min.js"></script>
+<script src="/resources/assets/js/jquery.magnific-popup.min.js"></script>
+<script src="/resources/assets/js/jquery.meanmenu.min.js"></script>
+<script src="/resources/assets/js/sticker.js"></script>
+<script src="/resources/assets/js/main.js"></script>
 </body>
 </html>

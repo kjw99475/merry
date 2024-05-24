@@ -28,7 +28,6 @@
                         <li><a href="#">선생님</a></li>
                         <li><a href="#">강의</a></li>
                         <li><a href="#">커뮤니티</a></li>
-                        <li><a href="#">나의 학습방</a></li>
                     </ul>
                 </div>
             </div>
