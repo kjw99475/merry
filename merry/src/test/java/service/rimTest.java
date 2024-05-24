@@ -1,6 +1,7 @@
 package service;
 
 import lombok.extern.log4j.Log4j2;
+import org.fullstack.merry.dto.lecture.ChapterDTO;
 import org.fullstack.merry.dto.lecture.LectureDTO;
 import org.fullstack.merry.service.lecture.ChapterServiceIf;
 import org.fullstack.merry.service.lecture.LectureServiceIf;
@@ -47,4 +48,30 @@ public class rimTest {
         LectureDTO lectureDTO = lectureService.view(1);
         log.info(lectureDTO);
     }
+
+//    @Test
+//    public void testLecAndChapterRegister() {
+//        LectureDTO lectureDTO = LectureDTO.builder()
+//                .lec_title("강의 제목 테스트")
+//                .lec_content("강의 내용 테스트")
+//                .member_idx(1)
+//                .member_name("test")
+//                .lec_img("테스트.png")
+//                .lec_price(1000)
+//                .lec_subject("수학")
+//                .build();
+//
+//        ChapterDTO[] chapterDTOS = new ChapterDTO[2];
+//        for (ChapterDTO dto : chapterDTOS) {
+//            dto = ChapterDTO.builder()
+//                    .lec_idx(lectureDTO.getLec_idx())
+//                    .chap_title("테스트")
+//                    .chap_video("테스트")
+//                    .chap_min("60")
+//                    .chap_second("40")
+//                    .build();
+//        }
+//
+//        log.info(lectureService.registLecAndChap(lectureDTO, chapterDTOS));
+//    }
 }
