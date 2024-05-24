@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.fullstack.merry.mapper.LectureMapper">
+
+    <sql id="whereCondition">
+        <where>
+            1=1
+            <if test="search_type != null">
+                <foreach collection="search_type" item="type" >
+                    <trim prefix="AND">
+                        <choose>
+                            <when test="type == 't'.toString()">
+                                lec_title like concat('%', #{search_word},'%')
+                            </when>
+                            <when test="type == 'n'.toString()">
+                                member_name like concat('%', #{search_word},'%' )
+                            </when>
+                        </choose>
+                    </trim>
+                </foreach>
+            </if>
+        </where>
+    </sql>
+
+    <insert id="regist">
+        insert into lecture(lec_title, lec_content, member_idx, member_name, lec_img)
+        values(#{lec_title}, #{lec_content}, #{member_idx}, #{member_name}, #{lec_img})
+    </insert>
+    <select id="view" resultType="org.fullstack.merry.dto.lecture.LectureDTO">
+        select *
+        from lecture
+        where lec_idx=#{lec_idx}
+    </select>
+    <update id="modify">
+        update lecture
+        set lec_title=#{lec_title}, lec_content=#{lec_content}, lec_img=#{lec_img}, lec_modify_date=now()
+        where lec_idx=#{lec_idx}
+    </update>
+    <update id="delete">
+        update lecture
+        set lec_status="N"
+        where lec_idx=#{lec_idx}
+    </update>
+    <select id="lectureList" resultType="org.fullstack.merry.domain.lecture.LectureVO">
+        select *
+        from lecture
+        <include refid="whereCondition"></include>
+
+    </select>
+    <select id="totalLecture">
+        select count(*)
+        from lecture
+        <include refid="whereCondition"></include>
+    </select>
+
+</mapper>

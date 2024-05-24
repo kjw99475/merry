@@ -28,14 +28,18 @@
                         <ul>
                             <li><a href="/teacher/list">선생님</a></li>
                             <li><a href="/lecture/list">강의</a></li>
+
                             <li><a href="#">커뮤니티</a>
                                 <ul class="sub-menu">
                                     <li><a href="/notice/list">공지사항</a></li>
                                     <li><a href="/info/list">교육정보</a></li>
                                     <li><a href="/data/list">자료실</a></li>
+                                    <li><a href="/qna/list">QnA</a></li>
                                     <li><a href="/bbs/list">자유게시판</a></li>
                                 </ul>
                             </li>
+
+
                             <li><a href="">나의 학습방</a>
                                 <ul class="sub-menu">
                                     <li><a href="/myedu/lecture/list">나의 강의실</a></li>
