@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/schema/mybatis-3-mapper.dtd">
+<mapper namespace="org.fullstack.merry.merry.mapper.BoardMapper">
+
+    <sql id="whereCondition">
+        <where>
+            <if test=' search_word != null and search_word != "" '>
+                <choose>
+                    <when test="type == 0">
+                        AND board_title LIKE CONCAT('%', #{search_word}, '%')
+                    </when>
+                    <when test="type == 1">
+                        AND board_content LIKE CONCAT('%', #{search_word}, '%')
+                    </when>
+                    <when test="type == 2">
+                        AND board_writer LIKE CONCAT('%', #{search_word}, '%')
+                    </when>
+                </choose>
+            </if>
+        </where>
+    </sql>
+
+
+    <select id="ListByPage" resultType="org.fullstack4.merry.domain.BoardVO">
+        SELECT board_idx, board_title, board_writer, board_content, board_reg_date, board_modify_date, member_idx
+        FROM board
+        <include refid="whereCondition"></include>
+        ORDER BY board_idx DESC
+        LIMIT #{page_skip_count}, #{page_size}
+    </select>
+
+    <select id="TotalCount">
+        SELECT COUNT(*)
+        FROM board
+        <include refid="whereCondition"></include>
+    </select>
+
+    <select id="view" resultType="org.fullstack.merry.domain.BoardVO">
+        SELECT board_idx, board_title, board_writer, board_content, board_reg_date, board_modify_date, member_idx
+        FROM board
+        WHERE board_idx = #{board_idx}
+    </select>
+
+    <insert id="regist" parameterType="org.fullstack.merry.domain.BoardVO" useGeneratedKeys="true" keyProperty="board_idx" keyColumn="board_idx">
+        INSERT INTO board (board_title, board_writer, board_content, board_reg_date, member_idx)
+        VALUES(#{board_title}, #{board_writer}, #{board_content}, NOW(), #{member_idx})
+    </insert>
+
+    <update id="modify">
+        UPDATE board SET
+        board_title = #{board_title}
+        , board_content = #{board_content}
+        , modify_date = NOW()
+        WHERE board_idx = #{board_idx}
+    </update>
+
+    <delete id="delete">
+        DELETE
+        FROM board
+        WHERE board_idx = #{board_idx}
+    </delete>
+
+
+</mapper>
