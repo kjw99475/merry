@@ -67,9 +67,9 @@
                         <form>
                             <div class="row mx-5">
                                 <select name="type" class="form-control col-1" >
-                                    <option value="0">제목</option>
-                                    <option value="1" >내용</option>
-                                    <option value="2" >작성자</option>
+                                    <option value="0" <c:if test="${responseDTO.type == 0}">selected</c:if>>제목</option>
+                                    <option value="1" <c:if test="${responseDTO.type == 1}">selected</c:if>>내용</option>
+                                    <option value="2" <c:if test="${responseDTO.type == 2}">selected</c:if>>작성자</option>
                                 </select>
 
                                 <div class="col-8">
