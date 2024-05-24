@@ -88,5 +88,26 @@ public class MemberController {
         log.info("===============================");
     }
 
+    @PostMapping("/join")
+    public String joinPOST(
+            @Valid MemberDTO memberDTO,
+            BindingResult bindingResult,
+            Model model, RedirectAttributes redirectAttributes
+    ) {
+        if (bindingResult.hasErrors()) {
+            redirectAttributes.addFlashAttribute("errors", bindingResult.getAllErrors());
+            return "redirect:/member/join";
+        }
+        memberDTO.setPhone(memberDTO.getPhone_0(), memberDTO.getPhone_1(), memberDTO.getPhone_2());
+        memberDTO.setEmail(memberDTO.getEmail_id(), memberDTO.getEmail_domain());
+        log.info("memberDTO email_domain : " + memberDTO.getEmail_domain());
+        int result = memberService.join(memberDTO);
+        if (result > 0) {
+            return "redirect:/login/login";
+        } else {
+            return "redirect:/member/join";
+        }
+    }
+
 
 }

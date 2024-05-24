@@ -2,6 +2,7 @@ package org.fullstack.merry.controller;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
+import org.apache.ibatis.annotations.Param;
 import org.fullstack.merry.dto.MemberDTO;
 import org.fullstack.merry.service.LoginServiceIf;
 import org.fullstack.merry.utils.CookieUtil;
@@ -35,20 +36,17 @@ public class LoginController {
             HttpServletRequest req,
             Model model
     ) {
-        log.info("===============================");
-        log.info("LoginController >> loginGET()");
-
-//        model.addAttribute("acc_url", req.getHeader("referer"));
+        model.addAttribute("acc_url", req.getHeader("Referer"));
         String save_id = CookieUtil.readCookie(req, "save_id");
         if (save_id != null) {
             model.addAttribute("save_id", save_id);
         }
-        log.info("===============================");
     }
 
     @PostMapping("/login")
     public String loginPOST(
             @Valid MemberDTO memberDTO,
+            @RequestParam(name = "acc_url", defaultValue = "/") String acc_url,
             BindingResult bindingResult,
             Model model,
             RedirectAttributes redirectAttributes,
@@ -87,7 +85,7 @@ public class LoginController {
             session.setAttribute("member_type", loginMemberDTO.getMember_type());
         }
 
-        return "redirect:/";
+        return "redirect:"+ acc_url;
     }
 
     @GetMapping("/findPwd")

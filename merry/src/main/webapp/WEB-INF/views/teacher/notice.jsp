@@ -1,13 +1,13 @@
-<%@ page contentType="text/html;charset=UTF-8" language="java" pageEncoding="UTF-8" %>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
+<%@ page trimDirectiveWhitespaces="true" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<!DOCTYPE HTML>
+
 <html>
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description"
-          content="Responsive Bootstrap4 Shop Template, Created by Imran Hossain from https://imransdesign.com/">
+    <meta name="description" content="Responsive Bootstrap4 Shop Template, Created by Imran Hossain from https://imransdesign.com/">
 
     <!-- title -->
     <title>Merry</title>
@@ -35,39 +35,64 @@
     <!-- responsive -->
     <link rel="stylesheet" href="/resources/assets/css/responsive.css">
 
-    <script src="/resources/assets/js/jquery-3.7.1.min.js"></script>
-    <script src="https://cdn.tiny.cloud/1/wjuflumw0txwktnvnufwfo5lj04kqmup66rnaj1jf6pnwv5d/tinymce/7/tinymce.min.js"
-            referrerpolicy="origin"></script>
 </head>
-<body class="pt-100">
+<body>
+
 <!--================ 헤더 start =================-->
-<jsp:include page="/WEB-INF/views/common/header.jsp"/>
+<jsp:include page="/WEB-INF/views/common/header.jsp" />
 <!--================ 헤더 end =================-->
 
-${lectureDTO.lec_idx}<br>
-${lectureDTO.lec_title}<br>
-${lectureDTO.lec_content}<br>
-${lectureDTO.lec_status}<br>
-${lectureDTO.lec_reg_date}<br>
-${lectureDTO.lec_modify_date}<br>
-${lectureDTO.member_idx}<br>
-${lectureDTO.lec_img}<br>
-${lectureDTO.member_name}<br>
-<ul>
-<c:forEach items="${ChapterList}" var="chapDTO">
-    <li>${chapDTO.chap_idx} ${chapDTO.chap_title} ${chapDTO.chap_video} ${chapDTO.chap_time} ${chapDTO.chap_status}</li>
-</c:forEach>
-</ul>
+<!--================ 본문 start =================-->
+<!-- hero area -->
+<!-- end hero area -->
 
-<button type="button" onclick="location.href='/lecture/modify?lec_idx=${lectureDTO.lec_idx}'">수정하기</button>
-<form action="/lecture/delete" id="frmDelete">
-    <input type="hidden" value="${lectureDTO.lec_idx}">
-    <button type="button" onclick="deleteOK()">삭제하기</button>
-</form>
+<!-- 선생님 섹션 -->
+<div class="container pt-100 mb-5">
+    <div class="mt-5">
+        <h1 style="width: 75%; margin: 0 auto 20px; text-align: center;">선생님 공지사항</h1>
+    </div>
+    <div class="col-lg-12 text-right mt-3">
+        <a href="/teacher/regist" class="boxed-btn">글작성</a>
+    </div>
+    <table class="table">
+        <colgroup class="w-100">
+            <col class="w-5">
+            <col class="w-70">
+            <col class="w-10">
+            <col class="w-15">
+        </colgroup>
+
+        <thead>
+        <tr>
+            <th>no</th>
+            <th>제목</th>
+            <th>작성자</th>
+            <th>작성일</th>
+        </tr>
+        </thead>
+        <tbody>
+        <c:forEach var="list" items="${noticeList}" varStatus="i">
+            <tr>
+                <td>${i.count}</td>
+                <td>${list.notice_title}</td>
+                <td>${list.member_name}</td>
+                <td>${list.notice_reg_date}</td>
+            </tr>
+        </c:forEach>
+        </tbody>
+    </table>
+    <div class="btn-toolbar justify-content-center" role="toolbar" aria-label="Toolbar with button groups">
+        <div class="btn-group">
+            <button type="button" class="btn btn-outline-merry">1</button>
+        </div>
+    </div>
+</div>
+<!-- //커뮤니티 섹션 -->
+
 <!--================ 본문 end =================-->
 
 <!--================ 푸터 Start =================-->
-<jsp:include page="/WEB-INF/views/common/footer.jsp"/>
+<jsp:include page="/WEB-INF/views/common/footer.jsp" />
 <!--================ 푸터 End =================-->
 
 <!-- jquery -->
@@ -90,16 +115,6 @@ ${lectureDTO.member_name}<br>
 <script src="/resources/assets/js/sticker.js"></script>
 <!-- main js -->
 <script src="/resources/assets/js/main.js"></script>
-
-<script>
-    function deleteOK() {
-        const frmDelete = document.querySelector("#frmDelete");
-        let deleteYN = confirm("삭제하시겠습니까?");
-        if (deleteYN) {
-            frmDelete.submit();
-        }
-    }
-</script>
 
 </body>
 </html>

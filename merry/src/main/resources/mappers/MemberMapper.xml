@@ -3,10 +3,10 @@
         PUBLIC "-//mybatis.org/DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="org.fullstack.merry.mapper.MemberMapper">
-<!--    <insert id="join">-->
-<!--        INSERT INTO tbl_member( user_id, name, pwd, email, jumin, birthday, addr1, addr2, job_code)-->
-<!--        VALUES ( #{user_id}, #{name}, #{pwd}, #{email}, #{jumin}, #{birthday}, #{addr1}, #{addr2}, #{job_code})-->
-<!--    </insert>-->
+    <insert id="join">
+        INSERT INTO member( member_id, pwd, name, email, birthday, addr, addr_detail, zipcode, phone)
+        VALUES ( #{member_id}, #{pwd}, #{name}, #{email}, #{birthday}, #{addr}, #{addr_detail}, #{zipcode}, #{phone})
+    </insert>
 
 <!--    <select id="view" resultType="org.fullstack.merry.domain.MemberVO">-->
 <!--        SELECT idx, user_id, name, pwd, tmp_pwd, phone, email, reg_date, login_date, lock_yn, limit_yn, try_count-->
