@@ -1,5 +1,7 @@
 package org.fullstack.merry.service;
 
+import org.fullstack.merry.dto.MemberDTO;
+
 public interface LoginServiceIf {
     MemberDTO login_info(String user_id, String pwd);
     int update_login_data(String user_id, String pwd);
