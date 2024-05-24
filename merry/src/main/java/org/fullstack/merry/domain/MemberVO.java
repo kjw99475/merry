@@ -24,4 +24,5 @@ public class MemberVO {
     private LocalDate modify_date;
     private String member_type;
     private String member_state;
+    private String teacher_intro;
 }
