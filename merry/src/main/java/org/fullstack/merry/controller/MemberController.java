@@ -59,23 +59,23 @@ public class MemberController {
 
 
     @GetMapping("/leave")
-    public String leaveGET(
+    public void leaveGET(
             HttpSession session,
             RedirectAttributes redirectAttributes
     ) {
         log.info("===============================");
         log.info("MemberController >> leaveGET()");
 
-        String user_id = (String)session.getAttribute("loginInfo");
-        int result = memberService.leave(user_id);
-        if (result > 0) {
-            redirectAttributes.addFlashAttribute("result", "정상적으로 탈퇴 처리되었습니다.");
-            session.invalidate();
-            return "redirect:/";
-        }
-        else {
-            return "/member/view";
-        }
+//        String user_id = (String)session.getAttribute("loginInfo");
+//        int result = memberService.leave(user_id);
+//        if (result > 0) {
+//            redirectAttributes.addFlashAttribute("result", "정상적으로 탈퇴 처리되었습니다.");
+//            session.invalidate();
+//            return "redirect:/";
+//        }
+//        else {
+//            return "/member/view";
+//        }
     }
 
     @GetMapping("/join")

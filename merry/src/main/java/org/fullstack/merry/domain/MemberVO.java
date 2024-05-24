@@ -12,8 +12,8 @@ import java.time.LocalDate;
 public class MemberVO {
     private int member_idx;
     private String member_id;
-    private String pwd;
     private String name;
+    private String pwd;
     private String email;
     private String birthday;
     private String addr;
@@ -24,4 +24,5 @@ public class MemberVO {
     private LocalDate modify_date;
     private String member_type;
     private String member_state;
+    private String teacher_intro;
 }
