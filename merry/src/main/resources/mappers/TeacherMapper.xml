@@ -16,7 +16,7 @@
     </select>
 
     <select id="lecturelist" resultType="org.fullstack.merry.domain.lecture.LectureVO">
-        SELECT lec_idx, lec_title, lec_img, lec_subject
+        SELECT lec_title, lec_img, lec_subject
         FROM lecture
         WHERE member_idx = ${teacherIdx}
           AND lec_status != 'N'
@@ -24,16 +24,6 @@
     <select id="qnaList" resultType="org.fullstack.merry.domain.QnaVO">
         SELECT qna_answer_yn, qna_title, qna_member_name, qna_reg_date
         FROM qna
-        WHERE qna_answer_idx = #{teacher_idx}
-    </select>
-    <select id="cartList">
-        SELECT lec_idx
-        FROM cart
-        WHERE member_id = #{member_id}
-    </select>
-    <select id="zzimList">
-        SELECT lec_idx
-        FROM zzim
-        WHERE member_id = #{member_id}
+        WHERE qna_answer_idx = ${teacher_idx}
     </select>
 </mapper>

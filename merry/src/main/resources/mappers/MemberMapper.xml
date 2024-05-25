@@ -8,24 +8,17 @@
         VALUES ( #{member_id}, #{pwd}, #{name}, #{email}, #{birthday}, #{addr}, #{addr_detail}, #{zipcode}, #{phone})
     </insert>
 
-    <select id="view" resultType="org.fullstack.merry.domain.MemberVO">
-        SELECT member_id, pwd, name, email, birthday, addr, addr_detail, zipcode, phone
-        FROM member
-        WHERE member_id = #{member_id}
-    </select>
+<!--    <select id="view" resultType="org.fullstack.merry.domain.MemberVO">-->
+<!--        SELECT idx, user_id, name, pwd, tmp_pwd, phone, email, reg_date, login_date, lock_yn, limit_yn, try_count-->
+<!--        FROM tbl_member-->
+<!--        WHERE user_id = #{user_id}-->
+<!--    </select>-->
 
-    <update id="modify">
-        UPDATE member
-        SET pwd = #{pwd}, email = #{email}, birthday = #{birthday}, addr = #{addr}
-          , addr_detail = #{addr_detail}, zipcode = #{zipcode}, phone = #{phone}, modify_date = now()
-        WHERE member_id = #{member_id}
-    </update>
-
-    <update id="leave">
-        UPDATE member
-        SET member_state = 'N'
-        WHERE member_id = #{member_id}
-    </update>
+<!--    <update id="modify">-->
+<!--        UPDATE tbl_member-->
+<!--        SET pwd = #{pwd}, phone = #{phone}, email = #{email}-->
+<!--        WHERE user_id = #{user_id}-->
+<!--    </update>-->
 
 <!--    <delete id="leave">-->
 <!--        DELETE FROM tbl_member-->

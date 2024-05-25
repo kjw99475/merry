@@ -3,6 +3,7 @@ package org.fullstack.merry.mapper;
 import org.fullstack.merry.domain.DataVO;
 import org.fullstack.merry.domain.NoticeVO;
 import org.fullstack.merry.domain.QnaVO;
+import org.fullstack.merry.domain.lecture.LectureReviewVO;
 import org.fullstack.merry.domain.lecture.LectureVO;
 import org.fullstack.merry.domain.lecture.QnaAnswerDTO;
 import org.fullstack.merry.dto.DataDTO;
@@ -25,6 +26,7 @@ public interface LectureMapper {
     List<QnaVO> qnaList(int lec_idx);
     List<DataDTO> dataList(int lec_idx);
 
+    //qna
     int registQna(QnaVO qnaVO);
     int modifyQna(QnaVO qnaVO);
     int deleteQna(int qna_idx);
@@ -33,13 +35,21 @@ public interface LectureMapper {
     int modifyTeacher(QnaAnswerDTO qnaAnswerDTO);
     int deleteTeacher(int qna_idx);
 
+    //notice
     int registNotice(NoticeVO noticeVO);
     int modifyNotice(NoticeVO noticeVO);
     int deleteNotice(int notice_idx);
     NoticeVO viewNotice(int notice_idx);
 
+    //data
     int registData(DataVO dataVO);
     int modifyData(DataVO dataVO);
     int deleteData(int data_idx);
     DataDTO viewData(int data_idx);
+
+    //review
+    int registReview(LectureReviewVO lectureReviewVO);
+    int modifyReview(LectureReviewVO lectureReviewVO);
+    int deleteReview(int review_idx);
+    List<LectureReviewVO> reviewList(int lec_idx);
 }

@@ -47,16 +47,4 @@ public class TeacherServiceImpl implements TeacherServiceIf {
                 .collect(Collectors.toList());
         return qnalist;
     }
-
-    @Override
-    public List<Integer> cartList(String member_id) {
-        List<Integer> cartlist = teacherMapper.cartList(member_id);
-        return cartlist;
-    }
-
-    @Override
-    public List<Integer> zzimList(String member_id) {
-        List<Integer> zzimlist = teacherMapper.zzimList(member_id);
-        return zzimlist;
-    }
 }

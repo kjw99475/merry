@@ -5,7 +5,7 @@
 <div class="d-flex flex-column flex-shrink-0 p-3 bg-body-tertiary" >
     <ul class="nav nav-pills flex-column mb-auto">
         <li class="nav-item">
-            <a href="/member/view" class="nav-link black-text <c:if test="${fn:contains(param.menuGubun, 'profile')}">active</c:if>">개인정보</a>
+            <a href="/mypage/profile" class="nav-link black-text <c:if test="${fn:contains(param.menuGubun, 'profile')}">active</c:if>">개인정보</a>
         </li>
         <li class="nav-item">
             <a href="/mypage/write" class="nav-link black-text <c:if test="${fn:contains(param.menuGubun, 'writeBbs')}">active</c:if>">작성게시글</a>

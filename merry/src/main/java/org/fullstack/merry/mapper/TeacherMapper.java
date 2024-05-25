@@ -16,6 +16,4 @@ public interface TeacherMapper {
     List<TeacherVO> teacherlist();
     List<LectureVO> lecturelist(String teacherIdx);
     List<QnaVO> qnaList(String teacher_idx);
-    List<Integer> cartList(String member_id);
-    List<Integer> zzimList(String member_id);
 }
