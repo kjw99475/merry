@@ -52,73 +52,28 @@
     <div class="mt-5">
         <h1 style="width: 75%; margin: 0 auto 20px; text-align: center;">강의 Q&A</h1>
     </div>
-    <div class="col-lg-12 text-right mt-3">
-        <a href="/lecture/qna/regist?lec_idx=${lec_idx}" class="boxed-btn">글작성</a>
-    </div>
-    <table class="table">
-        <colgroup class="w-100">
-            <col class="w-5">
-            <col class="w-70">
-            <col class="w-10">
-            <col class="w-15">
-        </colgroup>
+    <form action="/lecture/qna/regist" method="post">
+        <input type="hidden" name="member_idx" value="${sessionScope.member_idx}">
+        <input type="hidden" name="qna_lec_idx" value="${lectureDTO.lec_idx}">
+        <input type="hidden" name="qna_member_name" value="${sessionScope.name}">
+        <input type="hidden" name="qna_answer_idx" value="${lectureDTO.member_idx}">
+        <input type="hidden" name="qna_answer_name" value="${lectureDTO.member_name}">
+        <div class="mb-3"></div>
 
-        <thead>
-        <tr>
-            <th>no</th>
-            <th>답변여부</th>
-            <th>제목</th>
-            <th>작성자</th>
-            <th>작성일</th>
-        </tr>
-        </thead>
-        <tbody>
-        <c:forEach var="list" items="${qnaList}" varStatus="i">
-            <tr>
-                <td>${i.count}</td>
-                <td><c:if test="${list.qna_answer_yn eq 'Y'}">답변완료</c:if>
-                    <c:if test="${list.qna_answer_yn eq 'N'}">답변대기</c:if></td>
-                <td>
-                    <c:set var="title" value="${list.qna_title}"/>
-                    <c:choose>
-                        <c:when test="${fn:length(title) > 10}">
-                            <a href="/lecture/qna/view?qna_idx=${list.qna_idx}"><strong>${fn:substring(title, 0, 10)}</strong></a>
-                        </c:when>
-                        <c:otherwise>
-                            <a href="/lecture/qna/view?qna_idx=${list.qna_idx}"><strong>${list.qna_title}</strong></a>
-                        </c:otherwise>
-                    </c:choose></td>
-                <td>${list.qna_member_name}</td>
-                <td>${fn:substring(list.qna_reg_date, 0, 10)} / ${fn:substring(list.qna_reg_date, 11, 20)}</td>
-            </tr>
-            <c:if test="${list.qna_answer_yn eq 'Y'}">
-                <tr>
-                    <td></td>
-                    <td class="text-nowrap"><span class="badge bg-label-info me-1">답변</span>
-                    </td>
-                    <td class="text-nowrap">
-                        <c:set var="answer" value="${list.qna_answer}"/>
-                        <c:choose>
-                            <c:when test="${fn:length(answer) > 10}">
-                                <a href="/lecture/qna/view?qna_idx=${list.qna_idx}"><strong>${fn:substring(answer, 0, 10)}</strong></a>
-                            </c:when>
-                            <c:otherwise>
-                                <a href="/lecture/qna/view?qna_idx=${list.qna_idx}"><strong>${list.qna_answer}</strong></a>
-                            </c:otherwise>
-                        </c:choose>
+        <div class="mb-3">
+            <label class="form-label" for="basic-default-fullname">문의 제목</label>
+            <input type="text" class="form-control" id="qna_title" name="qna_title" value="${qnaDTO.qna_title}"/>
+            <div id="div_err_qna_title" style="display: none"></div>
+        </div>
+        <div class="mb-3">
+            <label class="form-label" for="basic-default-company">문의 내용</label>
+            <textarea class="form-control" rows="20" cols="10" name="qna_content" id="qna_content" valeue="${qnaDTO.qna_content}"></textarea>
+            <div id="div_err_qna_content" style="display: none"></div>
+        </div>
 
-                    </td>
-                    <td class="text-nowrap"><strong>${list.qna_answer_name}</strong></td>
-                    <td>
-                        <strong>${fn:substring(list.qna_answer_reg_date, 0, 10)} / ${fn:substring(list.qna_answer_reg_date, 11, 20)}</strong>
-                    </td>
-                    <td></td>
-
-                </tr>
-            </c:if>
-        </c:forEach>
-        </tbody>
-    </table>
+        <button type="submit" class="btn btn-primary">등록하기</button>
+        <button type="reset" class="btn btn-secondary" onclick="location.href='/lecture/qna/list?lec_idx=${lectureDTO.lec_idx}'">목록으로</button>
+    </form>
 
 </div>
 <!-- //커뮤니티 섹션 -->
@@ -149,6 +104,19 @@
 <script src="/resources/assets/js/sticker.js"></script>
 <!-- main js -->
 <script src="/resources/assets/js/main.js"></script>
+
+<script>
+    const serverValidResult = {}; //JSON 객체 빈값으로 선언
+    <c:forEach items="${errors}" var="err">
+    if (document.getElementById("div_err_${err.getField()}") != null) {
+        document.getElementById("div_err_${err.getField()}").innerHTML = "<span style='color:red'>${err.defaultMessage}</span>";
+        document.getElementById("div_err_${err.getField()}").style.display = "block";
+    }
+    serverValidResult['${err.getField()}'] = '${err.defaultMessage}';
+    </c:forEach>
+
+    console.log(serverValidResult);
+</script>
 
 </body>
 </html>
