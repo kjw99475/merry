@@ -24,4 +24,5 @@ public class DataVO {
     private LocalDate data_modify_date;
     private int member_idx;
     private int data_lec_idx;
+    private String data_member_name;
 }

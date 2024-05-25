@@ -128,13 +128,13 @@
     </update>
 
     <insert id="registNotice">
-        insert into notice(notice_title, notice_content, notice_org_file_name, notice_save_file_name, notice_type, member_idx, notice_lec_idx, notice_member_name)
-        values(#{notice_title}, #{notice_content}, #{notice_org_file_name}, #{notice_save_file_name}, 'l', #{member_idx}, #{notice_lec_idx}, #{notice_member_name})
+        insert into notice(notice_title, notice_content, notice_type, member_idx, notice_lec_idx, notice_member_name)
+        values(#{notice_title}, #{notice_content},  'l', #{member_idx}, #{notice_lec_idx}, #{notice_member_name})
     </insert>
 
     <update id="modifyNotice">
         update notice
-        set notice_title=#{notice_title}, notice_content=#{notice_content}, notice_org_file_name#{notice_org_file_name}, notice_save_file_name=#{notice_save_file_name}, notice_modify_date=now()
+        set notice_title=#{notice_title}, notice_content=#{notice_content}, notice_modify_date=now()
         where notice_idx=#{notice_idx}
     </update>
 
@@ -145,17 +145,18 @@
     <select id="viewNotice" resultType="org.fullstack.merry.domain.NoticeVO">
         select *
         from notice
-        where notice_idx=notice_idx
+        where notice_idx=#{notice_idx}
     </select>
 
     <insert id="registData">
-        insert into data(data_title, data_content, data_org_file_name, data_save_file_name, data_type, member_idx, data_lec_idx)
-        values(#{data_title}, #{data_content}, #{data_org_file_name}, #{data_save_file_name}, 'l', #{member_idx}, #{data_lec_idx})
+        insert into data(data_title, data_content, data_org_file_name, data_save_file_name, data_type, member_idx, data_lec_idx, data_member_name)
+        values(#{data_title}, #{data_content}, #{data_org_file_name}, #{data_save_file_name}, 'l', #{member_idx}, #{data_lec_idx}, #{data_member_name})
     </insert>
 
     <update id="modifyData">
         update data
         set data_title = #{data_title}, data_content = #{data_content}, data_org_file_name = #{data_org_file_name}, data_save_file_name=#{data_save_file_name}
+        where data_idx = #{data_idx}
     </update>
 
     <delete id="deleteData">
@@ -164,9 +165,8 @@
     </delete>
 
     <select id="viewData" resultType="org.fullstack.merry.dto.DataDTO">
-        SELECT data_idx, data_title, data_content, data_org_file_name, data_save_file_name, data_reg_date, l.member_idx AS member_idx, l.lec_idx AS data_lec_idx, l.member_name as member_name
-        FROM data d
-                 INNER JOIN lecture l ON d.data_lec_idx = l.lec_idx
-        WHERE data_type='l' AND l.lec_idx = #{lec_idx}
+        SELECT *
+        FROM data
+        where data_idx=#{data_idx}
     </select>
 </mapper>

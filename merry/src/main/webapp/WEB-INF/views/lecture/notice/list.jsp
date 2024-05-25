@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ page trimDirectiveWhitespaces="true" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 
 <html>
 <head>
@@ -51,9 +52,11 @@
     <div class="mt-5">
         <h1 style="width: 75%; margin: 0 auto 20px; text-align: center;">강의 공지사항</h1>
     </div>
-    <div class="col-lg-12 text-right mt-3">
-        <a href="/teacher/regist" class="boxed-btn">글작성</a>
-    </div>
+    <c:if test="${lectureDTO.member_idx eq sessionScope.member_idx}">
+        <div class="col-lg-12 text-right mt-3">
+            <a href="/lecture/notice/regist?lec_idx=${lec_idx}" class="boxed-btn">글작성</a>
+        </div>
+    </c:if>
     <table class="table">
         <colgroup class="w-100">
             <col class="w-5">
@@ -74,7 +77,17 @@
         <c:forEach var="list" items="${noticeList}" varStatus="i">
             <tr>
                 <td>${i.count}</td>
-                <td>${list.notice_title}</td>
+                <td>
+                    <c:set var="ntitle" value="${list.notice_title}"/>
+                    <c:choose>
+                        <c:when test="${fn:length(ntitle) > 10}">
+                            <a href="/lecture/notice/view?notice_idx=${list.notice_idx}"><strong>${fn:substring(ntitle, 0, 10)}</strong></a>
+                        </c:when>
+                        <c:otherwise>
+                            <a href="/lecture/notice/view?notice_idx=${list.notice_idx}"><strong>${list.notice_title}</strong></a>
+                        </c:otherwise>
+                    </c:choose>
+                </td>
                 <td>${list.member_name}</td>
                 <td>${list.notice_reg_date}</td>
             </tr>

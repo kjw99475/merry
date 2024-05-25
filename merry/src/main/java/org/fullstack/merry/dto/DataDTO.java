@@ -29,4 +29,5 @@ public class DataDTO {
     private int member_idx;
     private int data_lec_idx;
     private String member_name;
+    private String data_member_name;
 }

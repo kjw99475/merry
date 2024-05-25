@@ -31,4 +31,5 @@ public class NoticeDTO {
     private int member_idx;
     private String member_name;
     private int notice_lec_idx;
+    private String notice_member_name;
 }

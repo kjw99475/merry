@@ -52,27 +52,37 @@
     <div class="mt-5">
         <h1 style="width: 75%; margin: 0 auto 20px; text-align: center;">강의 Q&A</h1>
     </div>
-    <form action="/lecture/qna/regist" method="post">
-        <input type="hidden" name="member_idx" value="${sessionScope.member_idx}">
-        <input type="hidden" name="qna_lec_idx" value="${lectureDTO.lec_idx}">
-        <input type="hidden" name="qna_member_name" value="${sessionScope.name}">
-        <input type="hidden" name="qna_answer_idx" value="${lectureDTO.member_idx}">
-        <input type="hidden" name="qna_answer_name" value="${lectureDTO.member_name}">
+    <form action="/lecture/data/modify" method="post" enctype="multipart/form-data">
+        <input type="hidden" id="idx" name="data_idx" value="${dataDTO.data_idx}">
         <div class="mb-3"></div>
 
         <div class="mb-3">
-            <label class="form-label" for="basic-default-fullname">문의 제목</label>
-            <input type="text" class="form-control" id="qna_title" name="qna_title" value="${qnaDTO.qna_title}"/>
+            <label class="form-label" for="basic-default-fullname">자료실 제목</label>
+            <input type="text" class="form-control" id="data_title" name="data_title" value="${dataDTO.data_title}"/>
             <div id="div_err_qna_title" style="display: none"></div>
         </div>
         <div class="mb-3">
-            <label class="form-label" for="basic-default-company">문의 내용</label>
-            <textarea class="form-control" rows="20" cols="10" name="qna_content" id="qna_content" >${qnaDTO.qna_content}</textarea>
+            <label class="form-label" for="basic-default-company">자료실 내용</label>
+            <textarea class="form-control" rows="20" cols="10" name="data_content" id="data_content" >${dataDTO.data_content}</textarea>
             <div id="div_err_qna_content" style="display: none"></div>
         </div>
 
+        <c:if test="${dataDTO.data_org_file_name != null and dataDTO.data_org_file_name != '' }">
+            <div class="mt-4">
+                <span id="fileView">
+                     <label>첨부파일 : </label>${dataDTO.data_org_file_name}<button class="btn text-danger" type="button" id="btnDelete" onclick="askDelete()">X</button>
+                </span>
+                <input type="hidden" name="upload" id="upload" value="${dataDTO.data_org_file_name}">
+                <input type="hidden" name="upload2" id="upload2" value="${dataDTO.data_save_file_name}">
+            </div>
+        </c:if>
+        <div class="mb-3">
+            <label>파일 재업로드</label>
+            <input type="file" name="file" id="file" class="form-control" multiple>
+        </div>
+
         <button type="submit" class="btn btn-primary">등록하기</button>
-        <button type="reset" class="btn btn-secondary" onclick="location.href='/lecture/qna/list?lec_idx=${lectureDTO.lec_idx}'">목록으로</button>
+        <button type="reset" class="btn btn-secondary"  onclick="location.href='/lecture/data/view?data_idx=${dataDTO.data_idx}'">취소하고 돌아가기</button>
     </form>
 
 </div>
@@ -85,7 +95,7 @@
 <!--================ 푸터 End =================-->
 
 <!-- jquery -->
-<script src="/resources/assets/js/jquery-1.11.3.min.js"></script>
+<script src="/resources/assets/js/jquery-3.7.1.min.js"></script>
 <!-- bootstrap -->
 <script src="/resources/assets/bootstrap/js/bootstrap.min.js"></script>
 <!-- count down -->
@@ -116,6 +126,36 @@
     </c:forEach>
 
     console.log(serverValidResult);
+
+
+    function askDelete() {
+        let deleteYN = confirm("파일을 정말 삭제하시겠습니까? 삭제 후 취소를 원할 시 재업로드 하셔야 합니다.");
+        if (deleteYN) {
+            deleteShare();
+        }
+    }
+
+    function deleteShare(){
+        event.preventDefault();
+        event.stopPropagation();
+        var idx = $('#idx').val();
+        var spanInner = $('#fileView');
+        $.ajax({
+            url:'/lecture/data/deleteFile',
+            type:'post',
+            data:{idx:idx},
+            dataType : 'text',
+            success:function(result){
+                spanInner.remove();
+                console.log(result);
+            },
+            error : function(xhr, status, error) {
+                console.log("xhr! : " + xhr);
+                console.log("status! : " + status);
+                console.log("error! : " + error);
+            }
+        })
+    }
 </script>
 
 </body>

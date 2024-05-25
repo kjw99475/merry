@@ -157,7 +157,17 @@
                                     <c:forEach var="list" items="${noticeList}" varStatus="i" begin="0" end="1">
                                         <tr>
                                             <td>${i.count}</td>
-                                            <td>${list.notice_title}</td>
+                                            <td>
+                                                <c:set var="ntitle" value="${list.notice_title}"/>
+                                                <c:choose>
+                                                    <c:when test="${fn:length(ntitle) > 10}">
+                                                        <a href="/lecture/notice/view?notice_idx=${list.notice_idx}"><strong>${fn:substring(ntitle, 0, 10)}</strong></a>
+                                                    </c:when>
+                                                    <c:otherwise>
+                                                        <a href="/lecture/notice/view?notice_idx=${list.notice_idx}"><strong>${list.notice_title}</strong></a>
+                                                    </c:otherwise>
+                                                </c:choose>
+                                            </td>
                                             <td>${list.member_name}</td>
                                             <td>${list.notice_reg_date}</td>
                                         </tr>
@@ -323,7 +333,17 @@
                                     <c:forEach var="list" items="${dataList}" varStatus="i" begin="0" end="1">
                                         <tr>
                                             <td>${i.count}</td>
-                                            <td>${list.data_title}</td>
+                                            <td>
+                                                <c:set var="dtitle" value="${list.data_title}"/>
+                                                <c:choose>
+                                                    <c:when test="${fn:length(dtitle) > 10}">
+                                                        <a href="/lecture/data/view?data_idx=${list.data_idx}"><strong>${fn:substring(dtitle, 0, 10)}</strong> <c:if test="${list.data_org_file_name != null and list.data_org_file_name != '' }" ><i class="fa-solid fa-paperclip"></i></c:if></a>
+                                                    </c:when>
+                                                    <c:otherwise>
+                                                        <a href="/lecture/data/view?data_idx=${list.data_idx}"><strong>${list.data_title}</strong> <c:if test="${list.data_org_file_name != null and list.data_org_file_name != '' }" ><i class="fa-solid fa-paperclip"></i></c:if></a>
+                                                    </c:otherwise>
+                                                </c:choose>
+                                            </td>
                                             <td>${list.member_name}</td>
                                             <td>${list.data_reg_date}</td>
                                         </tr>
@@ -410,6 +430,8 @@
 <script src="/resources/assets/js/main.js"></script>
 
 <script src="https://kit.fontawesome.com/be97bd8e1b.js" crossorigin="anonymous"></script>
+
+
 
 <script>
     function deleteOK() {
