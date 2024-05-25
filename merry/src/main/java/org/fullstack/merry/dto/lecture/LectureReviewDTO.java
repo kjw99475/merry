@@ -13,6 +13,7 @@ import java.time.LocalDateTime;
 @Builder
 public class LectureReviewDTO {
     private int review_idx;
+    private int lec_idx;
     private int member_idx;
     private String comment;
     private LocalDateTime review_reg_date;

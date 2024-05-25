@@ -169,4 +169,27 @@
         FROM data
         where data_idx=#{data_idx}
     </select>
+
+    <insert id="registReview">
+        INSERT INTO lecture_review(lec_idx, member_idx, comment, review_writer)
+        VALUES(#{lec_idx}, #{member_idx}, #{comment}, #{review_writer})
+    </insert>
+
+    <update id="modifyReview">
+        UPDATE lecture_review
+        SET COMMENT = #{comment}, review_modify_date=now()
+        WHERE review_idx=#{review_idx}
+    </update>
+
+    <delete id="deleteReview">
+        DELETE FROM lecture_review
+        WHERE review_idx=#{review_idx}
+    </delete>
+
+    <select id="reviewList" resultType="org.fullstack.merry.domain.lecture.LectureReviewVO">
+        SELECT *
+        FROM lecture_review
+        WHERE lec_idx=#{lec_idx}
+    </select>
+
 </mapper>
