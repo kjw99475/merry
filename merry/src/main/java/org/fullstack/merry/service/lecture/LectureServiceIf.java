@@ -1,9 +1,10 @@
 package org.fullstack.merry.service.lecture;
 
-import org.fullstack.merry.dto.PageRequestDTO;
-import org.fullstack.merry.dto.PageResponseDTO;
+import org.fullstack.merry.dto.*;
 import org.fullstack.merry.dto.lecture.ChapterDTO;
 import org.fullstack.merry.dto.lecture.LectureDTO;
+
+import java.util.List;
 
 public interface LectureServiceIf {
     int regist(LectureDTO lectureDTO);
@@ -14,4 +15,7 @@ public interface LectureServiceIf {
     PageResponseDTO<LectureDTO> lectureList(PageRequestDTO pageRequestDTO);
     int totalLecture(PageRequestDTO pageRequestDTO);
     String getSubject(int member_idx);
+    List<NoticeDTO> noticeList(int lec_idx);
+    List<QnaDTO> qnaList(int lec_idx);
+    List<DataDTO> dataList(int lec_idx);
 }

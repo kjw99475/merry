@@ -25,4 +25,6 @@ public class QnaVO {
     private LocalDateTime qna_answer_reg_date;
     private LocalDateTime qna_answer_modify_date;
     private String qna_type;
+    private int qna_lec_idx;
+    private String qna_answer_idx;
 }

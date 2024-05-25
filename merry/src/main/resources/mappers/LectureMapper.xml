@@ -67,4 +67,25 @@
         WHERE m.member_idx = #{member_idx};
     </select>
 
+    <select id="noticeList" resultType="org.fullstack.merry.dto.NoticeDTO">
+        SELECT notice_idx, notice_title, notice_content, notice_reg_date, l.member_name AS member_name, l.lec_idx as lec_idx, n.member_idx as member_idx
+        FROM notice n
+                 INNER JOIN lecture l ON n.notice_lec_idx = l.lec_idx
+        WHERE notice_type = 'l' and l.lec_idx = #{lec_idx}
+    </select>
+
+    <select id="qnaList" resultType="org.fullstack.merry.domain.QnaVO">
+        SELECT qna_idx, qna_title, qna_content, qna_reg_date, q.member_idx AS member_idx, qna_member_name, qna_answer_name, qna_answer, qna_answer_yn, qna_answer_reg_date, qna_lec_idx, qna_answer_idx
+        FROM qna q
+                 INNER JOIN lecture l ON q.qna_lec_idx = l.lec_idx
+        WHERE qna_type = 'l' AND l.lec_idx = #{lec_idx}
+    </select>
+
+    <select id="dataList" resultType="org.fullstack.merry.dto.DataDTO">
+        SELECT data_idx, data_title, data_content, data_org_file_name, data_save_file_name, data_reg_date, l.member_idx AS member_idx, l.lec_idx AS data_lec_idx, l.member_name as member_name
+        FROM data d
+                 INNER JOIN lecture l ON d.data_lec_idx = l.lec_idx
+        WHERE data_type='l' AND l.lec_idx = #{lec_idx}
+    </select>
+
 </mapper>
