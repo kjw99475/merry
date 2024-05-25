@@ -5,13 +5,11 @@ import lombok.extern.log4j.Log4j2;
 import org.fullstack.merry.domain.DataVO;
 import org.fullstack.merry.domain.NoticeVO;
 import org.fullstack.merry.domain.QnaVO;
-import org.fullstack.merry.domain.lecture.LectureReviewVO;
 import org.fullstack.merry.domain.lecture.LectureVO;
 import org.fullstack.merry.domain.lecture.QnaAnswerDTO;
 import org.fullstack.merry.dto.*;
 import org.fullstack.merry.dto.lecture.ChapterDTO;
 import org.fullstack.merry.dto.lecture.LectureDTO;
-import org.fullstack.merry.dto.lecture.LectureReviewDTO;
 import org.fullstack.merry.mapper.ChapterMapper;
 import org.fullstack.merry.mapper.LectureMapper;
 import org.modelmapper.ModelMapper;
@@ -216,34 +214,6 @@ public class LectureServiceImpl implements LectureServiceIf{
     public DataDTO viewData(int data_idx) {
         DataDTO dataDTO = lectureMapper.viewData(data_idx);
         return dataDTO;
-    }
-
-    @Override
-    public int registReview(LectureReviewDTO lectureReviewDTO) {
-        LectureReviewVO lectureReviewVO = modelMapper.map(lectureReviewDTO, LectureReviewVO.class);
-        int result = lectureMapper.registReview(lectureReviewVO);
-        return result;
-    }
-
-    @Override
-    public int modifyReview(LectureReviewDTO lectureReviewDTO) {
-        LectureReviewVO lectureReviewVO = modelMapper.map(lectureReviewDTO, LectureReviewVO.class);
-        int result = lectureMapper.modifyReview(lectureReviewVO);
-        return result;
-    }
-
-    @Override
-    public int deleteReview(int review_idx) {
-        int result = lectureMapper.deleteReview(review_idx);
-        return 0;
-    }
-
-    @Override
-    public List<LectureReviewDTO> reviewList(int lec_idx) {
-        List<LectureReviewDTO> dtoList = lectureMapper.reviewList(lec_idx).stream()
-                .map(vo->modelMapper.map(vo, LectureReviewDTO.class))
-                .collect(Collectors.toList());
-        return dtoList;
     }
 
 }

@@ -8,7 +8,6 @@ import org.fullstack.merry.domain.lecture.QnaAnswerDTO;
 import org.fullstack.merry.dto.*;
 import org.fullstack.merry.dto.lecture.ChapterDTO;
 import org.fullstack.merry.dto.lecture.LectureDTO;
-import org.fullstack.merry.dto.lecture.LectureReviewDTO;
 import org.fullstack.merry.service.lecture.ChapterServiceIf;
 import org.fullstack.merry.service.lecture.LectureServiceIf;
 import org.springframework.stereotype.Controller;
@@ -101,12 +100,10 @@ public class LectureController {
         List<QnaDTO> qnaList = lectureService.qnaList(lec_idx);
         List<DataDTO> dataList = lectureService.dataList(lec_idx);
         List<NoticeDTO> noticeList = lectureService.noticeList(lec_idx);
-        List<LectureReviewDTO> reviewList = lectureService.reviewList(lec_idx);
 
         model.addAttribute("dataList", dataList);
         model.addAttribute("qnaList", qnaList);
         model.addAttribute("noticeList", noticeList);
-        model.addAttribute("reviewList", reviewList);
         model.addAttribute("lectureDTO", lectureDTO);
         model.addAttribute("ChapterList", chapterDTOList);
     }
@@ -612,41 +609,5 @@ public class LectureController {
 
         FileUploadUtil.download(req, resp, dataDTO.getData_org_file_name(), dataDTO.getData_save_file_name(), "D:\\java4\\merry\\merry\\src\\main\\webapp\\resources\\uploads\\lecture");
     }
-
-    //review
-    @PostMapping("/review/regist")
-    public String reviewRegist(@Valid LectureReviewDTO lectureReviewDTO,
-                               BindingResult bindingResult,
-                               RedirectAttributes redirectAttributes,
-                               Model model) {
-        if (bindingResult.hasErrors()) {
-            redirectAttributes.addFlashAttribute("errors", bindingResult.getAllErrors());
-            return "redirect:/lecture/view?lec_idx=" + lectureReviewDTO.getLec_idx();
-        }
-
-        int result = lectureService.registReview(lectureReviewDTO);
-        return "redirect:/lecture/view?lec_idx=" + lectureReviewDTO.getLec_idx();
-    }
-
-    @PostMapping("/review/modify")
-    public String reviewModify(@Valid LectureReviewDTO lectureReviewDTO,
-                               BindingResult bindingResult,
-                               RedirectAttributes redirectAttributes,
-                               Model model) {
-        if (bindingResult.hasErrors()) {
-            redirectAttributes.addFlashAttribute("errors", bindingResult.getAllErrors());
-            return "redirect:/lecture/view?lec_idx=" + lectureReviewDTO.getLec_idx();
-        }
-
-        int result = lectureService.modifyReview(lectureReviewDTO);
-        return "redirect:/lecture/view?lec_idx=" + lectureReviewDTO.getLec_idx();
-    }
-
-  @PostMapping("/review/delete")
-    public String reviewDelete(@RequestParam("review_idx") int review_idx,
-                               @RequestParam("lec_idx") int lec_idx) {
-        lectureService.deleteReview(review_idx);
-      return "redirect:/lecture/view?lec_idx=" + lec_idx;
-  }
 
 }

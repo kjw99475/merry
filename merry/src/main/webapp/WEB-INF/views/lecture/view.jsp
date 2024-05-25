@@ -265,58 +265,46 @@
                         <br>
                         <h4>강의 리뷰</h4>
                         <br>
-                        <c:if test="${not empty sessionScope.member_idx}">
-<%--                            구매조건 추가--%>
-                            <form action="/lecture/review/regist" method="post">
-                                <input type="hidden" name="member_id" value="${sessionScope.member_id}" />
-                                <h4 class="mb-5 fw-bold">리뷰 작성하기</h4>
-                                <div class="row g-4">
-                                    <input type="hidden" name="lec_idx" value="${lectureDTO.lec_idx}">
-                                    <input type="hidden" name="member_idx" value="${sessionScope.member_idx}">
-                                    <div class="col-lg-12">
-                                        <div class="border-bottom rounded">
-                                            <input type="text" name="review_writer" id="review_writer" readonly  class="form-control border-0" value="${sessionScope.name}">
-                                        </div>
-                                    </div>
-                                    <div class="col-lg-12">
-                                        <div class="border-bottom rounded my-4">
-                                            <textarea name="comment" id="comment" class="form-control border-0" cols="30" rows="8" placeholder="리뷰 내용을 입력하세요 *" spellcheck="false"></textarea>
-                                        </div>
-                                    </div>
-                                    <button type="submit" name="reviewBtn" id="reviewBtn" class="btn border border-secondary text-primary rounded-pill px-4 py-3 review_regist_btn">작성 완료</button>
-                                </div>
-                            </form>
-                        </c:if>
-                        <c:choose>
-                            <c:when test="${not empty reviewList}">
-                                <c:forEach var="list" items="${reviewList}">
-                                    <form name="frmDelete" id="frmDelete" method="post" action="/lecture/review/delete">
-                                        <div class="col-lg-12">
-                                            <div class="border-bottom rounded">
-                                                작성자 : ${list.review_writer}
-                                                <c:out value="${list.review_idx}"/>
-                                                <c:if test="${sessionScope.member_idx eq list.member_idx}">
-                                                <button type="button" onclick="goDelete()">리뷰 삭제하기</button>
-                                                </c:if>
-                                            </div>
-                                        </div>
-                                        <div class="col-lg-12">
-                                            <div class="border-bottom rounded my-4">
-                                                리뷰 : ${list.comment}
-                                            </div>
-                                        </div>
-                                        <input type="hidden" name="lec_idx" value="${list.lec_idx}">
-                                        <input type="hidden" id="review_idx" name="review_idx" value="${list.review_idx}">
-                                    </form>
-                                </c:forEach>
-                            </c:when>
-                            <c:otherwise>
-                                <br>
-                                등록된 리뷰가 없습니다. 첫 리뷰 작성자가 되어보세요!
-                            </c:otherwise>
-                        </c:choose>
+<%--                        <form name="frmDelete" id="frmDelete" method="post" action="/product/reviewDelete">--%>
 
+<%--                            <c:choose>--%>
+<%--                                <c:when test="${reviewVO != null}">--%>
+<%--&lt;%&ndash;                                    <c:forEach var="review" items="${reviewVO}">&ndash;%&gt;--%>
+<%--&lt;%&ndash;                                        <div class="d-flex">&ndash;%&gt;--%>
+<%--&lt;%&ndash;                                            <input type="hidden" name="pro_idx" id="pro_idx" value="${review.pro_idx}"/>&ndash;%&gt;--%>
+<%--&lt;%&ndash;                                            <input type="hidden" name="review_idx" id="review_idx" value="${review.review_idx}"/>&ndash;%&gt;--%>
 
+<%--&lt;%&ndash;                                            <img src="/resources/resources/uploads/img/member/${review.member_img}" class="img-fluid rounded-circle p-3" style="width: 100px; height: 100px;" alt="">&ndash;%&gt;--%>
+<%--&lt;%&ndash;                                            <div class="d-flex">&ndash;%&gt;--%>
+<%--&lt;%&ndash;                                                <div class="">&ndash;%&gt;--%>
+<%--&lt;%&ndash;                                                    <p class="mb-2 text-nowrap" style="font-size: 14px;">${fn:substring(review.review_reg_date, 0, 10)} &nbsp; ${fn:substring(review.review_reg_date, 11, 20)}</p>&ndash;%&gt;--%>
+<%--&lt;%&ndash;                                                    <div class="d-flex">&ndash;%&gt;--%>
+<%--&lt;%&ndash;                                                        <div class="d-flex mb-3">&ndash;%&gt;--%>
+<%--&lt;%&ndash;                                                            <i class="fa fa-star <c:if test='${review.review_star > 0}'>text-secondary</c:if>"></i>&ndash;%&gt;--%>
+<%--&lt;%&ndash;                                                            <i class="fa fa-star <c:if test='${review.review_star > 1}'>text-secondary</c:if>"></i>&ndash;%&gt;--%>
+<%--&lt;%&ndash;                                                            <i class="fa fa-star <c:if test='${review.review_star > 2}'>text-secondary</c:if>"></i>&ndash;%&gt;--%>
+<%--&lt;%&ndash;                                                            <i class="fa fa-star <c:if test='${review.review_star > 3}'>text-secondary</c:if>"></i>&ndash;%&gt;--%>
+<%--&lt;%&ndash;                                                            <i class="fa fa-star <c:if test='${review.review_star > 4}'>text-secondary</c:if>"></i>&ndash;%&gt;--%>
+<%--&lt;%&ndash;                                                        </div>&ndash;%&gt;--%>
+<%--&lt;%&ndash;                                                    </div>&ndash;%&gt;--%>
+<%--&lt;%&ndash;                                                    <h5>${review.member_id}</h5>&ndash;%&gt;--%>
+<%--&lt;%&ndash;                                                    <h5>${review.review_title}</h5>&ndash;%&gt;--%>
+<%--&lt;%&ndash;                                                    <p>${review.review_content}</p>&ndash;%&gt;--%>
+<%--&lt;%&ndash;                                                    <div class="empty"></div>&ndash;%&gt;--%>
+<%--&lt;%&ndash;                                                </div>&ndash;%&gt;--%>
+<%--&lt;%&ndash;                                                <c:if test="${sessionScope.member_id eq review.member_id || sessionScope.member_id eq 'admin'}">&ndash;%&gt;--%>
+<%--&lt;%&ndash;                                                    <button type="submit" onclick="goDelete()" id="review_delete_btn" name="review_delete_btn" class="btn border border-secondary text-primary rounded-pill px-4 py-3 review_del_btn">삭제</button>&ndash;%&gt;--%>
+<%--&lt;%&ndash;                                                </c:if>&ndash;%&gt;--%>
+<%--&lt;%&ndash;                                            </div>&ndash;%&gt;--%>
+<%--&lt;%&ndash;                                        </div>&ndash;%&gt;--%>
+
+<%--                                    </c:forEach>--%>
+<%--                                </c:when>--%>
+<%--                                <c:otherwise>--%>
+<%--                                    <p>리뷰가 없습니다.</p>--%>
+<%--                                </c:otherwise>--%>
+<%--                            </c:choose>--%>
+<%--                        </form>--%>
 
                         <p>${pro_content}</p>
                     </div>
@@ -374,7 +362,39 @@
 
                 </div>
             </div>
+            <c:if test="${sessionScope.loginInfo != null}" >
+                <form name="frmReview" id="frmReview" action="/product/view" method="post">
+                    <input type="hidden" name="member_id" value="${sessionScope.member_id}" />
+                    <h4 class="mb-5 fw-bold">리뷰 작성하기</h4>
+                    <div class="row g-4">
+                        <input type="hidden" name="pro_idx" value="${product.pro_idx}">
+                        <div class="col-lg-12">
+                            <div class="border-bottom rounded">
+                                <input type="text" name="review_title" id="review_title"  class="form-control border-0" placeholder="제목을 입력하세요 *">
+                            </div>
+                        </div>
+                        <div class="col-lg-12">
+                            <div class="border-bottom rounded my-4">
+                                <textarea name="review_content" id="review_content" class="form-control border-0" cols="30" rows="8" placeholder="리뷰 내용을 입력하세요 *" spellcheck="false"></textarea>
+                            </div>
+                        </div>
 
+                        <br>
+
+                        <div class="rating">
+
+                            <span class="rating__result star_span"></span>
+                            <i class="fa fa-star text-secondary first_star"></i>
+                            <i class="rating__star far fa-star"></i>
+                            <i class="rating__star far fa-star"></i>
+                            <i class="rating__star far fa-star"></i>
+                            <i class="rating__star far fa-star"></i>
+                        </div>
+                        <button type="submit" name="reviewBtn" id="reviewBtn" class="btn border border-secondary text-primary rounded-pill px-4 py-3 review_regist_btn">작성 완료</button>
+                        <input type="hidden" name="review_star" id="review_star" class="rating__input" readonly/>
+                    </div>
+                </form>
+            </c:if>
 
         </div>
     </div>
@@ -542,14 +562,6 @@
         popup.document.write("<center><embed src='"+data+"' width='"+vodW+"' height='"+vodH+"' name=name></embed>");
         popup.document.write("</center>");
         popup.document.write("</body></html>"); popup.document.close();
-    }
-
-    function goDelete() {
-        const frm = document.getElementById("frmDelete");
-        let confirm_flag = confirm("해당 리뷰를 삭제하시겠습니까?");
-        if(confirm_flag) {
-            frm.submit();
-        }
     }
 
 

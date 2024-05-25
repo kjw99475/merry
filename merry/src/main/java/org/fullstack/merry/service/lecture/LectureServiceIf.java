@@ -7,7 +7,6 @@ import org.fullstack.merry.domain.lecture.QnaAnswerDTO;
 import org.fullstack.merry.dto.*;
 import org.fullstack.merry.dto.lecture.ChapterDTO;
 import org.fullstack.merry.dto.lecture.LectureDTO;
-import org.fullstack.merry.dto.lecture.LectureReviewDTO;
 
 import java.util.List;
 
@@ -24,7 +23,6 @@ public interface LectureServiceIf {
     List<QnaDTO> qnaList(int lec_idx);
     List<DataDTO> dataList(int lec_idx);
 
-    //qna
     int registQna(QnaDTO qnaDTO);
     int modifyQna(QnaDTO qnaDTO);
     int deleteQna(int qna_idx);
@@ -33,21 +31,13 @@ public interface LectureServiceIf {
     int modifyTeacher(QnaAnswerDTO qnaAnswerDTO);
     int deleteTeacher(int qna_idx);
 
-    //notice
     int registNotice(NoticeDTO noticeDTO);
     int modifyNotice(NoticeDTO noticeDTO);
     int deleteNotice(int notice_idx);
     NoticeDTO viewNotice(int notice_idx);
 
-    //data
     int registData(DataDTO dataDTO);
     int modifyData(DataDTO dataDTO);
     int deleteData(int data_idx);
     DataDTO viewData(int data_idx);
-
-    //review
-    int registReview(LectureReviewDTO lectureReviewDTO);
-    int modifyReview(LectureReviewDTO lectureReviewDTO);
-    int deleteReview(int review_idx);
-    List<LectureReviewDTO> reviewList(int lec_idx);
 }
