@@ -47,6 +47,13 @@ public class TeacherServiceImpl implements TeacherServiceIf {
                 .collect(Collectors.toList());
         return qnalist;
     }
+    @Override
+    public List<DataDTO> dataList(String teacher_idx){
+        List<DataDTO> datalist = teacherMapper.datalist(teacher_idx).stream()
+                .map(vo->modelMapper.map(vo, DataDTO.class))
+                .collect(Collectors.toList());
+        return datalist;
+    }
 
     @Override
     public List<Integer> cartList(String member_id) {
