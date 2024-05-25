@@ -4,6 +4,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.fullstack.merry.dto.*;
 import org.fullstack.merry.dto.lecture.LectureDTO;
+import org.fullstack.merry.service.MypageServiceImpl;
 import org.fullstack.merry.service.TeacherServiceImpl;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -43,9 +44,17 @@ public class TeacherController {
     }
     @GetMapping("/manage/list")
     public void manageList(@RequestParam(value = "teacheridx", defaultValue = "0") String teacheridx,
+                           HttpSession session,
                            Model model){
+        String member_id = (String)session.getAttribute("member_id");
+        List<Integer> cartlist = teacherService.cartList(member_id);
+        List<Integer> zzimlist = teacherService.zzimList(member_id);
+        log.info("cartlist : {}", cartlist);
+        log.info("zzimlist : {}", zzimlist);
         List<LectureDTO> lecturelist = teacherService.lectureList(teacheridx);
         log.info("lecturelist : {}", lecturelist);
+        model.addAttribute("zzimlist", zzimlist);
+        model.addAttribute("cartlist", cartlist);
         model.addAttribute("lecturelist", lecturelist);
         model.addAttribute("teacheridx", teacheridx);
     }
