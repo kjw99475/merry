@@ -77,6 +77,7 @@
                     </div>
                 </div>
             </div>
+            <c:if test="${sessionScope.member_idx eq lectureDTO.member_idx}">
             <div class="col-md-7 mb-80">
                 <div class="row">
                 <button type="button" onclick="location.href='/lecture/modify?lec_idx=${lectureDTO.lec_idx}'">수정하기</button>
@@ -89,6 +90,7 @@
                 </c:if>
                 </div>
             </div>
+            </c:if>
             <div class="col-lg-12">
                 <nav>
                     <div class="nav nav-tabs mb-3">
@@ -134,21 +136,130 @@
                         <br>
                         <h4>공지사항</h4>
                         <br>
+                        <c:choose>
+                            <c:when test="${not empty noticeList}">
+                                <table class="table">
+                                    <colgroup class="w-100">
+                                        <col class="w-5">
+                                        <col class="w-70">
+                                        <col class="w-10">
+                                        <col class="w-15">
+                                    </colgroup>
+                                    <thead>
+                                    <tr>
+                                        <th>no</th>
+                                        <th>제목</th>
+                                        <th>작성자</th>
+                                        <th>작성일</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    <c:forEach var="list" items="${noticeList}" varStatus="i" begin="0" end="1">
+                                        <tr>
+                                            <td>${i.count}</td>
+                                            <td>${list.notice_title}</td>
+                                            <td>${list.member_name}</td>
+                                            <td>${list.notice_reg_date}</td>
+                                        </tr>
+                                    </c:forEach>
+                                    </tbody>
+                                </table>
+                                <a href="/lecture/notice/list?lec_idx=${lectureDTO.lec_idx}">더보기</a>
+                            </c:when>
+                            <c:otherwise>
+                                공지사항이 없습니다.
+                            </c:otherwise>
+                        </c:choose>
 
-                        <p>${pro_content}</p>
+
                     </div>
                     <div class="box4" id="nav-about" role="tabpanel" aria-labelledby="nav-about-tab">
                         <br>
                         <h4>QnA</h4>
                         <br>
+                        <c:choose>
+                            <c:when test="${not empty qnaList}">
+                                <table class="table">
+                                    <colgroup class="w-100">
+                                        <col class="w-5">
+                                        <col class="w-70">
+                                        <col class="w-10">
+                                        <col class="w-15">
+                                    </colgroup>
+                                    <thead>
+                                    <tr>
+                                        <th>no</th>
+                                        <th>답변여부</th>
+                                        <th>제목</th>
+                                        <th>작성자</th>
+                                        <th>작성일</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    <c:forEach var="list" items="${qnaList}" varStatus="i" begin="0" end="1">
+                                        <tr>
+                                            <td>${i.count}</td>
+                                            <td><c:if test="${list.qna_answer_yn eq 'Y'}">답변완료</c:if>
+                                                <c:if test="${list.qna_answer_yn eq 'N'}">답변대기</c:if></td>
+                                            <td>${list.qna_title}</td>
+                                            <td>${list.qna_member_name}</td>
+                                            <td>${fn:substring(list.qna_reg_date, 0, 10)}</td>
+                                        </tr>
+                                    </c:forEach>
+                                    </tbody>
+                                </table>
+                                <a href="/lecture/qna/list?lec_idx=${lectureDTO.lec_idx}">더보기</a>
+                            </c:when>
+                            <c:otherwise>
+                                QnA 게시글이 없습니다.
+                            </c:otherwise>
+                        </c:choose>
 
-                        <p>${pro_content}</p>
                     </div>
                     <div class="box5" id="nav-about" role="tabpanel" aria-labelledby="nav-about-tab">
                         <br>
                         <h4>강의 리뷰</h4>
                         <br>
+<%--                        <form name="frmDelete" id="frmDelete" method="post" action="/product/reviewDelete">--%>
 
+<%--                            <c:choose>--%>
+<%--                                <c:when test="${reviewVO != null}">--%>
+<%--&lt;%&ndash;                                    <c:forEach var="review" items="${reviewVO}">&ndash;%&gt;--%>
+<%--&lt;%&ndash;                                        <div class="d-flex">&ndash;%&gt;--%>
+<%--&lt;%&ndash;                                            <input type="hidden" name="pro_idx" id="pro_idx" value="${review.pro_idx}"/>&ndash;%&gt;--%>
+<%--&lt;%&ndash;                                            <input type="hidden" name="review_idx" id="review_idx" value="${review.review_idx}"/>&ndash;%&gt;--%>
+
+<%--&lt;%&ndash;                                            <img src="/resources/resources/uploads/img/member/${review.member_img}" class="img-fluid rounded-circle p-3" style="width: 100px; height: 100px;" alt="">&ndash;%&gt;--%>
+<%--&lt;%&ndash;                                            <div class="d-flex">&ndash;%&gt;--%>
+<%--&lt;%&ndash;                                                <div class="">&ndash;%&gt;--%>
+<%--&lt;%&ndash;                                                    <p class="mb-2 text-nowrap" style="font-size: 14px;">${fn:substring(review.review_reg_date, 0, 10)} &nbsp; ${fn:substring(review.review_reg_date, 11, 20)}</p>&ndash;%&gt;--%>
+<%--&lt;%&ndash;                                                    <div class="d-flex">&ndash;%&gt;--%>
+<%--&lt;%&ndash;                                                        <div class="d-flex mb-3">&ndash;%&gt;--%>
+<%--&lt;%&ndash;                                                            <i class="fa fa-star <c:if test='${review.review_star > 0}'>text-secondary</c:if>"></i>&ndash;%&gt;--%>
+<%--&lt;%&ndash;                                                            <i class="fa fa-star <c:if test='${review.review_star > 1}'>text-secondary</c:if>"></i>&ndash;%&gt;--%>
+<%--&lt;%&ndash;                                                            <i class="fa fa-star <c:if test='${review.review_star > 2}'>text-secondary</c:if>"></i>&ndash;%&gt;--%>
+<%--&lt;%&ndash;                                                            <i class="fa fa-star <c:if test='${review.review_star > 3}'>text-secondary</c:if>"></i>&ndash;%&gt;--%>
+<%--&lt;%&ndash;                                                            <i class="fa fa-star <c:if test='${review.review_star > 4}'>text-secondary</c:if>"></i>&ndash;%&gt;--%>
+<%--&lt;%&ndash;                                                        </div>&ndash;%&gt;--%>
+<%--&lt;%&ndash;                                                    </div>&ndash;%&gt;--%>
+<%--&lt;%&ndash;                                                    <h5>${review.member_id}</h5>&ndash;%&gt;--%>
+<%--&lt;%&ndash;                                                    <h5>${review.review_title}</h5>&ndash;%&gt;--%>
+<%--&lt;%&ndash;                                                    <p>${review.review_content}</p>&ndash;%&gt;--%>
+<%--&lt;%&ndash;                                                    <div class="empty"></div>&ndash;%&gt;--%>
+<%--&lt;%&ndash;                                                </div>&ndash;%&gt;--%>
+<%--&lt;%&ndash;                                                <c:if test="${sessionScope.member_id eq review.member_id || sessionScope.member_id eq 'admin'}">&ndash;%&gt;--%>
+<%--&lt;%&ndash;                                                    <button type="submit" onclick="goDelete()" id="review_delete_btn" name="review_delete_btn" class="btn border border-secondary text-primary rounded-pill px-4 py-3 review_del_btn">삭제</button>&ndash;%&gt;--%>
+<%--&lt;%&ndash;                                                </c:if>&ndash;%&gt;--%>
+<%--&lt;%&ndash;                                            </div>&ndash;%&gt;--%>
+<%--&lt;%&ndash;                                        </div>&ndash;%&gt;--%>
+
+<%--                                    </c:forEach>--%>
+<%--                                </c:when>--%>
+<%--                                <c:otherwise>--%>
+<%--                                    <p>리뷰가 없습니다.</p>--%>
+<%--                                </c:otherwise>--%>
+<%--                            </c:choose>--%>
+<%--                        </form>--%>
 
                         <p>${pro_content}</p>
                     </div>
@@ -156,52 +267,44 @@
                         <br>
                         <h4>자료실</h4>
                         <br>
-                        <p>${pro_content}</p>
-                    </div>
-
-                    <div class="reviewDiv" id="nav-mission" aria-labelledby="nav-mission-tab">
-                        <h4>리뷰</h4>
-                        <form name="frmDelete" id="frmDelete" method="post" action="/product/reviewDelete">
-
-                            <c:choose>
-                                <c:when test="${reviewVO != null}">
-                                    <c:forEach var="review" items="${reviewVO}">
-                                        <div class="d-flex">
-                                            <input type="hidden" name="pro_idx" id="pro_idx" value="${review.pro_idx}"/>
-                                            <input type="hidden" name="review_idx" id="review_idx" value="${review.review_idx}"/>
-
-                                            <img src="/resources/resources/uploads/img/member/${review.member_img}" class="img-fluid rounded-circle p-3" style="width: 100px; height: 100px;" alt="">
-                                            <div class="d-flex">
-                                                <div class="">
-                                                    <p class="mb-2 text-nowrap" style="font-size: 14px;">${fn:substring(review.review_reg_date, 0, 10)} &nbsp; ${fn:substring(review.review_reg_date, 11, 20)}</p>
-                                                    <div class="d-flex">
-                                                        <div class="d-flex mb-3">
-                                                            <i class="fa fa-star <c:if test='${review.review_star > 0}'>text-secondary</c:if>"></i>
-                                                            <i class="fa fa-star <c:if test='${review.review_star > 1}'>text-secondary</c:if>"></i>
-                                                            <i class="fa fa-star <c:if test='${review.review_star > 2}'>text-secondary</c:if>"></i>
-                                                            <i class="fa fa-star <c:if test='${review.review_star > 3}'>text-secondary</c:if>"></i>
-                                                            <i class="fa fa-star <c:if test='${review.review_star > 4}'>text-secondary</c:if>"></i>
-                                                        </div>
-                                                    </div>
-                                                    <h5>${review.member_id}</h5>
-                                                    <h5>${review.review_title}</h5>
-                                                    <p>${review.review_content}</p>
-                                                    <div class="empty"></div>
-                                                </div>
-                                                <c:if test="${sessionScope.member_id eq review.member_id || sessionScope.member_id eq 'admin'}">
-                                                    <button type="submit" onclick="goDelete()" id="review_delete_btn" name="review_delete_btn" class="btn border border-secondary text-primary rounded-pill px-4 py-3 review_del_btn">삭제</button>
-                                                </c:if>
-                                            </div>
-                                        </div>
-
+                        <c:choose>
+                            <c:when test="${not empty dataList}">
+                                <table class="table">
+                                    <colgroup class="w-100">
+                                        <col class="w-5">
+                                        <col class="w-70">
+                                        <col class="w-10">
+                                        <col class="w-15">
+                                    </colgroup>
+                                    <thead>
+                                    <tr>
+                                        <th>no</th>
+                                        <th>제목</th>
+                                        <th>작성자</th>
+                                        <th>작성일</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    <c:forEach var="list" items="${dataList}" varStatus="i" begin="0" end="1">
+                                        <tr>
+                                            <td>${i.count}</td>
+                                            <td>${list.data_title}</td>
+                                            <td>${list.member_name}</td>
+                                            <td>${list.data_reg_date}</td>
+                                        </tr>
                                     </c:forEach>
-                                </c:when>
-                                <c:otherwise>
-                                    <p>리뷰가 없습니다.</p>
-                                </c:otherwise>
-                            </c:choose>
-                        </form>
+                                    </tbody>
+                                </table>
+                                <a href="/lecture/data/list?lec_idx=${lectureDTO.lec_idx}">더보기</a>
+                            </c:when>
+                            <c:otherwise>
+                                자료실의 게시글이 없습니다.
+                            </c:otherwise>
+                        </c:choose>
+
                     </div>
+
+
                 </div>
             </div>
             <c:if test="${sessionScope.loginInfo != null}" >

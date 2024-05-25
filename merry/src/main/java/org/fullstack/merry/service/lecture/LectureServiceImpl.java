@@ -3,8 +3,7 @@ package org.fullstack.merry.service.lecture;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.fullstack.merry.domain.lecture.LectureVO;
-import org.fullstack.merry.dto.PageRequestDTO;
-import org.fullstack.merry.dto.PageResponseDTO;
+import org.fullstack.merry.dto.*;
 import org.fullstack.merry.dto.lecture.ChapterDTO;
 import org.fullstack.merry.dto.lecture.LectureDTO;
 import org.fullstack.merry.mapper.ChapterMapper;
@@ -94,4 +93,25 @@ public class LectureServiceImpl implements LectureServiceIf{
     public String getSubject(int member_idx) {
         return lectureMapper.getSubject(member_idx);
     }
+
+    @Override
+    public List<NoticeDTO> noticeList(int lec_idx) {
+        List<NoticeDTO> noticeDTOList = lectureMapper.noticeList(lec_idx);
+        return noticeDTOList;
+    }
+
+    @Override
+    public List<QnaDTO> qnaList(int lec_idx) {
+        List<QnaDTO> qnaDTOList = lectureMapper.qnaList(lec_idx).stream()
+                .map(vo->modelMapper.map(vo, QnaDTO.class))
+                .collect(Collectors.toList());
+        return qnaDTOList;
+    }
+
+    @Override
+    public List<DataDTO> dataList(int lec_idx) {
+        List<DataDTO> dataDTOList = lectureMapper.dataList(lec_idx);
+        return dataDTOList;
+    }
+
 }

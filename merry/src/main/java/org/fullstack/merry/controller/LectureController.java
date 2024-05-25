@@ -4,8 +4,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.fullstack.merry.Common.FileUploadUtil;
 import org.fullstack.merry.domain.lecture.ChapterVO;
-import org.fullstack.merry.dto.PageRequestDTO;
-import org.fullstack.merry.dto.PageResponseDTO;
+import org.fullstack.merry.dto.*;
 import org.fullstack.merry.dto.lecture.ChapterDTO;
 import org.fullstack.merry.dto.lecture.LectureDTO;
 import org.fullstack.merry.service.lecture.ChapterServiceIf;
@@ -99,7 +98,13 @@ public class LectureController {
         log.info("view");
         LectureDTO lectureDTO = lectureService.view(lec_idx);
         List<ChapterVO> chapterDTOList = chapterService.chapterList(lec_idx);
+        List<QnaDTO> qnaList = lectureService.qnaList(lec_idx);
+        List<DataDTO> dataList = lectureService.dataList(lec_idx);
+        List<NoticeDTO> noticeList = lectureService.noticeList(lec_idx);
 
+        model.addAttribute("dataList", dataList);
+        model.addAttribute("qnaList", qnaList);
+        model.addAttribute("noticeList", noticeList);
         model.addAttribute("lectureDTO", lectureDTO);
         model.addAttribute("ChapterList", chapterDTOList);
     }
@@ -205,9 +210,29 @@ public class LectureController {
     }
 
     @PostMapping("/delete")
-    public String String (@RequestParam("lec_idx") int lec_idx, Model model) {
+    public String String (@RequestParam(name="lec_idx", defaultValue = "0") int lec_idx, Model model) {
         lectureService.delete(lec_idx);
         return "redirect:/lecture/view?lec_idx=" + lec_idx;
     }
 
+    @GetMapping("/data/list")
+    public void dataListGET(@RequestParam(name="lec_idx", defaultValue = "0") int lec_idx,
+                            Model model) {
+        List<DataDTO> dataList = lectureService.dataList(lec_idx);
+        model.addAttribute("dataList", dataList);
+    }
+
+    @GetMapping("/notice/list")
+    public void noticeListGET(@RequestParam(name="lec_idx", defaultValue = "0") int lec_idx,
+                              Model model) {
+        List<NoticeDTO> noticeList = lectureService.noticeList(lec_idx);
+        model.addAttribute("noticeList", noticeList);
+    }
+
+    @GetMapping("/qna/list")
+    public void qnaListGET(@RequestParam(name="lec_idx", defaultValue = "0") int lec_idx,
+                           Model model) {
+        List<QnaDTO> qnaList = lectureService.qnaList(lec_idx);
+        model.addAttribute("qnaList", qnaList);
+    }
 }

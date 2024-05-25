@@ -30,4 +30,5 @@ public class NoticeDTO {
     private LocalDate notice_modify_date;
     private int member_idx;
     private String member_name;
+    private int notice_lec_idx;
 }
