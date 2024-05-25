@@ -425,6 +425,24 @@ p:last-child {
   color: #fff;
 }
 
+.orange-btn:disabled:hover {
+  background-color: #F3A421;
+}
+
+.red-btn {
+  background-color: #f34821;
+  color: #fff;
+}
+
+.red-btn:hover {
+  background-color: #df4220;
+  color: #fff;
+}
+
+.red-btn:disabled:hover {
+  background-color: #f34821;
+}
+
 .black-btn {
   background-color: #051922;
   color: #fff;
@@ -432,6 +450,11 @@ p:last-child {
 
 .black-btn:hover {
   background-color: #F3A421;
+  color: #fff;
+}
+
+.black-btn:disabled:hover {
+  background-color: #051922;
   color: #fff;
 }
 
@@ -445,6 +468,11 @@ p:last-child {
   color: #fff;
 }
 
+.orange-outline-btn:disabled:hover {
+  background-color: #fff;
+  color: #F3A421;
+}
+
 .red-outline-btn {
   border-color: #f34821;
   color: #f34821;
@@ -453,6 +481,11 @@ p:last-child {
 .red-outline-btn:hover {
   background-color: #f34821;
   color: #fff;
+}
+
+.red-outline-btn:disabled:hover {
+  background-color: transparent;
+  color: #f34821;
 }
 
 .black-outline-btn {
@@ -935,9 +968,27 @@ h2.widget-title {
   color: #fff;
 }
 
+h2.widget-title-right {
+  font-size: 24px;
+  font-weight: 500;
+  position: relative;
+  padding-bottom: 20px;
+  color: #fff;
+}
+
 h2.widget-title:after {
   position: absolute;
   left: 0;
+  bottom: 0;
+  width: 20px;
+  height: 2px;
+  background-color: #F3A421;
+  content: "";
+}
+
+h2.widget-title-right:after {
+  position: absolute;
+  right: 0;
   bottom: 0;
   width: 20px;
   height: 2px;
@@ -1043,9 +1094,9 @@ h2.widget-title:after {
 
 .footer-box.pages ul li:before {
   position: absolute;
-  left: 0;
+  right: 0;
   top: 0;
-  content: "\f105";
+  content: "\f104";
   font-family: "Font Awesome 5 Free";
   font-weight: 900;
   color: #F3A421;

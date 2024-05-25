@@ -35,123 +35,72 @@
 </head>
 <body>
 <jsp:include page="/WEB-INF/views/common/header.jsp" />
-<div class="pt-100">
-    <div class="row" style="display: grid;
-    grid-template-columns: 280px 1fr;
-    height: 100vh;">
-        <!--================ 사이드바 start =================-->
-        <jsp:include page="/WEB-INF/views/common/mypage_sidebar.jsp">
-            <jsp:param name="menuGubun" value="zzim"/>
-        </jsp:include>
-        <!--================ 사이드바 end =================-->
-        <div>
-            <div class="container">
-                <div class="mt-5">
-                    <!--================ 검색 start =================-->
-                    <div>
-                        <form>
-                            <div class="row mx-5">
-                                <select name="type" class="form-control col-1" >
-                                    <option value="0" <c:if test="${responseDTO.type == 0}">selected</c:if>>제목</option>
-                                    <option value="1" <c:if test="${responseDTO.type == 1}">selected</c:if>>내용</option>
-                                    <option value="2" <c:if test="${responseDTO.type == 2}">selected</c:if>>작성자</option>
-                                </select>
-
-                                <div class="col-8">
-                                    <input type="text" class="form-control" placeholder="Search" name="search_word" style="width: 100%" value="${responseDTO.search_word}">
-                                </div>
-                                <div class="col-3">
-                                    <button type="submit" class="btn btn-merry" >검색</button>
-                                </div>
-                            </div>
-                        </form>
-                    </div>
-                    <!--================ 검색 end =================-->
+<div class="breadcrumb-section breadcrumb-bg">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 offset-lg-2 text-center">
+                <div class="breadcrumb-text">
+                    <p>마이페이지</p>
+                    <h1>찜 한 강의</h1>
                 </div>
-                <div class="row justify-content-end m-3">
-                    <input type="button" class="btn btn-merry" onclick="location.href='/admin/board/regist'" value="등록">
-                </div>
-                <table class="table w-100">
-                    <thead>
-                    <tr>
-                        <th class="w-10">no</th>
-                        <th class="w-50">제목</th>
-                        <th class="w-30">작성자</th>
-                        <th class="w-10">작성일</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    <c:choose>
-                        <c:when test="${!empty responseDTO.dtoList}">
-                            <c:set value="${responseDTO.total_count}" var="total_count" />
-                            <c:forEach items="${responseDTO.dtoList}" var="bbsDTO" varStatus="loop">
-                                <tr>
-                                    <th>${total_count -responseDTO.page_skip_count -loop.index}</th>
-                                    <td><a href="/admin/board/view?board_idx=${bbsDTO.board_idx}" class="black-text">${bbsDTO.board_title}</a></td>
-                                    <td>${bbsDTO.board_writer}</td>
-                                    <td>${bbsDTO.board_reg_date}</td>
-                                </tr>
-                            </c:forEach>
-                        </c:when>
-                        <c:otherwise>
-                            <tr class="bg-white text-center">
-                                <td colspan="4">등록된 글이 없습니다.</td>
-                            </tr>
-                        </c:otherwise>
-                    </c:choose>
-                    </tbody>
-                </table>
-                <!--================ 페이징 start =================-->
-                <div class="pagination-wrap">
-                    <nav class="blog-pagination justify-content-center d-flex">
-                        <ul class="pagination">
-                            <c:if test="${responseDTO.page<=10}">
-                            <li class="page-item disabled">
-                                </c:if>
-                                <c:if test="${responseDTO.page>10}">
-                            <li class="page-item">
-                                </c:if>
-                                <a class="page-link" href="/admin/board/list${responseDTO.linked_params}&page=${responseDTO.page_block_end-10}" aria-label="Previous">
-                                    <span aria-hidden="true">&laquo;</span>
-                                </a>
-                            </li>
-                            <c:forEach begin="${responseDTO.page_block_start}"
-                                       end="${responseDTO.page_block_end}"
-                                       var="page_num">
-                                <c:choose>
-                                    <c:when test="${responseDTO.page == page_num}">
-                                        <li class="page-item active">
-                                            <a href="#" class="page-link">${page_num}</a>
-                                        </li>
-                                    </c:when>
-                                    <c:otherwise>
-                                        <li class="page-item">
-                                            <a href="${responseDTO.linked_params}&page=${page_num}" class="page-link">${page_num}</a>
-                                        </li>
-                                    </c:otherwise>
-                                </c:choose>
-                            </c:forEach>
-                            <c:if test="${(responseDTO.page_block_start+10)>(responseDTO.total_page)}">
-                            <li class="page-item disabled">
-                                </c:if>
-                                <c:if test="${(responseDTO.page_block_start+10)<=(responseDTO.total_page)}">
-                            <li class="page-item">
-                                </c:if>
-                                <a class="page-link" href="/admin/board/list${responseDTO.linked_params}&page=${responseDTO.page_block_start+10}" aria-label="Next">
-                                    <span aria-hidden="true">&raquo;</span>
-                                </a>
-                            </li>
-                        </ul>
-                    </nav>
-                </div>
-                <!--================ 페이징 end =================-->
             </div>
         </div>
     </div>
-    <!--================ 본문 end =================-->
-    <!--================ 푸터 Start =================-->
+</div>
+<div>
+    <div class="container">
+        <div class="row" style="display: grid;
+    grid-template-columns: 280px 1fr;
+    height: 100vh;">
+            <jsp:include page="/WEB-INF/views/common/mypage_sidebar.jsp">
+                <jsp:param name="menuGubun" value="zzim"/>
+            </jsp:include>
+            <div class="cart-section mt-80 mb-150">
+                <div class="container">
+                    <div>
+                        <div style="margin: 0 auto;">
+                            <form class="cart-table-wrap" action="/mypage/payment">
+                                <table class="cart-table">
+                                    <thead class="cart-table-head">
+                                    <tr class="table-head-row">
+                                        <th class="product-remove"><input type="checkbox"/></th>
+                                        <th class="product-image">강의이미지</th>
+                                        <th>강의정보</th>
+                                        <th>가격</th>
+                                        <th>장바구니</th>
+                                        <th>삭제</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    <tr class="table-body-row">
+                                        <td><input type="checkbox"/></td>
+                                        <td class="p-2 product-image"><img src="assets/img/products/product-img-1.jpg" alt=""></td>
+                                        <td class="p-2"><a href="/lecture/view?lec_idx=1">강의 이름</a></td>
+                                        <td class="p-2">110,000</td>
+                                        <td class="p-2"><button class="btn orange-outline-btn bordered-btn" type="button">추가</button></td>
+                                        <td class="p-2"><button class="btn red-outline-btn bordered-btn" type="button">삭제</button></td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                            </form>
+                        </div>
+                        <div class="d-flex col-10 justify-content-between" style="margin: 0 auto;">
+                            <div class="cart-buttons">
+                                <button class="btn btn-lg orange-outline-btn bordered-btn" type="button">선택 추가</button>
+                                <button class="btn btn-lg orange-btn bordered-btn" type="button">전체 추가</button>
+                            </div>
+                            <div class="cart-buttons">
+                                <button class="btn btn-lg red-outline-btn bordered-btn" type="button">선택 삭제</button>
+                                <button class="btn btn-lg red-btn bordered-btn" type="button">전체 삭제</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <jsp:include page="/WEB-INF/views/common/footer.jsp" />
-    <!--================ 푸터 End =================-->
     <script src="/resources/assets/js/jquery-1.11.3.min.js"></script>
     <script src="/resources/assets/bootstrap/js/bootstrap.min.js"></script>
     <script src="/resources/assets/js/jquery.countdown.js"></script>

@@ -35,72 +35,79 @@
 </head>
 <body>
 <jsp:include page="/WEB-INF/views/common/header.jsp" />
-<div class="pt-100">
-    <div class="row" style="display: grid;
+<div class="breadcrumb-section breadcrumb-bg">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 offset-lg-2 text-center">
+                <div class="breadcrumb-text">
+                    <p>마이페이지</p>
+                    <h1>1:1 문의</h1>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div>
+    <div class="container">
+        <div class="row" style="display: grid;
     grid-template-columns: 280px 1fr;
     height: 100vh;">
-        <!--================ 사이드바 start =================-->
-        <jsp:include page="/WEB-INF/views/common/mypage_sidebar.jsp">
-            <jsp:param name="menuGubun" value="qna"/>
-        </jsp:include>
-        <!--================ 사이드바 end =================-->
-        <div>
-            <div class="container">
-                <div class="mt-5">
-                    <!--================ 검색 start =================-->
-                    <div>
-                        <form>
-                            <div class="row mx-5">
-                                <select name="type" class="form-control col-1" >
-                                    <option value="0" <c:if test="${responseDTO.type == 0}">selected</c:if>>제목</option>
-                                    <option value="1" <c:if test="${responseDTO.type == 1}">selected</c:if>>내용</option>
-                                    <option value="2" <c:if test="${responseDTO.type == 2}">selected</c:if>>작성자</option>
-                                </select>
-
-                                <div class="col-8">
-                                    <input type="text" class="form-control" placeholder="Search" name="search_word" style="width: 100%" value="${responseDTO.search_word}">
-                                </div>
-                                <div class="col-3">
-                                    <button type="submit" class="btn btn-merry" >검색</button>
+            <jsp:include page="/WEB-INF/views/common/mypage_sidebar.jsp">
+                <jsp:param name="menuGubun" value="qna"/>
+            </jsp:include>
+            <div class="checkout-section mt-80 mb-150">
+                <div style="margin: 0 auto;">
+                    <form id="frmSearch" name="frmSearch" method="get" action="/mypage/payment">
+                        <div class="row mx-5 justify-content-center">
+                            <div class="col-auto d-flex justify-content-center">
+                                <input type="date" class="form-control col-4 mr-3" name="search_start_date" value="${responseDTO.search_word}">
+                                ~
+                                <input type="date" class="form-control col-4 ml-3" name="search_end_date" value="${responseDTO.search_word}">
+                                <div>
+                                    <button class="btn orange-btn bordered-btn ml-1" type="submit">검색</button>
                                 </div>
                             </div>
-                        </form>
+                        </div>
+                    </form>
+                </div>
+                <div class="container">
+                    <div style="margin: 0 auto;">
+                        <div class="col-auto">
+                    <div class="mb-1 text-right">
+                        <button class="btn orange-btn bordered-btn ml-1" type="button" onclick="location.href='/mypage/qna/regist';">문의하기</button>
                     </div>
-                    <!--================ 검색 end =================-->
+                            <form class="cart-table-wrap" action="/mypage/payment">
+                                <table class="cart-table">
+                                    <thead class="cart-table-head">
+                                    <tr class="table-head-row">
+                                        <th>No</th>
+                                        <th>제목</th>
+                                        <th>상태</th>
+                                        <th>작성일</th>
+                                        <th>답변일</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    <tr class="table-body-row">
+                                        <td class="p-2">2</td>
+                                        <td class="p-2"><a href="/mypage/qnaView?qna_type=M&qna_idx=1">강의가 재생되지 않아요.</a></td>
+                                        <td class="p-2">답변전</td>
+                                        <td class="p-2">2024-03-04</td>
+                                        <td class="p-2">-</td>
+                                    </tr>
+                                    <tr class="table-body-row">
+                                        <td class="p-2">1</td>
+                                        <td class="p-2"><a href="/mypage/qnaView?qna_type=M&qna_idx=1">환불 관련 문의합니다.</a></td>
+                                        <td class="p-2">답변완료</td>
+                                        <td class="p-2">2024-03-01</td>
+                                        <td class="p-2">2024-03-02</td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                            </form>
+                        </div>
+                    </div>
                 </div>
-                <div class="row justify-content-end m-3">
-                    <input type="button" class="btn btn-merry" onclick="location.href='/admin/board/regist'" value="등록">
-                </div>
-                <table class="table w-100">
-                    <thead>
-                    <tr>
-                        <th class="w-10">no</th>
-                        <th class="w-50">제목</th>
-                        <th class="w-30">작성자</th>
-                        <th class="w-10">작성일</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    <c:choose>
-                        <c:when test="${!empty responseDTO.dtoList}">
-                            <c:set value="${responseDTO.total_count}" var="total_count" />
-                            <c:forEach items="${responseDTO.dtoList}" var="bbsDTO" varStatus="loop">
-                                <tr>
-                                    <th>${total_count -responseDTO.page_skip_count -loop.index}</th>
-                                    <td><a href="/admin/board/view?board_idx=${bbsDTO.board_idx}" class="black-text">${bbsDTO.board_title}</a></td>
-                                    <td>${bbsDTO.board_writer}</td>
-                                    <td>${bbsDTO.board_reg_date}</td>
-                                </tr>
-                            </c:forEach>
-                        </c:when>
-                        <c:otherwise>
-                            <tr class="bg-white text-center">
-                                <td colspan="4">등록된 글이 없습니다.</td>
-                            </tr>
-                        </c:otherwise>
-                    </c:choose>
-                    </tbody>
-                </table>
                 <!--================ 페이징 start =================-->
                 <div class="pagination-wrap">
                     <nav class="blog-pagination justify-content-center d-flex">
@@ -144,12 +151,9 @@
                         </ul>
                     </nav>
                 </div>
-                <!--================ 페이징 end =================-->
             </div>
         </div>
     </div>
-    <!--================ 본문 end =================-->
-    <!--================ 푸터 Start =================-->
     <jsp:include page="/WEB-INF/views/common/footer.jsp" />
     <!--================ 푸터 End =================-->
     <script src="/resources/assets/js/jquery-1.11.3.min.js"></script>

@@ -32,126 +32,145 @@
     <link rel="stylesheet" href="/resources/assets/css/meanmenu.min.css">
     <link rel="stylesheet" href="/resources/assets/css/main.css">
     <link rel="stylesheet" href="/resources/assets/css/responsive.css">
+    <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+    <script>
+        function address() {
+            new daum.Postcode({
+                oncomplete: function (data) {
+                    document.getElementById("zipcode").value=data.zonecode;
+                    document.getElementById("addr").value = data.address;
+                    document.getElementById("addr_detail").focus();
+                }
+            }).open();
+        }
+    </script>
 </head>
 <body>
 <jsp:include page="/WEB-INF/views/common/header.jsp" />
-<div class="pt-100">
-    <div class="row" style="display: grid;
-    grid-template-columns: 280px 1fr;
-    height: 100vh;">
-        <!--================ 사이드바 start =================-->
-        <jsp:include page="/WEB-INF/views/common/mypage_sidebar.jsp">
-            <jsp:param name="menuGubun" value="profile"/>
-        </jsp:include>
-        <!--================ 사이드바 end =================-->
-        <div>
-            <div class="container">
-                <div class="mt-5">
-                    <!--================ 검색 start =================-->
-                    <div>
-                        <form>
-                            <div class="row mx-5">
-                                <select name="type" class="form-control col-1" >
-                                    <option value="0" <c:if test="${responseDTO.type == 0}">selected</c:if>>제목</option>
-                                    <option value="1" <c:if test="${responseDTO.type == 1}">selected</c:if>>내용</option>
-                                    <option value="2" <c:if test="${responseDTO.type == 2}">selected</c:if>>작성자</option>
-                                </select>
-
-                                <div class="col-8">
-                                    <input type="text" class="form-control" placeholder="Search" name="search_word" style="width: 100%" value="${responseDTO.search_word}">
-                                </div>
-                                <div class="col-3">
-                                    <button type="submit" class="btn btn-merry" >검색</button>
+<div class="breadcrumb-section breadcrumb-bg">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 offset-lg-2 text-center">
+                <div class="breadcrumb-text">
+                    <p>마이페이지</p>
+                    <h1>개인정보</h1>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div>
+    <div class="container">
+        <div class="row" style="display: grid; grid-template-columns: 280px 1fr; height: 100vh;">
+            <jsp:include page="/WEB-INF/views/common/mypage_sidebar.jsp">
+                <jsp:param name="menuGubun" value="profile"/>
+            </jsp:include>
+            <div>
+                <div class="container">
+                    <div class="checkout-section mt-80 mb-150">
+                        <form name="frmModify" id="frmModify" method="post" action="/member/modify">
+                            <div class="list-group w1024">
+                                <div style="margin-bottom: 24px;" aria-current="true">
+                                    <div class="d-flex w-100 justify-content-center" style="margin-bottom: 8px; padding-bottom: 4px;">
+                                        <div class="mb-1">
+                                            <div class="mb-3" >
+                                                <div class="input-group">
+                                                    <span class="input-group-text">아이디</span>
+                                                    <input type="text" name="member_id" id="member_id" class="form-control" readonly value="${memberDTO.user_id}">
+                                                </div>
+                                            </div>
+                                            <div class="mb-3">
+                                                <div class="input-group">
+                                                    <span class="input-group-text">이름</span>
+                                                    <input type="text" name="name" id="name" value="${memberDTO.name}" readonly class="form-control">
+                                                </div>
+                                            </div>
+                                            <div class="mb-3">
+                                                <div class="input-group">
+                                                    <span class="input-group-text">비밀번호</span>
+                                                    <input type="password" name="pwd" id="pwd" value="${memberDTO.pwd}" maxlength="300" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default">
+                                                </div>
+                                                <div id="div_err_pwd" style="display: none"></div>
+                                            </div>
+                                            <div class="mb-3">
+                                                <div class="input-group">
+                                                    <span class="input-group-text">이메일</span>
+                                                    <input type="text" class="form-control" name="email_id" id="email_id" placeholder="아이디" aria-label="email_id" value="${memberDTO.email_id}">
+                                                    <span class="input-group-text">@</span>
+                                                    <input type="text" class="form-control" name="email_domain" id="email_domain" value="${memberDTO.email_domain}" readonly/>
+                                                    <select class="col-4" name="domain_list" id="domain_list" value="${memberDTO.email_domain}">
+                                                        <option value="">선택</option>
+                                                        <option value="gmail.com">gmail.com</option>
+                                                        <option value="naver.com">naver.com</option>
+                                                        <option value="hanmail.net">hanmail.net</option>
+                                                        <option value="nate.com">nate.com</option>
+                                                        <option value="direct">직접 입력</option>
+                                                    </select>
+                                                </div>
+                                                <div id="div_err_email" style="display: none"></div>
+                                            </div>
+                                            <div class="mb-3">
+                                                <div class="input-group">
+                                                    <span class="input-group-text">생년월일</span>
+                                                    <input type="date" class="form-control" name="birthday" id="birthday" value="${memberDTO.birthday}"/>
+                                                </div>
+                                                <div id="div_err_birthday" style="display: none"></div>
+                                            </div>
+                                            <div class="mb-3">
+                                                <div class="input-group">
+                                                    <span class="input-group-text">핸드폰번호</span>
+                                                    <select class="col-3" name="phone_0" id="phone_0" value="${memberDTO.phone_0}">
+                                                        <option value="">선택</option>
+                                                        <option value="010">010</option>
+                                                        <option value="011">011</option>
+                                                        <option value="016">016</option>
+                                                        <option value="017">017</option>
+                                                        <option value="018">018</option>
+                                                    </select>
+                                                    <span class="input-group-text">-</span>
+                                                    <input type="text" class="form-control" name="phone_1" id="phone_1" aria-label="email_id" value="${memberDTO.phone_1}">
+                                                    <span class="input-group-text">-</span>
+                                                    <input type="text" class="form-control" name="phone_2" id="phone_2" value="${memberDTO.phone_2}"/>
+                                                </div>
+                                                <div id="div_err_phone" style="display: none"></div>
+                                            </div>
+                                            <div class="mb-3">
+                                                <div class="input-group">
+                                                    <span class="input-group-text">우편번호</span>
+                                                    <input type="text" class="form-control" name="zipcode" id="zipcode" onclick="address()" value="${memberDTO.zipcode}"/>
+                                                </div>
+                                                <div id="div_err_zipcode" style="display: none"></div>
+                                            </div>
+                                            <div class="mb-3">
+                                                <div class="input-group">
+                                                    <span class="input-group-text">주소</span>
+                                                    <input type="text" class="form-control" name="addr" id="addr" onclick="address()" value="${memberDTO.addr}"/>
+                                                </div>
+                                                <span id="div_err_addr"></span>
+                                            </div>
+                                            <div class="mb-3">
+                                                <div class="input-group">
+                                                    <span class="input-group-text">상세주소</span>
+                                                    <input type="text" class="form-control" name="addr_detail" id="addr_detail" value="${memberDTO.addr_detail}"/>
+                                                </div>
+                                                <span id="div_err_addr_detail"></span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="checkbox mb-3 text-center">
+                                        <button class="btn orange-btn bordered-btn" type="submit" id="btnModify">수정</button>
+                                        <button class="btn black-outline-btn" type="reset">초기화</button>
+                                        <button class="btn red-outline-btn" type="button" onclick="location.href='/member/leave';">회원탈퇴</button>
+                                    </div>
                                 </div>
                             </div>
                         </form>
                     </div>
-                    <!--================ 검색 end =================-->
                 </div>
-                <div class="row justify-content-end m-3">
-                    <input type="button" class="btn btn-merry" onclick="location.href='/admin/board/regist'" value="등록">
-                </div>
-                <table class="table w-100">
-                    <thead>
-                    <tr>
-                        <th class="w-10">no</th>
-                        <th class="w-50">제목</th>
-                        <th class="w-30">작성자</th>
-                        <th class="w-10">작성일</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    <c:choose>
-                        <c:when test="${!empty responseDTO.dtoList}">
-                            <c:set value="${responseDTO.total_count}" var="total_count" />
-                            <c:forEach items="${responseDTO.dtoList}" var="bbsDTO" varStatus="loop">
-                                <tr>
-                                    <th>${total_count -responseDTO.page_skip_count -loop.index}</th>
-                                    <td><a href="/admin/board/view?board_idx=${bbsDTO.board_idx}" class="black-text">${bbsDTO.board_title}</a></td>
-                                    <td>${bbsDTO.board_writer}</td>
-                                    <td>${bbsDTO.board_reg_date}</td>
-                                </tr>
-                            </c:forEach>
-                        </c:when>
-                        <c:otherwise>
-                            <tr class="bg-white text-center">
-                                <td colspan="4">등록된 글이 없습니다.</td>
-                            </tr>
-                        </c:otherwise>
-                    </c:choose>
-                    </tbody>
-                </table>
-                <!--================ 페이징 start =================-->
-                <div class="pagination-wrap">
-                    <nav class="blog-pagination justify-content-center d-flex">
-                        <ul class="pagination">
-                            <c:if test="${responseDTO.page<=10}">
-                            <li class="page-item disabled">
-                                </c:if>
-                                <c:if test="${responseDTO.page>10}">
-                            <li class="page-item">
-                                </c:if>
-                                <a class="page-link" href="/admin/board/list${responseDTO.linked_params}&page=${responseDTO.page_block_end-10}" aria-label="Previous">
-                                    <span aria-hidden="true">&laquo;</span>
-                                </a>
-                            </li>
-                            <c:forEach begin="${responseDTO.page_block_start}"
-                                       end="${responseDTO.page_block_end}"
-                                       var="page_num">
-                                <c:choose>
-                                    <c:when test="${responseDTO.page == page_num}">
-                                        <li class="page-item active">
-                                            <a href="#" class="page-link">${page_num}</a>
-                                        </li>
-                                    </c:when>
-                                    <c:otherwise>
-                                        <li class="page-item">
-                                            <a href="${responseDTO.linked_params}&page=${page_num}" class="page-link">${page_num}</a>
-                                        </li>
-                                    </c:otherwise>
-                                </c:choose>
-                            </c:forEach>
-                            <c:if test="${(responseDTO.page_block_start+10)>(responseDTO.total_page)}">
-                            <li class="page-item disabled">
-                                </c:if>
-                                <c:if test="${(responseDTO.page_block_start+10)<=(responseDTO.total_page)}">
-                            <li class="page-item">
-                                </c:if>
-                                <a class="page-link" href="/admin/board/list${responseDTO.linked_params}&page=${responseDTO.page_block_start+10}" aria-label="Next">
-                                    <span aria-hidden="true">&raquo;</span>
-                                </a>
-                            </li>
-                        </ul>
-                    </nav>
-                </div>
-                <!--================ 페이징 end =================-->
             </div>
         </div>
     </div>
-    <!--================ 본문 end =================-->
-    <!--================ 푸터 Start =================-->
     <jsp:include page="/WEB-INF/views/common/footer.jsp" />
-    <!--================ 푸터 End =================-->
     <script src="/resources/assets/js/jquery-1.11.3.min.js"></script>
     <script src="/resources/assets/bootstrap/js/bootstrap.min.js"></script>
     <script src="/resources/assets/js/jquery.countdown.js"></script>
