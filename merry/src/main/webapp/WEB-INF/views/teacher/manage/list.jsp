@@ -126,11 +126,13 @@
                 },            // Json 형식의 데이터이다.
                 success: function (result) { // 비동기통신의 성공일경우 success콜백으로 들어옵니다. 'res'는 응답받은 데이터이다.
                     if(result == 0){
-                        alert("장바구니에 상품이 존재합니다")
-                        return false;
-                    }
-                    if(confirm("장바구니에 추가되었습니다.\n 장바구니로 이동하시겠습니까?")){
-                        window.location.href="/mypage/cart"
+                        if(confirm("장바구니에 상품이 존재합니다.\n장바구니로 이동하시겠습니까?")){
+                            window.location.href="/mypage/cart"
+                        }
+                    }else {
+                        if (confirm("장바구니에 추가되었습니다.\n장바구니로 이동하시겠습니까?")) {
+                            window.location.href = "/mypage/cart"
+                        }
                     }
                 },
                 error: function (error) { // 비동기 통신이 실패할경우 error 콜백으로 들어옵니다.

@@ -33,6 +33,7 @@ public class TeacherController {
     @GetMapping("/manage/qna")
     public void qna(@RequestParam(value = "teacheridx", defaultValue = "0") String teacheridx,
                        Model model){
+        teacheridx = "3";
         List<QnaDTO> qnaList = teacherService.qnaList(teacheridx);
         log.info("qnaList : {}", qnaList);
         model.addAttribute("qnaList", qnaList);
@@ -61,6 +62,6 @@ public class TeacherController {
     @GetMapping("/manage/materials")
     public void materials(@RequestParam(value = "teacheridx", defaultValue = "0") String teacheridx,
                           Model model){
-//        List<DataDTO> dataList = teacherService.
+        List<DataDTO> dataList = teacherService.dataList(teacheridx);
     }
 }

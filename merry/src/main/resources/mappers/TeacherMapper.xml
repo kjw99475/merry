@@ -26,6 +26,11 @@
         FROM qna
         WHERE qna_answer_idx = #{teacher_idx}
     </select>
+    <select id="datalist" resultType="org.fullstack.merry.domain.DataVO">
+        SELECT data_idx, data_title, data_reg_date, 
+        FROM data
+        WHERE member_idx = '3'
+    </select>
     <select id="cartList">
         SELECT lec_idx
         FROM cart
