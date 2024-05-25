@@ -70,10 +70,16 @@ public class MypageController {
     }
     @ResponseBody
     @PostMapping("/addcart")
-    public void addcart(@RequestParam(value = "lec_idx") int lecIdx,
+    public int addcart(@RequestParam(value = "lec_idx") int lecIdx,
                         HttpSession session){
         String member_id = (String)session.getAttribute("member_id");
-        mypageService.addcart(member_id, lecIdx);
+        List<Integer> cartlist = teacherService.cartList(member_id);
+        if(cartlist.contains(lecIdx)){
+            return 0;
+        }else{
+            mypageService.addcart(member_id, lecIdx);
+            return 1;
+        }
     }
     @ResponseBody
     @PostMapping("/addzzim")
@@ -81,7 +87,6 @@ public class MypageController {
                         HttpSession session){
         String member_id = (String)session.getAttribute("member_id");
         List<Integer> zzimlist = teacherService.zzimList(member_id);
-        log.info(zzimlist.contains(lecIdx));
         if(zzimlist.contains(lecIdx)){
             mypageService.deletezzim(member_id, lecIdx);
         }else {
