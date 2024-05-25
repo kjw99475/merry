@@ -18,12 +18,12 @@ public class LoginServiceImpl implements LoginServiceIf {
     @Override
     public MemberDTO login_info(String member_id, String pwd) {
         MemberVO memberVO = loginMapper.login_info(member_id, pwd);
-        MemberDTO memberDTO = null;
         if (memberVO != null && memberVO.getPwd().equals(pwd)) {
-            memberDTO = modelMapper.map(memberVO, MemberDTO.class);
-        }
-        return memberDTO;
+            MemberDTO memberDTO = modelMapper.map(memberVO, MemberDTO.class);
+            return memberDTO;
+        } else return null;
     }
+
 
 //    @Override
 //    public int update_login_data(String user_id, String pwd) {
