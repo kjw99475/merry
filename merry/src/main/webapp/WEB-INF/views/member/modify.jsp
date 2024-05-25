@@ -196,8 +196,6 @@
         }
         serverValiseResult['${err.getField()}'] = '${err.defaultMessage}';
         </c:forEach>
-
-        console.log(serverValiseResult);
     </script>
 
     <script src="/resources/assets/js/jquery-1.11.3.min.js"></script>

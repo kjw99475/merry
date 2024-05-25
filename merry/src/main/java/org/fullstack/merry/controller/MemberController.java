@@ -15,8 +15,11 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
+import java.io.IOException;
+import java.io.PrintWriter;
 
 
 @Log4j2
@@ -52,8 +55,10 @@ public class MemberController {
         if (result > 0) {
             return "redirect:/login/login";
         } else {
+            redirectAttributes.addFlashAttribute("errors", bindingResult.getAllErrors());
             return "redirect:/member/join";
         }
+
     }
 
     @GetMapping("/view")
@@ -140,21 +145,26 @@ public class MemberController {
     @GetMapping("/leave")
     public String leaveGET(
             HttpSession session,
-            RedirectAttributes redirectAttributes
-    ) {
+            HttpServletResponse resp
+    ) throws IOException {
         log.info("===============================");
         log.info("MemberController >> leaveGET()");
 
         String member_id = (String)session.getAttribute("member_id");
         int result = memberService.leave(member_id);
         if (result > 0) {
-            redirectAttributes.addFlashAttribute("result", "정상적으로 탈퇴 처리되었습니다.");
             session.invalidate();
+            resp.setCharacterEncoding("UTF-8");
+            resp.setContentType("text/html; charset=UTF-8");
+            PrintWriter out = resp.getWriter();
+            out.println("<script>alert('정상적으로 탈퇴 처리되었습니다.'); location.href='/'</script>");
+            out.close();
             return "redirect:/";
         }
         else {
-            return "/member/view";
+            return "redirect:/member/view";
         }
+
     }
 
 
