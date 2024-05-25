@@ -14,31 +14,30 @@ import org.springframework.stereotype.Service;
 public class MemberServiceImpl implements MemberServiceIf {
     private final MemberMapper memberMapper;
     private final ModelMapper modelMapper;
-//
-//    @Override
-//    public MemberDTO view(String user_id) {
-//        MemberVO memberVO = memberMapper.view(user_id);
-//        MemberDTO memberDTO = modelMapper.map(memberVO, MemberDTO.class);
-//        return memberDTO;
-//    }
-//
-//    @Override
-//    public int modify(MemberDTO memberDTO) {
-//        MemberVO memberVO = modelMapper.map(memberDTO, MemberVO.class);
-//        int result = memberMapper.modify(memberVO);
-//        return result;
-//    }
-//
-//    @Override
-//    public int leave(String user_id) {
-//        int result = memberMapper.leave(user_id);
-//        return result;
-//    }
 
     @Override
     public int join(MemberDTO memberDTO) {
         MemberVO memberVO = modelMapper.map(memberDTO, MemberVO.class);
         int result = memberMapper.join(memberVO);
+        return result;
+    }
+
+    @Override
+    public MemberDTO view(String member_id) {
+        MemberVO memberVO = memberMapper.view(member_id);
+        MemberDTO memberDTO = modelMapper.map(memberVO, MemberDTO.class);
+        return memberDTO;
+    }
+    @Override
+    public int modify(MemberDTO memberDTO) {
+        MemberVO memberVO = modelMapper.map(memberDTO, MemberVO.class);
+        int result = memberMapper.modify(memberVO);
+        return result;
+    }
+
+    @Override
+    public int leave(String member_id) {
+        int result = memberMapper.leave(member_id);
         return result;
     }
 

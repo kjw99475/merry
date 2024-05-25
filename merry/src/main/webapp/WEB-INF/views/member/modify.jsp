@@ -76,7 +76,7 @@
                                             <div class="mb-3" >
                                                 <div class="input-group">
                                                     <span class="input-group-text">아이디</span>
-                                                    <input type="text" name="member_id" id="member_id" class="form-control" readonly value="${memberDTO.user_id}">
+                                                    <input type="text" name="member_id" id="member_id" class="form-control" readonly value="${memberDTO.member_id}">
                                                 </div>
                                             </div>
                                             <div class="mb-3">
@@ -88,7 +88,7 @@
                                             <div class="mb-3">
                                                 <div class="input-group">
                                                     <span class="input-group-text">비밀번호</span>
-                                                    <input type="password" name="pwd" id="pwd" value="${memberDTO.pwd}" maxlength="300" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default">
+                                                    <input type="password" name="pwd" id="pwd" value="" maxlength="300" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default">
                                                 </div>
                                                 <div id="div_err_pwd" style="display: none"></div>
                                             </div>
@@ -100,10 +100,10 @@
                                                     <input type="text" class="form-control" name="email_domain" id="email_domain" value="${memberDTO.email_domain}" readonly/>
                                                     <select class="col-4" name="domain_list" id="domain_list" value="${memberDTO.email_domain}">
                                                         <option value="">선택</option>
-                                                        <option value="gmail.com">gmail.com</option>
-                                                        <option value="naver.com">naver.com</option>
-                                                        <option value="hanmail.net">hanmail.net</option>
-                                                        <option value="nate.com">nate.com</option>
+                                                        <option value="gmail.com" <c:out value="${memberDTO.email_domain == 'gmail.com' ? 'selected' : ''}" />>gmail.com</option>
+                                                        <option value="naver.com" <c:out value="${memberDTO.email_domain == 'naver.com' ? 'selected' : ''}" />>naver.com</option>
+                                                        <option value="hanmail.net" <c:out value="${memberDTO.email_domain == 'hanmail.net' ? 'selected' : ''}" />>hanmail.net</option>
+                                                        <option value="nate.com" <c:out value="${memberDTO.email_domain == 'nate.com' ? 'selected' : ''}" />>nate.com</option>
                                                         <option value="direct">직접 입력</option>
                                                     </select>
                                                 </div>
@@ -119,16 +119,16 @@
                                             <div class="mb-3">
                                                 <div class="input-group">
                                                     <span class="input-group-text">핸드폰번호</span>
-                                                    <select class="col-3" name="phone_0" id="phone_0" value="${memberDTO.phone_0}">
+                                                    <select class="col-3" name="phone_0" id="phone_0">
                                                         <option value="">선택</option>
-                                                        <option value="010">010</option>
-                                                        <option value="011">011</option>
-                                                        <option value="016">016</option>
-                                                        <option value="017">017</option>
-                                                        <option value="018">018</option>
+                                                        <option value="010" <c:out value="${memberDTO.phone_0 == '010' ? 'selected' : ''}" />>010</option>
+                                                        <option value="011" <c:out value="${memberDTO.phone_0 == '011' ? 'selected' : ''}" />>011</option>
+                                                        <option value="016" <c:out value="${memberDTO.phone_0 == '016' ? 'selected' : ''}" />>016</option>
+                                                        <option value="017" <c:out value="${memberDTO.phone_0 == '017' ? 'selected' : ''}" />>017</option>
+                                                        <option value="018" <c:out value="${memberDTO.phone_0 == '018' ? 'selected' : ''}" />>018</option>
                                                     </select>
                                                     <span class="input-group-text">-</span>
-                                                    <input type="text" class="form-control" name="phone_1" id="phone_1" aria-label="email_id" value="${memberDTO.phone_1}">
+                                                    <input type="text" class="form-control" name="phone_1" id="phone_1" value="${memberDTO.phone_1}"/>
                                                     <span class="input-group-text">-</span>
                                                     <input type="text" class="form-control" name="phone_2" id="phone_2" value="${memberDTO.phone_2}"/>
                                                 </div>
@@ -158,9 +158,9 @@
                                         </div>
                                     </div>
                                     <div class="checkbox mb-3 text-center">
-                                        <button class="btn orange-btn bordered-btn" type="submit" id="btnModify">수정</button>
+                                        <button class="btn orange-btn bordered-btn" type="submit" id="btnModify">수정완료</button>
                                         <button class="btn black-outline-btn" type="reset">초기화</button>
-                                        <button class="btn red-outline-btn" type="button" onclick="location.href='/member/leave';">회원탈퇴</button>
+                                        <button class="btn red-outline-btn" type="button" onclick="location.href='/member/view';">수정취소</button>
                                     </div>
                                 </div>
                             </div>
@@ -171,6 +171,35 @@
         </div>
     </div>
     <jsp:include page="/WEB-INF/views/common/footer.jsp" />
+    <script>
+        if (${!empty result}) alert("${result}")
+        if (${!empty err}) alert("${err}")
+
+        const domainDOM = document.getElementById("email_domain");
+        const domainListDOM = document.getElementById("domain_list");
+
+        domainListDOM.addEventListener("change", function(e) {
+            if (e.target.value !== "direct") {
+                domainDOM.value = e.target.value;
+            } else {
+                domainDOM.value = "";
+                domainDOM.readOnly = false;
+            }
+        })
+    </script>
+    <script>
+        const serverValiseResult = {};
+        <c:forEach items="${errors}" var="err">
+        if(document.getElementById("div_err_${err.getField()}") != null) {
+            document.getElementById("div_err_${err.getField()}").innerHTML = "<small style='color: red'>${err.getField()}필드는 ${err.defaultMessage}</small>";
+            document.getElementById("div_err_${err.getField()}").style.display = "block";
+        }
+        serverValiseResult['${err.getField()}'] = '${err.defaultMessage}';
+        </c:forEach>
+
+        console.log(serverValiseResult);
+    </script>
+
     <script src="/resources/assets/js/jquery-1.11.3.min.js"></script>
     <script src="/resources/assets/bootstrap/js/bootstrap.min.js"></script>
     <script src="/resources/assets/js/jquery.countdown.js"></script>

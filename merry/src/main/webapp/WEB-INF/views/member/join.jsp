@@ -25,21 +25,13 @@
     <!-- google font -->
     <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,700" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Poppins:400,700&display=swap" rel="stylesheet">
-    <!-- fontawesome -->
     <link rel="stylesheet" href="/resources/assets/css/all.min.css">
-    <!-- bootstrap -->
     <link rel="stylesheet" href="/resources/assets/bootstrap/css/bootstrap.min.css">
-    <!-- owl carousel -->
     <link rel="stylesheet" href="/resources/assets/css/owl.carousel.css">
-    <!-- magnific popup -->
     <link rel="stylesheet" href="/resources/assets/css/magnific-popup.css">
-    <!-- animate css -->
     <link rel="stylesheet" href="/resources/assets/css/animate.css">
-    <!-- mean menu css -->
     <link rel="stylesheet" href="/resources/assets/css/meanmenu.min.css">
-    <!-- main style -->
     <link rel="stylesheet" href="/resources/assets/css/main.css">
-    <!-- responsive -->
     <link rel="stylesheet" href="/resources/assets/css/responsive.css">
     <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
     <script>
@@ -55,118 +47,125 @@
     </script>
 </head>
 <body>
-<div id="container" class="pt-150">
-    <%@ include file="/WEB-INF/views/common/header.jsp" %>
-        <div class="row">
-            <div class="col-lg-8 offset-lg-2 text-center">
-                <div class="section-title">
-                    <h3>Join</h3>
+<div id="container">
+    <jsp:include page="/WEB-INF/views/common/header.jsp" />
+    <div class="breadcrumb-section breadcrumb-bg">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8 offset-lg-2 text-center">
+                    <div class="breadcrumb-text">
+                        <h1>회원가입</h1>
+                    </div>
                 </div>
             </div>
         </div>
-        <form name="frmJoin" id="frmJoin" method="post" action="/member/join">
-            <div class="list-group w1024">
-                <div style="margin-bottom: 24px;" aria-current="true">
-                    <div class="d-flex w-100 justify-content-center" style="margin-bottom: 8px; padding-bottom: 4px;">
-                        <div class="mb-1">
-                            <div class="mb-3" >
-                                <div class="input-group">
-                                    <span class="input-group-text">아이디</span>
-                                    <input type="text" name="member_id" id="member_id" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default" value="${memberDTO.user_id}" maxlength="20">
-                                </div>
-                                <div id="div_err_member_id" style="display: none"></div>
+    </div>
+    <form name="frmJoin" id="frmJoin" method="post" action="/member/join">
+        <div class="list-group w1024 mt-80 mb-150">
+            <div style="margin-bottom: 24px;" aria-current="true">
+                <div class="d-flex w-100 justify-content-center" style="margin-bottom: 8px; padding-bottom: 4px;">
+                    <div class="mb-1">
+                        <div class="mb-3" >
+                            <div class="input-group">
+                                <span class="input-group-text">아이디</span>
+                                <input type="text" name="member_id" id="member_id" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default" value="${memberDTO.user_id}" maxlength="20">
                             </div>
-                            <div class="mb-3">
-                                <div class="input-group">
-                                    <span class="input-group-text">이름</span>
-                                    <input type="text" name="name" id="name" value="${memberDTO.name}" maxlength="20" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default">
-                                </div>
-                                <div id="div_err_name" style="display: none"></div>
+                            <div id="div_err_member_id" style="display: none"></div>
+                        </div>
+                        <div class="mb-3">
+                            <div class="input-group">
+                                <span class="input-group-text">이름</span>
+                                <input type="text" name="name" id="name" value="${memberDTO.name}" maxlength="20" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default">
                             </div>
-                            <div class="mb-3">
-                                <div class="input-group">
-                                    <span class="input-group-text">비밀번호</span>
-                                    <input type="password" name="pwd" id="pwd" value="${memberDTO.pwd}" maxlength="300" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default">
-                                </div>
-                                <div id="div_err_pwd" style="display: none"></div>
+                            <div id="div_err_name" style="display: none"></div>
+                        </div>
+                        <div class="mb-3">
+                            <div class="input-group">
+                                <span class="input-group-text">비밀번호</span>
+                                <input type="password" name="pwd" id="pwd" value="${memberDTO.pwd}" maxlength="300" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default">
                             </div>
-                            <div class="mb-3">
-                                <div class="input-group">
-                                    <span class="input-group-text">이메일</span>
-                                    <input type="text" class="form-control" name="email_id" id="email_id" placeholder="아이디" aria-label="email_id" value="${memberDTO.email_id}">
-                                    <span class="input-group-text">@</span>
-                                    <input type="text" class="form-control" name="email_domain" id="email_domain" value="${memberDTO.email_domain}" readonly/>
-                                    <select class="col-4" name="domain_list" id="domain_list" value="${memberDTO.email_domain}">
-                                        <option value="">선택</option>
-                                        <option value="gmail.com">gmail.com</option>
-                                        <option value="naver.com">naver.com</option>
-                                        <option value="hanmail.net">hanmail.net</option>
-                                        <option value="nate.com">nate.com</option>
-                                        <option value="direct">직접 입력</option>
-                                    </select>
-                                </div>
-                                <div id="div_err_email" style="display: none"></div>
+                            <div id="div_err_pwd" style="display: none"></div>
+                        </div>
+                        <div class="mb-3">
+                            <div class="input-group">
+                                <span class="input-group-text">이메일</span>
+                                <input type="text" class="form-control" name="email_id" id="email_id" placeholder="아이디" aria-label="email_id" value="${memberDTO.email_id}">
+                                <span class="input-group-text">@</span>
+                                <input type="text" class="form-control" name="email_domain" id="email_domain" value="${memberDTO.email_domain}" readonly/>
+                                <select class="col-4" name="domain_list" id="domain_list" value="${memberDTO.email_domain}">
+                                    <option value="">선택</option>
+                                    <option value="gmail.com">gmail.com</option>
+                                    <option value="naver.com">naver.com</option>
+                                    <option value="hanmail.net">hanmail.net</option>
+                                    <option value="nate.com">nate.com</option>
+                                    <option value="direct">직접 입력</option>
+                                </select>
                             </div>
-                            <div class="mb-3">
-                                <div class="input-group">
-                                    <span class="input-group-text">생년월일</span>
-                                    <input type="date" class="form-control" name="birthday" id="birthday" value="${memberDTO.birthday}"/>
-                                </div>
-                                <div id="div_err_birthday" style="display: none"></div>
+                            <div id="div_err_email" style="display: none"></div>
+                        </div>
+                        <div class="mb-3">
+                            <div class="input-group">
+                                <span class="input-group-text">생년월일</span>
+                                <input type="date" class="form-control" name="birthday" id="birthday" value="1994-02-05"/>
                             </div>
-                            <div class="mb-3">
-                                <div class="input-group">
-                                    <span class="input-group-text">핸드폰번호</span>
-                                    <select class="col-3" name="phone_0" id="phone_0" value="${memberDTO.phone_0}">
-                                        <option value="">선택</option>
-                                        <option value="010">010</option>
-                                        <option value="011">011</option>
-                                        <option value="016">016</option>
-                                        <option value="017">017</option>
-                                        <option value="018">018</option>
-                                    </select>
-                                    <span class="input-group-text">-</span>
-                                    <input type="text" class="form-control" name="phone_1" id="phone_1" aria-label="email_id" value="${memberDTO.phone_1}">
-                                    <span class="input-group-text">-</span>
-                                    <input type="text" class="form-control" name="phone_2" id="phone_2" value="${memberDTO.phone_2}"/>
-                                </div>
-                                <div id="div_err_phone" style="display: none"></div>
+                            <div id="div_err_birthday" style="display: none"></div>
+                        </div>
+                        <div class="mb-3">
+                            <div class="input-group">
+                                <span class="input-group-text">핸드폰번호</span>
+                                <select class="col-3" name="phone_0" id="phone_0">
+                                    <option value="">선택</option>
+                                    <option value="010" <c:out value="${memberDTO.phone_0 == '010' ? 'selected' : ''}" />>010</option>
+                                    <option value="011" <c:out value="${memberDTO.phone_0 == '011' ? 'selected' : ''}" />>011</option>
+                                    <option value="016" <c:out value="${memberDTO.phone_0 == '016' ? 'selected' : ''}" />>016</option>
+                                    <option value="017" <c:out value="${memberDTO.phone_0 == '017' ? 'selected' : ''}" />>017</option>
+                                    <option value="018" <c:out value="${memberDTO.phone_0 == '018' ? 'selected' : ''}" />>018</option>
+                                </select>
+                                <span class="input-group-text">-</span>
+                                <input type="text" class="form-control" name="phone_1" id="phone_1" aria-label="email_id" value="${memberDTO.phone_1}">
+                                <span class="input-group-text">-</span>
+                                <input type="text" class="form-control" name="phone_2" id="phone_2" value="${memberDTO.phone_2}"/>
                             </div>
-                            <div class="mb-3">
-                                <div class="input-group">
-                                    <span class="input-group-text">우편번호</span>
-                                    <input type="text" class="form-control" name="zipcode" id="zipcode" onclick="address()" value="${memberDTO.zipcode}"/>
-                                </div>
-                                <div id="div_err_zipcode" style="display: none"></div>
+                            <div id="div_err_phone" style="display: none"></div>
+                        </div>
+                        <div class="mb-3">
+                            <div class="input-group">
+                                <span class="input-group-text">우편번호</span>
+                                <input type="text" class="form-control" name="zipcode" id="zipcode" onclick="address()" value="${memberDTO.zipcode}"/>
                             </div>
-                            <div class="mb-3">
-                                <div class="input-group">
-                                    <span class="input-group-text">주소</span>
-                                    <input type="text" class="form-control" name="addr" id="addr" onclick="address()" value="${memberDTO.addr}"/>
-                                </div>
-                                <span id="div_err_addr"></span>
+                            <div id="div_err_zipcode" style="display: none"></div>
+                        </div>
+                        <div class="mb-3">
+                            <div class="input-group">
+                                <span class="input-group-text">주소</span>
+                                <input type="text" class="form-control" name="addr" id="addr" onclick="address()" value="${memberDTO.addr}"/>
                             </div>
-                            <div class="mb-3">
-                                <div class="input-group">
-                                    <span class="input-group-text">상세주소</span>
-                                    <input type="text" class="form-control" name="addr_detail" id="addr_detail" value="${memberDTO.addr_detail}"/>
-                                </div>
-                                <span id="div_err_addr_detail"></span>
+                            <span id="div_err_addr"></span>
+                        </div>
+                        <div class="mb-3">
+                            <div class="input-group">
+                                <span class="input-group-text">상세주소</span>
+                                <input type="text" class="form-control" name="addr_detail" id="addr_detail" value="${memberDTO.addr_detail}"/>
                             </div>
+                            <span id="div_err_addr_detail"></span>
                         </div>
                     </div>
-                    <div class="checkbox mb-3 text-center">
-                        <button class="btn orange-btn bordered-btn" type="submit" id="btnLogin">가입완료</button>
-                        <button class="btn black-outline-btn" type="reset">초기화</button>
-                        <button class="btn red-outline-btn" type="button" onclick="location.href='/login/login';">가입취소</button>
-                    </div>
+                </div>
+                <div class="checkbox mb-3 text-center">
+                    <button class="btn orange-btn bordered-btn" type="submit" id="btnLogin">가입완료</button>
+                    <button class="btn black-outline-btn" type="reset">초기화</button>
+                    <button class="btn red-outline-btn" type="button" onclick="location.href='/login/login';">가입취소</button>
                 </div>
             </div>
-        </form>
+        </div>
+    </form>
     <%@ include file="/WEB-INF/views/common/footer.jsp" %>
 </div>
 <script src="/resources/js/bootstrap.bundle.min.js"></script>
 <script>
+    if (${!empty result}) alert("${result}")
+    if (${!empty err}) alert("${err}")
+
     const domainDOM = document.getElementById("email_domain");
     const domainListDOM = document.getElementById("domain_list");
 
@@ -175,7 +174,7 @@
             domainDOM.value = e.target.value;
         } else {
             domainDOM.value = "";
-            domainDOM.disabled = false;
+            domainDOM.readOnly = false;
         }
     })
 </script>
@@ -191,26 +190,15 @@
 
     console.log(serverValiseResult);
 </script>
-<!-- jquery -->
 <script src="/resources/assets/js/jquery-1.11.3.min.js"></script>
-<!-- bootstrap -->
 <script src="/resources/assets/bootstrap/js/bootstrap.min.js"></script>
-<!-- count down -->
 <script src="/resources/assets/js/jquery.countdown.js"></script>
-<!-- isotope -->
 <script src="/resources/assets/js/jquery.isotope-3.0.6.min.js"></script>
-<!-- waypoints -->
 <script src="/resources/assets/js/waypoints.js"></script>
-<!-- owl carousel -->
 <script src="/resources/assets/js/owl.carousel.min.js"></script>
-<!-- magnific popup -->
 <script src="/resources/assets/js/jquery.magnific-popup.min.js"></script>
-<!-- mean menu -->
 <script src="/resources/assets/js/jquery.meanmenu.min.js"></script>
-<!-- sticker js -->
 <script src="/resources/assets/js/sticker.js"></script>
-<!-- main js -->
 <script src="/resources/assets/js/main.js"></script>
-
 </body>
 </html>

@@ -42,17 +42,28 @@ public class MemberDTO {
 
     private String email_id;
     private String email_domain;
+    public String getPhone_0(String phone) {return phone.substring(0, 3);}
+    public String getPhone_1(String phone) {
+        if (phone.length() == 12) {
+            return phone.substring(phone.indexOf("-") + 1, phone.indexOf("-") + 4);
+        } else {
+            return phone.substring(phone.indexOf("-") + 1, phone.indexOf("-") + 5);
+        }
+    }
+    public String getPhone_2(String phone) {
+        return phone.substring(phone.lastIndexOf("-") + 1);
+    }
 
     public void setPhone(String phone_0, String phone_1, String phone_2) {
         this.phone = phone_0 + "-" + phone_1 + "-" + phone_2;
     }
 
-//    public String getEmail_id(String email) {
-//        return email.split("@")[0];
-//    }
-//    public String getEmail_domain(String email) {
-//        return email.split("@")[1];
-//    }
+    public String getEmail_id(String email) {
+        return email.split("@")[0];
+    }
+    public String getEmail_domain(String email) {
+        return email.split("@")[1];
+    }
     public void setEmail(String email_id, String email_domain) {
         this.email = email_id + "@" + email_domain;
     }
