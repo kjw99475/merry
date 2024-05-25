@@ -8,13 +8,16 @@
             <a href="/mypage/profile" class="nav-link black-text <c:if test="${fn:contains(param.menuGubun, 'profile')}">active</c:if>">개인정보</a>
         </li>
         <li class="nav-item">
-            <a href="/mypage/write" class="nav-link black-text <c:if test="${fn:contains(param.menuGubun, 'write')}">active</c:if>">작성글</a>
+            <a href="/mypage/write" class="nav-link black-text <c:if test="${fn:contains(param.menuGubun, 'writeBbs')}">active</c:if>">작성게시글</a>
         </li>
         <li class="nav-item">
-            <a href="/mypage/qna" class="nav-link black-text <c:if test="${fn:contains(param.menuGubun, 'qna')}">active</c:if>">1:1문의</a>
+            <a href="/mypage/writeReply" class="nav-link black-text <c:if test="${fn:contains(param.menuGubun, 'writeReply')}">active</c:if>">작성댓글</a>
         </li>
         <li class="nav-item">
-            <a href="/mypage/zzim" class="nav-link black-text <c:if test="${fn:contains(param.menuGubun, 'zzim')}">active</c:if>">찜한 강의</a>
+            <a href="/mypage/qna/list" class="nav-link black-text <c:if test="${fn:contains(param.menuGubun, 'qna')}">active</c:if>">1:1문의</a>
+        </li>
+        <li class="nav-item">
+            <a href="/mypage/zzim" class="nav-link black-text <c:if test="${fn:contains(param.menuGubun, 'zzim')}">active</c:if>">찜 한 강의</a>
         </li>
         <li class="nav-item">
             <a href="/mypage/cart" class="nav-link black-text <c:if test="${fn:contains(param.menuGubun, 'cart')}">active</c:if>">장바구니</a>

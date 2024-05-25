@@ -2,7 +2,7 @@
   Created by IntelliJ IDEA.
   User: 82108
   Date: 2024-05-25
-  Time: 오후 2:29
+  Time: 오후 2:30
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
@@ -16,7 +16,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="Responsive Bootstrap4 Shop Template, Created by Imran Hossain from https://imransdesign.com/">
 
-    <title>Mypage >> write</title>
+    <title>Mypage >> qna >> view</title>
 
     <link rel="shortcut icon" type="image/x-icon" href="/resources/assets/img/merry_favicon.ico">
     <link rel="icon" type="image/x-icon" href="/resources/assets/img/merry_favicon.ico">
@@ -41,7 +41,7 @@
             <div class="col-lg-8 offset-lg-2 text-center">
                 <div class="breadcrumb-text">
                     <p>마이페이지</p>
-                    <h1>작성게시글</h1>
+                    <h1>1:1 문의</h1>
                 </div>
             </div>
         </div>
@@ -50,10 +50,10 @@
 <div>
     <div class="container">
         <div class="row" style="display: grid;
-        grid-template-columns: 280px 1fr;
-        height: 100vh;">
+    grid-template-columns: 280px 1fr;
+    height: 100vh;">
             <jsp:include page="/WEB-INF/views/common/mypage_sidebar.jsp">
-                <jsp:param name="menuGubun" value="writeBbs"/>
+                <jsp:param name="menuGubun" value="qna"/>
             </jsp:include>
             <div class="checkout-section mt-80 mb-150">
                 <div style="margin: 0 auto;">
@@ -79,14 +79,25 @@
                                     <tr class="table-head-row">
                                         <th>No</th>
                                         <th>제목</th>
+                                        <th>상태</th>
                                         <th>작성일</th>
+                                        <th>답변일</th>
                                     </tr>
                                     </thead>
                                     <tbody>
                                     <tr class="table-body-row">
-                                        <td class="p-2">1</td>
-                                        <td class="p-2"><a href="/board/view?board_idx=1">중학교 국어 강의 추천해주세요!</a></td>
+                                        <td class="p-2">2</td>
+                                        <td class="p-2"><a href="/mypage/qnaView?qna_type=M&qna_idx=1">강의가 재생되지 않아요.</a></td>
+                                        <td class="p-2">답변전</td>
                                         <td class="p-2">2024-03-04</td>
+                                        <td class="p-2">-</td>
+                                    </tr>
+                                    <tr class="table-body-row">
+                                        <td class="p-2">1</td>
+                                        <td class="p-2"><a href="/mypage/qnaView?qna_type=M&qna_idx=1">환불 관련 문의합니다.</a></td>
+                                        <td class="p-2">답변완료</td>
+                                        <td class="p-2">2024-03-01</td>
+                                        <td class="p-2">2024-03-02</td>
                                     </tr>
                                     </tbody>
                                 </table>
@@ -141,6 +152,7 @@
         </div>
     </div>
     <jsp:include page="/WEB-INF/views/common/footer.jsp" />
+    <!--================ 푸터 End =================-->
     <script src="/resources/assets/js/jquery-1.11.3.min.js"></script>
     <script src="/resources/assets/bootstrap/js/bootstrap.min.js"></script>
     <script src="/resources/assets/js/jquery.countdown.js"></script>
