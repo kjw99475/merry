@@ -56,7 +56,6 @@
             </div>
             <div class="form-floating d-flex">
                 <label for="member_id"><i class="fas fa-user mr-2" style="line-height: 33px;"></i></label>
-<%--                <label for="member_id"><i class="fas fa-user-check"></i>--%>
                     <c:choose>
                         <c:when test="${!empty param.id}">
                             <input type="text" class="form-control" name="member_id" id="member_id" value="${param.id}" maxlength="50" placeholder="아이디를 입력해주세요."/>
@@ -73,7 +72,6 @@
             <div class="checkbox mb-3">
                 <label style="margin-right: 10%"><input type="checkbox" name="save_id" id="save_id"
                         <c:out value="${!empty save_id ? 'checked' : ''}" />/> 아이디저장</label>
-                <button class="btn orange-outline-btn" type="button" id="btnPwd" onclick="location.href='/login/findPwd';">비밀번호 찾기</button>
             </div>
             <button class="w-100 btn btn-lg orange-btn mb-3 bordered-btn" type="submit" id="btnLogin" disabled>로그인</button>
             <a href="/member/join" style="color: inherit; opacity: .65" ><span style="text-decoration: underline">회원가입</span></a>
@@ -81,13 +79,8 @@
     </main>
 </div>
 <script>
-
-    if (${!empty err}) {
-        alert("${err}");
-        <%--if (${param.try_count > 5}) alert("5회 이상 로그인 실패로 잠금 처리된 아이디입니다. 관리자에게 문의해 주세요.")--%>
-        <%--else if (${!empty param.try_count}) alert("${err} \n로그인 시도 ${param.try_count}회/5회")--%>
-        <%--else alert("${err}")--%>
-    }
+    if (${!empty result}) alert("${result}")
+    if (${!empty err}) alert("${err}")
 
     const btnLogin = document.getElementById("btnLogin");
     const frm = document.getElementById("frmLogin");

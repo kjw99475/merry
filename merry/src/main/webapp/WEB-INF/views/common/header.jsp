@@ -41,7 +41,7 @@
                                                 <li><a href="/myedu/plan/list">학습 계획표</a></li>
                                             </ul>
                                         </li>
-                                        <li><a href="/mypage/profile"><i class="fas fa-user"></i> 마이페이지</a></li>
+                                        <li><a href="/member/view"><i class="fas fa-user"></i> 마이페이지</a></li>
                                         <li><a href="/login/logout"><small style="text-decoration: underline">로그아웃</small></a></li>
                                     </c:if>
                                     <c:if test="${sessionScope.member_type eq 'T'}">
