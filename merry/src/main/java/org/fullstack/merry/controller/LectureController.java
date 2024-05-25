@@ -178,7 +178,9 @@ public class LectureController {
                 saveChapVideo = "";
                 if (chapVideos != null && i < chapVideos.size() && !chapVideos.get(i).isEmpty()) {
                     for (int j=0; j<chapList.size(); j++) {
-                        FileUploadUtil.deleteFile(chapList.get(j).getChap_video(), "D:\\java4\\merry\\merry\\src\\main\\webapp\\resources\\uploads\\lecture");
+                        if (i == j) {
+                            FileUploadUtil.deleteFile(chapList.get(j).getChap_video(), "D:\\java4\\merry\\merry\\src\\main\\webapp\\resources\\uploads\\lecture");
+                        }
                     }
 
                     saveChapVideo = FileUploadUtil.saveFile(chapVideos.get(i), "D:\\java4\\merry\\merry\\src\\main\\webapp\\resources\\uploads\\lecture");

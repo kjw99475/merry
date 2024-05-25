@@ -4,7 +4,6 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.apache.ibatis.annotations.Param;
 import org.fullstack.merry.dto.MemberDTO;
-//import org.fullstack.merry.google.LoginInfo;
 import org.fullstack.merry.service.LoginServiceIf;
 import org.fullstack.merry.utils.CookieUtil;
 import org.springframework.stereotype.Controller;

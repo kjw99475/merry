@@ -76,7 +76,6 @@
                 <button class="btn orange-outline-btn" type="button" id="btnPwd" onclick="location.href='/login/findPwd';">비밀번호 찾기</button>
             </div>
             <button class="w-100 btn btn-lg orange-btn mb-3 bordered-btn" type="submit" id="btnLogin" disabled>로그인</button>
-            <button class="w-100 btn btn-lg black-btn mb-3 bordered-btn" type="button" id="btnGoogleLogin" onclick="location.href='/login/google'">구글계정으로 로그인</button>
             <a href="/member/join" style="color: inherit; opacity: .65" ><span style="text-decoration: underline">회원가입</span></a>
         </form>
     </main>

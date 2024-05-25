@@ -108,13 +108,13 @@
                                 <input type="file" accept="video/*" name="chapVideos"><br>
                                 <label>동영상 길이 (대략)</label>
                                 <select name="chapters[${i.index}].chap_time">
-                                    <option value="10분 이내">10분 이내</option>
-                                    <option value="20분 이내">20분 이내</option>
-                                    <option value="30분 이내">30분 이내</option>
-                                    <option value="40분 이내">40분 이내</option>
-                                    <option value="50분 이내">50분 이내</option>
-                                    <option value="60분 이내">60분 이내</option>
-                                    <option value="60분 이내">60분 이상</option>
+                                    <option value="10분 이내" <c:if test="${chapterDTO.chap_time eq '10분 이내'}">selected</c:if>>10분 이내</option>
+                                    <option value="20분 이내" <c:if test="${chapterDTO.chap_time eq '20분 이내'}">selected</c:if>>20분 이내</option>
+                                    <option value="30분 이내" <c:if test="${chapterDTO.chap_time eq '30분 이내'}">selected</c:if>>30분 이내</option>
+                                    <option value="40분 이내" <c:if test="${chapterDTO.chap_time eq '40분 이내'}">selected</c:if>>40분 이내</option>
+                                    <option value="50분 이내" <c:if test="${chapterDTO.chap_time eq '50분 이내'}">selected</c:if>>50분 이내</option>
+                                    <option value="60분 이내" <c:if test="${chapterDTO.chap_time eq '60분 이내'}">selected</c:if>>60분 이내</option>
+                                    <option value="60분 이내" <c:if test="${chapterDTO.chap_time eq '60분 이상'}">selected</c:if>>60분 이상</option>
                                 </select>
                             </div>
                         </c:forEach>
