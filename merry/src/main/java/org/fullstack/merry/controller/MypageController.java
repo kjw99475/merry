@@ -2,39 +2,27 @@ package org.fullstack.merry.controller;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
-<<<<<<< HEAD
-import org.fullstack.merry.dto.MemberDTO;
-import org.fullstack.merry.service.LoginServiceIf;
-import org.fullstack.merry.utils.CookieUtil;
+import org.fullstack.merry.service.MypageServiceIf;
+import org.fullstack.merry.service.TeacherServiceIf;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
-=======
-import org.fullstack.merry.service.MypageServiceIf;
-import org.fullstack.merry.service.TeacherServiceIf;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
->>>>>>> yh
 
 import javax.servlet.http.HttpSession;
-<<<<<<< HEAD
-import javax.validation.Valid;
-import java.text.ParseException;
-=======
 import java.util.List;
->>>>>>> yh
+
 
 @Log4j2
 @Controller
 @RequestMapping(value="/mypage")
 @RequiredArgsConstructor
 public class MypageController {
-//    private final MypageServiceIf mypageService;
+    private final MypageServiceIf mypageService;
+    private final TeacherServiceIf teacherService;
+
     @GetMapping("/profile")
     public void profileGET() {
         log.info("=========================");
@@ -76,8 +64,6 @@ public class MypageController {
         log.info("=========================");
     }
 
-<<<<<<< HEAD
-=======
     @ResponseBody
     @PostMapping("/addcart")
     public int addcart(@RequestParam(value = "lec_idx") int lecIdx,
@@ -104,15 +90,12 @@ public class MypageController {
         }
     }
 
->>>>>>> yh
     @GetMapping("/payment")
     public void paymentGET() {
         log.info("=========================");
         log.info("MypageController >> paymentGET()");
         log.info("=========================");
     }
-<<<<<<< HEAD
-=======
 
     @GetMapping("/paymentView")
     public void paymentVIEWGET() {
@@ -120,5 +103,5 @@ public class MypageController {
         log.info("MypageController >> paymentGET()");
         log.info("=========================");
     }
->>>>>>> yh
+
 }
