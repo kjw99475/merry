@@ -49,4 +49,9 @@ public class TeacherController {
         model.addAttribute("lecturelist", lecturelist);
         model.addAttribute("teacheridx", teacheridx);
     }
+    @GetMapping("/manage/materials")
+    public void materials(@RequestParam(value = "teacheridx", defaultValue = "0") String teacheridx,
+                          Model model){
+//        List<DataDTO> dataList = teacherService.
+    }
 }
