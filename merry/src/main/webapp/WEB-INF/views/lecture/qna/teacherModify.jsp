@@ -2,6 +2,7 @@
 <%@ page trimDirectiveWhitespaces="true" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
 <html>
 <head>
@@ -52,73 +53,45 @@
     <div class="mt-5">
         <h1 style="width: 75%; margin: 0 auto 20px; text-align: center;">강의 Q&A</h1>
     </div>
-    <div class="col-lg-12 text-right mt-3">
-        <a href="/lecture/qna/regist?lec_idx=${lec_idx}" class="boxed-btn">글작성</a>
+    <div class="row">
+        <div class="col-xl">
+
+            <div class="card mb-4">
+
+                <div class="card-body">
+                    <div class="mb-3">
+                        <label class="form-label"  for="basic-default-fullname">문의 제목</label>
+                        <input type="text" readonly class="form-control" id="qna_title" name="qna_title" value="${qnaDTO.qna_title}"/>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label" for="basic-default-fullname">등록일</label>
+                        <input type="text" readonly class="form-control" id="qna_reg_date" name="qna_title" value="${fn:substring(qnaDTO.qna_reg_date, 0, 10)} / ${fn:substring(qnaDTO.qna_reg_date, 11, 20)}"/>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label" for="basic-default-company">문의 내용</label>
+                        <textarea style="resize:none;" class="form-control" rows="10" readonly name="qna_content" id="qna_content" >${qnaDTO.qna_content}</textarea>
+                        <div id="div_err_qna_content" style="display: none"></div>
+                    </div>
+
+                </div>
+                <div class="card-body">
+                    <form action="/lecture/qna/teacherModify" method="post">
+                        <input type="hidden" name="qna_idx" value="${qnaDTO.qna_idx}">
+                        <div class="mb-3"></div>
+
+                        <div class="mb-3">
+                            <label class="form-label" for="basic-default-company">답변 내용</label>
+                            <textarea class="form-control" rows="20" cols="10" name="qna_answer" id="qna_answer" >${qnaDTO.qna_answer}</textarea>
+                            <div id="div_err_qna_answer" style="display: none"></div>
+                        </div>
+
+                        <button type="submit" class="btn btn-primary">수정하기</button>
+                        <button type="reset" class="btn btn-secondary" onclick="location.href='/lecture/qna/view?qna_idx=${qnaDTO.qna_idx}'">게시글로 돌아가기</button>
+                    </form>
+                </div>
+            </div>
+        </div>
     </div>
-    <table class="table">
-        <colgroup class="w-100">
-            <col class="w-5">
-            <col class="w-70">
-            <col class="w-10">
-            <col class="w-15">
-        </colgroup>
-
-        <thead>
-        <tr>
-            <th>no</th>
-            <th>답변여부</th>
-            <th>제목</th>
-            <th>작성자</th>
-            <th>작성일</th>
-        </tr>
-        </thead>
-        <tbody>
-        <c:forEach var="list" items="${qnaList}" varStatus="i">
-            <tr>
-                <td>${i.count}</td>
-                <td><c:if test="${list.qna_answer_yn eq 'Y'}">답변완료</c:if>
-                    <c:if test="${list.qna_answer_yn eq 'N'}">답변대기</c:if></td>
-                <td>
-                    <c:set var="title" value="${list.qna_title}"/>
-                    <c:choose>
-                        <c:when test="${fn:length(title) > 10}">
-                            <a href="/lecture/qna/view?qna_idx=${list.qna_idx}"><strong>${fn:substring(title, 0, 10)}</strong></a>
-                        </c:when>
-                        <c:otherwise>
-                            <a href="/lecture/qna/view?qna_idx=${list.qna_idx}"><strong>${list.qna_title}</strong></a>
-                        </c:otherwise>
-                    </c:choose></td>
-                <td>${list.qna_member_name}</td>
-                <td>${fn:substring(list.qna_reg_date, 0, 10)} / ${fn:substring(list.qna_reg_date, 11, 20)}</td>
-            </tr>
-            <c:if test="${list.qna_answer_yn eq 'Y'}">
-                <tr>
-                    <td></td>
-                    <td class="text-nowrap"><span class="badge bg-label-info me-1">답변</span>
-                    </td>
-                    <td class="text-nowrap">
-                        <c:set var="answer" value="${list.qna_answer}"/>
-                        <c:choose>
-                            <c:when test="${fn:length(answer) > 10}">
-                                <a href="/lecture/qna/view?qna_idx=${list.qna_idx}"><strong>${fn:substring(answer, 0, 10)}</strong></a>
-                            </c:when>
-                            <c:otherwise>
-                                <a href="/lecture/qna/view?qna_idx=${list.qna_idx}"><strong>${list.qna_answer}</strong></a>
-                            </c:otherwise>
-                        </c:choose>
-
-                    </td>
-                    <td class="text-nowrap"><strong>${list.qna_answer_name}</strong></td>
-                    <td>
-                        <strong>${fn:substring(list.qna_answer_reg_date, 0, 10)} / ${fn:substring(list.qna_answer_reg_date, 11, 20)}</strong>
-                    </td>
-                    <td></td>
-
-                </tr>
-            </c:if>
-        </c:forEach>
-        </tbody>
-    </table>
 
 </div>
 <!-- //커뮤니티 섹션 -->
@@ -149,6 +122,36 @@
 <script src="/resources/assets/js/sticker.js"></script>
 <!-- main js -->
 <script src="/resources/assets/js/main.js"></script>
+
+<script>
+    const serverValidResult = {}; //JSON 객체 빈값으로 선언
+    <c:forEach items="${errors}" var="err">
+    if (document.getElementById("div_err_${err.getField()}") != null) {
+        document.getElementById("div_err_${err.getField()}").innerHTML = "<span style='color:red'>${err.defaultMessage}</span>";
+        document.getElementById("div_err_${err.getField()}").style.display = "block";
+    }
+    serverValidResult['${err.getField()}'] = '${err.defaultMessage}';
+    </c:forEach>
+
+    console.log(serverValidResult);
+
+
+    document.getElementById("adminDelete").addEventListener("click", () => {
+        let yn = confirm("답변을 삭제 하시겠습니까?");
+        if (yn) {
+            location.href = "/lecture/qna/deleteTeacher?qna_idx=${qnaDTO.qna_idx}";
+        }
+
+    });
+
+    function qnaDelete(qna_idx) {
+        let yn = confirm("문의글을 삭제 하시겠습니까?");
+        if (yn) {
+            location.href = "/lecture/qna/delete?qna_idx=" + qna_idx;
+        }
+
+    }
+</script>
 
 </body>
 </html>
