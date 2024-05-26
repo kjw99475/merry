@@ -23,4 +23,6 @@ public class NoticeVO {
     private LocalDate notice_reg_date;
     private LocalDate notice_modify_date;
     private int member_idx;
+    private int notice_lec_idx;
+    private String notice_member_name;
 }

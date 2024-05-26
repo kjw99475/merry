@@ -10,10 +10,35 @@
         WHERE notice_type = 't'
           AND n.member_idx = ${M_Idx}
     </select>
-    <select id="teacherlist" resultType="org.fullstack.merry.dto.MemberDTO">
-        SELECT m.name, t.subject, m.teacher_intro
-        FROM teacher AS t
-        INNER JOIN member AS m
-        ON t.member_idx=m.member_idx
+    <select id="teacherlist" resultType="org.fullstack.merry.domain.TeacherVO">
+        SELECT SUBJECT,teacher_name, intro, teacher_image, member_idx
+        FROM teacher
+    </select>
+
+    <select id="lecturelist" resultType="org.fullstack.merry.domain.lecture.LectureVO">
+        SELECT lec_idx, lec_title, lec_img, lec_subject
+        FROM lecture
+        WHERE member_idx = ${teacherIdx}
+          AND lec_status != 'N'
+    </select>
+    <select id="qnaList" resultType="org.fullstack.merry.domain.QnaVO">
+        SELECT qna_answer_yn, qna_title, qna_member_name, qna_reg_date
+        FROM qna
+        WHERE qna_answer_idx = #{teacher_idx}
+    </select>
+    <select id="datalist" resultType="org.fullstack.merry.domain.DataVO">
+        SELECT data_idx, data_title, data_reg_date, 
+        FROM data
+        WHERE member_idx = '3'
+    </select>
+    <select id="cartList">
+        SELECT lec_idx
+        FROM cart
+        WHERE member_id = #{member_id}
+    </select>
+    <select id="zzimList">
+        SELECT lec_idx
+        FROM zzim
+        WHERE member_id = #{member_id}
     </select>
 </mapper>
