@@ -3,6 +3,7 @@ package org.fullstack.merry.service;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.fullstack.merry.domain.BoardVO;
+import org.fullstack.merry.domain.GradeVO;
 import org.fullstack.merry.dto.*;
 import org.fullstack.merry.dto.lecture.LectureDTO;
 import org.fullstack.merry.mapper.TeacherMapper;
@@ -65,5 +66,33 @@ public class TeacherServiceImpl implements TeacherServiceIf {
     public List<Integer> zzimList(String member_id) {
         List<Integer> zzimlist = teacherMapper.zzimList(member_id);
         return zzimlist;
+    }
+
+    @Override
+    public int teacherGradeRegist(GradeDTO gradeDTO) {
+        GradeVO gradeVO = modelMapper.map(gradeDTO, GradeVO.class);
+
+        int result = teacherMapper.teacherGradeRegist(gradeVO);
+
+        return result;
+    }
+
+    @Override
+    public PageResponseDTO<GradeDTO> gradeList(PageRequestDTO pageRequestDTO) {
+        List<GradeVO> voList = teacherMapper.gradeList(pageRequestDTO);
+
+        List<GradeDTO> dtoList = voList.stream()
+                .map(vo -> modelMapper.map(vo, GradeDTO.class))
+                .collect(Collectors.toList());
+
+        int total_count = teacherMapper.totalGrade(pageRequestDTO);
+
+        PageResponseDTO<GradeDTO> responseDTO = PageResponseDTO.<GradeDTO>withAll()
+                .requestDTO(pageRequestDTO)
+                .dtoList(dtoList)
+                .total_count(total_count)
+                .build();
+
+        return responseDTO;
     }
 }
