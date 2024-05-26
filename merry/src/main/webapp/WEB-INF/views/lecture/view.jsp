@@ -62,14 +62,12 @@
                     <div class="single-product-form">
 
                         <input type="hidden" id="lecIdx" value="${lectureDTO.lec_idx}">
-
-<%--                        <c:if test="">--%>
-                            <a href="javascript:nozzim();" class="cart-btn"><i class="fa-solid fa-heart"></i> 찜</a>
-<%--                        </c:if>--%>
-<%--                        <c:if test="">--%>
-                            <a href="javascript:addzzim();" class="cart-btn"><i class="fa-regular fa-heart"></i> 찜</a>
-<%--                        </c:if>--%>
-                        <a href="javascript:addcart();" class="cart-btn"><i class="fas fa-shopping-cart"></i> Add to Cart</a>
+                        <span class="cart" onclick="addcart(${lectureDTO.lec_idx})">
+                                <i class="fas fa-shopping-cart" id="cart${lectureDTO.lec_idx}" <c:if test="${fn:contains(cartlist, lectureDTO.lec_idx)}"> style="color: blue" </c:if>> </i>장바구니
+                            </span>
+                        <span class="zzim" onclick="addzzim(${lectureDTO.lec_idx})">
+                                <i class="fas fa-heart" id="zzim${lectureDTO.lec_idx}" <c:if test="${fn:contains(zzimlist, lectureDTO.lec_idx)}"> style="color:red" </c:if>></i>찜하기
+                            </span>
                         <a href="javascript:addbuy();" class="cart-btn"> 수강신청</a>
 
                         <p><strong>Categories: </strong>${lectureDTO.lec_subject}</p>
@@ -107,11 +105,12 @@
                                 id="box4" data-bs-toggle="tab" data-bs-target="#nav-mission"
                                 aria-controls="nav-mission" aria-selected="false">QnA</button>
                         <button class="nav-link border-white border-bottom-0 letsmove" type="button" role="tab"
-                                id="box5" data-bs-toggle="tab" data-bs-target="#nav-mission"
-                                aria-controls="nav-mission" aria-selected="false">강의 리뷰</button>
-                        <button class="nav-link border-white border-bottom-0 letsmove" type="button" role="tab"
                                 id="box6" data-bs-toggle="tab" data-bs-target="#nav-mission"
                                 aria-controls="nav-mission" aria-selected="false">자료실</button>
+                        <button class="nav-link border-white border-bottom-0 letsmove" type="button" role="tab"
+                                id="box5" data-bs-toggle="tab" data-bs-target="#nav-mission"
+                                aria-controls="nav-mission" aria-selected="false">강의 리뷰</button>
+
                     </div>
                 </nav>
                 <div class="tab-content mb-5">
@@ -261,65 +260,7 @@
                         </c:choose>
 
                     </div>
-                    <div class="box5" id="nav-about" role="tabpanel" aria-labelledby="nav-about-tab">
-                        <br>
-                        <h4>강의 리뷰</h4>
-                        <br>
-                        <c:if test="${not empty sessionScope.member_idx}">
-<%--                            구매조건 추가--%>
-                            <form action="/lecture/review/regist" method="post">
-                                <input type="hidden" name="member_id" value="${sessionScope.member_id}" />
-                                <h4 class="mb-5 fw-bold">리뷰 작성하기</h4>
-                                <div class="row g-4">
-                                    <input type="hidden" name="lec_idx" value="${lectureDTO.lec_idx}">
-                                    <input type="hidden" name="member_idx" value="${sessionScope.member_idx}">
-                                    <div class="col-lg-12">
-                                        <div class="border-bottom rounded">
-                                            <input type="text" name="review_writer" id="review_writer" readonly  class="form-control border-0" value="${sessionScope.name}">
-                                        </div>
-                                    </div>
-                                    <div class="col-lg-12">
-                                        <div class="border-bottom rounded my-4">
-                                            <textarea name="comment" id="comment" class="form-control border-0" cols="30" rows="8" placeholder="리뷰 내용을 입력하세요 *" spellcheck="false"></textarea>
-                                        </div>
-                                    </div>
-                                    <button type="submit" name="reviewBtn" id="reviewBtn" class="btn border border-secondary text-primary rounded-pill px-4 py-3 review_regist_btn">작성 완료</button>
-                                </div>
-                            </form>
-                        </c:if>
-                        <c:choose>
-                            <c:when test="${not empty reviewList}">
-                                <c:forEach var="list" items="${reviewList}">
-                                    <form name="frmDelete" id="frmDelete" method="post" action="/lecture/review/delete">
-                                        <div class="col-lg-12">
-                                            <div class="border-bottom rounded">
-                                                작성자 : ${list.review_writer}
-                                                <c:out value="${list.review_idx}"/>
-                                                <c:if test="${sessionScope.member_idx eq list.member_idx}">
-                                                <button type="button" onclick="goDelete()">리뷰 삭제하기</button>
-                                                </c:if>
-                                            </div>
-                                        </div>
-                                        <div class="col-lg-12">
-                                            <div class="border-bottom rounded my-4">
-                                                리뷰 : ${list.comment}
-                                            </div>
-                                        </div>
-                                        <input type="hidden" name="lec_idx" value="${list.lec_idx}">
-                                        <input type="hidden" id="review_idx" name="review_idx" value="${list.review_idx}">
-                                    </form>
-                                </c:forEach>
-                            </c:when>
-                            <c:otherwise>
-                                <br>
-                                등록된 리뷰가 없습니다. 첫 리뷰 작성자가 되어보세요!
-                            </c:otherwise>
-                        </c:choose>
 
-
-
-                        <p>${pro_content}</p>
-                    </div>
                     <div class="box6" id="nav-about" role="tabpanel" aria-labelledby="nav-about-tab">
                         <br>
                         <h4>자료실</h4>
@@ -366,6 +307,59 @@
                             </c:when>
                             <c:otherwise>
                                 자료실의 게시글이 없습니다.
+                            </c:otherwise>
+                        </c:choose>
+
+                    </div>
+                    <div class="box5" id="nav-about" role="tabpanel" aria-labelledby="nav-about-tab">
+                        <br>
+                        <h4>강의 리뷰</h4>
+                        <br>
+                        <c:if test="${not empty sessionScope.member_idx}">
+                            <%--                            구매조건 추가--%>
+                            <form action="/lecture/review/regist" method="post">
+                                <input type="hidden" name="member_id" value="${sessionScope.member_id}" />
+                                <h4 class="mb-5 fw-bold">리뷰 작성하기</h4>
+                                <div class="row g-4">
+                                    <input type="hidden" name="lec_idx" value="${lectureDTO.lec_idx}">
+                                    <input type="hidden" name="member_idx" value="${sessionScope.member_idx}">
+                                    <div class="col-lg-12">
+                                        <div class="border-bottom rounded">
+                                            <input type="text" name="review_writer" id="review_writer" readonly  class="form-control border-0" value="${sessionScope.name}">
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-12">
+                                        <div class="border-bottom rounded my-4">
+                                            <textarea name="comment" id="comment" class="form-control border-0" cols="30" rows="8" placeholder="리뷰 내용을 입력하세요 *" spellcheck="false"></textarea>
+                                        </div>
+                                    </div>
+                                    <button type="submit" name="reviewBtn" id="reviewBtn" class="btn border border-secondary text-primary rounded-pill px-4 py-3 review_regist_btn">작성 완료</button>
+                                </div>
+                            </form>
+                        </c:if>
+                        <c:choose>
+                            <c:when test="${not empty reviewList}">
+                                <c:forEach var="list" items="${reviewList}" varStatus="rev">
+                                    <div id="review${rev.index}" >
+                                        <div class="col-lg-12">
+                                            <div class="border-bottom rounded">
+                                                 작성자 : ${list.review_writer}
+                                                <c:if test="${sessionScope.member_idx eq list.member_idx}">
+                                                    <button type="button" onclick="askDelete(${rev.index}, '${list.review_idx}')">리뷰 삭제하기</button>
+                                                </c:if>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-12">
+                                            <div class="border-bottom rounded my-4">
+                                                리뷰 : ${list.comment}
+                                            </div>
+                                        </div>
+                                    </div>
+                                </c:forEach>
+                            </c:when>
+                            <c:otherwise>
+                                <br>
+                                등록된 리뷰가 없습니다. 첫 리뷰 작성자가 되어보세요!
                             </c:otherwise>
                         </c:choose>
 
@@ -433,99 +427,52 @@
 
     }
 
-    function addcart(){
-        let lecIdx = document.getElementById("lecIdx").value ;
-        if(${sessionScope.member_id != null}){
+    function addcart(lecIdx){
+        if(lecIdx != 0) {
             $.ajax({
                 type: "POST",            // HTTP method type(GET, POST) 형식이다.
-                url: "/lecture/addcart",      // 컨트롤러에서 대기중인 URL 주소이다.
+                url: "/mypage/addcart",      // 컨트롤러에서 대기중인 URL 주소이다.
                 data: {
-                    lec_idx:lecIdx
-                },
-                dataType : 'text',
+                    lec_idx: lecIdx,
+                    member_id: "${member_id}"
+                },            // Json 형식의 데이터이다.
                 success: function (result) { // 비동기통신의 성공일경우 success콜백으로 들어옵니다. 'res'는 응답받은 데이터이다.
-                    if(confirm("장바구니에 상품이 담겼습니다 장바구니로 이동하시겠습니까?")){
-                        window.location.href="/member/cart";
+                    if(result == 0){
+                        if(confirm("장바구니에 상품이 존재합니다.\n장바구니로 이동하시겠습니까?")){
+                            window.location.href="/mypage/cart"
+                        }
+                    }else {
+                        if (confirm("장바구니에 추가되었습니다.\n장바구니로 이동하시겠습니까?")) {
+                            window.location.href = "/mypage/cart"
+                        }
                     }
                 },
                 error: function (error) { // 비동기 통신이 실패할경우 error 콜백으로 들어옵니다.
                     console.log(error);
                 }
             });
-        }else{
-            alert("로그인 후 이용해주세요");
         }
     }
-
-    function addzzim(){
-        let lecIdx = document.getElementById("lecIdx").value ;
-        if(${sessionScope.member_id != null}){
+    function addzzim(lecIdx){
+        if(lecIdx != 0) {
             $.ajax({
                 type: "POST",            // HTTP method type(GET, POST) 형식이다.
-                url: "/lecture/zzim",      // 컨트롤러에서 대기중인 URL 주소이다.
+                url: "/mypage/addzzim",      // 컨트롤러에서 대기중인 URL 주소이다.
                 data: {
-                    lec_idx:lecIdx
-                },
-                dataType : 'text',
+                    lec_idx: lecIdx
+                },            // Json 형식의 데이터이다.
                 success: function (result) { // 비동기통신의 성공일경우 success콜백으로 들어옵니다. 'res'는 응답받은 데이터이다.
-                    if(confirm("찜 목록에 추가되었습니다. 찜 목록으로 이동하시겠습니까?")){
-                        window.location.href="/member/zzim";
-                    }
-                    window.location.reload();
-                },
-                error: function (error) { // 비동기 통신이 실패할경우 error 콜백으로 들어옵니다.
-                    console.log(error);
-                }
-            });
-        }else{
-            alert("로그인 후 이용해주세요");
-        }
-    }
-
-    function nozzim(){
-        let lecIdx = document.getElementById("lecIdx").value ;
-        if(${sessionScope.member_id != null}){
-            $.ajax({
-                type: "POST",            // HTTP method type(GET, POST) 형식이다.
-                url: "/lecture/zzimDelete",      // 컨트롤러에서 대기중인 URL 주소이다.
-                data: {
-                    lec_idx:lecIdx
-                },
-                dataType : 'text',
-                success: function (result) { // 비동기통신의 성공일경우 success콜백으로 들어옵니다. 'res'는 응답받은 데이터이다.
-                    alert("찜 목록에서 해제되었습니다.")
-                    window.location.reload();
-                },
-                error: function (error) { // 비동기 통신이 실패할경우 error 콜백으로 들어옵니다.
-                    console.log(error);
-                }
-            });
-        }else{
-            alert("로그인 후 이용해주세요");
-        }
-    }
-
-    function addbuy(){
-        let lecIdx = document.getElementById("lecIdx").value ;
-        if(${sessionScope.member_id != null}){
-            $.ajax({
-                type: "POST",            // HTTP method type(GET, POST) 형식이다.
-                url: "/lecture/buy",      // 컨트롤러에서 대기중인 URL 주소이다.
-                data: {
-                    lec_idx:lecIdx
-                },
-                dataType : 'text',
-                success: function (result) { // 비동기통신의 성공일경우 success콜백으로 들어옵니다. 'res'는 응답받은 데이터이다.
-                    if(confirm("장바구니에 상품이 담겼습니다 장바구니로 이동하시겠습니까?")){
-                        window.location.href="/member/buy";
+                    let color =  document.getElementById("zzim"+lecIdx).style.color;
+                    if(color == "red"){
+                        document.getElementById("zzim"+lecIdx).style.color="";
+                    }else{
+                        document.getElementById("zzim"+lecIdx).style.color="red";
                     }
                 },
                 error: function (error) { // 비동기 통신이 실패할경우 error 콜백으로 들어옵니다.
                     console.log(error);
                 }
             });
-        }else{
-            alert("로그인 후 이용해주세요");
         }
     }
 
@@ -544,12 +491,36 @@
         popup.document.write("</body></html>"); popup.document.close();
     }
 
-    function goDelete() {
-        const frm = document.getElementById("frmDelete");
-        let confirm_flag = confirm("해당 리뷰를 삭제하시겠습니까?");
-        if(confirm_flag) {
-            frm.submit();
+
+    function askDelete(index, review_idx) {
+        let deleteYN = confirm("리뷰를 삭제 하시겠습니까?");
+        if (deleteYN) {
+            deleteReview(index, review_idx);
         }
+    }
+
+    function deleteReview(index, review_idx){
+        event.preventDefault();
+        event.stopPropagation();
+        var divInner = $('#review' + index);
+        $.ajax({
+            url:'/lecture/review/delete', //Controller에서 요청 받을 주소
+            type:'post', //POST 방식으로 전달
+            data:{review_idx},
+            dataType : 'text',
+            success:function(result){ //컨트롤러에서 넘어온 cnt값을 받는다
+                divInner.remove();
+                console.log(result);
+            },
+            error : function(xhr, status, error) {
+                console.error("AJAX 요청 실패!");
+                console.error("상태 코드: " + xhr.status); // HTTP 상태 코드
+                console.error("상태 텍스트: " + xhr.statusText); // 상태 텍스트
+                console.error("응답 텍스트: " + xhr.responseText); // 서버에서 반환된 응답 텍스트
+                console.error("오류: " + error); // 오류 메시지
+            }
+        })
+
     }
 
 
