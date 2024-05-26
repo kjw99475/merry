@@ -42,6 +42,9 @@ public class PageResponseDTO<E> {
     private String type2;
     private String member_id;
     private String page_flag;
+
+    private String grade_student;
+
     PageResponseDTO() {}
 
     @Builder(builderMethodName = "withAll")
@@ -75,6 +78,8 @@ public class PageResponseDTO<E> {
         this.status = requestDTO.getStatus();
         this.sort = requestDTO.getSort();
         this.page_flag = requestDTO.getPage_flag();
+        this.grade_student = requestDTO.getGrade_student();
+
         StringBuilder sb = new StringBuilder("?page_size=" + this.page_size);
         if(search_type != null) sb.append("&search_type=" + search_type_st );
         if(search_word != null) sb.append("&search_word=" + search_word);

@@ -3,13 +3,21 @@ package org.fullstack.merry.controller;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.fullstack.merry.domain.Calendar;
+import org.fullstack.merry.dto.GradeDTO;
+import org.fullstack.merry.dto.PageRequestDTO;
+import org.fullstack.merry.dto.PageResponseDTO;
 import org.fullstack.merry.service.CalendarService;
+import org.fullstack.merry.service.GradeService;
 import org.json.simple.JSONObject;
 import org.json.simple.JSONArray;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import javax.servlet.http.HttpSession;
+import javax.validation.Valid;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -21,9 +29,10 @@ import java.util.Map;
 public class MyeduController {
 
     private final CalendarService calendarService;
+    private final GradeService gradeService;
 
     @GetMapping("/plan/list")
-    public void planList(Model model) {
+    public void planList() {
     }
 
     @ResponseBody
@@ -93,6 +102,26 @@ public class MyeduController {
             return "/myedu/plan/list";
         } else {
             return "fail";
+        }
+    }
+
+    @GetMapping("/grade/list")
+    public void gradeList(@Valid PageRequestDTO pageRequestDTO,
+                          BindingResult bindingResult,
+                          RedirectAttributes redirectAttributes,
+                          HttpSession session,
+                          Model model) {
+        if (bindingResult.hasErrors()) {
+            redirectAttributes.addFlashAttribute("errors", bindingResult.getAllErrors());
+        }
+
+        if(session.getAttribute("name") != null) {
+            pageRequestDTO.setGrade_student(session.getAttribute("name").toString());
+            PageResponseDTO<GradeDTO> responseDTO = gradeService.gradeList(pageRequestDTO);
+
+            log.info("responseDTO : {}", responseDTO);
+
+            model.addAttribute("responseDTO", responseDTO);
         }
     }
 }
