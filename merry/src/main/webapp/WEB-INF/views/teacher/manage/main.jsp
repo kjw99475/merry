@@ -41,11 +41,23 @@
 <!--================ 헤더 start =================-->
 <jsp:include page="/WEB-INF/views/common/header.jsp" />
 <!--================ 헤더 end =================-->
-
 <!--================ 본문 start =================-->
 <!-- hero area -->
 <!-- end hero area -->
-
+<!-- breadcrumb-section -->
+<div class="breadcrumb-section breadcrumb-bg">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 offset-lg-2 text-center">
+                <div class="breadcrumb-text">
+                    <p>선생님페이지</p>
+                    <h1>선생님</h1>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- end breadcrumb section -->
 <!-- 선생님 섹션 -->
 <div class="container pt-100 mb-5">
     <div class="row mt-5">
@@ -56,6 +68,9 @@
         </div>
     </div>
     <div class="row">
+        <jsp:include page="/WEB-INF/views/common/teacher_sidebar.jsp">
+            <jsp:param name="menuGubun" value="grade"/>
+        </jsp:include>
         <c:forEach var="list" items="${teacherlist}">
             <div class="col-lg-3 col-md-6">
                 <div class="single-latest-news">
