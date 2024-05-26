@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ page trimDirectiveWhitespaces="true" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 
 <html>
 <head>
@@ -49,45 +50,29 @@
 <!-- 선생님 섹션 -->
 <div class="container pt-100 mb-5">
     <div class="mt-5">
-        <h1 style="width: 75%; margin: 0 auto 20px; text-align: center;">선생님 Q&A</h1>
+        <h1 style="width: 75%; margin: 0 auto 20px; text-align: center;">강의 공지사항</h1>
     </div>
-    <div class="col-lg-12 text-right mt-3">
-        <a href="/teacher/regist" class="boxed-btn">글작성</a>
-    </div>
-    <table class="table">
-        <colgroup class="w-100">
-            <col class="w-5">
-            <col class="w-70">
-            <col class="w-10">
-            <col class="w-15">
-        </colgroup>
+    <form action="/lecture/notice/regist" method="post">
+        <input type="hidden" name="member_idx" value="${sessionScope.member_idx}">
+        <input type="hidden" name="notice_lec_idx" value="${lectureDTO.lec_idx}">
+        <input type="hidden" name="notice_member_name" value="${sessionScope.name}">
+        <div class="mb-3"></div>
 
-        <thead>
-        <tr>
-            <th>no</th>
-            <th>답변여부</th>
-            <th>제목</th>
-            <th>작성자</th>
-            <th>작성일</th>
-        </tr>
-        </thead>
-        <tbody>
-        <c:forEach var="list" items="${noticeList}" varStatus="i">
-            <tr>
-                <td>${i.count}</td>
-                <td>${}</td>
-                <td>${list.notice_title}</td>
-                <td>${list.member_name}</td>
-                <td>${list.notice_reg_date}</td>
-            </tr>
-        </c:forEach>
-        </tbody>
-    </table>
-    <div class="btn-toolbar justify-content-center" role="toolbar" aria-label="Toolbar with button groups">
-        <div class="btn-group">
-            <button type="button" class="btn btn-outline-merry">1</button>
+        <div class="mb-3">
+            <label class="form-label" for="basic-default-fullname">공지사항 제목</label>
+            <input type="text" class="form-control" id="notice_title" name="notice_title" value="${noticeDTO.notice_title}"/>
+            <div id="div_err_qna_title" style="display: none"></div>
         </div>
-    </div>
+        <div class="mb-3">
+            <label class="form-label" for="basic-default-company">공지사항 내용</label>
+            <textarea class="form-control" rows="20" cols="10" name="notice_content" id="notice_content" >${noticeDTO.notice_content}</textarea>
+            <div id="div_err_qna_content" style="display: none"></div>
+        </div>
+
+        <button type="submit" class="btn btn-primary">등록하기</button>
+        <button type="reset" class="btn btn-secondary" onclick="location.href='/lecture/notice/list?lec_idx=${lectureDTO.lec_idx}'">목록으로</button>
+    </form>
+
 </div>
 <!-- //커뮤니티 섹션 -->
 
@@ -117,6 +102,19 @@
 <script src="/resources/assets/js/sticker.js"></script>
 <!-- main js -->
 <script src="/resources/assets/js/main.js"></script>
+
+<script>
+    const serverValidResult = {}; //JSON 객체 빈값으로 선언
+    <c:forEach items="${errors}" var="err">
+    if (document.getElementById("div_err_${err.getField()}") != null) {
+        document.getElementById("div_err_${err.getField()}").innerHTML = "<span style='color:red'>${err.defaultMessage}</span>";
+        document.getElementById("div_err_${err.getField()}").style.display = "block";
+    }
+    serverValidResult['${err.getField()}'] = '${err.defaultMessage}';
+    </c:forEach>
+
+    console.log(serverValidResult);
+</script>
 
 </body>
 </html>

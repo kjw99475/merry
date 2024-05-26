@@ -39,20 +39,126 @@
     <script src="https://cdn.tiny.cloud/1/wjuflumw0txwktnvnufwfo5lj04kqmup66rnaj1jf6pnwv5d/tinymce/7/tinymce.min.js"
             referrerpolicy="origin"></script>
 </head>
-<body class="pt-100">
+<body>
 <!--================ 헤더 start =================-->
 <jsp:include page="/WEB-INF/views/common/header.jsp"/>
 <!--================ 헤더 end =================-->
 
-<ul>
-    <c:forEach var="lectureDTO" items="${responseDTO.dtoList}">
-        <ul onclick="location.href='/lecture/view?lec_idx=${lectureDTO.lec_idx}'">${lectureDTO.lec_title}</ul>
-    </c:forEach>
-</ul>
 
-<button onclick="location.href='/lecture/regist'">
-    강의 등록하기
-</button>
+<div class="container pt-100 mb-5">
+    <div class="row mt-5">
+        <div class="col-lg-8 offset-lg-2 text-center">
+            <div class="section-title">
+                <h3>강의</h3>
+            </div>
+        </div>
+    </div>
+
+    <div class="col">
+        <form role="search" id="frmSearch">
+            <div class="mb-3 row">
+                <label class="col-sm-2 col-form-label">검색 범위</label>
+                <div class="col-sm-2">
+                    <input class="form-check-input" type="checkbox" name="search_type" id="search_type1" value="t" <c:if test="${responseDTO['search_type_st'].contains('t')}">checked</c:if>>
+                    <label class="form-check-label" for="search_type1">제목</label>
+                    <input class="form-check-input" type="checkbox" name="search_type" id="search_type2" value="u" <c:if test="${responseDTO['search_type_st'] != 'null' && responseDTO['search_type_st'].contains('u')}">checked</c:if>>
+                    <label for="search_type2">선생님</label>
+                </div>
+                <div class="col">
+                    <input class="form-check-label" type="search" name="search_word"  id="search_word" placeholder="Search" aria-label="Search" value="${responseDTO.search_word}">
+                </div>
+                <div class="col-sm-2">
+                    <button class="btn btn-outline-success" id="btnSearch" type="submit">Search</button>
+                    <button class="btn btn-outline-success" id="btnReset" type="reset" onclick="location.href='/lecture/list'">reset</button>
+                </div>
+            </div>
+        </form>
+    </div>
+
+    <div class="row">
+        <div class="col-md-12">
+            <form>
+            <div class="product-filters">
+                <ul>
+                    <li <c:if test="${empty responseDTO.subject_code}">class="active"</c:if> data-filter="*"><button onclick="location.href='/lecture/list'" style="background-color: #00ff0000; border: none">All</button></li>
+                    <li <c:if test="${responseDTO.subject_code eq '국어'}">class="active"</c:if> data-filter=".국어"><button  value="국어" name="subject_code" style="background-color: #00ff0000; border: none">국어</button></li>
+                    <li <c:if test="${responseDTO.subject_code eq '영어'}">class="active"</c:if> data-filter=".영어"><button value="영어" name="subject_code" style="background-color: #00ff0000; border: none">영어</button></li>
+                    <li <c:if test="${responseDTO.subject_code eq '수학'}">class="active"</c:if> data-filter=".수학"><button value="수학" name="subject_code" style="background-color: #00ff0000; border: none">수학</button></li>
+                    <li <c:if test="${responseDTO.subject_code eq '사회'}">class="active"</c:if> data-filter=".사회"><button value="사회" name="subject_code" style="background-color: #00ff0000; border: none">사회</button></li>
+                    <li <c:if test="${responseDTO.subject_code eq '과학'}">class="active"</c:if> data-filter=".과학"><button value="과학" name="subject_code" style="background-color: #00ff0000; border: none">과학</button></li>
+                </ul>
+            </div>
+            </form>
+        </div>
+    </div>
+
+
+    <div class="row mb-300">
+        <div class="col-md-3">
+            <c:if test="${sessionScope.member_type == 'T' or sessionScope.member_type=='A'}">
+                <button onclick="location.href='/lecture/regist'">
+                    강의 등록하기
+                </button>
+            </c:if>
+        </div>
+    </div>
+
+
+    <div class="row">
+        <c:forEach var="lectureDTO" items="${responseDTO.dtoList}">
+            <c:if test="${lectureDTO.lec_status eq 'Y'}">
+            <div class="col-lg-3 col-md-6 ${lectureDTO.lec_subject}">
+                <div class="single-latest-news">
+                    <a href="/lecture/view?lec_idx=${lectureDTO.lec_idx}"><div class="latest-news-bg news-bg-1" style="background: url('/resources/uploads/lecture/${lectureDTO.lec_img}'); background-size: 100% 100%">
+                    </div></a>
+                    <div class="news-text-box">
+                        <h3><a href="#">${lectureDTO.lec_title}</a></h3>
+                        <p class="blog-meta border-bottom pb-1">
+                            <span class="author"><i class="fas fa-book-open"></i> ${lectureDTO.lec_subject}</span>
+                            <span class="cart"><i class="fas fa-shopping-cart"></i>장바구니</span>
+                            <span class="cart"><i class="fas fa-heart"></i>찜하기</span>
+                        </p>
+
+                    </div>
+                </div>
+            </div>
+        </c:if>
+        </c:forEach>
+    </div>
+    <div class="row">
+        <div class="col-lg-12 text-center">
+            <div class="pagination-wrap">
+                <ul>
+                    <li class="page-item<c:if test="${responseDTO.prev_page_flag ne true}"> disabled</c:if>">
+                        <!--a class="page-link" data-num="1" href="page=1">Previous</a-->
+                        <a class="page-link"
+                           data-num="<c:choose><c:when test="${responseDTO.prev_page_flag}">${responseDTO.page_block_start-1}</c:when><c:otherwise>1</c:otherwise></c:choose>"
+                           href="<c:choose><c:when test="${responseDTO.prev_page_flag}">${responseDTO.linkParams}&page=${responseDTO.page_block_start-10}</c:when><c:otherwise>#</c:otherwise></c:choose>">Prev</a>
+                    </li>
+                    <c:forEach begin="${responseDTO.page_block_start}"
+                               end="${responseDTO.page_block_end}"
+                               var="page_num">
+                        <li class="page-item<c:if test="${responseDTO.page == page_num}"> active</c:if>">
+                            <a class="page-link" data-num="${page_num}"
+                               href="<c:choose><c:when test="${responseDTO.page == page_num}">#</c:when><c:otherwise>${responseDTO.linkParams}&page=${page_num}</c:otherwise></c:choose>">${page_num}</a>
+                        </li>
+                    </c:forEach>
+                    <li class="page-item<c:if test="${responseDTO.next_page_flag ne true}"> disabled</c:if>">
+                        <a class="page-link"
+                           data-num="<c:choose><c:when test="${responseDTO.next_page_flag}">${responseDTO.page_block_end+1}</c:when><c:otherwise>${responseDTO.page_block_end}</c:otherwise></c:choose>"
+                           href="<c:choose><c:when test="${responseDTO.next_page_flag}">${responseDTO.linkParams}&page=${responseDTO.page_block_end+1}</c:when><c:otherwise>#</c:otherwise></c:choose>">Next</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+
+
+
+
 
 <!--================ 본문 end =================-->
 

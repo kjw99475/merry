@@ -21,13 +21,13 @@
                 </div>
             </div>
             <div class="col-lg-4 col-md-6">
-                <div class="footer-box pages">
-                    <h2 class="widget-title">Pages</h2>
+                <div class="footer-box pages text-sm-right">
+                    <h2 class="widget-title-right">Pages</h2>
                     <ul>
-                        <li><a href="/">Home</a></li>
-                        <li><a href="#">선생님</a></li>
-                        <li><a href="#">강의</a></li>
-                        <li><a href="#">커뮤니티</a></li>
+                        <li style="padding-right: 20px;"><a href="/">Home</a></li>
+                        <li style="padding-right: 20px;"><a href="/teacher/list">선생님</a></li>
+                        <li style="padding-right: 20px;"><a href="/lecture/list">강의</a></li>
+                        <li style="padding-right: 20px;"><a href="/notice/list">커뮤니티</a></li>
                     </ul>
                 </div>
             </div>

@@ -21,6 +21,11 @@
                     </trim>
                 </foreach>
             </if>
+            <if test="subject_code != null">
+                <trim prefix="AND">
+                    lec_subject = #{subject_code}
+                </trim>
+            </if>
         </where>
     </sql>
 
@@ -53,6 +58,138 @@
         select count(*)
         from lecture
         <include refid="whereCondition"></include>
+    </select>
+
+    <select id="getSubject" resultType="String">
+        SELECT SUBJECT
+        FROM teacher t
+                 INNER JOIN MEMBER m ON t.member_idx = m.member_idx
+        WHERE m.member_idx = #{member_idx};
+    </select>
+
+    <select id="noticeList" resultType="org.fullstack.merry.dto.NoticeDTO">
+        SELECT notice_idx, notice_title, notice_content, notice_reg_date, l.member_name AS member_name, l.lec_idx as lec_idx, n.member_idx as member_idx
+        FROM notice n
+                 INNER JOIN lecture l ON n.notice_lec_idx = l.lec_idx
+        WHERE notice_type = 'l' and l.lec_idx = #{lec_idx}
+    </select>
+
+    <select id="qnaList" resultType="org.fullstack.merry.domain.QnaVO">
+        SELECT qna_idx, qna_title, qna_content, qna_reg_date, q.member_idx AS member_idx, qna_member_name, qna_answer_name, qna_answer, qna_answer_yn, qna_answer_reg_date, qna_lec_idx, qna_answer_idx
+        FROM qna q
+                 INNER JOIN lecture l ON q.qna_lec_idx = l.lec_idx
+        WHERE qna_type = 'l' AND l.lec_idx = #{lec_idx}
+    </select>
+
+    <select id="dataList" resultType="org.fullstack.merry.dto.DataDTO">
+        SELECT data_idx, data_title, data_content, data_org_file_name, data_save_file_name, data_reg_date, l.member_idx AS member_idx, l.lec_idx AS data_lec_idx, l.member_name as member_name
+        FROM data d
+                 INNER JOIN lecture l ON d.data_lec_idx = l.lec_idx
+        WHERE data_type='l' AND l.lec_idx = #{lec_idx}
+    </select>
+
+    <insert id="registQna">
+        insert into qna(qna_title, qna_content, member_idx, qna_member_name, qna_answer_idx, qna_answer_name, qna_type, qna_lec_idx)
+        values(#{qna_title}, #{qna_content}, #{member_idx}, #{qna_member_name}, #{qna_answer_idx}, #{qna_answer_name}, 'l', #{qna_lec_idx})
+    </insert>
+
+    <update id="modifyQna">
+        update qna
+        set qna_title=#{qna_title}, qna_content=#{qna_content}, qna_modify_date=now()
+        where qna_idx=#{qna_idx}
+    </update>
+
+    <delete id="deleteQna">
+        delete from qna where qna_idx=#{qna_idx}
+    </delete>
+
+    <select id="viewQna" resultType="org.fullstack.merry.domain.QnaVO">
+        select *
+        from qna
+        where qna_idx=#{qna_idx}
+    </select>
+
+    <update id="registTeacher">
+        update qna
+        set qna_answer=#{qna_answer}, qna_answer_yn='Y', qna_answer_reg_date=now()
+        where qna_idx=#{qna_idx}
+    </update>
+
+    <update id="modifyTeacher">
+        update qna
+        set qna_answer=#{qna_answer}, qna_answer_modify_date=now()
+        where qna_idx=#{qna_idx}
+    </update>
+
+    <update id="deleteTeacher">
+        update qna
+        set qna_answer=null, qna_answer_yn='N'
+        where qna_idx=#{qna_idx}
+    </update>
+
+    <insert id="registNotice">
+        insert into notice(notice_title, notice_content, notice_type, member_idx, notice_lec_idx, notice_member_name)
+        values(#{notice_title}, #{notice_content},  'l', #{member_idx}, #{notice_lec_idx}, #{notice_member_name})
+    </insert>
+
+    <update id="modifyNotice">
+        update notice
+        set notice_title=#{notice_title}, notice_content=#{notice_content}, notice_modify_date=now()
+        where notice_idx=#{notice_idx}
+    </update>
+
+    <delete id="deleteNotice">
+        delete from notice where notice_idx=#{notice_idx}
+    </delete>
+
+    <select id="viewNotice" resultType="org.fullstack.merry.domain.NoticeVO">
+        select *
+        from notice
+        where notice_idx=#{notice_idx}
+    </select>
+
+    <insert id="registData">
+        insert into data(data_title, data_content, data_org_file_name, data_save_file_name, data_type, member_idx, data_lec_idx, data_member_name)
+        values(#{data_title}, #{data_content}, #{data_org_file_name}, #{data_save_file_name}, 'l', #{member_idx}, #{data_lec_idx}, #{data_member_name})
+    </insert>
+
+    <update id="modifyData">
+        update data
+        set data_title = #{data_title}, data_content = #{data_content}, data_org_file_name = #{data_org_file_name}, data_save_file_name=#{data_save_file_name}
+        where data_idx = #{data_idx}
+    </update>
+
+    <delete id="deleteData">
+        delete from data
+        where data_idx = #{data_idx}
+    </delete>
+
+    <select id="viewData" resultType="org.fullstack.merry.dto.DataDTO">
+        SELECT *
+        FROM data
+        where data_idx=#{data_idx}
+    </select>
+
+    <insert id="registReview">
+        INSERT INTO lecture_review(lec_idx, member_idx, comment, review_writer)
+        VALUES(#{lec_idx}, #{member_idx}, #{comment}, #{review_writer})
+    </insert>
+
+    <update id="modifyReview">
+        UPDATE lecture_review
+        SET COMMENT = #{comment}, review_modify_date=now()
+        WHERE review_idx=#{review_idx}
+    </update>
+
+    <delete id="deleteReview">
+        DELETE FROM lecture_review
+        WHERE review_idx=#{review_idx}
+    </delete>
+
+    <select id="reviewList" resultType="org.fullstack.merry.domain.lecture.LectureReviewVO">
+        SELECT *
+        FROM lecture_review
+        WHERE lec_idx=#{lec_idx}
     </select>
 
 </mapper>

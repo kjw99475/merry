@@ -62,7 +62,6 @@ public class ChapterServiceImpl implements ChapterServiceIf{
     public List<ChapterVO> chapterList(int lec_idx) {
         List<ChapterVO> voList = chapterMapper.chapterList(lec_idx);
 
-        log.info(voList);
         return voList;
     }
 

@@ -2,20 +2,16 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ page trimDirectiveWhitespaces="true" %>
 <!-- header -->
-<div class="top-header-area black-bg" id="sticker">
-    <div class="container" style="height: 50px;">
+<div class="top-header-area" id="sticker">
+    <div class="container">
         <div class="row">
             <div class="col-lg-12 col-sm-12 text-center">
                 <div class="main-menu-wrap">
-                    <!-- logo -->
                     <div class="site-logo">
                         <a href="/">
                             <img src="/resources/assets/img/merry_logo.png" style="height: 40px;" alt="">
                         </a>
                     </div>
-                    <!-- logo -->
-
-                    <!-- menu start -->
                     <nav class="main-menu">
                         <ul>
                             <li><a href="/teacher/list">선생님</a></li>
@@ -33,7 +29,7 @@
                             <c:choose>
                                 <c:when test="${!empty sessionScope.member_id}">
                                     <c:if test="${sessionScope.member_type eq 'A'}">
-                                        <li><a href="/admin/list"><i class="fas fa-user"></i> 관리자페이지</a></li>
+                                        <li><a href="/admin/member/list"><i class="fas fa-user"></i> 관리자페이지</a></li>
                                         <li><a href="/login/logout"><small style="text-decoration: underline">로그아웃</small></a></li>
                                     </c:if>
                                     <c:if test="${sessionScope.member_type eq 'B'}">
@@ -45,7 +41,7 @@
                                                 <li><a href="/myedu/plan/list">학습 계획표</a></li>
                                             </ul>
                                         </li>
-                                        <li><a href="/my/list"><i class="fas fa-user"></i> 마이페이지</a></li>
+                                        <li><a href="/member/view"><i class="fas fa-user"></i> 마이페이지</a></li>
                                         <li><a href="/login/logout"><small style="text-decoration: underline">로그아웃</small></a></li>
                                     </c:if>
                                     <c:if test="${sessionScope.member_type eq 'T'}">
@@ -61,13 +57,12 @@
                             </c:choose>
                             <li>
                                 <div class="header-icons">
-                                    <a class="shopping-cart" href="cart.html"><i class="fas fa-shopping-cart"></i></a>
+                                    <a class="shopping-cart" href="/mypage/cart"><i class="fas fa-shopping-cart"></i></a>
                                 </div>
                             </li>
                         </ul>
                     </nav>
                     <div class="mobile-menu"></div>
-                    <!-- menu end -->
                 </div>
             </div>
         </div>

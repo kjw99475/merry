@@ -2,11 +2,16 @@ package org.fullstack.merry.service.lecture;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
+import org.fullstack.merry.domain.DataVO;
+import org.fullstack.merry.domain.NoticeVO;
+import org.fullstack.merry.domain.QnaVO;
+import org.fullstack.merry.domain.lecture.LectureReviewVO;
 import org.fullstack.merry.domain.lecture.LectureVO;
-import org.fullstack.merry.dto.PageRequestDTO;
-import org.fullstack.merry.dto.PageResponseDTO;
+import org.fullstack.merry.domain.lecture.QnaAnswerDTO;
+import org.fullstack.merry.dto.*;
 import org.fullstack.merry.dto.lecture.ChapterDTO;
 import org.fullstack.merry.dto.lecture.LectureDTO;
+import org.fullstack.merry.dto.lecture.LectureReviewDTO;
 import org.fullstack.merry.mapper.ChapterMapper;
 import org.fullstack.merry.mapper.LectureMapper;
 import org.modelmapper.ModelMapper;
@@ -89,4 +94,156 @@ public class LectureServiceImpl implements LectureServiceIf{
     public int totalLecture(PageRequestDTO pageRequestDTO) {
         return lectureMapper.totalLecture(pageRequestDTO);
     }
+
+    @Override
+    public String getSubject(int member_idx) {
+        return lectureMapper.getSubject(member_idx);
+    }
+
+    @Override
+    public List<NoticeDTO> noticeList(int lec_idx) {
+        List<NoticeDTO> noticeDTOList = lectureMapper.noticeList(lec_idx);
+        return noticeDTOList;
+    }
+
+    @Override
+    public List<QnaDTO> qnaList(int lec_idx) {
+        List<QnaDTO> qnaDTOList = lectureMapper.qnaList(lec_idx).stream()
+                .map(vo->modelMapper.map(vo, QnaDTO.class))
+                .collect(Collectors.toList());
+        return qnaDTOList;
+    }
+
+    @Override
+    public List<DataDTO> dataList(int lec_idx) {
+        List<DataDTO> dataDTOList = lectureMapper.dataList(lec_idx);
+        return dataDTOList;
+    }
+
+    @Override
+    public int registQna(QnaDTO qnaDTO) {
+        QnaVO qnaVO = modelMapper.map(qnaDTO, QnaVO.class);
+        int result = lectureMapper.registQna(qnaVO);
+        return result;
+    }
+
+    @Override
+    public int modifyQna(QnaDTO qnaDTO) {
+        QnaVO qnaVO = modelMapper.map(qnaDTO, QnaVO.class);
+        int result = lectureMapper.modifyQna(qnaVO);
+        return result;
+    }
+
+    @Override
+    public int deleteQna(int qna_idx) {
+        int result = lectureMapper.deleteQna(qna_idx);
+        return result;
+    }
+
+    @Override
+    public QnaDTO viewQna(int qna_idx) {
+        QnaVO qnaVO = lectureMapper.viewQna(qna_idx);
+        QnaDTO qnaDTO = modelMapper.map(qnaVO, QnaDTO.class);
+        return qnaDTO;
+    }
+
+    @Override
+    public int registTeacher(QnaAnswerDTO qnaAnswerDTO) {
+        int result = lectureMapper.registTeacher(qnaAnswerDTO);
+        return result;
+    }
+
+    @Override
+    public int modifyTeacher(QnaAnswerDTO qnaAnswerDTO) {
+        int result = lectureMapper.modifyTeacher(qnaAnswerDTO);
+        return result;
+    }
+
+    @Override
+    public int deleteTeacher(int qna_idx) {
+        int result = lectureMapper.deleteTeacher(qna_idx);
+        return result;
+    }
+
+    @Override
+    public int registNotice(NoticeDTO noticeDTO) {
+        NoticeVO noticeVO = modelMapper.map(noticeDTO, NoticeVO.class);
+        int result = lectureMapper.registNotice(noticeVO);
+        return result;
+    }
+
+    @Override
+    public int modifyNotice(NoticeDTO noticeDTO) {
+        NoticeVO noticeVO = modelMapper.map(noticeDTO, NoticeVO.class);
+        int result = lectureMapper.modifyNotice(noticeVO);
+        return result;
+    }
+
+    @Override
+    public int deleteNotice(int notice_idx) {
+        int result = lectureMapper.deleteNotice(notice_idx);
+        return result;
+    }
+
+    @Override
+    public NoticeDTO viewNotice(int notice_idx) {
+        NoticeVO noticeVO = lectureMapper.viewNotice(notice_idx);
+        NoticeDTO noticeDTO = modelMapper.map(noticeVO, NoticeDTO.class);
+        return noticeDTO;
+    }
+
+    @Override
+    public int registData(DataDTO dataDTO) {
+        DataVO dataVO = modelMapper.map(dataDTO, DataVO.class);
+        int result = lectureMapper.registData(dataVO);
+        return result;
+    }
+
+    @Override
+    public int modifyData(DataDTO dataDTO) {
+        DataVO dataVO = modelMapper.map(dataDTO, DataVO.class);
+        int result = lectureMapper.modifyData(dataVO);
+        return result;
+    }
+
+    @Override
+    public int deleteData(int data_idx) {
+        int result = lectureMapper.deleteData(data_idx);
+        return result;
+    }
+
+    @Override
+    public DataDTO viewData(int data_idx) {
+        DataDTO dataDTO = lectureMapper.viewData(data_idx);
+        return dataDTO;
+    }
+
+    @Override
+    public int registReview(LectureReviewDTO lectureReviewDTO) {
+        LectureReviewVO lectureReviewVO = modelMapper.map(lectureReviewDTO, LectureReviewVO.class);
+        int result = lectureMapper.registReview(lectureReviewVO);
+        return result;
+    }
+
+    @Override
+    public int modifyReview(LectureReviewDTO lectureReviewDTO) {
+        LectureReviewVO lectureReviewVO = modelMapper.map(lectureReviewDTO, LectureReviewVO.class);
+        int result = lectureMapper.modifyReview(lectureReviewVO);
+        return result;
+    }
+
+    @Override
+    public int deleteReview(int review_idx) {
+        int result = lectureMapper.deleteReview(review_idx);
+        return 0;
+    }
+
+    @Override
+    public List<LectureReviewDTO> reviewList(int lec_idx) {
+        List<LectureReviewDTO> dtoList = lectureMapper.reviewList(lec_idx).stream()
+                .map(vo->modelMapper.map(vo, LectureReviewDTO.class))
+                .collect(Collectors.toList());
+        return dtoList;
+    }
+
 }
