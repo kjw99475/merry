@@ -75,7 +75,7 @@
                         <label class="form-label" for="basic-default-fullname">등록일</label>
                         <input type="text" readonly class="form-control" id="qna_reg_date"
                                name="qna_title"
-                               value="${fn:substring(noticeDTO.notice_reg_date, 0, 10)} / ${fn:substring(noticeDTO.notice_reg_date, 11, 20)}"/>
+                               value="${noticeDTO.notice_reg_date}"/>
 
                     </div>
                     <div class="mb-3">
