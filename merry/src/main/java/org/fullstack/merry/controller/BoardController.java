@@ -3,8 +3,10 @@ package org.fullstack.merry.controller;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.fullstack.merry.dto.BoardDTO;
+import org.fullstack.merry.dto.BoardReplyDTO;
 import org.fullstack.merry.dto.PageRequestDTO;
 import org.fullstack.merry.dto.PageResponseDTO;
+import org.fullstack.merry.service.BoardReplyServiceIf;
 import org.fullstack.merry.service.BoardServiceIf;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -17,6 +19,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
+import java.util.List;
 
 @Log4j2
 @Controller
@@ -24,6 +27,7 @@ import javax.validation.Valid;
 @RequiredArgsConstructor
 public class BoardController {
     private final BoardServiceIf boardServiceIf;
+    private final BoardReplyServiceIf boardReplyServiceIf;
 
     //    ===================== board start ==============================
     @GetMapping("/list")
@@ -49,6 +53,10 @@ public class BoardController {
         BoardDTO boardDTO = boardServiceIf.view(board_idx);
         model.addAttribute("boardDTO", boardDTO);
         log.info("boardDTO >> " + boardDTO);
+
+        List<BoardReplyDTO> replyDTOList = boardReplyServiceIf.reply_list(board_idx);
+        model.addAttribute("replyDTOList", replyDTOList);
+        log.info("replyDTOList >> " + replyDTOList);
     }
 
     @GetMapping("/regist")

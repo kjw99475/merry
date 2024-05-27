@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/schema/mybatis-3-mapper.dtd">
+<mapper namespace="org.fullstack.merry.mapper.BoardReplyMapper">
+
+    <select id="ListByPage" resultType="org.fullstack.merry.domain.BoardReplyVO">
+        SELECT reply_idx, reply_comment, reply_writer, reply_reg_date, board_idx
+        FROM board_reply
+        WHERE board_idx = #{board_idx}
+        ORDER BY board_idx DESC
+    </select>
+
+    <insert id="reply_regist" parameterType="org.fullstack.merry.domain.BoardReplyVO" useGeneratedKeys="true" keyProperty="reply_idx" keyColumn="reply_idx">
+        INSERT INTO board_reply (reply_comment, reply_writer, reply_reg_date, board_idx, member_idx)
+        VALUES(#{reply_comment}, #{reply_writer}, NOW(), #{board_idx}, #{member_idx})
+    </insert>
+
+    <select id="reply_list" resultType="org.fullstack.merry.domain.BoardReplyVO">
+        select reply_idx, reply_comment, reply_writer, reply_reg_date, board_idx, member_idx
+        from board_reply
+        where board_idx=#{board_idx}
+        order by reply_idx asc
+    </select>
+
+    <delete id="deleteReply">
+        DELETE
+        FROM board_reply
+        WHERE reply_idx = #{reply_idx}
+    </delete>
+
+</mapper>

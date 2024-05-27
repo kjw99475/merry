@@ -21,4 +21,5 @@ public class BoardReplyVO {
     private LocalDate reply_reg_date;
     private LocalDate reply_modify_date;
     private int board_idx;
+    private int member_idx;
 }
