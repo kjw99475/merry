@@ -110,7 +110,7 @@
                         <div class="d-flex col-lg-8 justify-content-between">
                             <div class="cart-buttons">
                                 <button class="btn btn-lg orange-outline-btn bordered-btn" type="button">선택 주문</button>
-                                <button class="btn btn-lg orange-btn bordered-btn" type="button">전체 주문</button>
+                                <button class="btn btn-lg orange-btn bordered-btn" type="button" onclick="location='/order/order?lec_idx=25,38,47'">전체 주문</button>
                             </div>
                             <div class="cart-buttons">
                                 <button class="btn btn-lg red-outline-btn bordered-btn" type="button">선택 삭제</button>
