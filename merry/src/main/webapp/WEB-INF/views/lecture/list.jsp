@@ -71,11 +71,14 @@
                 </div>
                 <div>
                     <button type="button" class="btn btn-merry" onclick="searchType()" >검색</button>
+                    <button type="button" class="btn btn-secondary" onclick="location.href='/lecture/list'">초기화</button>
                 </div>
             </div>
             <div style="display: none">
                 <div class="product-filters">
+                    <c:if test="${not empty responseDTO.subject_code}">
                     <input type="hidden" value="${responseDTO.subject_code}" name="subject_code">
+                    </c:if>
                     
                 </div>
             </div>
@@ -86,7 +89,7 @@
         <div class="col-md-12">
             <form>
                 <div style="display: none" class="row mx-5 mb-100 justify-content-center">
-                    <select name="search_type" id="search_type" class="form-control col-1" >
+                    <select name="search_type" class="form-control col-1" >
                         <option value="">선택</option>
                         <option value="t" <c:if test="${responseDTO['search_type_st'] != 'null' && responseDTO['search_type_st'].contains('t')}">selected</c:if>>제목</option>
                         <option value="u" <c:if test="${responseDTO['search_type_st'] != 'null' && responseDTO['search_type_st'].contains('u')}">selected</c:if>>선생님</option>
