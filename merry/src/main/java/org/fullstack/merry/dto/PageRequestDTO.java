@@ -57,8 +57,8 @@ public class PageRequestDTO {
     private String search_word;
     private String search_data1;
     private String search_data2;
-    private LocalDate search_date1;
-    private LocalDate search_date2;
+    private String search_date1;
+    private String search_date2;
     private String category_code;
     private String class_code;
     private String subject_code;
