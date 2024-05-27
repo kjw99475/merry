@@ -73,6 +73,7 @@ public class PageRequestDTO {
     private String grade_teacher;
     private String lec_status;
     private int member_idx;
+    private String member_type;
 
     public int getPage_skip_count() {
         return  (this.page-1)*this.page_size;

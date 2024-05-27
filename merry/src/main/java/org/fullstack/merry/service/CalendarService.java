@@ -8,7 +8,7 @@ public interface CalendarService {
 
     int calendarRegist(Calendar dateData);
 
-    List<Calendar> calendarList();
+    List<Calendar> calendarList(String member_id);
 
     Calendar calendarView(int id);
 

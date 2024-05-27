@@ -31,4 +31,17 @@
         WHERE member_idx = #{member_idx}
         <include refid="whereCondition"></include>
     </select>
+
+    <select id="myReviewList">
+        SELECT * FROM lecture_review as lr
+        INNER JOIN lecture as l ON l.lec_idx = lr.lec_idx
+        WHERE lr.member_idx = #{member_idx}
+        <include refid="whereCondition"></include>
+    </select>
+
+    <select id="totalMyReview">
+        SELECT COUNT(*) FROM lecture_review
+        WHERE member_idx = #{member_idx}
+        <include refid="whereCondition"></include>
+    </select>
 </mapper>

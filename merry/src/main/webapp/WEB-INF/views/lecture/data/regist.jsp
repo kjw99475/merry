@@ -46,12 +46,21 @@
 <!--================ 본문 start =================-->
 <!-- hero area -->
 <!-- end hero area -->
-
+<div class="breadcrumb-section breadcrumb-bg">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 offset-lg-2 text-center">
+                <div class="breadcrumb-text">
+                    <p><a href="/lecture/view?lec_idx=${lectureDTO.lec_idx}"> 강의</a> </p>
+                    <h1>강의 자료실</h1>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 <!-- 선생님 섹션 -->
 <div class="container pt-100 mb-5">
-    <div class="mt-5">
-        <h1 style="width: 75%; margin: 0 auto 20px; text-align: center;">강의 Q&A</h1>
-    </div>
+
     <form action="/lecture/data/regist" method="post" enctype="multipart/form-data">
         <input type="hidden" name="member_idx" value="${sessionScope.member_idx}">
         <input type="hidden" name="data_lec_idx" value="${lectureDTO.lec_idx}">

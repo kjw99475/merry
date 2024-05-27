@@ -47,6 +47,7 @@ public class PageResponseDTO<E> {
     private String grade_teacher;
     private String lec_status;
     private int member_idx;
+    private String member_type;
 
     PageResponseDTO() {}
 
@@ -85,6 +86,7 @@ public class PageResponseDTO<E> {
         this.grade_teacher = requestDTO.getGrade_teacher();
         this.lec_status = requestDTO.getLec_status();
         this.member_idx = requestDTO.getMember_idx();
+        this.member_type = requestDTO.getMember_type();
 
         StringBuilder sb = new StringBuilder("?page_size=" + this.page_size);
         if(search_type != null) sb.append("&search_type=" + search_type_st );
