@@ -82,24 +82,32 @@
         </tr>
         </thead>
         <tbody>
-        <c:forEach var="list" items="${dataList}" varStatus="i">
-            <tr>
-                <td>${i.count}</td>
-                <td>
-                    <c:set var="dtitle" value="${list.data_title}"/>
-                    <c:choose>
-                        <c:when test="${fn:length(dtitle) > 10}">
-                            <a href="/lecture/data/view?data_idx=${list.data_idx}"><strong>${fn:substring(dtitle, 0, 10)}...</strong> <c:if test="${list.data_org_file_name != null and list.data_org_file_name != '' }" ><i class="fa-solid fa-paperclip"></i></c:if></a>
-                        </c:when>
-                        <c:otherwise>
-                            <a href="/lecture/data/view?data_idx=${list.data_idx}"><strong>${list.data_title}</strong><c:if test="${list.data_org_file_name != null and list.data_org_file_name != '' }" ><i class="fa-solid fa-paperclip"></i></c:if> </a>
-                        </c:otherwise>
-                    </c:choose>
-                </td>
-                <td>${list.member_name}</td>
-                <td>${list.data_reg_date}</td>
-            </tr>
-        </c:forEach>
+        <c:choose>
+            <c:when test="${not empty qnaList}">
+                <c:forEach var="list" items="${dataList}" varStatus="i">
+                    <tr>
+                        <td>${i.count}</td>
+                        <td>
+                            <c:set var="dtitle" value="${list.data_title}"/>
+                            <c:choose>
+                                <c:when test="${fn:length(dtitle) > 10}">
+                                    <a href="/lecture/data/view?data_idx=${list.data_idx}"><strong>${fn:substring(dtitle, 0, 10)}...</strong> <c:if test="${list.data_org_file_name != null and list.data_org_file_name != '' }" ><i class="fa-solid fa-paperclip"></i></c:if></a>
+                                </c:when>
+                                <c:otherwise>
+                                    <a href="/lecture/data/view?data_idx=${list.data_idx}"><strong>${list.data_title}</strong><c:if test="${list.data_org_file_name != null and list.data_org_file_name != '' }" ><i class="fa-solid fa-paperclip"></i></c:if> </a>
+                                </c:otherwise>
+                            </c:choose>
+                        </td>
+                        <td>${list.member_name}</td>
+                        <td>${list.data_reg_date}</td>
+                    </tr>
+                </c:forEach>
+            </c:when>
+            <c:otherwise>
+                등록된 게시글이 없습니다.
+            </c:otherwise>
+        </c:choose>
+
         </tbody>
     </table>
     <div class="btn-toolbar justify-content-center" role="toolbar" aria-label="Toolbar with button groups">

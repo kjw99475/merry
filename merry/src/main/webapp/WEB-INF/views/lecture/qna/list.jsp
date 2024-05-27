@@ -69,7 +69,8 @@
     <table class="table">
         <colgroup class="w-100">
             <col class="w-5">
-            <col class="w-70">
+            <col class="w-5">
+            <col class="w-65">
             <col class="w-10">
             <col class="w-15">
         </colgroup>
@@ -84,50 +85,58 @@
         </tr>
         </thead>
         <tbody>
-        <c:forEach var="list" items="${qnaList}" varStatus="i">
-            <tr>
-                <td>${i.count}</td>
-                <td><c:if test="${list.qna_answer_yn eq 'Y'}">답변완료</c:if>
-                    <c:if test="${list.qna_answer_yn eq 'N'}">답변대기</c:if></td>
-                <td>
-                    <c:set var="title" value="${list.qna_title}"/>
-                    <c:choose>
-                        <c:when test="${fn:length(title) > 10}">
-                            <a href="/lecture/qna/view?qna_idx=${list.qna_idx}"><strong>${fn:substring(title, 0, 10)}...</strong></a>
-                        </c:when>
-                        <c:otherwise>
-                            <a href="/lecture/qna/view?qna_idx=${list.qna_idx}"><strong>${list.qna_title}</strong></a>
-                        </c:otherwise>
-                    </c:choose></td>
-                <td>${list.qna_member_name}</td>
-                <td>${fn:substring(list.qna_reg_date, 0, 10)} / ${fn:substring(list.qna_reg_date, 11, 20)}</td>
-            </tr>
-            <c:if test="${list.qna_answer_yn eq 'Y'}">
-                <tr>
-                    <td></td>
-                    <td class="text-nowrap"><span class="badge bg-label-info me-1">답변</span>
-                    </td>
-                    <td class="text-nowrap">
-                        <c:set var="answer" value="${list.qna_answer}"/>
-                        <c:choose>
-                            <c:when test="${fn:length(answer) > 10}">
-                                <a href="/lecture/qna/view?qna_idx=${list.qna_idx}"><strong>${fn:substring(answer, 0, 10)}</strong></a>
-                            </c:when>
-                            <c:otherwise>
-                                <a href="/lecture/qna/view?qna_idx=${list.qna_idx}"><strong>${list.qna_answer}</strong></a>
-                            </c:otherwise>
-                        </c:choose>
+        <c:choose>
+            <c:when test="${not empty qnaList}">
+                <c:forEach var="list" items="${qnaList}" varStatus="i">
+                    <tr>
+                        <td>${i.count}</td>
+                        <td><c:if test="${list.qna_answer_yn eq 'Y'}">답변완료</c:if>
+                            <c:if test="${list.qna_answer_yn eq 'N'}">답변대기</c:if></td>
+                        <td>
+                            <c:set var="title" value="${list.qna_title}"/>
+                            <c:choose>
+                                <c:when test="${fn:length(title) > 10}">
+                                    <a href="/lecture/qna/view?qna_idx=${list.qna_idx}"><strong>${fn:substring(title, 0, 10)}...</strong></a>
+                                </c:when>
+                                <c:otherwise>
+                                    <a href="/lecture/qna/view?qna_idx=${list.qna_idx}"><strong>${list.qna_title}</strong></a>
+                                </c:otherwise>
+                            </c:choose></td>
+                        <td>${list.qna_member_name}</td>
+                        <td>${fn:substring(list.qna_reg_date, 0, 10)} / ${fn:substring(list.qna_reg_date, 11, 20)}</td>
+                    </tr>
+                    <c:if test="${list.qna_answer_yn eq 'Y'}">
+                        <tr>
+                            <td></td>
+                            <td class="text-nowrap"><span class="badge bg-label-info me-1">답변</span>
+                            </td>
+                            <td class="text-nowrap">
+                                <c:set var="answer" value="${list.qna_answer}"/>
+                                <c:choose>
+                                    <c:when test="${fn:length(answer) > 10}">
+                                        <a href="/lecture/qna/view?qna_idx=${list.qna_idx}"><strong>${fn:substring(answer, 0, 10)}</strong></a>
+                                    </c:when>
+                                    <c:otherwise>
+                                        <a href="/lecture/qna/view?qna_idx=${list.qna_idx}"><strong>${list.qna_answer}</strong></a>
+                                    </c:otherwise>
+                                </c:choose>
 
-                    </td>
-                    <td class="text-nowrap"><strong>${list.qna_answer_name}</strong></td>
-                    <td>
-                        <strong>${fn:substring(list.qna_answer_reg_date, 0, 10)} / ${fn:substring(list.qna_answer_reg_date, 11, 20)}</strong>
-                    </td>
-                    <td></td>
+                            </td>
+                            <td class="text-nowrap"><strong>${list.qna_answer_name}</strong></td>
+                            <td>
+                                <strong>${fn:substring(list.qna_answer_reg_date, 0, 10)} / ${fn:substring(list.qna_answer_reg_date, 11, 20)}</strong>
+                            </td>
+                            <td></td>
 
-                </tr>
-            </c:if>
-        </c:forEach>
+                        </tr>
+                    </c:if>
+                </c:forEach>
+            </c:when>
+            <c:otherwise>
+                등록된 게시글이 없습니다.
+            </c:otherwise>
+        </c:choose>
+
         </tbody>
     </table>
 

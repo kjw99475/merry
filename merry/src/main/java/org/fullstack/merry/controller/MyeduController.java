@@ -42,7 +42,6 @@ public class MyeduController {
 
         List<Calendar> calendarList = calendarService.calendarList(member_id);
 
-//        JSONObject jsonObject = new JSONObject();
         JSONArray jsonArr = new JSONArray();
 
         HashMap<String, Object> map = new HashMap<>();
@@ -125,8 +124,8 @@ public class MyeduController {
         }
     }
 
-    @GetMapping("/write/list")
-    public void writeList(@Valid PageRequestDTO pageRequestDTO,
+    @GetMapping("/qna/list")
+    public void qnaList(@Valid PageRequestDTO pageRequestDTO,
                           BindingResult bindingResult,
                           RedirectAttributes redirectAttributes,
                           HttpSession session,
@@ -156,8 +155,6 @@ public class MyeduController {
         if(session.getAttribute("member_idx") != null) {
             pageRequestDTO.setMember_idx((int)session.getAttribute("member_idx"));
             PageResponseDTO<MyReviewDTO> responseDTO = myeduService.myReviewList(pageRequestDTO);
-
-            log.info("responseDTO : {}", responseDTO);
 
             model.addAttribute("responseDTO", responseDTO);
         }

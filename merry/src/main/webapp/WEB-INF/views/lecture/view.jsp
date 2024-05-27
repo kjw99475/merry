@@ -79,7 +79,9 @@
                         <span class="zzim" onclick="addzzim(${lectureDTO.lec_idx})">
                                 <i class="fas fa-heart" id="zzim${lectureDTO.lec_idx}" <c:if test="${fn:contains(zzimlist, lectureDTO.lec_idx)}"> style="color:red" </c:if>></i>찜하기
                             </span>
-                        <a href="javascript:addbuy();" class="cart-btn"> 수강신청</a>
+                        <c:if test="${orderCnt < 1}">
+                        <a href="/order/order?lec_idx=${lectureDTO.lec_idx}" class="cart-btn"> 수강신청</a>
+                        </c:if>
 
                         <p><strong>Categories: </strong>${lectureDTO.lec_subject}</p>
 
@@ -207,6 +209,7 @@
                             </c:when>
                             <c:otherwise>
                                 공지사항이 없습니다.
+                                <a href="/lecture/notice/list?lec_idx=${lectureDTO.lec_idx}">더보기</a>
                             </c:otherwise>
                         </c:choose>
 
@@ -221,7 +224,8 @@
                                 <table class="table">
                                     <colgroup class="w-100">
                                         <col class="w-5">
-                                        <col class="w-70">
+                                        <col class="w-5">
+                                        <col class="w-65">
                                         <col class="w-10">
                                         <col class="w-15">
                                     </colgroup>
@@ -286,6 +290,7 @@
                             </c:when>
                             <c:otherwise>
                                 QnA 게시글이 없습니다.
+                                <a href="/lecture/qna/list?lec_idx=${lectureDTO.lec_idx}">더보기</a>
                             </c:otherwise>
                         </c:choose>
 
@@ -337,6 +342,7 @@
                             </c:when>
                             <c:otherwise>
                                 자료실의 게시글이 없습니다.
+                                <a href="/lecture/data/list?lec_idx=${lectureDTO.lec_idx}">더보기</a>
                             </c:otherwise>
                         </c:choose>
 

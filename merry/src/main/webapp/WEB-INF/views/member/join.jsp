@@ -181,13 +181,12 @@
     const serverValiseResult = {};
     <c:forEach items="${errors}" var="err">
     if(document.getElementById("div_err_${err.getField()}") != null) {
-        document.getElementById("div_err_${err.getField()}").innerHTML = "<small style='color: red'>${err.getField()}필드는 ${err.defaultMessage}</small>";
+        document.getElementById("div_err_${err.getField()}").innerHTML = "<small style='color: red'>${err.defaultMessage}</small>";
         document.getElementById("div_err_${err.getField()}").style.display = "block";
     }
     serverValiseResult['${err.getField()}'] = '${err.defaultMessage}';
     </c:forEach>
 
-    console.log(serverValiseResult);
 </script>
 
 <script src="/resources/assets/js/jquery-1.11.3.min.js"></script>
