@@ -10,6 +10,7 @@ import org.fullstack.merry.dto.lecture.LectureDTO;
 import org.fullstack.merry.service.BoardServiceIf;
 import org.fullstack.merry.service.MypageServiceIf;
 import org.fullstack.merry.service.TeacherServiceIf;
+import org.fullstack.merry.service.lecture.LectureServiceIf;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -32,6 +33,7 @@ import java.util.List;
 public class MypageController {
     private final MypageServiceIf mypageService;
     private final TeacherServiceIf teacherService;
+    private final LectureServiceIf lectureService;
 
     @GetMapping("/profile")
     public void profileGET() {
@@ -48,8 +50,27 @@ public class MypageController {
             HttpSession session,
             Model model
     ) {
+        if(bindingResult.hasErrors()){
+            log.info("MypageController >> list Error");
+            redirectAttributes.addFlashAttribute("errors", bindingResult.getAllErrors());
+        }
+        pageRequestDTO.setMember_id((String)session.getAttribute("member_id"));
+        pageRequestDTO.setPage_block_size(10);
+        PageResponseDTO<BoardDTO> responseDTO = mypageService.writeListByPage(pageRequestDTO);
+        model.addAttribute("responseDTO", responseDTO);
+    }
+
+
+    @GetMapping("/writeReply")
+    public void writeReplyGET(
+            @Valid PageRequestDTO pageRequestDTO,
+            BindingResult bindingResult,
+            RedirectAttributes redirectAttributes,
+            HttpSession session,
+            Model model
+    ) {
         log.info("=========================");
-        log.info("MypageController >> writeGET()");
+        log.info("MypageController >> writeReplyGET()");
         if(bindingResult.hasErrors()){
             log.info("MypageController >> list Error");
             redirectAttributes.addFlashAttribute("errors", bindingResult.getAllErrors());
@@ -62,40 +83,36 @@ public class MypageController {
     }
 
 
-    @GetMapping("/writeReply")
-    public void writeReplyGET() {
-        log.info("=========================");
-        log.info("MypageController >> writeReplyGET()");
-        log.info("=========================");
-    }
 
+    /* 1:1 문의 */
     @GetMapping("/qna/list")
     public void qnaListGET(
-            @RequestParam(name="qna_idx", defaultValue = "0") int qna_idx,
+            HttpSession session,
             Model model
     ) {
-        List<QnaDTO> qnaList = mypageService.qnaList(qna_idx);
-//        QnaDTO qnaDTO = mypageService.view(qna_idx);
-//        model.addAttribute("lectureDTO", lectureDTO);
-//        model.addAttribute("member_idx", member_idx);
+        int member_idx = (int)session.getAttribute("member_idx");
+        int total_count = mypageService.qnaTotalCount(member_idx);
+        List<QnaDTO> qnaList = mypageService.qnaList(member_idx);
         model.addAttribute("qnaList", qnaList);
+        model.addAttribute("total_count", total_count);
+    }
 
+    @GetMapping("/qna/view")
+    public void viewQnaGET(
+            @RequestParam(name="qna_idx", defaultValue = "0") int qna_idx,
+               Model model
+    ) {
+        QnaDTO qnaDTO = mypageService.viewQna(qna_idx);
+        model.addAttribute("qnaDTO", qnaDTO);
+        log.info("qnaDTO ; " + qnaDTO);
     }
 
     @GetMapping("/qna/regist")
-    public void qnaRegistGET(
-            @RequestParam(name="qna_idx", defaultValue = "0") int qna_idx,
-            Model model
-    ) {
-        log.info("=========================");
-        log.info("MypageController >> qnaRegistGET()");
-
-        QnaDTO qnaDTO = mypageService.viewQna(qna_idx);
-        model.addAttribute("qnaDTO", qnaDTO);
+    public void registQnaGET() {
     }
 
     @PostMapping("/qna/regist")
-    public String qnaRegistPOST(@Valid QnaDTO qnaDTO,
+    public String registQnaPOST(@Valid QnaDTO qnaDTO,
                                 BindingResult bindingResult,
                                 RedirectAttributes redirectAttributes,
                                 HttpSession session,
@@ -103,9 +120,8 @@ public class MypageController {
         if (bindingResult.hasErrors()) {
             redirectAttributes.addFlashAttribute("errors", bindingResult.getAllErrors());
             redirectAttributes.addFlashAttribute("qnaDTO", qnaDTO);
-            return "redirect:/lecture/qna/regist?lec_idx="+qnaDTO.getQna_lec_idx();
+            return "redirect:/mypage/qna/regist?qna_idx="+qnaDTO.getQna_idx();
         }
-
         qnaDTO.setQna_member_name((String)session.getAttribute("name"));
         int result = mypageService.registQna(qnaDTO);
 
@@ -115,9 +131,47 @@ public class MypageController {
         else {
             return "redirect:/mypage/qna/regist?qna_idx="+qnaDTO.getQna_idx();
         }
-
     }
 
+    @GetMapping("/qna/modify")
+    public void modifyQnaGET(@RequestParam(name = "qna_idx", defaultValue="0") int qna_idx,
+                          Model model) {
+        QnaDTO qnaDTO = mypageService.viewQna(qna_idx);
+        model.addAttribute("qnaDTO", qnaDTO);
+    }
+
+    @PostMapping("/qna/modify")
+    public String modifyQnaPOST(@Valid QnaDTO qnaDTO,
+                            BindingResult bindingResult,
+                            RedirectAttributes redirectAttributes,
+                            Model model) {
+        log.info("===========MapageController >> modifyQnaPOST =====");
+        log.info("qnaDTO : " + qnaDTO);
+
+
+        if (bindingResult.hasErrors()) {
+            log.info("Errors");
+            redirectAttributes.addFlashAttribute("errors", bindingResult.getAllErrors());
+            redirectAttributes.addFlashAttribute("qnaDTO", qnaDTO);
+
+            return "redirect:/mypage/qna/modify?qna_idx=" + qnaDTO.getQna_idx();
+        }
+
+        int result = lectureService.modifyQna(qnaDTO);
+
+        if (result > 0) {
+            return "redirect:/mypage/qna/view?qna_idx=" + qnaDTO.getQna_idx();
+        }
+        else {
+            return "redirect:/mypage/qna/modify?qna_idx=" + qnaDTO.getQna_idx();
+        }
+
+    }
+    @GetMapping("/qna/delete")
+    public String deleteQnaGET(@RequestParam(name="qna_idx", defaultValue = "0") int qna_idx) {
+        lectureService.deleteQna(qna_idx);
+        return "redirect:/mypage/qna/list";
+    }
 
 
     @GetMapping("/zzim")
