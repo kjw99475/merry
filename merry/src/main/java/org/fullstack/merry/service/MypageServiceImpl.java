@@ -158,5 +158,9 @@ public class MypageServiceImpl implements MypageServiceIf{
 //        int lec_idx = mypageMapper.getLecIdx(pageRequestDTO);
 //        return lec_idx;
 //    }
-
+    @Override
+    public int orderUpdateState(int order_idx) {
+        int result = mypageMapper.orderUpdateState(order_idx);
+        return result;
+    }
 }

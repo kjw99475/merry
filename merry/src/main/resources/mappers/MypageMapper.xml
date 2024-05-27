@@ -96,4 +96,10 @@
         <include refid="whereCondition2"></include>
     </select>
 
+    <update id="orderUpdateState">
+        UPDATE `order` SET
+        order_state = 'B'
+        WHERE order_idx = #{order_idx}
+    </update>
+
 </mapper>

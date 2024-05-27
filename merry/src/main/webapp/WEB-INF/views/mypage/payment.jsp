@@ -99,9 +99,26 @@
                                                     <td class="p-2"><a href="/mypage/paymentView?order_idx=${list.order_idx}">1</a></td>
                                                     <td class="p-2">${fn:substring(list.order_date, 0, 10)}</td>
                                                     <td class="p-2"><fmt:formatNumber type="number" maxFractionDigits="3" value="${list.order_total}" /></td>
-                                                    <td class="p-2">${list.order_state}</td>
-                                                    <td class="p-2"><button class="btn orange-outline-btn bordered-btn" type="button">확정</button></td>
-                                                    <td class="p-2"><button class="btn red-outline-btn bordered-btn" type="button">요청</button></td>
+                                                    <c:if test="${list.order_state == 'A'}">
+                                                        <td class="p-2">결제완료</td>
+                                                        <td class="p-2"><button class="btn orange-outline-btn bordered-btn" type="button" onclick="confirmOK(${list.order_idx})">신청</button></td>
+                                                        <td class="p-2"><button class="btn red-outline-btn bordered-btn" type="button">요청</button></td>
+                                                    </c:if>
+                                                    <c:if test="${list.order_state == 'B'}">
+                                                        <td class="p-2">구매확정</td>
+                                                        <td class="p-2"><button class="btn orange-btn bordered-btn" type="button" disabled>완료</button></td>
+                                                        <td class="p-2"><button class="btn red-btn bordered-btn" type="button" disabled>불가</button></td>
+                                                    </c:if>
+                                                    <c:if test="${list.order_state == 'C'}">
+                                                        <td class="p-2">환불요청</td>
+                                                        <td class="p-2"><button class="btn orange-btn bordered-btn" type="button" disabled>불가</button></td>
+                                                        <td class="p-2"><button class="btn red-btn bordered-btn" type="button" disabled>진행중</button></td>
+                                                    </c:if>
+                                                    <c:if test="${list.order_state == 'D'}">
+                                                        <td class="p-2">환불완료</td>
+                                                        <td class="p-2"><button class="btn orange-btn bordered-btn" type="button" disabled>불가</button></td>
+                                                        <td class="p-2"><button class="btn red-btn bordered-btn" type="button" disabled>완료</button></td>
+                                                    </c:if>
                                                 </tr>
                                             </c:forEach>
                                         </c:when>
@@ -111,47 +128,6 @@
                                             </tr>
                                         </c:otherwise>
                                     </c:choose>
-
-<%--                                    <tr class="table-body-row">--%>
-<%--                                        <td class="p-2"><a href="/mypage/paymentView">20240304-170520557</a></td>--%>
-<%--                                        <td class="p-2">2024-03-04</td>--%>
-<%--                                        <td class="p-2 product-image"><img src="assets/img/products/product-img-1.jpg" alt=""></td>--%>
-<%--                                        <td class="p-2"><a href="/lecture/view?lec_idx=1">강의 이름</a></td>--%>
-<%--                                        <td class="p-2">110,000</td>--%>
-<%--                                        <td class="p-2">결제완료</td>--%>
-<%--                                        <td class="p-2"><button class="btn orange-outline-btn bordered-btn" type="button">확정</button></td>--%>
-<%--                                        <td class="p-2"><button class="btn red-outline-btn bordered-btn" type="button">요청</button></td>--%>
-<%--                                    </tr>--%>
-<%--                                    <tr class="table-body-row">--%>
-<%--                                        <td class="p-2"><a href="/mypage/paymentView?payment_idx=1">20240304-170520557</a></td>--%>
-<%--                                        <td class="p-2">2024-03-04</td>--%>
-<%--                                        <td class="p-2 product-image"><img src="assets/img/products/product-img-1.jpg" alt=""></td>--%>
-<%--                                        <td class="p-2"><a href="/lecture/view?lec_idx=1">강의 이름</a></td>--%>
-<%--                                        <td class="p-2">110,000</td>--%>
-<%--                                        <td class="p-2">구매확정</td>--%>
-<%--                                        <td class="p-2"><button class="btn orange-outline-btn bordered-btn" type="button" disabled>확정</button></td>--%>
-<%--                                        <td class="p-2"><button class="btn red-outline-btn bordered-btn" type="button" disabled>요청</button></td>--%>
-<%--                                    </tr>--%>
-<%--                                    <tr class="table-body-row">--%>
-<%--                                        <td class="p-2"><a href="/mypage/paymentView?payment_idx=1">20240304-170520557</a></td>--%>
-<%--                                        <td class="p-2">2024-03-04</td>--%>
-<%--                                        <td class="p-2 product-image"><img src="assets/img/products/product-img-1.jpg" alt=""></td>--%>
-<%--                                        <td class="p-2"><a href="/lecture/view?lec_idx=1">강의 이름</a></td>--%>
-<%--                                        <td class="p-2">110,000</td>--%>
-<%--                                        <td class="p-2">환불요청</td>--%>
-<%--                                        <td class="p-2"><button class="btn orange-outline-btn bordered-btn" type="button" disabled>확정</button></td>--%>
-<%--                                        <td class="p-2"><button class="btn red-outline-btn bordered-btn" type="button" disabled>요청</button></td>--%>
-<%--                                    </tr>--%>
-<%--                                    <tr class="table-body-row">--%>
-<%--                                        <td class="p-2"><a href="/mypage/paymentView?payment_idx=1">20240304-170520557</a></td>--%>
-<%--                                        <td class="p-2">2024-03-04</td>--%>
-<%--                                        <td class="p-2 product-image"><img src="assets/img/products/product-img-1.jpg" alt=""></td>--%>
-<%--                                        <td class="p-2"><a href="/lecture/view?lec_idx=1">강의 이름</a></td>--%>
-<%--                                        <td class="p-2">110,000</td>--%>
-<%--                                        <td class="p-2">환불완료</td>--%>
-<%--                                        <td class="p-2"><button class="btn orange-outline-btn bordered-btn" type="button" disabled>확정</button></td>--%>
-<%--                                        <td class="p-2"><button class="btn red-outline-btn bordered-btn" type="button" disabled>요청</button></td>--%>
-<%--                                    </tr>--%>
                                     </tbody>
                                 </table>
                             </form>
@@ -215,5 +191,38 @@
     <script src="/resources/assets/js/jquery.meanmenu.min.js"></script>
     <script src="/resources/assets/js/sticker.js"></script>
     <script src="/resources/assets/js/main.js"></script>
+
+    <script>
+        function confirmOK(order_idx) {
+            let confirmYN = confirm("구매를 확정하면 환불을 요청할 수 없습니다. 구매를 확정하시겠습니까?");
+            if (confirmYN) {
+                changeState(order_idx);
+            }
+        }
+
+        function changeState(order_idx){
+            event.preventDefault();
+            event.stopPropagation();
+            $.ajax({
+                url:'/mypage/orderUpdateState', //Controller에서 요청 받을 주소
+                type:'post', //POST 방식으로 전달
+                data:{order_idx},
+                success:function(result){ //컨트롤러에서 넘어온 cnt값을 받는다
+                    window.location.reload();
+                    console.log(result);
+                },
+                error : function(xhr, status, error) {
+                    console.error("AJAX 요청 실패!");
+                    console.error("상태 코드: " + xhr.status); // HTTP 상태 코드
+                    console.error("상태 텍스트: " + xhr.statusText); // 상태 텍스트
+                    console.error("응답 텍스트: " + xhr.responseText); // 서버에서 반환된 응답 텍스트
+                    console.error("오류: " + error); // 오류 메시지
+                }
+            })
+
+        }
+
+
+    </script>
 </body>
 </html>

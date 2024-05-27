@@ -20,6 +20,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -250,6 +251,20 @@ public class MypageController {
         log.info("responseDTO : " + responseDTO);
 //        log.info("lectureDTO : " + lectureDTO);
         log.info("=========================");
+    }
+
+    @PostMapping("/orderUpdateState")
+    @ResponseBody
+    public String orderUpdateState(
+            @RequestParam(name = "order_idx") int order_idx
+    ) {
+        int result = mypageService.orderUpdateState(order_idx);
+        if (result > 0) {
+            return "redirect:/mypage/payment";
+        }
+        else {
+            return "redirect:/mypage/payment";
+        }
     }
 
 

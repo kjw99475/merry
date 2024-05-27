@@ -2,6 +2,7 @@ package org.fullstack.merry.service;
 
 import org.fullstack.merry.dto.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public interface MypageServiceIf {
@@ -25,5 +26,6 @@ public interface MypageServiceIf {
    int orderTotalCount(PageRequestDTO pageRequestDTO);
    PageResponseDTO<OrderDTO> orderListByPage(PageRequestDTO pageRequestDTO);
 //   int getLecIdx(PageRequestDTO pageRequestDTO);
+   int orderUpdateState(int order_idx);
 
 }

@@ -1,12 +1,9 @@
 package org.fullstack.merry.mapper;
 
 import org.apache.ibatis.annotations.Param;
-import org.fullstack.merry.domain.BoardVO;
 import org.fullstack.merry.domain.OrderVO;
 import org.fullstack.merry.domain.QnaVO;
 import org.fullstack.merry.domain.ZzimVO;
-import org.fullstack.merry.domain.lecture.QnaAnswerDTO;
-import org.fullstack.merry.dto.DataDTO;
 import org.fullstack.merry.dto.PageRequestDTO;
 
 import java.util.List;
@@ -38,6 +35,7 @@ public interface MypageMapper {
     List<OrderVO> orderList(PageRequestDTO requestDTO);
     int orderTotalCount(PageRequestDTO requestDTO);
     int getLecIdx(PageRequestDTO requestDTO);
+    int orderUpdateState(@Param(value = "order_idx") int order_idx);
 
 
 
