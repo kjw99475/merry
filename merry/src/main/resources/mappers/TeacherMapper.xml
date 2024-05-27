@@ -4,7 +4,7 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="org.fullstack.merry.mapper.TeacherMapper">
     <select id="noticeList" resultType="org.fullstack.merry.dto.NoticeDTO">
-        SELECT notice_title, notice_content, notice_reg_date, m.name AS member_name
+        SELECT notice_idx, notice_title, notice_content, notice_reg_date, m.name AS member_name
         FROM notice AS n
                  LEFT JOIN member AS m ON n.member_idx=m.member_idx
         WHERE notice_type = 't'
@@ -27,7 +27,7 @@
         WHERE qna_answer_idx = #{teacher_idx}
     </select>
     <select id="datalist" resultType="org.fullstack.merry.domain.DataVO">
-        SELECT data_idx, data_title, data_reg_date, 
+        SELECT data_idx, data_title, data_reg_date
         FROM data
         WHERE member_idx = '3'
     </select>

@@ -27,20 +27,36 @@ public class TeacherController {
     private final TeacherServiceImpl teacherService;
     @GetMapping("/manage/notice")
     public void notice(@RequestParam(value = "teacheridx", defaultValue = "0") String teacheridx,
+                       HttpSession session,
                        Model model){
-        teacheridx = "3";
-        List<NoticeDTO> noticeList = teacherService.noticeList(teacheridx);
-        log.info("noticeList : {}", noticeList);
-        model.addAttribute("noticeList", noticeList);
+        String member_id = (String)session.getAttribute("member_id");
+        List<Integer> cartlist = teacherService.cartList(member_id);
+        List<Integer> zzimlist = teacherService.zzimList(member_id);
+        log.info("cartlist : {}", cartlist);
+        log.info("zzimlist : {}", zzimlist);
+        List<LectureDTO> lecturelist = teacherService.lectureList(teacheridx);
+        log.info("lecturelist : {}", lecturelist);
+        model.addAttribute("zzimlist", zzimlist);
+        model.addAttribute("cartlist", cartlist);
+        model.addAttribute("lecturelist", lecturelist);
+        model.addAttribute("teacheridx", teacheridx);
     }
 
     @GetMapping("/manage/qna")
     public void qna(@RequestParam(value = "teacheridx", defaultValue = "0") String teacheridx,
+                    HttpSession session,
                     Model model){
-        teacheridx = "3";
-        List<QnaDTO> qnaList = teacherService.qnaList(teacheridx);
-        log.info("qnaList : {}", qnaList);
-        model.addAttribute("qnaList", qnaList);
+        String member_id = (String)session.getAttribute("member_id");
+        List<Integer> cartlist = teacherService.cartList(member_id);
+        List<Integer> zzimlist = teacherService.zzimList(member_id);
+        log.info("cartlist : {}", cartlist);
+        log.info("zzimlist : {}", zzimlist);
+        List<LectureDTO> lecturelist = teacherService.lectureList(teacheridx);
+        log.info("lecturelist : {}", lecturelist);
+        model.addAttribute("zzimlist", zzimlist);
+        model.addAttribute("cartlist", cartlist);
+        model.addAttribute("lecturelist", lecturelist);
+        model.addAttribute("teacheridx", teacheridx);
     }
     @GetMapping("/list")
     public void list(Model model){
@@ -65,8 +81,19 @@ public class TeacherController {
     }
     @GetMapping("/manage/materials")
     public void materials(@RequestParam(value = "teacheridx", defaultValue = "0") String teacheridx,
+                          HttpSession session,
                           Model model){
-        List<DataDTO> dataList = teacherService.dataList(teacheridx);
+        String member_id = (String)session.getAttribute("member_id");
+        List<Integer> cartlist = teacherService.cartList(member_id);
+        List<Integer> zzimlist = teacherService.zzimList(member_id);
+        log.info("cartlist : {}", cartlist);
+        log.info("zzimlist : {}", zzimlist);
+        List<LectureDTO> lecturelist = teacherService.lectureList(teacheridx);
+        log.info("lecturelist : {}", lecturelist);
+        model.addAttribute("zzimlist", zzimlist);
+        model.addAttribute("cartlist", cartlist);
+        model.addAttribute("lecturelist", lecturelist);
+        model.addAttribute("teacheridx", teacheridx);
     }
 
     @GetMapping("/manage/main")
