@@ -17,4 +17,9 @@ public interface TeacherServiceIf {
 
     int teacherGradeRegist(GradeDTO gradeDTO);
     PageResponseDTO<GradeDTO> gradeList(PageRequestDTO pageRequestDTO);
+
+    int teacherInfoRegist(TeacherDTO teacherDTO);
+    int teacherInfoModify(TeacherDTO teacherDTO);
+    int infoPresent(int member_idx);
+    TeacherDTO viewInfo(int member_idx);
 }
