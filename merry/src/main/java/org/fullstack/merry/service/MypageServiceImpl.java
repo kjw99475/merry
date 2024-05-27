@@ -3,9 +3,11 @@ package org.fullstack.merry.service;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.fullstack.merry.domain.BoardVO;
+import org.fullstack.merry.domain.QnaVO;
 import org.fullstack.merry.dto.BoardDTO;
 import org.fullstack.merry.dto.PageRequestDTO;
 import org.fullstack.merry.dto.PageResponseDTO;
+import org.fullstack.merry.dto.QnaDTO;
 import org.fullstack.merry.mapper.BoardMapper;
 import org.fullstack.merry.mapper.MypageMapper;
 import org.modelmapper.ModelMapper;
@@ -66,6 +68,25 @@ public class MypageServiceImpl implements MypageServiceIf{
         return responseDTO;
     }
 
+    @Override
+    public List<QnaDTO> qnaList(int member_idx) {
+        List<QnaDTO> qnaDTOList = mypageMapper.qnaList(member_idx).stream()
+                .map(vo->modelMapper.map(vo, QnaDTO.class))
+                .collect(Collectors.toList());
+        return qnaDTOList;
+    }
+
+    @Override
+    public QnaDTO viewQna(int member_idx) {
+        return null;
+    }
+
+    @Override
+    public int registQna(QnaDTO qnaDTO) {
+        QnaVO qnaVO = modelMapper.map(qnaDTO, QnaVO.class);
+        int result = mypageMapper.registQna(qnaVO);
+        return result;
+    }
 
 
 //    @Override
