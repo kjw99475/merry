@@ -5,6 +5,8 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 import java.time.LocalDate;
 
@@ -14,20 +16,25 @@ import java.time.LocalDate;
 @Builder
 public class MemberDTO {
     private int member_idx;
-    //    @NotBlank
+    @NotBlank(message = "아이디는 필수 입력사항입니다.")
     @Pattern(regexp = "^[a-z0-9]{4,16}", message = "4~16자의 영어 소문자 및 숫자만 입력이 가능합니다.")
     private String member_id;
+    @NotBlank(message = "이름은 필수 입력사항입니다.")
     private String name;
-    //    @NotBlank
+    @NotBlank(message = "비밀번호는 필수 입력사항입니다.")
     @Pattern(regexp = "^(?=.*[a-z])(?=.*[!@#$%^*+=-])(?=.*[0-9]).{8,}", message = "8자 이상의 영문 소문자, 숫자, 특수문자를 조합해 주세요.")
     private String pwd;
-    //    @NotBlank
+    @NotBlank(message = "이메일은 필수 입력사항입니다.")
     @Pattern(regexp = "^[a-zA-Z0-9_+&*-]+(?:\\.[a-zA-Z0-9_+&*-]+)*@(?:[a-zA-Z0-9-]+\\.)+[a-zA-Z]{2,7}$", message = "email@email.com 형식으로 입력해주세요")
     private String email;
+    @NotBlank(message = "생년월일은 필수 입력사항입니다.")
     private String birthday;
+    @NotBlank(message = "주소는 필수 입력사항입니다.")
     private String addr;
     private String addr_detail;
+    @NotNull(message = "우편번호는 필수 입력사항입니다.")
     private int zipcode;
+    @NotBlank(message = "핸드폰번호는 필수 입력사항입니다")
     private String phone;
     private LocalDate reg_date;
     private LocalDate modify_date;

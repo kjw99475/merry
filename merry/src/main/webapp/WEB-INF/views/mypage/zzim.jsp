@@ -8,6 +8,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ page trimDirectiveWhitespaces="true" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
 <html>
 <head>
@@ -61,23 +62,34 @@
                                 <table class="cart-table">
                                     <thead class="cart-table-head">
                                     <tr class="table-head-row">
-                                        <th class="product-remove"><input type="checkbox"/></th>
+                                        <th class="product-remove">선택</th>
                                         <th class="product-image">강의이미지</th>
-                                        <th>강의정보</th>
+                                        <th>강의제목</th>
                                         <th>가격</th>
                                         <th>장바구니</th>
-                                        <th>삭제</th>
+                                        <th>찜 삭제</th>
                                     </tr>
                                     </thead>
                                     <tbody>
-                                    <tr class="table-body-row">
-                                        <td><input type="checkbox"/></td>
-                                        <td class="p-2 product-image"><img src="assets/img/products/product-img-1.jpg" alt=""></td>
-                                        <td class="p-2"><a href="/lecture/view?lec_idx=1">강의 이름</a></td>
-                                        <td class="p-2">110,000</td>
-                                        <td class="p-2"><button class="btn orange-outline-btn bordered-btn" type="button">추가</button></td>
-                                        <td class="p-2"><button class="btn red-outline-btn bordered-btn" type="button">삭제</button></td>
-                                    </tr>
+                                    <c:choose>
+                                        <c:when test="${!empty responseDTO && responseDTO.total_count > 0}">
+                                            <c:forEach items="${responseDTO.dtoList}" var="list" varStatus="loop">
+                                                <tr class="table-body-row text-center">
+                                                    <td><input type="checkbox"/></td>
+                                                    <td class="p-2 product-image"><img src="/resources/uploads/lecture/${list.lec_img}" width="50px"></td>
+                                                    <td class="p-2"><a href="/lecture/view?lec_idx=${list.lec_idx}">${list.lec_title}</a></td>
+                                                    <td class="p-2"><fmt:formatNumber type="number" maxFractionDigits="3" value="${list.lec_price}" /></td>
+                                                    <td class="p-2"><button class="btn orange-outline-btn bordered-btn" type="button">추가</button></td>
+                                                    <td class="p-2"><button class="btn red-outline-btn bordered-btn" type="button" onclick="location.href='/mypage/deletezzim?zzim_idx=${list.zzim_idx}'">삭제</button></td>
+                                                </tr>
+                                            </c:forEach>
+                                        </c:when>
+                                        <c:otherwise>
+                                            <tr class="table-body-row text-center">
+                                                <td class="p-2" colspan="6">찜 내역이 없습니다.</td>
+                                            </tr>
+                                        </c:otherwise>
+                                    </c:choose>
                                     </tbody>
                                 </table>
                             </form>
@@ -92,11 +104,54 @@
                                 <button class="btn btn-lg red-btn bordered-btn" type="button">전체 삭제</button>
                             </div>
                         </div>
+                        <div class="pagination-wrap">
+                            <nav class="blog-pagination justify-content-center d-flex">
+                                <ul class="pagination">
+                                    <c:if test="${responseDTO.page<=10}">
+                                    <li class="page-item disabled">
+                                        </c:if>
+                                        <c:if test="${responseDTO.page>10}">
+                                    <li class="page-item">
+                                        </c:if>
+                                        <a class="page-link" href="/admin/board/list${responseDTO.linked_params}&page=${responseDTO.page_block_end-10}" aria-label="Previous">
+                                            <span aria-hidden="true">&laquo;</span>
+                                        </a>
+                                    </li>
+                                    <c:forEach begin="${responseDTO.page_block_start}"
+                                               end="${responseDTO.page_block_end}"
+                                               var="page_num">
+                                        <c:choose>
+                                            <c:when test="${responseDTO.page == page_num}">
+                                                <li class="page-item active">
+                                                    <a href="#" class="page-link">${page_num}</a>
+                                                </li>
+                                            </c:when>
+                                            <c:otherwise>
+                                                <li class="page-item">
+                                                    <a href="${responseDTO.linked_params}&page=${page_num}" class="page-link">${page_num}</a>
+                                                </li>
+                                            </c:otherwise>
+                                        </c:choose>
+                                    </c:forEach>
+                                    <c:if test="${(responseDTO.page_block_start+10)>(responseDTO.total_page)}">
+                                    <li class="page-item disabled">
+                                        </c:if>
+                                        <c:if test="${(responseDTO.page_block_start+10)<=(responseDTO.total_page)}">
+                                    <li class="page-item">
+                                        </c:if>
+                                        <a class="page-link" href="/admin/board/list${responseDTO.linked_params}&page=${responseDTO.page_block_start+10}" aria-label="Next">
+                                            <span aria-hidden="true">&raquo;</span>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </nav>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
+
 
     <jsp:include page="/WEB-INF/views/common/footer.jsp" />
     <script src="/resources/assets/js/jquery-1.11.3.min.js"></script>

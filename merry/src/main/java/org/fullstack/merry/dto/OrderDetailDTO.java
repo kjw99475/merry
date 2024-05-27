@@ -13,14 +13,10 @@ import java.time.LocalDate;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class OrderDTO {
+public class OrderDetailDTO {
+    private int idx;
     private int order_idx;
-    private String member_id;
-    private LocalDate order_date;
-    private int order_total;
-    private String billing_type;
-    private String order_state;
-
     private int lec_idx;
+
     private int member_idx;
 }

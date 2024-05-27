@@ -52,8 +52,8 @@
         <div class="row">
             <div class="col-lg-8 offset-lg-2 text-center">
                 <div class="breadcrumb-text">
-                    <p>마이페이지</p>
-                    <h1>개인정보</h1>
+                    <p>학습방</p>
+                    <h1>성적 입력</h1>
                 </div>
             </div>
         </div>
@@ -68,17 +68,17 @@
             <div>
                 <div class="container">
                     <div class="checkout-section mt-80 mb-150">
-                        <form action="/teacher/manage/grade/regist" method="post">
+                        <form action="/teacher/grade/regist" method="post">
                             <label>시험 제목</label>
-                            <input type="text" class="form-control" name="grade_title">
+                            <input type="text" class="form-control" name="grade_title" value="${gradeDTO.grade_title}">
                             <div id="div_err_grade_title" style="display: none"></div>
 
                             <label>점수</label>
-                            <input type="text" class="form-control" name="grade_score">
+                            <input type="text" class="form-control" name="grade_score" value="${gradeDTO.grade_score}">
                             <div id="div_err_grade_score" style="display: none"></div>
 
                             <label>학생 이름</label>
-                            <input type="text" class="form-control" name="grade_student">
+                            <input type="text" class="form-control" name="grade_student" value="${gradeDTO.grade_student}">
                             <div id="div_err_grade_student" style="display: none"></div>
 
                             <label>선생님 이름</label>

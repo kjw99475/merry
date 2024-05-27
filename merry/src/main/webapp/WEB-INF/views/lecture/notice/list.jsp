@@ -83,24 +83,32 @@
         </tr>
         </thead>
         <tbody>
-        <c:forEach var="list" items="${noticeList}" varStatus="i">
-            <tr>
-                <td>${i.count}</td>
-                <td>
-                    <c:set var="ntitle" value="${list.notice_title}"/>
-                    <c:choose>
-                        <c:when test="${fn:length(ntitle) > 10}">
-                            <a href="/lecture/notice/view?notice_idx=${list.notice_idx}"><strong>${fn:substring(ntitle, 0, 10)}...</strong></a>
-                        </c:when>
-                        <c:otherwise>
-                            <a href="/lecture/notice/view?notice_idx=${list.notice_idx}"><strong>${list.notice_title}</strong></a>
-                        </c:otherwise>
-                    </c:choose>
-                </td>
-                <td>${list.member_name}</td>
-                <td>${list.notice_reg_date}</td>
-            </tr>
-        </c:forEach>
+        <c:choose>
+            <c:when test="${not empty qnaList}">
+                <c:forEach var="list" items="${noticeList}" varStatus="i">
+                    <tr>
+                        <td>${i.count}</td>
+                        <td>
+                            <c:set var="ntitle" value="${list.notice_title}"/>
+                            <c:choose>
+                                <c:when test="${fn:length(ntitle) > 10}">
+                                    <a href="/lecture/notice/view?notice_idx=${list.notice_idx}"><strong>${fn:substring(ntitle, 0, 10)}...</strong></a>
+                                </c:when>
+                                <c:otherwise>
+                                    <a href="/lecture/notice/view?notice_idx=${list.notice_idx}"><strong>${list.notice_title}</strong></a>
+                                </c:otherwise>
+                            </c:choose>
+                        </td>
+                        <td>${list.member_name}</td>
+                        <td>${list.notice_reg_date}</td>
+                    </tr>
+                </c:forEach>
+            </c:when>
+            <c:otherwise>
+                등록된 게시글이 없습니다.
+            </c:otherwise>
+        </c:choose>
+
         </tbody>
     </table>
     <div class="btn-toolbar justify-content-center" role="toolbar" aria-label="Toolbar with button groups">

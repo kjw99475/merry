@@ -17,6 +17,7 @@ public interface LectureServiceIf {
     int modify(LectureDTO lectureDTO);
     int delete(int lec_idx);
     LectureDTO view(int lec_idx);
+
     PageResponseDTO<LectureDTO> lectureList(PageRequestDTO pageRequestDTO);
     int totalLecture(PageRequestDTO pageRequestDTO);
     String getSubject(int member_idx);
