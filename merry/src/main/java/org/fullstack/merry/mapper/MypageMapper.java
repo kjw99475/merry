@@ -17,7 +17,9 @@ public interface MypageMapper {
 
     /* 1:1 문의 */
     List<QnaVO> qnaList(PageRequestDTO requestDTO);
+    List<QnaVO> qnaList2(PageRequestDTO requestDTO);
     int qnaTotalCount(PageRequestDTO requestDTO);
+    int qnaTotalCount2(PageRequestDTO requestDTO);
     QnaVO viewQna(int qna_idx);
     int registQna(QnaVO qnaVO);
 

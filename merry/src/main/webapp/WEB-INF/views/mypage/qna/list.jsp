@@ -103,7 +103,7 @@
                                         </c:when>
                                         <c:otherwise>
                                             <tr class="table-body-row text-center">
-                                                <td class="p-2" colspan="3">작성한 1:1문의가 없습니다.</td>
+                                                <td class="p-2" colspan="5">작성한 1:1문의가 없습니다.</td>
                                             </tr>
                                         </c:otherwise>
                                     </c:choose>

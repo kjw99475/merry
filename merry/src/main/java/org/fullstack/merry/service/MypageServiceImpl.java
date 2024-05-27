@@ -90,8 +90,8 @@ public class MypageServiceImpl implements MypageServiceIf{
     }
 
     @Override
-    public int qnaTotalCount(PageRequestDTO requestDTO) {
-        int total_count = mypageMapper.qnaTotalCount(requestDTO);
+    public int qnaTotalCount(PageRequestDTO pageRequestDTO) {
+        int total_count = mypageMapper.qnaTotalCount(pageRequestDTO);
         return total_count;
     }
 
@@ -102,6 +102,29 @@ public class MypageServiceImpl implements MypageServiceIf{
                 .map(vo->modelMapper.map(vo,QnaDTO.class))
                 .collect(Collectors.toList());
         int total_count = mypageMapper.qnaTotalCount(pageRequestDTO);
+
+        PageResponseDTO<QnaDTO> responseDTO = PageResponseDTO.<QnaDTO>withAll()
+                .requestDTO(pageRequestDTO)
+                .dtoList(dtoList)
+                .total_count(total_count)
+                .build();
+
+        return responseDTO;
+    }
+
+    @Override
+    public int qnaTotalCount2(PageRequestDTO pageRequestDTO) {
+        int total_count = mypageMapper.qnaTotalCount2(pageRequestDTO);
+        return total_count;
+    }
+
+    @Override
+    public PageResponseDTO<QnaDTO> qnaList2(PageRequestDTO pageRequestDTO) {
+        List<QnaVO> voList = mypageMapper.qnaList2(pageRequestDTO);
+        List<QnaDTO> dtoList = voList.stream()
+                .map(vo->modelMapper.map(vo,QnaDTO.class))
+                .collect(Collectors.toList());
+        int total_count = mypageMapper.qnaTotalCount2(pageRequestDTO);
 
         PageResponseDTO<QnaDTO> responseDTO = PageResponseDTO.<QnaDTO>withAll()
                 .requestDTO(pageRequestDTO)

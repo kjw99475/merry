@@ -5,9 +5,7 @@
 <mapper namespace="org.fullstack.merry.mapper.MypageMapper">
     <sql id="whereCondition">
         <where>
-            <trim prefix="and">
-                member_id = #{member_id}
-            </trim>
+            member_id = #{member_id} AND qna_type = 'M'
             <if test="search_date1 != null and search_date2 != null and search_date1 != '' and search_date2 != ''">
                 <trim prefix="and">
                     qna_reg_date BETWEEN #{search_date1} AND #{search_date2}
@@ -20,6 +18,16 @@
             <trim prefix="and">
                 o.member_id = #{member_id}
             </trim>
+            <if test="search_date1 != null and search_date2 != null and search_date1 != '' and search_date2 != ''">
+                <trim prefix="and">
+                    order_date BETWEEN #{search_date1} AND #{search_date2}
+                </trim>
+            </if>
+        </where>
+    </sql>
+    <sql id="whereCondition3">
+        <where>
+            qna_type = 'M'
             <if test="search_date1 != null and search_date2 != null and search_date1 != '' and search_date2 != ''">
                 <trim prefix="and">
                     order_date BETWEEN #{search_date1} AND #{search_date2}
@@ -42,7 +50,7 @@
     <delete id="deleteCart">
         DELETE FROM cart
         WHERE member_id = #{member_id}
-        AND lec_idx = #{lecIdx}
+          AND lec_idx = #{lecIdx}
     </delete>
     <delete id="deletezzim">
         DELETE FROM zzim
@@ -61,6 +69,20 @@
         SELECT qna_idx, qna_title, qna_answer_yn, qna_member_name, qna_reg_date, member_id
         FROM qna AS q INNER JOIN member AS m ON q.member_idx = m.member_idx
         <include refid="whereCondition"></include>
+        ORDER BY qna_idx DESC
+        LIMIT #{page_skip_count}, #{page_size}
+    </select>
+
+    <select id="qnaTotalCount2">
+        SELECT COUNT(*)
+        FROM qna
+        <include refid="whereCondition3"></include>
+    </select>
+
+    <select id="qnaList2" resultType="org.fullstack.merry.domain.QnaVO">
+        SELECT qna_idx, qna_title, qna_answer_yn, qna_member_name, qna_reg_date
+        FROM qna
+        <include refid="whereCondition3"></include>
         ORDER BY qna_idx DESC
         LIMIT #{page_skip_count}, #{page_size}
     </select>
@@ -96,7 +118,7 @@
     </select>
     <update id="orderUpdateState">
         UPDATE `order` SET
-        order_state = 'B'
+            order_state = 'B'
         WHERE order_idx = #{order_idx}
     </update>
 
@@ -106,7 +128,7 @@
         FROM zzim AS z INNER JOIN member AS m ON z.member_id = m.member_id
         WHERE z.member_id = #{member_id}
         ORDER BY zzim_idx DESC
-        LIMIT #{page_skip_count}, #{page_size}
+            LIMIT #{page_skip_count}, #{page_size}
     </select>
     <select id="zzimTotalCount">
         SELECT COUNT(*)
@@ -120,7 +142,7 @@
         FROM cart AS c INNER JOIN member AS m ON c.member_id = m.member_id
         WHERE c.member_id = #{member_id}
         ORDER BY cart_idx DESC
-        LIMIT #{page_skip_count}, #{page_size}
+            LIMIT #{page_skip_count}, #{page_size}
     </select>
     <select id="cartTotalCount">
         SELECT COUNT(*)

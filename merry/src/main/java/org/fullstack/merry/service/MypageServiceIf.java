@@ -19,6 +19,8 @@ public interface MypageServiceIf {
    // 1:1 문의
    int qnaTotalCount(PageRequestDTO pageRequestDTO);
    PageResponseDTO<QnaDTO> qnaList(PageRequestDTO pageRequestDTO);
+   int qnaTotalCount2(PageRequestDTO pageRequestDTO);
+   PageResponseDTO<QnaDTO> qnaList2(PageRequestDTO pageRequestDTO);
    QnaDTO viewQna(int qna_idx);
    int registQna(QnaDTO qnaDTO);
 
