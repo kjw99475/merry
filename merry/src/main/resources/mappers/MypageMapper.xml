@@ -30,7 +30,7 @@
             qna_type = 'M'
             <if test="search_date1 != null and search_date2 != null and search_date1 != '' and search_date2 != ''">
                 <trim prefix="and">
-                    order_date BETWEEN #{search_date1} AND #{search_date2}
+                    qna_reg_date BETWEEN #{search_date1} AND #{search_date2}
                 </trim>
             </if>
         </where>

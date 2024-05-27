@@ -56,18 +56,18 @@
                                 <input type="text" class="form-control" placeholder="Search" name="search_word" style="width: 100%" value="${responseDTO.search_word}">
                             </div>
                             <div>
-                                <button type="submit" class="btn btn-merry" >검색</button>
+                                <button type="submit" class="btn orange-btn" >검색</button>
                             </div>
                         </div>
                     </form>
                 </div>
                 <div class="container">
                     <div style="margin: 0 auto;">
-                        <div class="col-auto">
+                        <div class="col-auto cart-table-wrap">
                             <table class="cart-table">
-                                <thead>
-                                <tr>
-                                    <th>no</th>
+                                <thead class="cart-table-head">
+                                <tr class="table-head-row">
+                                    <th>No</th>
                                     <th>아이디</th>
                                     <th>이름</th>
                                     <th>탈퇴 및 등록</th>
@@ -80,9 +80,9 @@
                                     <c:when test="${!empty responseDTO.dtoList}">
                                         <c:set value="${responseDTO.total_count}" var="total_count" />
                                         <c:forEach items="${responseDTO.dtoList}" var="memberDTO" varStatus="loop">
-                                            <tr>
-                                                <th>${total_count -responseDTO.page_skip_count -loop.index}</th>
-                                                <td>
+                                            <tr class="table-body-row text-center">
+                                                <td>${total_count -responseDTO.page_skip_count -loop.index}</td>
+                                                <td class="p-2">
                                                     <c:choose>
                                                         <c:when test="${memberDTO.member_state eq 'N'}">
                                                             <span style="text-decoration:line-through; color:red">${memberDTO.member_id} </span>
@@ -94,27 +94,27 @@
                                                 </td>
                                                 <c:choose>
                                                     <c:when test="${memberDTO.member_state eq 'N'}">
-                                                        <td><span style="text-decoration:line-through; color:red">${memberDTO.name} </span></td>
-                                                        <td>
+                                                        <td class="p-2"><span style="text-decoration:line-through; color:red">${memberDTO.name} </span></td>
+                                                        <td class="p-2">
                                                             <button class="btn red-btn" disabled>탈퇴 처리 완료</button>
                                                         </td>
                                                     </c:when>
                                                     <c:otherwise>
-                                                        <td><span>${memberDTO.name}</span></td>
-                                                        <td>
+                                                        <td class="p-2"><span>${memberDTO.name}</span></td>
+                                                        <td class="p-2">
                                                             <button onclick="deleteOK('${memberDTO.member_id}')" class="btn red-outline-btn">탈퇴</button>
                                                             <button onclick="registOK('${memberDTO.member_idx}')" class="btn orange-outline-btn">선생님</button>
                                                         </td>
                                                     </c:otherwise>
                                                 </c:choose>
-                                                <td><c:out value="${memberDTO.member_state == 'Y' ? '일반회원' : '탈퇴회원' }"/></td>
-                                                <td>${memberDTO.reg_date}</td>
+                                                <td class="p-2"><c:out value="${memberDTO.member_state == 'Y' ? '일반회원' : '탈퇴회원' }"/></td>
+                                                <td class="p-2">${memberDTO.reg_date}</td>
                                             </tr>
                                         </c:forEach>
                                     </c:when>
                                     <c:otherwise>
-                                        <tr class="bg-white text-center">
-                                            <td colspan="3">등록된 회원이 없습니다.</td>
+                                        <tr class="table-body-row text-center">
+                                            <td class="p-2" colspan="6">등록된 회원이 없습니다.</td>
                                         </tr>
                                     </c:otherwise>
                                 </c:choose>

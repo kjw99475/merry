@@ -55,18 +55,18 @@
                                 <input type="text" class="form-control" placeholder="Search" name="search_word" style="width: 100%" value="${responseDTO.search_word}">
                             </div>
                             <div>
-                                <button type="submit" class="btn btn-merry" >검색</button>
+                                <button type="submit" class="btn orange-btn" >검색</button>
                             </div>
                         </div>
                     </form>
                 </div>
                 <div class="container">
                     <div style="margin: 0 auto;">
-                        <div class="col-auto">
+                        <div class="col-auto cart-table-wrap">
                             <table class="cart-table">
-                                <thead>
-                                <tr>
-                                    <th>no</th>
+                                <thead class="cart-table-head">
+                                <tr class="table-head-row">
+                                    <th>No</th>
                                     <th>아이디</th>
                                     <th>이름</th>
                                     <th>회원구분</th>
@@ -78,8 +78,8 @@
                                     <c:when test="${!empty responseDTO.dtoList}">
                                         <c:set value="${responseDTO.total_count}" var="total_count" />
                                         <c:forEach items="${responseDTO.dtoList}" var="memberDTO" varStatus="loop">
-                                            <tr>
-                                                <th>${total_count -responseDTO.page_skip_count -loop.index}</th>
+                                            <tr class="table-body-row text-center">
+                                                <td>${total_count -responseDTO.page_skip_count -loop.index}</td>
                                                 <td>
                                                     <c:choose>
                                                         <c:when test="${memberDTO.member_state eq 'N'}">
@@ -107,7 +107,7 @@
                                         </c:forEach>
                                     </c:when>
                                     <c:otherwise>
-                                        <tr class="bg-white text-center">
+                                        <tr class="table-body-row text-center">
                                             <td colspan="3">등록된 선생님이 없습니다.</td>
                                         </tr>
                                     </c:otherwise>
