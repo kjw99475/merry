@@ -4,6 +4,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.fullstack.merry.domain.BoardReplyVO;
 import org.fullstack.merry.domain.BoardVO;
+import org.fullstack.merry.domain.OrderVO;
 import org.fullstack.merry.domain.QnaVO;
 import org.fullstack.merry.dto.*;
 import org.fullstack.merry.mapper.BoardMapper;
@@ -92,18 +93,28 @@ public class MypageServiceImpl implements MypageServiceIf{
     }
 
     @Override
-    public int qnaTotalCount(int member_idx) {
-        int total_count = mypageMapper.qnaTotalCount(member_idx);
+    public int qnaTotalCount(PageRequestDTO requestDTO) {
+        int total_count = mypageMapper.qnaTotalCount(requestDTO);
         return total_count;
     }
 
     @Override
-    public List<QnaDTO> qnaList(int member_idx) {
-        List<QnaDTO> qnaDTOList = mypageMapper.qnaList(member_idx).stream()
-                .map(vo->modelMapper.map(vo, QnaDTO.class))
+    public PageResponseDTO<QnaDTO> qnaList(PageRequestDTO pageRequestDTO) {
+        List<QnaVO> voList = mypageMapper.qnaList(pageRequestDTO);
+        List<QnaDTO> dtoList = voList.stream()
+                .map(vo->modelMapper.map(vo,QnaDTO.class))
                 .collect(Collectors.toList());
-        return qnaDTOList;
+        int total_count = mypageMapper.qnaTotalCount(pageRequestDTO);
+
+        PageResponseDTO<QnaDTO> responseDTO = PageResponseDTO.<QnaDTO>withAll()
+                .requestDTO(pageRequestDTO)
+                .dtoList(dtoList)
+                .total_count(total_count)
+                .build();
+
+        return responseDTO;
     }
+
 
     @Override
     public QnaDTO viewQna(int qna_idx) {
@@ -119,25 +130,33 @@ public class MypageServiceImpl implements MypageServiceIf{
         return result;
     }
 
+    @Override
+    public int orderTotalCount(PageRequestDTO pageRequestDTO) {
+        int total_count = mypageMapper.orderTotalCount(pageRequestDTO);
+        return total_count;
+    }
+
+    @Override
+    public PageResponseDTO<OrderDTO> orderListByPage(PageRequestDTO pageRequestDTO) {
+        List<OrderVO> voList = mypageMapper.orderList(pageRequestDTO);
+        List<OrderDTO> dtoList = voList.stream()
+                .map(vo->modelMapper.map(vo,OrderDTO.class))
+                .collect(Collectors.toList());
+        int total_count = mypageMapper.orderTotalCount(pageRequestDTO);
+
+        PageResponseDTO<OrderDTO> responseDTO = PageResponseDTO.<OrderDTO>withAll()
+                .requestDTO(pageRequestDTO)
+                .dtoList(dtoList)
+                .total_count(total_count)
+                .build();
+
+        return responseDTO;
+    }
 
 //    @Override
-//    public int memberTotalCount(PageRequestDTO pageRequestDTO) { return adminMapper.memberTotalCount(pageRequestDTO); }
-//
-//    @Override
-//    public PageResponseDTO<NoticeDTO> noticeListByPage(PageRequestDTO pageRequestDTO) {
-//        List<NoticeVO> voList = adminMapper.noticeListByPage(pageRequestDTO);
-//        List<NoticeDTO> dtoList = voList.stream()
-//                .map(vo -> modelMapper.map(vo, NoticeDTO.class))
-//                .collect(Collectors.toList());
-//
-//        int total_count = adminMapper.noticeTotalCount(pageRequestDTO);
-//
-//        PageResponseDTO<NoticeDTO> pageResponseDTO = PageResponseDTO.<NoticeDTO>withAll()
-//                .requestDTO(pageRequestDTO)
-//                .dtoList(dtoList)
-//                .total_count(total_count)
-//                .build();
-//
-//        return pageResponseDTO;
+//    public int getLecIdx(PageRequestDTO pageRequestDTO) {
+//        int lec_idx = mypageMapper.getLecIdx(pageRequestDTO);
+//        return lec_idx;
 //    }
+
 }
