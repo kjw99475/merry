@@ -3,6 +3,25 @@
         PUBLIC "-//mybatis.org/DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="org.fullstack.merry.mapper.TeacherMapper">
+    <sql id="whereCondition">
+        <trim>
+            <if test="search_type != null">
+                <foreach collection="search_type" item="type" >
+                    <trim prefix="AND">
+                        <choose>
+                            <when test="type == 't'.toString()">
+                                grade_title like concat('%', #{search_word},'%')
+                            </when>
+                            <when test="type == 'u'.toString()">
+                                grade_student like concat('%', #{search_word},'%')
+                            </when>
+                        </choose>
+                    </trim>
+                </foreach>
+            </if>
+        </trim>
+    </sql>
+
     <select id="noticeList" resultType="org.fullstack.merry.dto.NoticeDTO">
         SELECT notice_title, notice_content, notice_reg_date, m.name AS member_name
         FROM notice AS n
@@ -50,6 +69,7 @@
     <select id="gradeList">
         SELECT * FROM grade
         WHERE grade_teacher = #{grade_teacher}
+        <include refid="whereCondition"></include>
         ORDER BY grade_idx DESC
         LIMIT #{page_skip_count}, #{page_size}
     </select>
@@ -57,5 +77,6 @@
     <select id="totalGrade">
         SELECT COUNT(*) FROM grade
         WHERE grade_teacher = #{grade_teacher}
+        <include refid="whereCondition"></include>
     </select>
 </mapper>

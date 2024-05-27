@@ -5,6 +5,7 @@ import lombok.extern.log4j.Log4j2;
 import org.fullstack.merry.dto.*;
 import org.fullstack.merry.dto.lecture.LectureDTO;
 import org.fullstack.merry.service.MypageServiceImpl;
+import org.fullstack.merry.service.TeacherServiceIf;
 import org.fullstack.merry.service.TeacherServiceImpl;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -24,7 +25,7 @@ import java.util.List;
 @RequiredArgsConstructor
 @RequestMapping(value="/teacher")
 public class TeacherController {
-    private final TeacherServiceImpl teacherService;
+    private final TeacherServiceIf teacherService;
     @GetMapping("/manage/notice")
     public void notice(@RequestParam(value = "teacheridx", defaultValue = "0") String teacheridx,
                        Model model){
@@ -69,12 +70,7 @@ public class TeacherController {
         List<DataDTO> dataList = teacherService.dataList(teacheridx);
     }
 
-    @GetMapping("/manage/main")
-    public void teacherMain() {
-
-    }
-
-    @GetMapping("/manage/grade")
+    @GetMapping("/grade/list")
     public void teacherGradeList(PageRequestDTO pageRequestDTO, HttpSession session, Model model) {
         pageRequestDTO.setGrade_teacher(session.getAttribute("name").toString());
 
@@ -83,12 +79,12 @@ public class TeacherController {
         model.addAttribute("responseDTO", responseDTO);
     }
 
-    @GetMapping("/manage/grade/regist")
+    @GetMapping("/grade/regist")
     public void teacherGradeRegist() {
 
     }
 
-    @PostMapping("/manage/grade/regist")
+    @PostMapping("/grade/regist")
     public String teacherGradeRegistPost(@Valid GradeDTO gradeDTO,
                                          BindingResult bindingResult,
                                          RedirectAttributes redirectAttributes) {
@@ -96,15 +92,15 @@ public class TeacherController {
             redirectAttributes.addFlashAttribute("errors", bindingResult.getAllErrors());
             redirectAttributes.addFlashAttribute("gradeDTO", gradeDTO);
 
-            return "redirect:/teacher/manage/grade/regist";
+            return "redirect:/teacher/grade/regist";
         }
 
         int result = teacherService.teacherGradeRegist(gradeDTO);
 
         if(result > 0) {
-            return "redirect:/teacher/manage/grade";
+            return "redirect:/teacher/grade/list";
         } else {
-            return "redirect:/teacher/manage/grade/regist";
+            return "redirect:/teacher/grade/regist";
         }
     }
 }
