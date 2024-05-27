@@ -141,7 +141,7 @@
                                         <ul>
                                         <c:forEach items="${ChapterList}" var="chapDTO">
                                             <c:choose>
-                                                <c:when test="${orderCnt >= 1}">
+                                                <c:when test="${orderCnt >= 1 or sessionScope.member_idx eq lectureDTO.member_idx}">
                                                     <span><strong>목차를 클릭하여 강의를 수강하세요!</strong></span>
                                                     <li><a class="btn" onclick="javascript:Dalack_lab('/resources/uploads/lecture/${chapDTO.chap_video}')"> ${chapDTO.chap_title} (${chapDTO.chap_time})</a></li>
                                                 </c:when>
