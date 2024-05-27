@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org/DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.fullstack.merry.mapper.MyeduMapper">
+    <sql id="whereCondition">
+        <trim>
+            <if test="search_type != null">
+                <foreach collection="search_type" item="type" >
+                    <trim prefix="AND">
+                        <choose>
+                            <when test="type == 't'.toString()">
+                                qna_title like concat('%', #{search_word},'%')
+                            </when>
+                        </choose>
+                    </trim>
+                </foreach>
+            </if>
+        </trim>
+    </sql>
+
+    <select id="myQnaList">
+        SELECT * FROM qna as q
+        INNER JOIN lecture as l ON l.lec_idx = q.qna_lec_idx
+        WHERE q.member_idx = #{member_idx}
+        <include refid="whereCondition"></include>
+    </select>
+
+    <select id="totalMyQna">
+        SELECT COUNT(*) FROM qna
+        WHERE member_idx = #{member_idx}
+        <include refid="whereCondition"></include>
+    </select>
+</mapper>
