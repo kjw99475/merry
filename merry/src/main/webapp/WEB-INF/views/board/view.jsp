@@ -69,50 +69,48 @@
                             <h2></h2>
 
                         </div>
-                        <div id="form_status"></div>
                         <div class="contact-form">
-                            <div class="card">
-                                <div class="card-body">
-                            <form id="frm_" name="frm_" method="post" action="/board/delete">
-                                    <input type="hidden" name="board_idx" value="${boardDTO.board_idx}">
-<%--                                <label for="board_title">제목</label>--%>
-                                <div><span class="font-weight-bold">제목</span>
-                                    <input type="text" value="${boardDTO.board_title}" class="form-control col-12" readonly>
-
-                                </div>
-                                <div><span class="" >작성자</span>
-                                    <input type="text" value="${boardDTO.board_writer}" class="form-control col-12" readonly>
-                                </div>
-                                <div><span class="" >작성일</span>
-                                    <input type="text" value="${boardDTO.board_reg_date}" class="form-control col-12" readonly>
-                                </div>
-
-                                <div class="overflow-auto mt-4" style="max-height: 500px;">${boardDTO.board_content}</div>
+                            <form id="frm_" name="frm_" method="post" action="/admin/board/delete">
+                                <input type="hidden" name="board_idx" value="${boardDTO.board_idx}">
+                                <%--                                <label for="board_title">제목</label>--%>
+                                <table class="table no-wrap user-table mb-0 text-lg-start">
+                                    <tr class="table-light">
+                                        <th style="width: 120px;">제목<span class="fas fa-pencil-alt"></span></th>
+                                        <td>${boardDTO.board_title}</td>
+                                    </tr>
+                                    <tr class="table-light">
+                                        <th>작성자<span class="fas fa-user"></span></th>
+                                        <td>${boardDTO.board_writer}</td>
+                                    </tr>
+                                    <tr class="table-light">
+                                        <th>작성일<span class="fas fa-calendar"></span></th>
+                                        <td>${boardDTO.board_reg_date}</td>
+                                    </tr>
+                                    <tr class="table-light">
+                                        <th>내용<span class="fas fa-book"></span></th>
+                                        <td>
+                                            <div class="overflow-auto" style="max-height: 500px;">${boardDTO.board_content}</div>
+                                        </td>
+                                    </tr>
+                                </table>
 
                                 <div class="row justify-content-between mt-3">
-                                    <div>
-                                        <c:if test="${sessionScope.member_idx eq boardDTO.member_idx}">
-                                        <button type="button" class="btn btn-outline-merry" onclick="delete_();">삭제</button>
-                                        <script>
-                                            const frm = document.querySelector("#frm_");
-                                            function delete_() {
-                                                let chk_del = confirm("삭제하시겠습니까?");
-                                                if(chk_del) {
-                                                    frm.submit();
-                                                }
+                                    <button type="button" class="btn btn-outline-merry" onclick="delete_();">삭제</button>
+                                    <script>
+                                        const frm = document.querySelector("#frm_");
+                                        function delete_() {
+                                            let chk_del = confirm("삭제하시겠습니까?");
+                                            if(chk_del) {
+                                                frm.submit();
                                             }
-                                        </script>
-                                        </c:if>
-                                    </div>
+                                        }
+                                    </script>
                                     <div>
                                         <button type="button" class="btn btn-outline-merry" onclick="location.href='/board/list'">목록</button>
-                                        <c:if test="${sessionScope.member_idx eq boardDTO.member_idx}">
                                         <button type="button" class="btn btn-merry" onclick="location.href='/board/modify?board_idx=${boardDTO.board_idx}'">수정</button>
-                                        </c:if>
                                     </div>
                                 </div>
                             </form>
-                            </div>
                         </div>
                     </div>
 
@@ -142,16 +140,36 @@
                         <c:choose>
                             <c:when test="${not empty replyDTOList}">
                                 <c:forEach items="${replyDTOList}" var="reply" varStatus="status">
-                                    <form action="/board/reply/deleteReply" method="post">
+                                    <form action="/board/reply/deleteReply" method="post" id="frm_reply_delete">
                                         <input type="hidden" name="board_idx" value="${boardDTO.board_idx}">
                                         <input type="hidden" name="reply_idx" value="${reply.reply_idx}">
 
                                     <li class="border-top border-bottom">
-                                        <span>${reply.reply_writer}</span>
+                                        <span><span class="fas fa-user"></span> ${reply.reply_writer}</span>
                                         <p>${reply.reply_comment}</p>
                                         <span style="font-size: smaller">${reply.reply_reg_date}</span>
                                         <c:if test="${reply.member_idx eq sessionScope.member_idx or sessionScope.member_type eq 'A'}">
-                                        <button class="btn-danger"  type="submit" > 삭제 </button>
+                                        <button class="btn-danger" id="btn-danger" onclick="delete_reply(${boardDTO.board_idx}, ${reply.reply_idx})" type="button"> 삭제 </button>
+                                            <script>
+                                                function delete_reply(board_idx, reply_idx) {
+                                                    if (confirm("해당 댓글을 삭제하시겠습니까?")) {
+                                                        $.ajax({
+                                                            type: "POST",            // HTTP method type(GET, POST) 형식이다.
+                                                            url: "/board/reply/deleteReply",      // 컨트롤러에서 대기중인 URL 주소이다.
+                                                            data: {
+                                                                reply_idx: reply_idx,
+                                                                board_idx: board_idx
+                                                            },            // Json 형식의 데이터이다.
+                                                            success: function (result) { // 비동기통신의 성공일경우 success콜백으로 들어옵니다. 'res'는 응답받은 데이터이다.
+                                                                window.location.reload();
+                                                            },
+                                                            error: function (error) { // 비동기 통신이 실패할경우 error 콜백으로 들어옵니다.
+                                                                console.log(error);
+                                                            }
+                                                        });
+                                                    }
+                                                }
+                                            </script>
                                         </c:if>
                                     </li>
                                     </form>

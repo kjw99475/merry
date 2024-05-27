@@ -75,9 +75,22 @@
                             <form id="frm_" name="frm_" method="post" action="/admin/notice/delete">
                                     <input type="hidden" name="notice_idx" value="${noticeDTO.notice_idx}">
 <%--                                <label for="notice_title">제목</label>--%>
-                                <div><span class="font-weight-bold">제목 : </span>${noticeDTO.notice_title}</div>
-
-                                <div class="overflow-auto mt-4" style="max-height: 500px;">${noticeDTO.notice_content}</div>
+                                <table class="table no-wrap user-table mb-0 text-lg-start">
+                                    <tr class="table-light">
+                                        <th style="width: 120px;">제목<span class="fas fa-pencil-alt"></span></th>
+                                        <td>${noticeDTO.notice_title}</td>
+                                    </tr>
+                                    <tr class="table-light">
+                                        <th>작성일<span class="fas fa-calendar"></span></th>
+                                        <td>${noticeDTO.notice_reg_date}</td>
+                                    </tr>
+                                    <tr class="table-light">
+                                        <th>내용<span class="fas fa-book"></span></th>
+                                        <td>
+                                            <div class="overflow-auto" style="max-height: 500px;">${noticeDTO.notice_content}</div>
+                                        </td>
+                                    </tr>
+                                </table>
 
                                 <c:if test="${noticeDTO.notice_org_file_name != null and noticeDTO.notice_org_file_name != '' }" >
                                     <div class="mt-4">

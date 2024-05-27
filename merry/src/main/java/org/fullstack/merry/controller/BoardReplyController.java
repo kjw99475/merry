@@ -18,8 +18,9 @@ public class BoardReplyController {
 
     private final BoardReplyServiceIf boardReplyService;
 
+    @ResponseBody
     @PostMapping("/registReply")
-    public String replyRegistPOST(@Valid BoardReplyDTO boardReplyDTO,
+    public void replyRegistPOST(@Valid BoardReplyDTO boardReplyDTO,
                                   BindingResult bindingResult,
                                   RedirectAttributes redirectAttributes) {
         log.info("============================");
@@ -31,7 +32,7 @@ public class BoardReplyController {
             redirectAttributes.addFlashAttribute("errors", bindingResult.getAllErrors());
             redirectAttributes.addFlashAttribute("boardReplyDTO", boardReplyDTO);
 
-            return "redirect:/board/view?board_idx=" + boardReplyDTO.getBoard_idx();
+//            return "redirect:/board/view?board_idx=" + boardReplyDTO.getBoard_idx();
         }
 
         log.info("boardReplyDTO : " + boardReplyDTO.toString());
@@ -41,20 +42,20 @@ public class BoardReplyController {
         log.info("replyResult : " + result);
         log.info("============================");
 
-        return "redirect:/board/view?board_idx=" + boardReplyDTO.getBoard_idx();
+//        return "redirect:/board/view?board_idx=" + boardReplyDTO.getBoard_idx();
     }
 
 
-
+    @ResponseBody
     @PostMapping("/deleteReply")
-    public String deleteReply(@RequestParam(name = "reply_idx", defaultValue="0") int reply_idx,
+    public void deleteReply(@RequestParam(name = "reply_idx", defaultValue="0") int reply_idx,
                               @RequestParam(name = "board_idx", defaultValue="0") int board_idx) {
 
         int result = boardReplyService.deleteReply(reply_idx, reply_idx);
         log.info("deleteform : " + reply_idx +":::" +  reply_idx);
         log.info("deleteReplyResult : " + result);
 
-        return "redirect:/board/view?board_idx=" + board_idx;
+//        return "redirect:/board/view?board_idx=" + board_idx;
     }
 
 

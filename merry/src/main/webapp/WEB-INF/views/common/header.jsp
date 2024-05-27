@@ -22,7 +22,6 @@
                                     <li><a href="/notice/list">공지사항</a></li>
                                     <li><a href="/info/list">교육정보</a></li>
                                     <li><a href="/data/list">자료실</a></li>
-                                    <li><a href="/qna/list">QnA</a></li>
                                     <li><a href="/board/list">자유게시판</a></li>
                                 </ul>
                             </li>
