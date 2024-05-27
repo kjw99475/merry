@@ -28,4 +28,13 @@ public interface MypageServiceIf {
 //   int getLecIdx(PageRequestDTO pageRequestDTO);
    int orderUpdateState(int order_idx);
 
+   // 찜
+   int zzimTotalCount(PageRequestDTO pageRequestDTO);
+   PageResponseDTO<ZzimDTO> zzimListByPage(PageRequestDTO pageRequestDTO);
+
+   // 카트
+   // 찜
+   int cartTotalCount(PageRequestDTO pageRequestDTO);
+   PageResponseDTO<CartDTO> cartListByPage(PageRequestDTO pageRequestDTO);
+
 }

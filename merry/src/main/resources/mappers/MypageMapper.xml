@@ -76,12 +76,7 @@
         values(#{qna_title}, #{qna_content}, #{member_idx}, #{qna_member_name}, #{qna_answer_idx}, #{qna_answer_name}, 'M')
     </insert>
 
-    <select id="orderTotalCount">
-        SELECT COUNT(*)
-        FROM `order` AS o INNER JOIN member AS m ON o.member_id = m.member_id
-        <include refid="whereCondition2"></include>
-    </select>
-
+    <!-- 결제 내역 -->
     <select id="orderList" resultType="org.fullstack.merry.domain.OrderVO">
         SELECT order_idx, order_date, order_total, order_state, o.member_id
         FROM `order` AS o INNER JOIN member AS m ON o.member_id = m.member_id
@@ -89,17 +84,48 @@
         ORDER BY order_idx DESC
         LIMIT #{page_skip_count}, #{page_size}
     </select>
-
+    <select id="orderTotalCount">
+        SELECT COUNT(*)
+        FROM `order` AS o INNER JOIN member AS m ON o.member_id = m.member_id
+        <include refid="whereCondition2"></include>
+    </select>
     <select id="getLecIdx">
         SELECT lec_idx
         FROM `order` AS o INNER JOIN order_detail AS od ON o.order_idx = od.order_idx
         <include refid="whereCondition2"></include>
     </select>
-
     <update id="orderUpdateState">
         UPDATE `order` SET
         order_state = 'B'
         WHERE order_idx = #{order_idx}
     </update>
+
+    <!-- 찜 -->
+    <select id="zzimList" resultType="org.fullstack.merry.domain.ZzimVO">
+        SELECT zzim_idx, lec_idx, lec_title, lec_price, lec_img, z.member_id
+        FROM zzim AS z INNER JOIN member AS m ON z.member_id = m.member_id
+        WHERE z.member_id = #{member_id}
+        ORDER BY zzim_idx DESC
+        LIMIT #{page_skip_count}, #{page_size}
+    </select>
+    <select id="zzimTotalCount">
+        SELECT COUNT(*)
+        FROM zzim AS z INNER JOIN member AS m ON z.member_id = m.member_id
+        WHERE z.member_id = #{member_id}
+    </select>
+
+    <!-- 카트 -->
+    <select id="cartList" resultType="org.fullstack.merry.domain.CartVO">
+        SELECT cart_idx, lec_idx, lec_title, lec_price, lec_img, c.member_id
+        FROM cart AS c INNER JOIN member AS m ON c.member_id = m.member_id
+        WHERE c.member_id = #{member_id}
+        ORDER BY cart_idx DESC
+        LIMIT #{page_skip_count}, #{page_size}
+    </select>
+    <select id="cartTotalCount">
+        SELECT COUNT(*)
+        FROM cart AS c INNER JOIN member AS m ON c.member_id = m.member_id
+        WHERE c.member_id = #{member_id}
+    </select>
 
 </mapper>

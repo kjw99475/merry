@@ -186,17 +186,40 @@ public class MypageController {
 
 
     @GetMapping("/zzim")
-    public void zzimGET() {
-        log.info("=========================");
-        log.info("MypageController >> zzimGET()");
-        log.info("=========================");
+    public void zzimGET(
+            @Valid PageRequestDTO pageRequestDTO,
+            BindingResult bindingResult,
+            RedirectAttributes redirectAttributes,
+            HttpSession session,
+            Model model
+    ) {
+        if(bindingResult.hasErrors()){
+            log.info("MypageController >> list Error");
+            redirectAttributes.addFlashAttribute("errors", bindingResult.getAllErrors());
+        }
+        pageRequestDTO.setMember_id((String)session.getAttribute("member_id"));
+        pageRequestDTO.setPage_block_size(10);
+        PageResponseDTO<ZzimDTO> responseDTO = mypageService.zzimListByPage(pageRequestDTO);
+        model.addAttribute("responseDTO", responseDTO);
     }
 
+
     @GetMapping("/cart")
-    public void cartGET() {
-        log.info("=========================");
-        log.info("MypageController >> cartGET()");
-        log.info("=========================");
+    public void cartGET(
+            @Valid PageRequestDTO pageRequestDTO,
+            BindingResult bindingResult,
+            RedirectAttributes redirectAttributes,
+            HttpSession session,
+            Model model
+    ) {
+        if(bindingResult.hasErrors()){
+            log.info("MypageController >> list Error");
+            redirectAttributes.addFlashAttribute("errors", bindingResult.getAllErrors());
+        }
+        pageRequestDTO.setMember_id((String)session.getAttribute("member_id"));
+        pageRequestDTO.setPage_block_size(10);
+        PageResponseDTO<CartDTO> responseDTO = mypageService.cartListByPage(pageRequestDTO);
+        model.addAttribute("responseDTO", responseDTO);
     }
 
     @ResponseBody
@@ -212,6 +235,18 @@ public class MypageController {
             return 1;
         }
     }
+
+    @ResponseBody
+    @PostMapping("/deletecart")
+    public String deleteCartPOST(
+            @RequestParam(name="cart_idx", defaultValue = "0") int cart_idx,
+            HttpSession session
+    ) {
+        String member_id = (String)session.getAttribute("member_id");
+        mypageService.deleteCart(member_id, cart_idx);
+        return "redirect:/mypage/cart";
+    }
+
     @ResponseBody
     @PostMapping("/addzzim")
     public void addzzim(@RequestParam(value = "lec_idx") int lecIdx,
@@ -223,6 +258,17 @@ public class MypageController {
         }else {
             mypageService.addzzim(member_id, lecIdx);
         }
+    }
+
+    @ResponseBody
+    @PostMapping("/deletezzim")
+    public String deleteZzimPOST(
+            @RequestParam(name="zzim_idx", defaultValue = "0") int zzim_idx,
+            HttpSession session
+    ) {
+        String member_id = (String)session.getAttribute("member_id");
+        mypageService.deletezzim(member_id, zzim_idx);
+        return "redirect:/mypage/zzim";
     }
 
     @GetMapping("/payment")
@@ -266,9 +312,6 @@ public class MypageController {
             return "redirect:/mypage/payment";
         }
     }
-
-
-
 
     @GetMapping("/paymentView")
     public void paymentVIEWGET() {

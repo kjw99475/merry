@@ -2,10 +2,7 @@ package org.fullstack.merry.service;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
-import org.fullstack.merry.domain.BoardReplyVO;
-import org.fullstack.merry.domain.BoardVO;
-import org.fullstack.merry.domain.OrderVO;
-import org.fullstack.merry.domain.QnaVO;
+import org.fullstack.merry.domain.*;
 import org.fullstack.merry.dto.*;
 import org.fullstack.merry.mapper.BoardMapper;
 import org.fullstack.merry.mapper.BoardReplyMapper;
@@ -36,13 +33,13 @@ public class MypageServiceImpl implements MypageServiceIf{
     }
 
     @Override
-    public void deleteCart(String member_id, int LecIdx) {
-        mypageMapper.deleteCart(member_id, LecIdx);
+    public void deleteCart(String member_id, int lecIdx) {
+        mypageMapper.deleteCart(member_id, lecIdx);
     }
 
     @Override
-    public void deletezzim(String member_id, int LecIdx) {
-        mypageMapper.deletezzim(member_id, LecIdx);
+    public void deletezzim(String member_id, int lecIdx) {
+        mypageMapper.deletezzim(member_id, lecIdx);
     }
 
     // 작성게시글
@@ -162,5 +159,52 @@ public class MypageServiceImpl implements MypageServiceIf{
     public int orderUpdateState(int order_idx) {
         int result = mypageMapper.orderUpdateState(order_idx);
         return result;
+    }
+
+    /* 찜 */
+    @Override
+    public int zzimTotalCount(PageRequestDTO pageRequestDTO) {
+        int total_count = mypageMapper.zzimTotalCount(pageRequestDTO);
+        return total_count;
+    }
+
+    @Override
+    public PageResponseDTO<ZzimDTO> zzimListByPage(PageRequestDTO pageRequestDTO) {
+        List<ZzimVO> voList = mypageMapper.zzimList(pageRequestDTO);
+        List<ZzimDTO> dtoList = voList.stream()
+                .map(vo -> modelMapper.map(vo, ZzimDTO.class))
+                .collect(Collectors.toList());
+        int total_count = mypageMapper.zzimTotalCount(pageRequestDTO);
+
+        PageResponseDTO<ZzimDTO> responseDTO = PageResponseDTO.<ZzimDTO>withAll()
+                .requestDTO(pageRequestDTO)
+                .dtoList(dtoList)
+                .total_count(total_count)
+                .build();
+
+        return responseDTO;
+    }
+
+    @Override
+    public int cartTotalCount(PageRequestDTO pageRequestDTO) {
+        int total_count = mypageMapper.cartTotalCount(pageRequestDTO);
+        return total_count;
+    }
+
+    @Override
+    public PageResponseDTO<CartDTO> cartListByPage(PageRequestDTO pageRequestDTO) {
+        List<CartVO> voList = mypageMapper.cartList(pageRequestDTO);
+        List<CartDTO> dtoList = voList.stream()
+                .map(vo -> modelMapper.map(vo, CartDTO.class))
+                .collect(Collectors.toList());
+        int total_count = mypageMapper.cartTotalCount(pageRequestDTO);
+
+        PageResponseDTO<CartDTO> responseDTO = PageResponseDTO.<CartDTO>withAll()
+                .requestDTO(pageRequestDTO)
+                .dtoList(dtoList)
+                .total_count(total_count)
+                .build();
+
+        return responseDTO;
     }
 }
