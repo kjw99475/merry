@@ -37,8 +37,10 @@ public class MyeduController {
 
     @ResponseBody
     @GetMapping("/plan/calendar")
-    public List<Map<String, Object>> calendar() {
-        List<Calendar> calendarList = calendarService.calendarList();
+    public List<Map<String, Object>> calendar(HttpSession session) {
+        String member_id = session.getAttribute("member_id").toString();
+
+        List<Calendar> calendarList = calendarService.calendarList(member_id);
 
 //        JSONObject jsonObject = new JSONObject();
         JSONArray jsonArr = new JSONArray();
@@ -136,6 +138,24 @@ public class MyeduController {
         if(session.getAttribute("member_idx") != null) {
             pageRequestDTO.setMember_idx((int)session.getAttribute("member_idx"));
             PageResponseDTO<MyQnaDTO> responseDTO = myeduService.myQnaList(pageRequestDTO);
+
+            model.addAttribute("responseDTO", responseDTO);
+        }
+    }
+
+    @GetMapping("/review/list")
+    public void reviewList(@Valid PageRequestDTO pageRequestDTO,
+                          BindingResult bindingResult,
+                          RedirectAttributes redirectAttributes,
+                          HttpSession session,
+                          Model model) {
+        if (bindingResult.hasErrors()) {
+            redirectAttributes.addFlashAttribute("errors", bindingResult.getAllErrors());
+        }
+
+        if(session.getAttribute("member_idx") != null) {
+            pageRequestDTO.setMember_idx((int)session.getAttribute("member_idx"));
+            PageResponseDTO<MyReviewDTO> responseDTO = myeduService.myReviewList(pageRequestDTO);
 
             log.info("responseDTO : {}", responseDTO);
 

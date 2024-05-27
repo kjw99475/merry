@@ -5,12 +5,12 @@
 <mapper namespace="org.fullstack.merry.mapper.CalendarMapper">
     <insert id="calendarRegist">
         INSERT INTO calendar(groupId, title, content, writer, start, end, allday, textColor, backgroundColor)
-        VALUES (#{groupId}, #{title}, #{content}, 'test', #{start}, #{end}, #{allday}, #{textColor}, #{backgroundColor})
+        VALUES (#{groupId}, #{title}, #{content}, #{writer}, #{start}, #{end}, #{allday}, #{textColor}, #{backgroundColor})
     </insert>
 
     <select id="calendarList">
         SELECT * FROM calendar
---         WHERE member_idx = 1
+        WHERE writer = #{member_id}
     </select>
 
     <select id="calendarView">
