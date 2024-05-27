@@ -46,8 +46,8 @@
 <!--================ 본문 start =================-->
 
 
-
-<div class="pt-100">
+<div style="height: 85px; background-color: black"></div>
+<div>
 
     <div class="row" style="display: grid;
     grid-template-columns: 280px 1fr;
@@ -74,7 +74,9 @@
                             <form id="frm_" name="frm_" method="post" action="/admin/board/delete">
                                     <input type="hidden" name="board_idx" value="${boardDTO.board_idx}">
 <%--                                <label for="board_title">제목</label>--%>
-                                <div><span class="font-weight-bold">제목 : </span>${boardDTO.board_title}</div>
+                                <div style="font-size: larger"><span class="font-weight-bold">제목 : </span>${boardDTO.board_title}</div>
+                                <div><span class="" >작성자 : </span>${boardDTO.board_writer}</div>
+                                <div><span class="" >작성일 : </span>${boardDTO.board_reg_date}</div>
 
                                 <div class="overflow-auto mt-4" style="max-height: 500px;">${boardDTO.board_content}</div>
 
