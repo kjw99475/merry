@@ -209,6 +209,7 @@
                             </c:when>
                             <c:otherwise>
                                 공지사항이 없습니다.
+                                <a href="/lecture/notice/list?lec_idx=${lectureDTO.lec_idx}">더보기</a>
                             </c:otherwise>
                         </c:choose>
 
@@ -223,7 +224,8 @@
                                 <table class="table">
                                     <colgroup class="w-100">
                                         <col class="w-5">
-                                        <col class="w-70">
+                                        <col class="w-5">
+                                        <col class="w-65">
                                         <col class="w-10">
                                         <col class="w-15">
                                     </colgroup>
@@ -288,6 +290,7 @@
                             </c:when>
                             <c:otherwise>
                                 QnA 게시글이 없습니다.
+                                <a href="/lecture/qna/list?lec_idx=${lectureDTO.lec_idx}">더보기</a>
                             </c:otherwise>
                         </c:choose>
 
@@ -339,6 +342,7 @@
                             </c:when>
                             <c:otherwise>
                                 자료실의 게시글이 없습니다.
+                                <a href="/lecture/data/list?lec_idx=${lectureDTO.lec_idx}">더보기</a>
                             </c:otherwise>
                         </c:choose>
 
