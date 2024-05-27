@@ -33,15 +33,45 @@ public class AdminController {
     private final InfoServiceIf infoServiceIf;
     private final NoticeServiceIf noticeServiceIf;
     private final LectureServiceIf lectureService;
+    private final MemberServiceIf memberService;
 
     @GetMapping("/member/list")
-    public void GETmemberList() {
+    public void GETmemberList(@Valid PageRequestDTO pageRequestDTO,
+                              BindingResult bindingResult,
+                              RedirectAttributes redirectAttributes,
+                              Model model) {
+        pageRequestDTO.setMember_type("B");
+
+        PageResponseDTO<MemberDTO> responseDTO = memberService.memberList(pageRequestDTO);
+
+        model.addAttribute("responseDTO", responseDTO);
 
     }
 
-    @GetMapping("/teacher/list")
-    public void GETteacherList() {
+    @RequestMapping(value = "/member/delete", method = RequestMethod.POST, produces = "application/text;charset=UTF-8")
+    @ResponseBody
+    public String memberDelete(@RequestParam("member_id") String member_id) {
+        memberService.leave(member_id);
+        return "ok";
+    }
 
+    @GetMapping("/teacher/list")
+    public void GETteacherList(@Valid PageRequestDTO pageRequestDTO,
+                               BindingResult bindingResult,
+                               RedirectAttributes redirectAttributes,
+                               Model model) {
+        pageRequestDTO.setMember_type("T");
+
+        PageResponseDTO<MemberDTO> responseDTO = memberService.memberList(pageRequestDTO);
+        model.addAttribute("responseDTO", responseDTO);
+
+    }
+
+    @RequestMapping(value = "/member/teacher", method = RequestMethod.POST, produces = "application/text;charset=UTF-8")
+    @ResponseBody
+    public String teacherRegist(@RequestParam("member_idx") int member_idx) {
+        memberService.registTeacher(member_idx);
+        return "ok";
     }
 
     @GetMapping("/qna/list")

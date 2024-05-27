@@ -15,10 +15,10 @@
                     <trim prefix="AND">
                         <choose>
                             <when test="type == 't'.toString()">
-                                lec_title like concat('%', trim(#{search_word}),'%')
+                                (lec_title like concat('%', trim(#{search_word}),'%'))
                             </when>
                             <when test="type == 'u'.toString()">
-                                member_name like concat('%', trim(#{search_word}),'%' )
+                                (member_name like concat('%', trim(#{search_word}),'%' ))
                             </when>
                         </choose>
                     </trim>
@@ -27,7 +27,7 @@
 
             <if test="subject_code != null">
                 <trim prefix="AND">
-                    lec_subject = #{subject_code}
+                    (lec_subject = #{subject_code})
                 </trim>
             </if>
         </where>
