@@ -74,9 +74,22 @@
                             <form id="frm_" name="frm_" method="post" action="/data/delete">
                                     <input type="hidden" name="data_idx" value="${dataDTO.data_idx}">
 <%--                                <label for="data_title">제목</label>--%>
-                                <div><span class="font-weight-bold">제목 : </span>${dataDTO.data_title}</div>
-
-                                <div class="overflow-auto mt-4" style="max-height: 500px;">${dataDTO.data_content}</div>
+                                <table class="table no-wrap user-table mb-0 text-lg-start">
+                                    <tr class="table-light">
+                                        <th style="width: 120px;">제목<span class="fas fa-pencil-alt"></span></th>
+                                        <td>${dataDTO.data_title}</td>
+                                    </tr>
+                                    <tr class="table-light">
+                                        <th>작성일<span class="fas fa-calendar"></span></th>
+                                        <td>${dataDTO.data_reg_date}</td>
+                                    </tr>
+                                    <tr class="table-light">
+                                        <th>내용<span class="fas fa-book"></span></th>
+                                        <td>
+                                            <div class="overflow-auto" style="max-height: 500px;">${dataDTO.data_content}</div>
+                                        </td>
+                                    </tr>
+                                </table>
 
                                 <c:if test="${dataDTO.data_org_file_name != null and dataDTO.data_org_file_name != '' }" >
                                     <div class="mt-4">
