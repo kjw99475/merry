@@ -46,12 +46,21 @@
 <!--================ 본문 start =================-->
 <!-- hero area -->
 <!-- end hero area -->
-
+<div class="breadcrumb-section breadcrumb-bg">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 offset-lg-2 text-center">
+                <div class="breadcrumb-text">
+                    <p><a href="/lecture/view?lec_idx=${lectureDTO.lec_idx}"> ${lectureDTO.lec_title}</a> </p>
+                    <h1>강의 QnA</h1>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 <!-- 선생님 섹션 -->
 <div class="container pt-100 mb-5">
-    <div class="mt-5">
-        <h1 style="width: 75%; margin: 0 auto 20px; text-align: center;">강의 Q&A</h1>
-    </div>
+
     <c:if test="${not empty sessionScope.member_idx}">
         <div class="col-lg-12 text-right mt-3">
             <a href="/lecture/qna/regist?lec_idx=${lec_idx}" class="boxed-btn">글작성</a>
@@ -84,7 +93,7 @@
                     <c:set var="title" value="${list.qna_title}"/>
                     <c:choose>
                         <c:when test="${fn:length(title) > 10}">
-                            <a href="/lecture/qna/view?qna_idx=${list.qna_idx}"><strong>${fn:substring(title, 0, 10)}</strong></a>
+                            <a href="/lecture/qna/view?qna_idx=${list.qna_idx}"><strong>${fn:substring(title, 0, 10)}...</strong></a>
                         </c:when>
                         <c:otherwise>
                             <a href="/lecture/qna/view?qna_idx=${list.qna_idx}"><strong>${list.qna_title}</strong></a>

@@ -46,12 +46,20 @@
 <!--================ 본문 start =================-->
 <!-- hero area -->
 <!-- end hero area -->
-
+<div class="breadcrumb-section breadcrumb-bg">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 offset-lg-2 text-center">
+                <div class="breadcrumb-text">
+                    <p><a href="/lecture/view?lec_idx=${lectureDTO.lec_idx}"> ${lectureDTO.lec_title}</a> </p>
+                    <h1>강의 자료실</h1>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 <!-- 선생님 섹션 -->
 <div class="container pt-100 mb-5">
-    <div class="mt-5">
-        <h1 style="width: 75%; margin: 0 auto 20px; text-align: center;">강의 자료실</h1>
-    </div>
     <c:if test="${lectureDTO.member_idx eq sessionScope.member_idx}">
         <div class="col-lg-12 text-right mt-3">
             <a href="/lecture/data/regist?lec_idx=${lec_idx}" class="boxed-btn">글작성</a>
@@ -81,7 +89,7 @@
                     <c:set var="dtitle" value="${list.data_title}"/>
                     <c:choose>
                         <c:when test="${fn:length(dtitle) > 10}">
-                            <a href="/lecture/data/view?data_idx=${list.data_idx}"><strong>${fn:substring(dtitle, 0, 10)}</strong> <c:if test="${list.data_org_file_name != null and list.data_org_file_name != '' }" ><i class="fa-solid fa-paperclip"></i></c:if></a>
+                            <a href="/lecture/data/view?data_idx=${list.data_idx}"><strong>${fn:substring(dtitle, 0, 10)}...</strong> <c:if test="${list.data_org_file_name != null and list.data_org_file_name != '' }" ><i class="fa-solid fa-paperclip"></i></c:if></a>
                         </c:when>
                         <c:otherwise>
                             <a href="/lecture/data/view?data_idx=${list.data_idx}"><strong>${list.data_title}</strong><c:if test="${list.data_org_file_name != null and list.data_org_file_name != '' }" ><i class="fa-solid fa-paperclip"></i></c:if> </a>
