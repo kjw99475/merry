@@ -134,7 +134,26 @@
                             <div id="div_err_reply_comment" style="display: none"></div>
                         </div>
                         <div class="d-grid gap-2 d-md-flex justify-content-md-end">
-                            <button class="btn btn-merry me-md-2 mb-2" id="replySubmit" type="submit">댓글등록</button>
+                            <button class="btn btn-merry me-md-2 mb-2" id="replySubmit" onclick="regist_reply(${boardDTO.board_idx})" type="button">댓글등록</button>
+                            <script>
+                                function regist_reply(board_idx, reply_writer, member_idx) {
+                                    let comment = document.getElementById("reply_comment").value;
+                                        $.ajax({
+                                            type: "POST",            // HTTP method type(GET, POST) 형식이다.
+                                            url: "/board/reply/registReply",      // 컨트롤러에서 대기중인 URL 주소이다.
+                                            data: {
+                                                board_idx: board_idx,
+                                                reply_comment: comment
+                                            },            // Json 형식의 데이터이다.
+                                            success: function (result) { // 비동기통신의 성공일경우 success콜백으로 들어옵니다. 'res'는 응답받은 데이터이다.
+                                                window.location.reload();
+                                            },
+                                            error: function (error) { // 비동기 통신이 실패할경우 error 콜백으로 들어옵니다.
+                                                console.log(error);
+                                            }
+                                        });
+                                }
+                            </script>
                         </div>
                     </form>
 
