@@ -40,30 +40,33 @@
         <div class="container py-5">
             <h1 class="mb-4">Billing details</h1>
             <div class="row g-5">
-                <div class="col-md-12 col-lg-12 col-xl-5">
-                    <div class="table">
-                        <table class="table">
-                            <thead>
-                            <tr>
-                                <th scope="col" colspan="2">상품 정보</th>
-                                <th scope="col">가격</th>
-                            </tr>
-                            </thead>
-                            <tbody>
-                            <c:forEach items="${cartList}" var="list">
+                <div class="col-md-12 col-lg-9 col-xl-7">
+                    <table class="table">
+                        <thead>
+                        <tr>
+                            <th scope="col" colspan="2">상품 정보</th>
+                            <th scope="col">가격</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                            <c:forEach items="${orderlist}" var="list">
                                 <tr>
                                     <th scope="row">
                                         <div class="d-flex align-items-center mt-2">
-                                            <img src="/resources/resources/img/books/${list.pro_img}" class="img-fluid rounded-circle" style="width: 90px; height: 90px;" alt="">
+                                            <img src="/resources/uploads/lecture/${list.lec_img}" class="img-fluid rounded-circle" style="width: 90px; height: 90px;" alt="">
                                         </div>
                                     </th>
-                                    <td class="py-5">${list.pro_title}</td>
-                                    <td class="py-5">${list.pro_quantity}</td>
-                                    <input type="hidden" name="cart_idx" value="${list.cart_idx}"/>
-                                    <input type="hidden" name="pro_idx" value="${list.pro_idx}"/>
-                                    <input type="hidden" name="pro_idx" value="${list.pro_idx}"/>
+                                    <td class="py-5">${list.lec_title}</td>
+                                    <td class="py-5">${list.lec_price}</td>
                                 </tr>
                             </c:forEach>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="col-md-12 col-lg-6 col-xl-5">
+                    <div class="table-responsive">
+                        <table class="table">
+                            <tbody>
                             <tr>
                                 <th scope="row">
                                 </th>
@@ -74,7 +77,7 @@
                                 <td class="py-5"></td>
                                 <td class="py-5">
                                     <div class="py-3 border-bottom border-top">
-                                        <p class="mb-0 text-dark">${total}</p>
+                                        <p class="mb-0 text-dark">${order_total}</p>
                                     </div>
                                 </td>
                             </tr>
@@ -98,9 +101,12 @@
                             </tbody>
                         </table>
                     </div>
-                    <div class="row g-4 text-center align-items-center justify-content-center pt-4">
-                        <button class="btn border-secondary py-3 px-4 text-uppercase w-100 text-primary" type="submit">Place Order</button>
-                    </div>
+                    <form method="post" action="/order/order">
+                        <input type="hidden" name="lec_idx" id="lec_idx" value="${lec_idx}"/>
+                        <div class="row g-4 text-center align-items-center justify-content-center pt-4">
+                            <button class="btn border-secondary py-3 px-4 text-uppercase w-100 text-primary" type="submit">Place Order</button>
+                        </div>
+                    </form>
                 </div>
             </div>
         </div>
