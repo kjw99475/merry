@@ -23,8 +23,8 @@ public class CalendarServiceImpl implements CalendarService {
     }
 
     @Override
-    public List<Calendar> calendarList() {
-        List<Calendar> planList = calendarMapper.calendarList();
+    public List<Calendar> calendarList(String member_id) {
+        List<Calendar> planList = calendarMapper.calendarList(member_id);
 
         return planList;
     }

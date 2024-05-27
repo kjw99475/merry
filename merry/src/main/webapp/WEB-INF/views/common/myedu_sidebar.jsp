@@ -5,10 +5,10 @@
 <div class="d-flex flex-column flex-shrink-0 p-3 bg-body-tertiary" >
     <ul class="nav nav-pills flex-column mb-auto">
         <li class="nav-item">
-            <a href="/myedu/qna/list" class="nav-link black-text <c:if test="${fn:contains(param.menuGubun, 'qna')}">active</c:if>">QNA</a>
+            <a href="/myedu/write/list" class="nav-link black-text <c:if test="${fn:contains(param.menuGubun, 'qna')}">active</c:if>">QNA</a>
         </li>
         <li class="nav-item">
-            <a href="/myedu/review/list" class="nav-link black-text <c:if test="${fn:contains(param.menuGubun, 'zzim')}">active</c:if>">강의 후기</a>
+            <a href="/myedu/review/list" class="nav-link black-text <c:if test="${fn:contains(param.menuGubun, 'review')}">active</c:if>">강의 후기</a>
         </li>
     </ul>
 </div>

@@ -46,7 +46,18 @@
 <body>
 
 <jsp:include page="/WEB-INF/views/common/header.jsp" />
-
+<div class="breadcrumb-section breadcrumb-bg">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 offset-lg-2 text-center">
+                <div class="breadcrumb-text">
+                    <p>학습계획표</p>
+                    <h1>나의 학습 계획</h1>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 <!-- 달력 -->
 <div id="calendar" class="pt-100 w-75 mx-auto my-3"></div>
 
@@ -62,10 +73,10 @@
             </div>
             <div class="modal-body">
                 <div class="form-group">
+                    <input type="hidden" class="form-control" id="writer" name="writer" value="${sessionScope.member_id}">
+
                     <label for="title" class="col-form-label">일정 내용</label>
                     <input type="text" class="form-control" id="title" name="title" maxlength="30">
-                    <label for="writer" class="col-form-label">작성자</label>
-                    <input type="text" class="form-control" id="writer" name="writer">
                     <label for="start" class="col-form-label">시작 날짜</label>
                     <input type="date" class="form-control" id="start" name="start">
                     <label for="end" class="col-form-label">종료 날짜</label>
@@ -177,6 +188,7 @@
     let mEnd = document.getElementById("mEnd");
     let mTextColor = document.getElementById("mTextColor");
     let mBackgroundColor = document.getElementById("mBackgroundColor");
+
     document.addEventListener("DOMContentLoaded", function() {
         // 일정 목록 가져오기
         let request = $.ajax({
@@ -220,44 +232,77 @@
                         }
                     });
                 },
-                dateClick: function(arg) {
+                dateClick: function(arg) { // 날짜 클릭했을 때
                     $("#calendarModal").modal("show");
+                    document.getElementById("start").value = arg.dateStr;
+                },
+                eventChange: function(arg) { // 일정 변경됐을 때(옮기거나 늘릴 때)
+                    var changeObj = {
+                        id: arg.event.id,
+                        title: arg.event.title,
+                        writer: "${sessionScope.member_id}",
+                        start: dateFormat(new Date(arg.event.start)),
+                        end: dateFormat(new Date(arg.event.end)),
+                        textColor: arg.event.textColor,
+                        backgroundColor: arg.event.backgroundColor
+                    }
+
+                    $.ajax({
+                        type: "POST",
+                        url: "/myedu/plan/modify",
+                        data: JSON.stringify(changeObj),
+                        contentType: "application/json; charset=UTF-8",
+                        success: function(data) {
+                            console.log(data);
+                            if(data != "fail") {
+                                window.location.href=data;
+                            } else {
+                                alert("일정 수정 실패\n다시 수정해주세요.");
+                            }
+                        }
+                    });
+                },
+                select: function(arg) { // 날짜 드래그 했을 때
+                    $("#calendarModal").modal("show");
+                    document.getElementById("start").value = arg.startStr;
+                    document.getElementById("end").value = arg.endStr;
                 },
                 customButtons: {
                     addEventButton: {
                         text: "일정 등록",
                         click: function() {
                             $("#calendarModal").modal("show");
-
-                            $("#addCalendar").on("click", function() {
-                                let title = $("#title").val();
-                                let writer = $("#writer").val();
-                                let start = $("#start").val();
-                                let end = $("#end").val();
-                                let textColor = $("#textColor").val();
-                                let backgroundColor = $("#backgroundColor").val();
-
-                                let obj = readyToPost(title, writer, start, end, textColor, backgroundColor);
-
-                                $.ajax({
-                                    type: "POST",
-                                    url: "/myedu/plan/regist",
-                                    data: JSON.stringify(obj),
-                                    contentType: "application/json; charset=UTF-8",
-                                    success: function(data) {
-                                        if(data != "fail") {
-                                            window.location.reload(data);
-                                        } else {
-                                            alert("일정 등록 실패\n재등록해주세요.");
-                                        }
-                                    }
-                                });
-                            });
                         }
                     }
                 }
             });
             calendar.render();
+        });
+    });
+
+    // 일정 등록
+    $("#addCalendar").on("click", function() {
+        let title = $("#title").val();
+        let writer = $("#writer").val();
+        let start = $("#start").val();
+        let end = $("#end").val();
+        let textColor = $("#textColor").val();
+        let backgroundColor = $("#backgroundColor").val();
+
+        let obj = readyToPost(title, writer, start, end, textColor, backgroundColor);
+
+        $.ajax({
+            type: "POST",
+            url: "/myedu/plan/regist",
+            data: JSON.stringify(obj),
+            contentType: "application/json; charset=UTF-8",
+            success: function(data) {
+                if(data != "fail") {
+                    window.location.reload(data);
+                } else {
+                    alert("일정 등록 실패\n재등록해주세요.");
+                }
+            }
         });
     });
 
@@ -345,6 +390,14 @@
         };
 
         return obj;
+    }
+
+    function dateFormat(date) {
+        let startDate = date.getFullYear() + "-"
+            + (date.getMonth()+1 < 10 ? "0" + (date.getMonth()+1) : (date.getMonth()+1)) + "-"
+            + (date.getDate() < 10 ? "0" + date.getDate() : date.getDate());
+
+        return startDate;
     }
 </script>
 
