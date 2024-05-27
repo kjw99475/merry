@@ -4,6 +4,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.fullstack.merry.domain.BoardVO;
 import org.fullstack.merry.domain.GradeVO;
+import org.fullstack.merry.domain.TeacherVO;
 import org.fullstack.merry.dto.*;
 import org.fullstack.merry.dto.lecture.LectureDTO;
 import org.fullstack.merry.mapper.TeacherMapper;
@@ -94,5 +95,31 @@ public class TeacherServiceImpl implements TeacherServiceIf {
                 .build();
 
         return responseDTO;
+    }
+
+    @Override
+    public int teacherInfoRegist(TeacherDTO teacherDTO) {
+        TeacherVO teacherVO = modelMapper.map(teacherDTO, TeacherVO.class);
+        int result = teacherMapper.teacherInfoRegist(teacherVO);
+        return result;
+    }
+
+    @Override
+    public int teacherInfoModify(TeacherDTO teacherDTO) {
+        TeacherVO teacherVO = modelMapper.map(teacherDTO, TeacherVO.class);
+        int result = teacherMapper.teacherInfoModify(teacherVO);
+        return result;
+    }
+
+    @Override
+    public int infoPresent(int member_idx) {
+        return teacherMapper.infoPresent(member_idx);
+    }
+
+    @Override
+    public TeacherDTO viewInfo(int member_idx) {
+        TeacherVO teacherVO = teacherMapper.viewInfo(member_idx);
+        TeacherDTO teacherDTO = modelMapper.map(teacherVO, TeacherDTO.class);
+        return teacherDTO;
     }
 }
