@@ -79,7 +79,9 @@
                         <span class="zzim" onclick="addzzim(${lectureDTO.lec_idx})">
                                 <i class="fas fa-heart" id="zzim${lectureDTO.lec_idx}" <c:if test="${fn:contains(zzimlist, lectureDTO.lec_idx)}"> style="color:red" </c:if>></i>찜하기
                             </span>
-                        <a href="javascript:addbuy();" class="cart-btn"> 수강신청</a>
+                        <c:if test="${orderCnt < 1}">
+                        <a href="/order/order?lec_idx=${lectureDTO.lec_idx}" class="cart-btn"> 수강신청</a>
+                        </c:if>
 
                         <p><strong>Categories: </strong>${lectureDTO.lec_subject}</p>
 
