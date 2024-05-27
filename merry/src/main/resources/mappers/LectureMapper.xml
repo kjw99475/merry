@@ -198,4 +198,18 @@
         WHERE lec_idx=#{lec_idx}
     </select>
 
+    <select id="viewOrder">
+        SELECT count(*)
+        FROM lecture l
+                 INNER JOIN order_detail od ON od.lec_idx = l.lec_idx
+                 INNER JOIN `order` o ON o.order_idx = od.order_idx
+        WHERE l.lec_idx = #{lec_idx} AND o.member_id=#{member_id}
+    </select>
+
+    <select id="countReview">
+        SELECT COUNT(*)
+        FROM lecture_review
+        WHERE member_idx = #{member_idx} AND lec_idx = #{lec_idx}
+    </select>
+
 </mapper>

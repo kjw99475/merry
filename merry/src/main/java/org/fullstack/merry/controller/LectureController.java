@@ -98,6 +98,7 @@ public class LectureController {
 
     @GetMapping("/view")
     public void view(@RequestParam(name="lec_idx", defaultValue = "0") int lec_idx,
+                     OrderDTO orderDTO,
                      HttpSession session,
                      Model model) {
         LectureDTO lectureDTO = lectureService.view(lec_idx);
@@ -110,6 +111,13 @@ public class LectureController {
         List<Integer> cartlist = teacherService.cartList(member_id);
         List<Integer> zzimlist = teacherService.zzimList(member_id);
 
+        orderDTO.setLec_idx(lectureDTO.getLec_idx());
+        orderDTO.setMember_id(member_id);
+        orderDTO.setMember_idx((Integer) session.getAttribute("member_idx"));
+
+        int orderCnt = lectureService.viewOrder(orderDTO);
+        int reviewCnt = lectureService.countReview(orderDTO);
+
         model.addAttribute("zzimlist", zzimlist);
         model.addAttribute("cartlist", cartlist);
         model.addAttribute("dataList", dataList);
@@ -118,6 +126,8 @@ public class LectureController {
         model.addAttribute("reviewList", reviewList);
         model.addAttribute("lectureDTO", lectureDTO);
         model.addAttribute("ChapterList", chapterDTOList);
+        model.addAttribute("orderCnt", orderCnt);
+        model.addAttribute("reviewCnt", reviewCnt);
     }
 
     @GetMapping("/list")
