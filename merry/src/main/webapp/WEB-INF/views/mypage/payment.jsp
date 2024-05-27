@@ -8,6 +8,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ page trimDirectiveWhitespaces="true" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
 <html>
 <head>
@@ -60,9 +62,9 @@
                     <form id="frmSearch" name="frmSearch" method="get" action="/mypage/payment">
                         <div class="row mx-5 justify-content-center">
                             <div class="col-auto d-flex justify-content-center">
-                                <input type="date" class="form-control col-4 mr-3" name="search_start_date" value="${responseDTO.search_word}">
+                                <input type="date" class="form-control col-4 mr-3" name="search_date1" value="${responseDTO.search_date1}">
                                 ~
-                                <input type="date" class="form-control col-4 ml-3" name="search_end_date" value="${responseDTO.search_word}">
+                                <input type="date" class="form-control col-4 ml-3" name="search_date2" value="${responseDTO.search_date2}">
                                 <div>
                                     <button class="btn orange-btn bordered-btn ml-1" type="submit">검색</button>
                                 </div>
@@ -77,7 +79,7 @@
                                 <table class="cart-table">
                                     <thead class="cart-table-head">
                                     <tr class="table-head-row">
-                                        <th>결제번호</th>
+                                        <th>No</th>
                                         <th>결제일</th>
                                         <th class="product-image">강의이미지</th>
                                         <th>강의정보</th>
@@ -88,46 +90,68 @@
                                     </tr>
                                     </thead>
                                     <tbody>
-                                    <tr class="table-body-row">
-                                        <td class="p-2"><a href="/mypage/paymentView">20240304-170520557</a></td>
-                                        <td class="p-2">2024-03-04</td>
-                                        <td class="p-2 product-image"><img src="assets/img/products/product-img-1.jpg" alt=""></td>
-                                        <td class="p-2"><a href="/lecture/view?lec_idx=1">강의 이름</a></td>
-                                        <td class="p-2">110,000</td>
-                                        <td class="p-2">결제완료</td>
-                                        <td class="p-2"><button class="btn orange-outline-btn bordered-btn" type="button">확정</button></td>
-                                        <td class="p-2"><button class="btn red-outline-btn bordered-btn" type="button">요청</button></td>
-                                    </tr>
-                                    <tr class="table-body-row">
-                                        <td class="p-2"><a href="/mypage/paymentView?payment_idx=1">20240304-170520557</a></td>
-                                        <td class="p-2">2024-03-04</td>
-                                        <td class="p-2 product-image"><img src="assets/img/products/product-img-1.jpg" alt=""></td>
-                                        <td class="p-2"><a href="/lecture/view?lec_idx=1">강의 이름</a></td>
-                                        <td class="p-2">110,000</td>
-                                        <td class="p-2">구매확정</td>
-                                        <td class="p-2"><button class="btn orange-outline-btn bordered-btn" type="button" disabled>확정</button></td>
-                                        <td class="p-2"><button class="btn red-outline-btn bordered-btn" type="button" disabled>요청</button></td>
-                                    </tr>
-                                    <tr class="table-body-row">
-                                        <td class="p-2"><a href="/mypage/paymentView?payment_idx=1">20240304-170520557</a></td>
-                                        <td class="p-2">2024-03-04</td>
-                                        <td class="p-2 product-image"><img src="assets/img/products/product-img-1.jpg" alt=""></td>
-                                        <td class="p-2"><a href="/lecture/view?lec_idx=1">강의 이름</a></td>
-                                        <td class="p-2">110,000</td>
-                                        <td class="p-2">환불요청</td>
-                                        <td class="p-2"><button class="btn orange-outline-btn bordered-btn" type="button" disabled>확정</button></td>
-                                        <td class="p-2"><button class="btn red-outline-btn bordered-btn" type="button" disabled>요청</button></td>
-                                    </tr>
-                                    <tr class="table-body-row">
-                                        <td class="p-2"><a href="/mypage/paymentView?payment_idx=1">20240304-170520557</a></td>
-                                        <td class="p-2">2024-03-04</td>
-                                        <td class="p-2 product-image"><img src="assets/img/products/product-img-1.jpg" alt=""></td>
-                                        <td class="p-2"><a href="/lecture/view?lec_idx=1">강의 이름</a></td>
-                                        <td class="p-2">110,000</td>
-                                        <td class="p-2">환불완료</td>
-                                        <td class="p-2"><button class="btn orange-outline-btn bordered-btn" type="button" disabled>확정</button></td>
-                                        <td class="p-2"><button class="btn red-outline-btn bordered-btn" type="button" disabled>요청</button></td>
-                                    </tr>
+                                    <c:choose>
+                                        <c:when test="${!empty responseDTO && responseDTO.total_count > 0}">
+                                            <c:forEach items="${responseDTO.dtoList}" var="list" varStatus="loop">
+                                                <tr class="table-body-row text-center">
+                                                    <td class="p-2">${responseDTO.total_count - loop.index}</td>
+                                                    <td class="p-2">${list.order_date}</td>
+                                                    <td class="p-2"><a href="/mypage/paymentView?order_idx=${list.order_idx}">1</a></td>
+                                                    <td class="p-2">${fn:substring(list.order_date, 0, 10)}</td>
+                                                    <td class="p-2"><fmt:formatNumber type="number" maxFractionDigits="3" value="${list.order_total}" /></td>
+                                                    <td class="p-2">${list.order_state}</td>
+                                                    <td class="p-2"><button class="btn orange-outline-btn bordered-btn" type="button">확정</button></td>
+                                                    <td class="p-2"><button class="btn red-outline-btn bordered-btn" type="button">요청</button></td>
+                                                </tr>
+                                            </c:forEach>
+                                        </c:when>
+                                        <c:otherwise>
+                                            <tr class="table-body-row text-center">
+                                                <td class="p-2" colspan="8">결제 내역이 없습니다.</td>
+                                            </tr>
+                                        </c:otherwise>
+                                    </c:choose>
+
+<%--                                    <tr class="table-body-row">--%>
+<%--                                        <td class="p-2"><a href="/mypage/paymentView">20240304-170520557</a></td>--%>
+<%--                                        <td class="p-2">2024-03-04</td>--%>
+<%--                                        <td class="p-2 product-image"><img src="assets/img/products/product-img-1.jpg" alt=""></td>--%>
+<%--                                        <td class="p-2"><a href="/lecture/view?lec_idx=1">강의 이름</a></td>--%>
+<%--                                        <td class="p-2">110,000</td>--%>
+<%--                                        <td class="p-2">결제완료</td>--%>
+<%--                                        <td class="p-2"><button class="btn orange-outline-btn bordered-btn" type="button">확정</button></td>--%>
+<%--                                        <td class="p-2"><button class="btn red-outline-btn bordered-btn" type="button">요청</button></td>--%>
+<%--                                    </tr>--%>
+<%--                                    <tr class="table-body-row">--%>
+<%--                                        <td class="p-2"><a href="/mypage/paymentView?payment_idx=1">20240304-170520557</a></td>--%>
+<%--                                        <td class="p-2">2024-03-04</td>--%>
+<%--                                        <td class="p-2 product-image"><img src="assets/img/products/product-img-1.jpg" alt=""></td>--%>
+<%--                                        <td class="p-2"><a href="/lecture/view?lec_idx=1">강의 이름</a></td>--%>
+<%--                                        <td class="p-2">110,000</td>--%>
+<%--                                        <td class="p-2">구매확정</td>--%>
+<%--                                        <td class="p-2"><button class="btn orange-outline-btn bordered-btn" type="button" disabled>확정</button></td>--%>
+<%--                                        <td class="p-2"><button class="btn red-outline-btn bordered-btn" type="button" disabled>요청</button></td>--%>
+<%--                                    </tr>--%>
+<%--                                    <tr class="table-body-row">--%>
+<%--                                        <td class="p-2"><a href="/mypage/paymentView?payment_idx=1">20240304-170520557</a></td>--%>
+<%--                                        <td class="p-2">2024-03-04</td>--%>
+<%--                                        <td class="p-2 product-image"><img src="assets/img/products/product-img-1.jpg" alt=""></td>--%>
+<%--                                        <td class="p-2"><a href="/lecture/view?lec_idx=1">강의 이름</a></td>--%>
+<%--                                        <td class="p-2">110,000</td>--%>
+<%--                                        <td class="p-2">환불요청</td>--%>
+<%--                                        <td class="p-2"><button class="btn orange-outline-btn bordered-btn" type="button" disabled>확정</button></td>--%>
+<%--                                        <td class="p-2"><button class="btn red-outline-btn bordered-btn" type="button" disabled>요청</button></td>--%>
+<%--                                    </tr>--%>
+<%--                                    <tr class="table-body-row">--%>
+<%--                                        <td class="p-2"><a href="/mypage/paymentView?payment_idx=1">20240304-170520557</a></td>--%>
+<%--                                        <td class="p-2">2024-03-04</td>--%>
+<%--                                        <td class="p-2 product-image"><img src="assets/img/products/product-img-1.jpg" alt=""></td>--%>
+<%--                                        <td class="p-2"><a href="/lecture/view?lec_idx=1">강의 이름</a></td>--%>
+<%--                                        <td class="p-2">110,000</td>--%>
+<%--                                        <td class="p-2">환불완료</td>--%>
+<%--                                        <td class="p-2"><button class="btn orange-outline-btn bordered-btn" type="button" disabled>확정</button></td>--%>
+<%--                                        <td class="p-2"><button class="btn red-outline-btn bordered-btn" type="button" disabled>요청</button></td>--%>
+<%--                                    </tr>--%>
                                     </tbody>
                                 </table>
                             </form>

@@ -3,6 +3,30 @@
         PUBLIC "-//mybatis.org/DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="org.fullstack.merry.mapper.MypageMapper">
+    <sql id="whereCondition">
+        <where>
+            <trim prefix="and">
+                member_id = #{member_id}
+            </trim>
+            <if test="search_date1 != null and search_date2 != null and search_date1 != '' and search_date2 != ''">
+                <trim prefix="and">
+                    qna_reg_date BETWEEN #{search_date1} AND #{search_date2}
+                </trim>
+            </if>
+        </where>
+    </sql>
+    <sql id="whereCondition2">
+        <where>
+            <trim prefix="and">
+                o.member_id = #{member_id}
+            </trim>
+            <if test="search_date1 != null and search_date2 != null and search_date1 != '' and search_date2 != ''">
+                <trim prefix="and">
+                    order_date BETWEEN #{search_date1} AND #{search_date2}
+                </trim>
+            </if>
+        </where>
+    </sql>
     <insert id="addcart">
         INSERT into cart(member_id, lec_idx, lec_title, lec_price, lec_img)
         SELECT #{member_id}, lec.lec_idx, lec.lec_title, lec.lec_price, lec.lec_img
@@ -30,13 +54,15 @@
     <select id="qnaTotalCount">
         SELECT COUNT(*)
         FROM qna AS q INNER JOIN member AS m ON q.member_idx = m.member_idx
-        WHERE q.member_idx = #{member_idx}
+        <include refid="whereCondition"></include>
     </select>
+
     <select id="qnaList" resultType="org.fullstack.merry.domain.QnaVO">
-        SELECT qna_idx, qna_title, qna_answer_yn, qna_member_name, qna_reg_date
-        FROM qna
-        WHERE member_idx = #{member_idx}
+        SELECT qna_idx, qna_title, qna_answer_yn, qna_member_name, qna_reg_date, member_id
+        FROM qna AS q INNER JOIN member AS m ON q.member_idx = m.member_idx
+        <include refid="whereCondition"></include>
         ORDER BY qna_idx DESC
+        LIMIT #{page_skip_count}, #{page_size}
     </select>
 
     <select id="viewQna" resultType="org.fullstack.merry.domain.QnaVO">
@@ -50,23 +76,24 @@
         values(#{qna_title}, #{qna_content}, #{member_idx}, #{qna_member_name}, #{qna_answer_idx}, #{qna_answer_name}, 'M')
     </insert>
 
-<!--    <update id="modifyQna">-->
-<!--        update qna-->
-<!--        set qna_title=#{qna_title}, qna_content=#{qna_content}, qna_modify_date=now()-->
-<!--        where qna_idx=#{qna_idx}-->
-<!--    </update>-->
+    <select id="orderTotalCount">
+        SELECT COUNT(*)
+        FROM `order` AS o INNER JOIN member AS m ON o.member_id = m.member_id
+        <include refid="whereCondition2"></include>
+    </select>
 
-<!--    <delete id="deleteQna">-->
-<!--        delete from qna where qna_idx=#{qna_idx}-->
-<!--    </delete>-->
+    <select id="orderList" resultType="org.fullstack.merry.domain.OrderVO">
+        SELECT order_idx, order_date, order_total, order_state, o.member_id
+        FROM `order` AS o INNER JOIN member AS m ON o.member_id = m.member_id
+        <include refid="whereCondition2"></include>
+        ORDER BY order_idx DESC
+        LIMIT #{page_skip_count}, #{page_size}
+    </select>
 
+    <select id="getLecIdx">
+        SELECT lec_idx
+        FROM `order` AS o INNER JOIN order_detail AS od ON o.order_idx = od.order_idx
+        <include refid="whereCondition2"></include>
+    </select>
 
-
-<!--    <select id="noticeListByPage" resultType="org.fullstack4.bookstore.domain.NoticeVO">-->
-<!--        SELECT idx, title, writer, reg_date, content, org_file_name, save_file_name, fix_state-->
-<!--        FROM tbl_bbs_notice-->
-<!--        <include refid="whereCondition"></include>-->
-<!--        ORDER BY fix_state ASC, idx DESC-->
-<!--        LIMIT #{page_skip_count}, #{page_size}-->
-<!--    </select>-->
 </mapper>

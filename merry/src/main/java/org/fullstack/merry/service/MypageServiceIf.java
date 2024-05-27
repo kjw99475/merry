@@ -16,10 +16,14 @@ public interface MypageServiceIf {
    PageResponseDTO<BoardReplyDTO> writeReplyListByPage(PageRequestDTO pageRequestDTO);
 
    // 1:1 문의
-   int qnaTotalCount(int member_idx);
-   List<QnaDTO> qnaList(int member_idx);
+   int qnaTotalCount(PageRequestDTO pageRequestDTO);
+   PageResponseDTO<QnaDTO> qnaList(PageRequestDTO pageRequestDTO);
    QnaDTO viewQna(int qna_idx);
    int registQna(QnaDTO qnaDTO);
 
+   // 결제내역
+   int orderTotalCount(PageRequestDTO pageRequestDTO);
+   PageResponseDTO<OrderDTO> orderListByPage(PageRequestDTO pageRequestDTO);
+//   int getLecIdx(PageRequestDTO pageRequestDTO);
 
 }

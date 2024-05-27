@@ -85,14 +85,26 @@ public class MypageController {
     /* 1:1 문의 */
     @GetMapping("/qna/list")
     public void qnaListGET(
+            @Valid PageRequestDTO pageRequestDTO,
+            BindingResult bindingResult,
+            RedirectAttributes redirectAttributes,
             HttpSession session,
             Model model
     ) {
-        int member_idx = (int)session.getAttribute("member_idx");
-        int total_count = mypageService.qnaTotalCount(member_idx);
-        List<QnaDTO> qnaList = mypageService.qnaList(member_idx);
-        model.addAttribute("qnaList", qnaList);
-        model.addAttribute("total_count", total_count);
+        log.info("=========================");
+        log.info("MypageController >> qnaListGET()");
+        if(bindingResult.hasErrors()){
+            log.info("MypageController >> list Error");
+            redirectAttributes.addFlashAttribute("errors", bindingResult.getAllErrors());
+        }
+        int total_count = mypageService.qnaTotalCount(pageRequestDTO);
+        pageRequestDTO.setTotal_count(total_count);
+        log.info("total_count : " + total_count);
+        pageRequestDTO.setMember_id((String)session.getAttribute("member_id"));
+        pageRequestDTO.setPage_block_size(10);
+        PageResponseDTO<QnaDTO> responseDTO = mypageService.qnaList(pageRequestDTO);
+        model.addAttribute("responseDTO", responseDTO);
+        log.info("responseDTO : " + responseDTO);
     }
 
     @GetMapping("/qna/view")
@@ -213,11 +225,35 @@ public class MypageController {
     }
 
     @GetMapping("/payment")
-    public void paymentGET() {
+    public void paymentGET(
+            @Valid PageRequestDTO pageRequestDTO,
+            BindingResult bindingResult,
+            RedirectAttributes redirectAttributes,
+            HttpSession session,
+            Model model
+    ) {
         log.info("=========================");
         log.info("MypageController >> paymentGET()");
+        if(bindingResult.hasErrors()){
+            log.info("MypageController >> list Error");
+            redirectAttributes.addFlashAttribute("errors", bindingResult.getAllErrors());
+        }
+        pageRequestDTO.setMember_id((String)session.getAttribute("member_id"));
+        pageRequestDTO.setPage_block_size(10);
+        PageResponseDTO<OrderDTO> responseDTO = mypageService.orderListByPage(pageRequestDTO);
+        model.addAttribute("responseDTO", responseDTO);
+
+//        int lec_idx = mypageService.getLecIdx(pageRequestDTO);
+//        LectureDTO lectureDTO = lectureService.view(lec_idx);
+//        model.addAttribute("lectureDTO", lectureDTO);
+
+        log.info("responseDTO : " + responseDTO);
+//        log.info("lectureDTO : " + lectureDTO);
         log.info("=========================");
     }
+
+
+
 
     @GetMapping("/paymentView")
     public void paymentVIEWGET() {

@@ -54,22 +54,22 @@
             <jsp:include page="/WEB-INF/views/common/mypage_sidebar.jsp">
                 <jsp:param name="menuGubun" value="qna"/>
             </jsp:include>
-<%--            <div class="checkout-section mt-80 mb-150">--%>
-<%--                <div style="margin: 0 auto;">--%>
-<%--                    <form id="frmSearch" name="frmSearch" method="get" action="/mypage/qna/list">--%>
-<%--                        <div class="row mx-5 justify-content-center">--%>
-<%--                            <div class="col-auto d-flex justify-content-center">--%>
-<%--                                <input type="date" class="form-control col-4 mr-3" name="search_date1" value="${responseDTO.search_date1}">--%>
-<%--                                ~--%>
-<%--                                <input type="date" class="form-control col-4 ml-3" name="search_date2" value="${responseDTO.search_date2}">--%>
-<%--                                <div>--%>
-<%--                                    <button class="btn orange-btn bordered-btn ml-1" type="submit">검색</button>--%>
-<%--                                </div>--%>
-<%--                            </div>--%>
-<%--                        </div>--%>
-<%--                    </form>--%>
-<%--                </div>--%>
-                <div class="container mt-80 mb-150">
+            <div class="checkout-section mt-80 mb-150">
+                <div style="margin: 0 auto;">
+                    <form id="frmSearch" name="frmSearch" method="get" action="/mypage/qna/list">
+                        <div class="row mx-5 justify-content-center">
+                            <div class="col-auto d-flex justify-content-center">
+                                <input type="date" class="form-control col-4 mr-3" name="search_date1" value="${responseDTO.search_date1}">
+                                ~
+                                <input type="date" class="form-control col-4 ml-3" name="search_date2" value="${responseDTO.search_date2}">
+                                <div>
+                                    <button class="btn orange-btn bordered-btn ml-1" type="submit">검색</button>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="container">
                     <div style="margin: 0 auto;">
                         <div class="col-auto">
                     <div class="mb-1 text-right">
@@ -88,10 +88,10 @@
                                     </thead>
                                     <tbody>
                                     <c:choose>
-                                        <c:when test="${!empty qnaList && total_count > 0}">
-                                            <c:forEach items="${qnaList}" var="list" varStatus="loop">
+                                        <c:when test="${!empty responseDTO && responseDTO.total_count > 0}">
+                                            <c:forEach items="${responseDTO.dtoList}" var="list" varStatus="loop">
                                                 <tr class="table-body-row text-center">
-                                                    <td class="p-2">${total_count - loop.index}</td>
+                                                    <td class="p-2">${responseDTO.total_count - loop.index}</td>
                                                     <td class="p-2"><a href="/mypage/qna/view?qna_idx=${list.qna_idx}">${list.qna_title}</a></td>
                                                     <td class="p-2">${list.qna_answer_yn}</td>
                                                     <td class="p-2">${fn:substring(list.qna_reg_date, 0, 10)}</td>
@@ -102,7 +102,7 @@
                                             </c:forEach>
                                         </c:when>
                                         <c:otherwise>
-                                            <tr class="table-body-row">
+                                            <tr class="table-body-row text-center">
                                                 <td class="p-2" colspan="3">작성한 1:1문의가 없습니다.</td>
                                             </tr>
                                         </c:otherwise>
@@ -113,49 +113,48 @@
                         </div>
                     </div>
                 </div>
-                <!--================ 페이징 start =================-->
-<%--                <div class="pagination-wrap">--%>
-<%--                    <nav class="blog-pagination justify-content-center d-flex">--%>
-<%--                        <ul class="pagination">--%>
-<%--                            <c:if test="${responseDTO.page<=10}">--%>
-<%--                            <li class="page-item disabled">--%>
-<%--                                </c:if>--%>
-<%--                                <c:if test="${responseDTO.page>10}">--%>
-<%--                            <li class="page-item">--%>
-<%--                                </c:if>--%>
-<%--                                <a class="page-link" href="/admin/board/list${responseDTO.linked_params}&page=${responseDTO.page_block_end-10}" aria-label="Previous">--%>
-<%--                                    <span aria-hidden="true">&laquo;</span>--%>
-<%--                                </a>--%>
-<%--                            </li>--%>
-<%--                            <c:forEach begin="${responseDTO.page_block_start}"--%>
-<%--                                       end="${responseDTO.page_block_end}"--%>
-<%--                                       var="page_num">--%>
-<%--                                <c:choose>--%>
-<%--                                    <c:when test="${responseDTO.page == page_num}">--%>
-<%--                                        <li class="page-item active">--%>
-<%--                                            <a href="#" class="page-link">${page_num}</a>--%>
-<%--                                        </li>--%>
-<%--                                    </c:when>--%>
-<%--                                    <c:otherwise>--%>
-<%--                                        <li class="page-item">--%>
-<%--                                            <a href="${responseDTO.linked_params}&page=${page_num}" class="page-link">${page_num}</a>--%>
-<%--                                        </li>--%>
-<%--                                    </c:otherwise>--%>
-<%--                                </c:choose>--%>
-<%--                            </c:forEach>--%>
-<%--                            <c:if test="${(responseDTO.page_block_start+10)>(responseDTO.total_page)}">--%>
-<%--                            <li class="page-item disabled">--%>
-<%--                                </c:if>--%>
-<%--                                <c:if test="${(responseDTO.page_block_start+10)<=(responseDTO.total_page)}">--%>
-<%--                            <li class="page-item">--%>
-<%--                                </c:if>--%>
-<%--                                <a class="page-link" href="/admin/board/list${responseDTO.linked_params}&page=${responseDTO.page_block_start+10}" aria-label="Next">--%>
-<%--                                    <span aria-hidden="true">&raquo;</span>--%>
-<%--                                </a>--%>
-<%--                            </li>--%>
-<%--                        </ul>--%>
-<%--                    </nav>--%>
-<%--                </div>--%>
+                <div class="pagination-wrap">
+                    <nav class="blog-pagination justify-content-center d-flex">
+                        <ul class="pagination">
+                            <c:if test="${responseDTO.page<=10}">
+                            <li class="page-item disabled">
+                                </c:if>
+                                <c:if test="${responseDTO.page>10}">
+                            <li class="page-item">
+                                </c:if>
+                                <a class="page-link" href="/admin/board/list${responseDTO.linked_params}&page=${responseDTO.page_block_end-10}" aria-label="Previous">
+                                    <span aria-hidden="true">&laquo;</span>
+                                </a>
+                            </li>
+                            <c:forEach begin="${responseDTO.page_block_start}"
+                                       end="${responseDTO.page_block_end}"
+                                       var="page_num">
+                                <c:choose>
+                                    <c:when test="${responseDTO.page == page_num}">
+                                        <li class="page-item active">
+                                            <a href="#" class="page-link">${page_num}</a>
+                                        </li>
+                                    </c:when>
+                                    <c:otherwise>
+                                        <li class="page-item">
+                                            <a href="${responseDTO.linked_params}&page=${page_num}" class="page-link">${page_num}</a>
+                                        </li>
+                                    </c:otherwise>
+                                </c:choose>
+                            </c:forEach>
+                            <c:if test="${(responseDTO.page_block_start+10)>(responseDTO.total_page)}">
+                            <li class="page-item disabled">
+                                </c:if>
+                                <c:if test="${(responseDTO.page_block_start+10)<=(responseDTO.total_page)}">
+                            <li class="page-item">
+                                </c:if>
+                                <a class="page-link" href="/admin/board/list${responseDTO.linked_params}&page=${responseDTO.page_block_start+10}" aria-label="Next">
+                                    <span aria-hidden="true">&raquo;</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </nav>
+                </div>
             </div>
         </div>
     </div>
