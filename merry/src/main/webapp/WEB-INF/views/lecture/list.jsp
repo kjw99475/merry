@@ -55,22 +55,26 @@
         </div>
     </div>
 
-    <div class="col">
+    <div class="col justify-content-center">
         <form role="search" id="frmSearch">
-            <div class="mb-3 row">
-                <label class="col-sm-2 col-form-label">검색 범위</label>
-                <div class="col-sm-2">
-                    <input class="form-check-input" type="checkbox" name="search_type" id="search_type1" value="t" <c:if test="${responseDTO['search_type_st'].contains('t')}">checked</c:if>>
-                    <label class="form-check-label" for="search_type1">제목</label>
-                    <input class="form-check-input" type="checkbox" name="search_type" id="search_type2" value="u" <c:if test="${responseDTO['search_type_st'] != 'null' && responseDTO['search_type_st'].contains('u')}">checked</c:if>>
-                    <label for="search_type2">선생님</label>
+            <div class="row mx-5 mb-100 justify-content-center">
+                <select name="search_type" id="search_type" class="form-control col-1" >
+                    <option value="">선택</option>
+                    <option value="t" <c:if test="${responseDTO['search_type_st'] != 'null' && responseDTO['search_type_st'].contains('t')}">selected</c:if>>제목</option>
+                    <option value="u" <c:if test="${responseDTO['search_type_st'] != 'null' && responseDTO['search_type_st'].contains('u')}">selected</c:if>>선생님</option>
+                </select>
+
+                <div class="col-8">
+                    <input type="text" class="form-control" placeholder="Search" name="search_word" style="width: 100%" value="${responseDTO.search_word}">
                 </div>
-                <div class="col">
-                    <input class="form-check-label" type="search" name="search_word"  id="search_word" placeholder="Search" aria-label="Search" value="${responseDTO.search_word}">
+                <div>
+                    <button type="button" class="btn btn-merry" onclick="searchType()" >검색</button>
                 </div>
-                <div class="col-sm-2">
-                    <button class="btn btn-outline-success" id="btnSearch" type="submit">Search</button>
-                    <button class="btn btn-outline-success" id="btnReset" type="reset" onclick="location.href='/lecture/list'">reset</button>
+            </div>
+            <div style="display: none">
+                <div class="product-filters">
+                    <input type="hidden" value="${responseDTO.subject_code}" name="subject_code">
+                    
                 </div>
             </div>
         </form>
@@ -79,6 +83,20 @@
     <div class="row">
         <div class="col-md-12">
             <form>
+                <div style="display: none" class="row mx-5 mb-100 justify-content-center">
+                    <select name="search_type" id="search_type" class="form-control col-1" >
+                        <option value="">선택</option>
+                        <option value="t" <c:if test="${responseDTO['search_type_st'] != 'null' && responseDTO['search_type_st'].contains('t')}">selected</c:if>>제목</option>
+                        <option value="u" <c:if test="${responseDTO['search_type_st'] != 'null' && responseDTO['search_type_st'].contains('u')}">selected</c:if>>선생님</option>
+                    </select>
+
+                    <div class="col-8">
+                        <input type="text" class="form-control" placeholder="Search" name="search_word" style="width: 100%" value="${responseDTO.search_word}">
+                    </div>
+                    <div>
+                        <button type="button" class="btn btn-merry" onclick="searchType()" >검색</button>
+                    </div>
+                </div>
             <div class="product-filters">
                 <ul>
                     <li <c:if test="${empty responseDTO.subject_code}">class="active"</c:if> data-filter="*"><button onclick="location.href='/lecture/list'" style="background-color: #00ff0000; border: none">All</button></li>
@@ -251,6 +269,17 @@
                     console.log(error);
                 }
             });
+        }
+    }
+
+    function searchType() {
+        let selectElement = document.getElementById("search_type"); // select 요소의 id로 변경
+        let selectedOption = selectElement.options[selectElement.selectedIndex].value;
+
+        if (selectedOption === "") {
+            alert("검색 구분을 선택해 주세요");
+        } else {
+            document.getElementById("frmSearch").submit();
         }
     }
 </script>

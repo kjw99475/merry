@@ -5,10 +5,9 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.fullstack.merry.Common.FileUploadUtil;
 import org.fullstack.merry.dto.*;
-import org.fullstack.merry.service.BoardServiceIf;
-import org.fullstack.merry.service.DataServiceIf;
-import org.fullstack.merry.service.InfoServiceIf;
-import org.fullstack.merry.service.NoticeServiceIf;
+import org.fullstack.merry.dto.lecture.LectureDTO;
+import org.fullstack.merry.service.*;
+import org.fullstack.merry.service.lecture.LectureServiceIf;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -19,7 +18,9 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
+import java.util.List;
 
 @Log4j2
 @Controller
@@ -30,6 +31,7 @@ public class AdminController {
     private final DataServiceIf dataServiceIf;
     private final InfoServiceIf infoServiceIf;
     private final NoticeServiceIf noticeServiceIf;
+    private final LectureServiceIf lectureService;
 
     @GetMapping("/member/list")
     public void GETmemberList() {
@@ -47,8 +49,25 @@ public class AdminController {
     }
 
     @GetMapping("/lecture/list")
-    public void GETlectureList() {
+    public void GETlectureList(@Valid PageRequestDTO pageRequestDTO, BindingResult bindingResult, RedirectAttributes redirectAttributes,
+                               HttpSession session, Model model) {
+        if (bindingResult.hasErrors()) {
+            log.info("LectureController >> list Error");
+            redirectAttributes.addFlashAttribute("errors", bindingResult.getAllErrors());
+        }
 
+        String member_id = (String)session.getAttribute("member_id");
+
+
+        PageResponseDTO<LectureDTO> responseDTO = lectureService.lectureList(pageRequestDTO);
+        model.addAttribute("responseDTO", responseDTO);
+    }
+
+    @RequestMapping(value = "/lecture/delete", method = RequestMethod.POST, produces = "application/text;charset=UTF-8")
+    @ResponseBody
+    public String reviewDelete(@RequestParam("lec_idx") int lec_idx) {
+        lectureService.delete(lec_idx);
+        return "ok";
     }
 
     //    ===================== notice start ==============================
