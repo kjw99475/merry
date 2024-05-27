@@ -15,15 +15,16 @@
                     <trim prefix="AND">
                         <choose>
                             <when test="type == 't'.toString()">
-                                lec_title like concat('%', #{search_word},'%')
+                                lec_title like concat('%', trim(#{search_word}),'%')
                             </when>
-                            <when test="type == 'n'.toString()">
-                                member_name like concat('%', #{search_word},'%' )
+                            <when test="type == 'u'.toString()">
+                                member_name like concat('%', trim(#{search_word}),'%' )
                             </when>
                         </choose>
                     </trim>
                 </foreach>
             </if>
+
             <if test="subject_code != null">
                 <trim prefix="AND">
                     lec_subject = #{subject_code}
