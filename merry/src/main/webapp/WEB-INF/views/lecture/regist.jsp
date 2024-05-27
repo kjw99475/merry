@@ -65,12 +65,23 @@
     </script>
 
 </head>
-<body class="pt-150">
+<body >
 
 <!--================ 헤더 start =================-->
 <jsp:include page="/WEB-INF/views/common/header.jsp"/>
 <!--================ 헤더 end =================-->
-
+<div class="breadcrumb-section breadcrumb-bg">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 offset-lg-2 text-center">
+                <div class="breadcrumb-text">
+                    <p>강의</p>
+                    <h1>강의 등록</h1>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 <div class="contact-form spad">
     <div class="container">
         <div class="row">
