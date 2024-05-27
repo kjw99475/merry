@@ -99,12 +99,12 @@
                 </div>
             <div class="product-filters">
                 <ul>
-                    <li <c:if test="${empty responseDTO.subject_code}">class="active"</c:if> data-filter="*"><button onclick="location.href='/lecture/list'" style="background-color: #00ff0000; border: none">All</button></li>
-                    <li <c:if test="${responseDTO.subject_code eq '국어'}">class="active"</c:if> data-filter=".국어"><button  value="국어" name="subject_code" style="background-color: #00ff0000; border: none">국어</button></li>
-                    <li <c:if test="${responseDTO.subject_code eq '영어'}">class="active"</c:if> data-filter=".영어"><button value="영어" name="subject_code" style="background-color: #00ff0000; border: none">영어</button></li>
-                    <li <c:if test="${responseDTO.subject_code eq '수학'}">class="active"</c:if> data-filter=".수학"><button value="수학" name="subject_code" style="background-color: #00ff0000; border: none">수학</button></li>
-                    <li <c:if test="${responseDTO.subject_code eq '사회'}">class="active"</c:if> data-filter=".사회"><button value="사회" name="subject_code" style="background-color: #00ff0000; border: none">사회</button></li>
-                    <li <c:if test="${responseDTO.subject_code eq '과학'}">class="active"</c:if> data-filter=".과학"><button value="과학" name="subject_code" style="background-color: #00ff0000; border: none">과학</button></li>
+                    <li class="<c:if test='${empty responseDTO.subject_code}'>active</c:if> p-md-0" data-filter="*"><button onclick="location.href='/lecture/list'" style="background-color: #00ff0000; border: none; padding:10px 30px;">All</button></li>
+                    <li class="<c:if test='${ responseDTO.subject_code eq "국어"}'>active</c:if> p-md-0" data-filter=".국어"><button   value="국어" name="subject_code" style="background-color: #00ff0000; border: none; padding:10px 30px;">국어</button></li>
+                    <li class="<c:if test='${ responseDTO.subject_code  eq "영어"}'>active</c:if> p-md-0" data-filter=".영어"><button value="영어" name="subject_code" style="background-color: #00ff0000; border: none; padding:10px 30px;">영어</button></li>
+                    <li class="<c:if test='${ responseDTO.subject_code  eq "수학"}'>active</c:if> p-md-0" data-filter=".수학"><button value="수학" name="subject_code" style="background-color: #00ff0000; border: none; padding:10px 30px;">수학</button></li>
+                    <li class="<c:if test='${ responseDTO.subject_code  eq "사회"}'>active</c:if> p-md-0" data-filter=".사회"><button value="사회" name="subject_code" style="background-color: #00ff0000; border: none; padding:10px 30px;">사회</button></li>
+                    <li class="<c:if test='${ responseDTO.subject_code eq "과학"}'>active</c:if> p-md-0" data-filter=".과학"><button value="과학" name="subject_code" style="background-color: #00ff0000; border: none; padding:10px 30px;">과학</button></li>
                 </ul>
             </div>
             </form>
