@@ -246,4 +246,16 @@ public class LectureServiceImpl implements LectureServiceIf{
         return dtoList;
     }
 
+    @Override
+    public int viewOrder(OrderDTO orderDTO) {
+        int result = lectureMapper.viewOrder(orderDTO);
+        return result;
+    }
+
+    @Override
+    public int countReview(OrderDTO orderDTO) {
+        int result = lectureMapper.countReview(orderDTO);
+        return result;
+    }
+
 }

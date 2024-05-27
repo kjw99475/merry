@@ -89,10 +89,10 @@ public class PageResponseDTO<E> {
         this.member_type = requestDTO.getMember_type();
 
         StringBuilder sb = new StringBuilder("?page_size=" + this.page_size);
-        if(search_type != null) sb.append("&search_type=" + search_type_st );
+        if(search_type != null ) sb.append("&search_type=" + search_type_st );
         if(search_word != null) sb.append("&search_word=" + search_word);
-        if(search_data1 != null) sb.append("&search_data1=" + search_data1);
-        if(search_data2 != null) sb.append("&search_data2=" + search_data2);
+        if(search_data1 != null && !search_data1.isEmpty()) sb.append("&search_data1=" + search_data1);
+        if(search_data2 != null && !search_data2.isEmpty()) sb.append("&search_data2=" + search_data2);
         if(status != null && !status.trim().isEmpty()) sb.append("&status=" + status);
         if(type != null) sb.append("&type=" + type);
         if(type2 != null) sb.append("&type2=" + type2);
@@ -101,6 +101,7 @@ public class PageResponseDTO<E> {
         if(class_code != null && class_code!="") sb.append("&class_code=" + class_code);
         if(subject_code != null && subject_code != "") sb.append("&subject_code=" + subject_code);
         if(member_id != null) sb.append("&member_id=" + member_id);
+        if (member_type != null && !member_type.isEmpty()) sb.append("&member_type=" + member_type);
 
 
         this.linked_params =  sb.toString();  // 쿼리스트링

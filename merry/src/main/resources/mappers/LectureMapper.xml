@@ -15,10 +15,10 @@
                     <trim prefix="AND">
                         <choose>
                             <when test="type == 't'.toString()">
-                                lec_title like concat('%', trim(#{search_word}),'%')
+                                (lec_title like concat('%', trim(#{search_word}),'%'))
                             </when>
                             <when test="type == 'u'.toString()">
-                                member_name like concat('%', trim(#{search_word}),'%' )
+                                (member_name like concat('%', trim(#{search_word}),'%' ))
                             </when>
                         </choose>
                     </trim>
@@ -27,7 +27,7 @@
 
             <if test="subject_code != null">
                 <trim prefix="AND">
-                    lec_subject = #{subject_code}
+                    (lec_subject = #{subject_code})
                 </trim>
             </if>
         </where>
@@ -196,6 +196,20 @@
         SELECT *
         FROM lecture_review
         WHERE lec_idx=#{lec_idx}
+    </select>
+
+    <select id="viewOrder">
+        SELECT count(*)
+        FROM lecture l
+                 INNER JOIN order_detail od ON od.lec_idx = l.lec_idx
+                 INNER JOIN `order` o ON o.order_idx = od.order_idx
+        WHERE l.lec_idx = #{lec_idx} AND o.member_id=#{member_id}
+    </select>
+
+    <select id="countReview">
+        SELECT COUNT(*)
+        FROM lecture_review
+        WHERE member_idx = #{member_idx} AND lec_idx = #{lec_idx}
     </select>
 
 </mapper>

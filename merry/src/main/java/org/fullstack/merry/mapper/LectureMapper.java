@@ -6,10 +6,7 @@ import org.fullstack.merry.domain.QnaVO;
 import org.fullstack.merry.domain.lecture.LectureReviewVO;
 import org.fullstack.merry.domain.lecture.LectureVO;
 import org.fullstack.merry.domain.lecture.QnaAnswerDTO;
-import org.fullstack.merry.dto.DataDTO;
-import org.fullstack.merry.dto.NoticeDTO;
-import org.fullstack.merry.dto.PageRequestDTO;
-import org.fullstack.merry.dto.QnaDTO;
+import org.fullstack.merry.dto.*;
 import org.fullstack.merry.dto.lecture.LectureDTO;
 
 import java.util.List;
@@ -52,4 +49,10 @@ public interface LectureMapper {
     int modifyReview(LectureReviewVO lectureReviewVO);
     int deleteReview(int review_idx);
     List<LectureReviewVO> reviewList(int lec_idx);
+
+    //결제내역 조회
+   int viewOrder(OrderDTO orderDTO);
+
+    //리뷰 작성여부 조회
+    int countReview(OrderDTO orderDTO);
 }

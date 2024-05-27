@@ -18,4 +18,6 @@ public class OrderDTO {
     private String member_id;
     private LocalDate order_date;
     private int order_total;
+    private int lec_idx;
+    private  int member_idx;
 }
