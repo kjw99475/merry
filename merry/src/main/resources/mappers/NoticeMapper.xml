@@ -20,7 +20,7 @@
 
 
     <select id="ListByPage" resultType="org.fullstack.merry.domain.NoticeVO">
-        SELECT notice_idx, notice_title, notice_content, notice_org_file_name, notice_save_file_name, notice_type, notice_reg_date, notice_modify_date, member_idx
+        SELECT notice_idx, notice_title, notice_content, notice_org_file_name, notice_save_file_name, notice_type, notice_reg_date, notice_modify_date, member_idx, notice_member_name
         FROM notice
         <include refid="whereCondition"></include>
         ORDER BY notice_idx DESC
@@ -40,8 +40,8 @@
     </select>
 
     <insert id="regist" parameterType="org.fullstack.merry.domain.NoticeVO" useGeneratedKeys="true" keyProperty="notice_idx" keyColumn="notice_idx">
-        INSERT INTO notice (notice_title, notice_content, notice_org_file_name, notice_save_file_name, notice_type, notice_reg_date, member_idx)
-        VALUES(#{notice_title}, #{notice_content}, #{notice_org_file_name}, #{notice_save_file_name}, #{notice_type}, NOW(), #{member_idx})
+        INSERT INTO notice (notice_title, notice_content, notice_org_file_name, notice_save_file_name, notice_type, notice_reg_date, member_idx, notice_member_name)
+        VALUES(#{notice_title}, #{notice_content}, #{notice_org_file_name}, #{notice_save_file_name}, #{notice_type}, NOW(), #{member_idx}, #{notice_member_name})
     </insert>
 
     <update id="modify">

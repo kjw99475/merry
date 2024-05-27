@@ -20,7 +20,7 @@
 
 
     <select id="ListByPage" resultType="org.fullstack.merry.domain.DataVO">
-        SELECT data_idx, data_title, data_content, data_org_file_name, data_save_file_name, data_type, data_reg_date, data_modify_date, member_idx
+        SELECT data_idx, data_title, data_content, data_org_file_name, data_save_file_name, data_type, data_reg_date, data_modify_date, member_idx, data_member_name
         FROM data
         <include refid="whereCondition"></include>
         ORDER BY data_idx DESC
@@ -40,8 +40,8 @@
     </select>
 
     <insert id="regist" parameterType="org.fullstack.merry.domain.DataVO" useGeneratedKeys="true" keyProperty="data_idx" keyColumn="data_idx">
-        INSERT INTO data (data_title, data_content, data_org_file_name, data_save_file_name, data_type, data_reg_date, member_idx)
-        VALUES(#{data_title}, #{data_content}, #{data_org_file_name}, #{data_save_file_name}, #{data_type}, NOW(), #{member_idx})
+        INSERT INTO data (data_title, data_content, data_org_file_name, data_save_file_name, data_type, data_reg_date, member_idx, data_member_name)
+        VALUES(#{data_title}, #{data_content}, #{data_org_file_name}, #{data_save_file_name}, #{data_type}, NOW(), #{member_idx}, #{data_member_name})
     </insert>
 
     <update id="modify">
