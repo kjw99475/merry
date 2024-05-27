@@ -5,6 +5,8 @@ import lombok.extern.log4j.Log4j2;
 import org.fullstack.merry.dto.BoardDTO;
 import org.fullstack.merry.dto.PageRequestDTO;
 import org.fullstack.merry.dto.PageResponseDTO;
+import org.fullstack.merry.dto.QnaDTO;
+import org.fullstack.merry.dto.lecture.LectureDTO;
 import org.fullstack.merry.service.BoardServiceIf;
 import org.fullstack.merry.service.MypageServiceIf;
 import org.fullstack.merry.service.TeacherServiceIf;
@@ -68,11 +70,55 @@ public class MypageController {
     }
 
     @GetMapping("/qna/list")
-    public void qnaGET() {
-        log.info("=========================");
-        log.info("MypageController >> qnalistGET()");
-        log.info("=========================");
+    public void qnaListGET(
+            @RequestParam(name="qna_idx", defaultValue = "0") int qna_idx,
+            Model model
+    ) {
+        List<QnaDTO> qnaList = mypageService.qnaList(qna_idx);
+//        QnaDTO qnaDTO = mypageService.view(qna_idx);
+//        model.addAttribute("lectureDTO", lectureDTO);
+//        model.addAttribute("member_idx", member_idx);
+        model.addAttribute("qnaList", qnaList);
+
     }
+
+    @GetMapping("/qna/regist")
+    public void qnaRegistGET(
+            @RequestParam(name="qna_idx", defaultValue = "0") int qna_idx,
+            Model model
+    ) {
+        log.info("=========================");
+        log.info("MypageController >> qnaRegistGET()");
+
+        QnaDTO qnaDTO = mypageService.viewQna(qna_idx);
+        model.addAttribute("qnaDTO", qnaDTO);
+    }
+
+    @PostMapping("/qna/regist")
+    public String qnaRegistPOST(@Valid QnaDTO qnaDTO,
+                                BindingResult bindingResult,
+                                RedirectAttributes redirectAttributes,
+                                HttpSession session,
+                                Model model) {
+        if (bindingResult.hasErrors()) {
+            redirectAttributes.addFlashAttribute("errors", bindingResult.getAllErrors());
+            redirectAttributes.addFlashAttribute("qnaDTO", qnaDTO);
+            return "redirect:/lecture/qna/regist?lec_idx="+qnaDTO.getQna_lec_idx();
+        }
+
+        qnaDTO.setQna_member_name((String)session.getAttribute("name"));
+        int result = mypageService.registQna(qnaDTO);
+
+        if (result > 0) {
+            return "redirect:/mypage/qna/list?qna_idx="+qnaDTO.getQna_idx();
+        }
+        else {
+            return "redirect:/mypage/qna/regist?qna_idx="+qnaDTO.getQna_idx();
+        }
+
+    }
+
+
 
     @GetMapping("/zzim")
     public void zzimGET() {

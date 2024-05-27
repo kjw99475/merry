@@ -44,18 +44,20 @@
 <!--================ 헤더 start =================-->
 <jsp:include page="/WEB-INF/views/common/header.jsp"/>
 <!--================ 헤더 end =================-->
-
-
-<div class="container pt-100 mb-5">
-    <div class="row mt-5">
-        <div class="col-lg-8 offset-lg-2 text-center">
-            <div class="section-title">
-                <h3>강의</h3>
+<div class="breadcrumb-section breadcrumb-bg">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 offset-lg-2 text-center">
+                <div class="breadcrumb-text">
+                    <p>강의</p>
+                    <h1>강의 목록</h1>
+                </div>
             </div>
         </div>
     </div>
-
-    <div class="col justify-content-center">
+</div>
+<div class="container pt-100 mb-5">
+    <div class="col">
         <form role="search" id="frmSearch">
             <div class="row mx-5 mb-100 justify-content-center">
                 <select name="search_type" id="search_type" class="form-control col-1" >
