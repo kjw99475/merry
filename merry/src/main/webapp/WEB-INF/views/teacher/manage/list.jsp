@@ -48,40 +48,41 @@
 <!-- end hero area -->
 
 <!-- 선생님 섹션 -->
-<div class="container pt-100 mb-5">
-    <div class="row mt-5">
-        <div class="col-lg-8 offset-lg-2 text-center">
-            <div class="section-title">
-                <h3>선생님</h3>
-            </div>
-        </div>
-    </div>
-    <div class="row">
-        <c:forEach var="list" items="${lecturelist}">
-            <div class="col-lg-3 col-md-6">
-                <div class="single-latest-news">
-                    <a href="manage/list?teacheridx=${list.member_idx}"><div class="latest-news-bg news-bg-1" style="background: url('/resources/assets/img/${list.lec_img}'); background-size: 100% 100%">
-                    </div></a>
-                    <div class="news-text-box">
-                        <h3><a href="#">${list.lec_title}</a></h3>
-                        <p class="blog-meta border-bottom pb-1">
-                            <span class="author"><i class="fas fa-book-open"></i> ${list.lec_subject}</span>
-                            <span class="cart" onclick="addcart(${list.lec_idx})">
-                                <i class="fas fa-shopping-cart" id="cart${list.lec_idx}" <c:if test="${fn:contains(cartlist, list.lec_idx)}"> style="color: blue" </c:if>> </i>장바구니
-                            </span>
-                            <span class="zzim" onclick="addzzim(${list.lec_idx})">
-                                <i class="fas fa-heart" id="zzim${list.lec_idx}" <c:if test="${fn:contains(zzimlist, '28')}"> style="color:red" </c:if>></i>찜하기
-                            </span>
-                        </p>
+<div class="container-fluid">
+    <div class="container pt-100 mb-5">
+        <div class="row mt-5">
+            <jsp:include page="/WEB-INF/views/common/teacher_sidebar.jsp"/>
+            <div class="col-lg-9 text-center">
+                <div class="section-title">
+                    <h3>선생님 강의</h3>
+                </div>
+                <div class="row g-4">
+                    <c:forEach var="list" items="${lecturelist}">
+                        <div class="single-latest-news col-lg-4">
+                            <a href="manage/list?teacheridx=${list.member_idx}"><div class="latest-news-bg news-bg-1" style="background: url('/resources/uploads/lecture/${list.lec_img}'); background-size: 100% 100%">
+                            </div></a>
+                            <div class="news-text-box">
+                                <h3><a href="#">${list.lec_title}</a></h3>
+                                <p class="blog-meta border-bottom pb-1">
+                                    <span class="author"><i class="fas fa-book-open"></i> ${list.lec_subject}</span>
+                                    <span class="cart" onclick="addcart(${list.lec_idx})">
+                                        <i class="fas fa-shopping-cart" id="cart${list.lec_idx}" <c:if test="${fn:contains(cartlist, list.lec_idx)}"> style="color: blue" </c:if>> </i>장바구니
+                                    </span>
+                                    <span class="zzim" onclick="addzzim(${list.lec_idx})">
+                                        <i class="fas fa-heart" id="zzim${list.lec_idx}" <c:if test="${fn:contains(zzimlist, '28')}"> style="color:red" </c:if>></i>찜하기
+                                    </span>
+                                </p>
 
-                    </div>
+                            </div>
+                        </div>
+                    </c:forEach>
                 </div>
             </div>
-        </c:forEach>
-    </div>
-    <div class="btn-toolbar justify-content-center" role="toolbar" aria-label="Toolbar with button groups">
-        <div class="btn-group">
-            <button type="button" class="btn btn-outline-merry">1</button>
+        </div>
+        <div class="btn-toolbar justify-content-center" role="toolbar" aria-label="Toolbar with button groups">
+            <div class="btn-group">
+                <button type="button" class="btn btn-outline-merry">1</button>
+            </div>
         </div>
     </div>
 </div>
@@ -89,8 +90,8 @@
 
 <!--================ 본문 end =================-->
 
-<!--================ 푸터 Start =================-->
-<jsp:include page="/WEB-INF/views/common/footer.jsp" />
+    <!--================ 푸터 Start =================-->
+    <jsp:include page="/WEB-INF/views/common/footer.jsp" />
 <!--================ 푸터 End =================-->
 
 <!-- jquery -->

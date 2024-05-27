@@ -46,12 +46,21 @@
 <!--================ 본문 start =================-->
 <!-- hero area -->
 <!-- end hero area -->
-
+<div class="breadcrumb-section breadcrumb-bg">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 offset-lg-2 text-center">
+                <div class="breadcrumb-text">
+                    <p><a href="/lecture/view?lec_idx=${lectureDTO.lec_idx}"> ${lectureDTO.lec_title}</a> </p>
+                    <h1>강의 공지사항</h1>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 <!-- 선생님 섹션 -->
 <div class="container pt-100 mb-5">
-    <div class="mt-5">
-        <h1 style="width: 75%; margin: 0 auto 20px; text-align: center;">강의 공지사항</h1>
-    </div>
+
     <c:if test="${lectureDTO.member_idx eq sessionScope.member_idx}">
         <div class="col-lg-12 text-right mt-3">
             <a href="/lecture/notice/regist?lec_idx=${lec_idx}" class="boxed-btn">글작성</a>
@@ -81,7 +90,7 @@
                     <c:set var="ntitle" value="${list.notice_title}"/>
                     <c:choose>
                         <c:when test="${fn:length(ntitle) > 10}">
-                            <a href="/lecture/notice/view?notice_idx=${list.notice_idx}"><strong>${fn:substring(ntitle, 0, 10)}</strong></a>
+                            <a href="/lecture/notice/view?notice_idx=${list.notice_idx}"><strong>${fn:substring(ntitle, 0, 10)}...</strong></a>
                         </c:when>
                         <c:otherwise>
                             <a href="/lecture/notice/view?notice_idx=${list.notice_idx}"><strong>${list.notice_title}</strong></a>

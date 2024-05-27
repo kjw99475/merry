@@ -87,9 +87,7 @@
 
                 </div>
 
-                <div class="row justify-content-end m-3">
-                    <input type="button" class="btn btn-merry" onclick="location.href='/admin/data/regist'" value="등록">
-                </div>
+    
 
 
                 <table class="table w-100">

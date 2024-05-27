@@ -40,11 +40,22 @@
     <script src="https://cdn.tiny.cloud/1/wjuflumw0txwktnvnufwfo5lj04kqmup66rnaj1jf6pnwv5d/tinymce/7/tinymce.min.js"
             referrerpolicy="origin"></script>
 </head>
-<body class="pt-100">
+<body >
 <!--================ 헤더 start =================-->
 <jsp:include page="/WEB-INF/views/common/header.jsp"/>
 <!--================ 헤더 end =================-->
-
+<div class="breadcrumb-section breadcrumb-bg">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 offset-lg-2 text-center">
+                <div class="breadcrumb-text">
+                    <p>강의</p>
+                    <h1>${lectureDTO.lec_title}</h1>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 <!-- single product -->
 <div class="single-product mt-150 mb-150">
     <div class="container">
@@ -124,11 +135,21 @@
                         <br>
                         <h4>강의목차</h4>
                         <br>
-                            <ul>
-                                <c:forEach items="${ChapterList}" var="chapDTO">
-                                    <li><a onclick="javascript:Dalack_lab('/resources/uploads/lecture/${chapDTO.chap_video}')"> ${chapDTO.chap_title} (${chapDTO.chap_time})</a></li>
-                                </c:forEach>
-                            </ul>
+
+                                <c:choose>
+                                    <c:when test="${not empty ChapterList}">
+                                        <ul>
+                                        <c:forEach items="${ChapterList}" var="chapDTO">
+                                            <li><a onclick="javascript:Dalack_lab('/resources/uploads/lecture/${chapDTO.chap_video}')"> ${chapDTO.chap_title} (${chapDTO.chap_time})</a></li>
+                                        </c:forEach>
+                                        </ul>
+                                    </c:when>
+                                    <c:otherwise>
+                                        목차가 없습니다.
+                                    </c:otherwise>
+                                </c:choose>
+
+                    
 
                     </div>
                     <div class="box3" id="nav-about" role="tabpanel" aria-labelledby="nav-about-tab">
@@ -160,7 +181,7 @@
                                                 <c:set var="ntitle" value="${list.notice_title}"/>
                                                 <c:choose>
                                                     <c:when test="${fn:length(ntitle) > 10}">
-                                                        <a href="/lecture/notice/view?notice_idx=${list.notice_idx}"><strong>${fn:substring(ntitle, 0, 10)}</strong></a>
+                                                        <a href="/lecture/notice/view?notice_idx=${list.notice_idx}"><strong>${fn:substring(ntitle, 0, 10)}...</strong></a>
                                                     </c:when>
                                                     <c:otherwise>
                                                         <a href="/lecture/notice/view?notice_idx=${list.notice_idx}"><strong>${list.notice_title}</strong></a>
@@ -215,7 +236,7 @@
                                                 <c:set var="title" value="${list.qna_title}"/>
                                                 <c:choose>
                                                     <c:when test="${fn:length(title) > 10}">
-                                                        <a href="/lecture/qna/view?qna_idx=${list.qna_idx}"><strong>${fn:substring(title, 0, 10)}</strong></a>
+                                                        <a href="/lecture/qna/view?qna_idx=${list.qna_idx}"><strong>${fn:substring(title, 0, 10)}...</strong></a>
                                                     </c:when>
                                                     <c:otherwise>
                                                         <a href="/lecture/qna/view?qna_idx=${list.qna_idx}"><strong>${list.qna_title}</strong></a>
@@ -233,7 +254,7 @@
                                                     <c:set var="answer" value="${list.qna_answer}"/>
                                                     <c:choose>
                                                         <c:when test="${fn:length(answer) > 10}">
-                                                            <a href="/lecture/qna/view?qna_idx=${list.qna_idx}"><strong>${fn:substring(answer, 0, 10)}</strong></a>
+                                                            <a href="/lecture/qna/view?qna_idx=${list.qna_idx}"><strong>${fn:substring(answer, 0, 10)}...</strong></a>
                                                         </c:when>
                                                         <c:otherwise>
                                                             <a href="/lecture/qna/view?qna_idx=${list.qna_idx}"><strong>${list.qna_answer}</strong></a>
@@ -261,7 +282,7 @@
 
                     </div>
 
-                    <div class="box6" id="nav-about" role="tabpanel" aria-labelledby="nav-about-tab">
+                    <div class="box5" id="nav-about" role="tabpanel" aria-labelledby="nav-about-tab">
                         <br>
                         <h4>자료실</h4>
                         <br>
@@ -290,7 +311,7 @@
                                                 <c:set var="dtitle" value="${list.data_title}"/>
                                                 <c:choose>
                                                     <c:when test="${fn:length(dtitle) > 10}">
-                                                        <a href="/lecture/data/view?data_idx=${list.data_idx}"><strong>${fn:substring(dtitle, 0, 10)}</strong> <c:if test="${list.data_org_file_name != null and list.data_org_file_name != '' }" ><i class="fa-solid fa-paperclip"></i></c:if></a>
+                                                        <a href="/lecture/data/view?data_idx=${list.data_idx}"><strong>${fn:substring(dtitle, 0, 10)}...</strong> <c:if test="${list.data_org_file_name != null and list.data_org_file_name != '' }" ><i class="fa-solid fa-paperclip"></i></c:if></a>
                                                     </c:when>
                                                     <c:otherwise>
                                                         <a href="/lecture/data/view?data_idx=${list.data_idx}"><strong>${list.data_title}</strong> <c:if test="${list.data_org_file_name != null and list.data_org_file_name != '' }" ><i class="fa-solid fa-paperclip"></i></c:if></a>
@@ -311,7 +332,7 @@
                         </c:choose>
 
                     </div>
-                    <div class="box5" id="nav-about" role="tabpanel" aria-labelledby="nav-about-tab">
+                    <div class="box6" id="nav-about" role="tabpanel" aria-labelledby="nav-about-tab">
                         <br>
                         <h4>강의 리뷰</h4>
                         <br>

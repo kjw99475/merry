@@ -64,18 +64,19 @@
                 <div class="mt-5">
                     <!--================ 검색 start =================-->
                     <div>
-                        <form>
-                            <div class="row mx-5">
-<%--                                <select name="type" class="form-control col-1" >--%>
-<%--                                    <option value="0" <c:if test="${responseDTO.type == 0}">selected</c:if>>제목</option>--%>
-<%--                                    <option value="1" <c:if test="${responseDTO.type == 1}">selected</c:if>>내용</option>--%>
-<%--                                </select>--%>
+                        <form role="search" id="frmSearch">
+                            <div class="row mx-5 mb-100 justify-content-center">
+                                <select name="search_type" id="search_type" class="form-control col-1" >
+                                    <option value="">선택</option>
+                                    <option value="t" <c:if test="${responseDTO['search_type_st'] != 'null' && responseDTO['search_type_st'].contains('t')}">selected</c:if>>제목</option>
+                                    <option value="u" <c:if test="${responseDTO['search_type_st'] != 'null' && responseDTO['search_type_st'].contains('u')}">selected</c:if>>선생님</option>
+                                </select>
 
-                                <div class="col-9">
+                                <div class="col-8">
                                     <input type="text" class="form-control" placeholder="Search" name="search_word" style="width: 100%" value="${responseDTO.search_word}">
                                 </div>
-                                <div class="col-3">
-                                    <button type="submit" class="btn btn-merry" >검색</button>
+                                <div>
+                                    <button type="button" class="btn btn-merry" onclick="searchType()" >검색</button>
                                 </div>
                             </div>
                         </form>
@@ -86,9 +87,7 @@
 
                 </div>
 
-                <div class="row justify-content-end m-3">
-                    <input type="button" class="btn btn-merry" onclick="location.href='/admin/notice/regist'" value="등록">
-                </div>
+
 
 
                 <table class="table w-100">
@@ -96,19 +95,34 @@
                     <thead>
                     <tr>
                         <th class="w-10">no</th>
-                        <th class="w-60">제목</th>
-                        <th class="w-30">작성일</th>
+                        <th class="w-30">아이디</th>
+                        <th class="w-30">회원 구분</th>
+                        <th class="w-30">등록일</th>
                     </tr>
                     </thead>
                     <tbody>
                     <c:choose>
                         <c:when test="${!empty responseDTO.dtoList}">
                             <c:set value="${responseDTO.total_count}" var="total_count" />
-                            <c:forEach items="${responseDTO.dtoList}" var="bbsDTO" varStatus="loop">
+                            <c:forEach items="${responseDTO.dtoList}" var="lectureDTO" varStatus="loop">
                                 <tr>
                                     <th>${total_count -responseDTO.page_skip_count -loop.index}</th>
-                                    <td><a href="/admin/notice/view?notice_idx=${bbsDTO.notice_idx}" class="black-text">${bbsDTO.notice_title}</a><c:if test="${bbsDTO.notice_org_file_name != null and bbsDTO.notice_org_file_name != '' }" ><i class="fas fa-pen"></i></c:if> </td>
-                                    <td>${bbsDTO.notice_reg_date}</td>
+                                    <td>
+                                        <c:choose>
+                                            <c:when test="${lectureDTO.lec_status eq 'N'}">
+                                                <a href="/lecture/view?lec_idx=${lectureDTO.lec_idx}" class="black-text">
+                                                    <span style="text-decoration:line-through; color:red">${lectureDTO.lec_title} </span>
+                                                </a>
+                                            </c:when>
+                                            <c:otherwise>
+                                                <a href="/lecture/view?lec_idx=${lectureDTO.lec_idx}" class="black-text">
+                                                    <span>${lectureDTO.lec_title}</span>
+                                                </a>
+                                                <button onclick="deleteOK('${lectureDTO.lec_idx}')" class="btn-danger btn">삭제</button>
+                                            </c:otherwise>
+                                        </c:choose>
+                                    </td>
+                                    <td>${lectureDTO.lec_reg_date}</td>
                                 </tr>
                             </c:forEach>
                         </c:when>
@@ -131,7 +145,7 @@
                                 <c:if test="${responseDTO.page>10}">
                             <li class="page-item">
                                 </c:if>
-                                <a class="page-link" href="/admin/notice/list${responseDTO.linked_params}&page=${responseDTO.page_block_end-10}" aria-label="Previous">
+                                <a class="page-link" href="/admin/data/list${responseDTO.linked_params}&page=${responseDTO.page_block_end-10}" aria-label="Previous">
                                     <span aria-hidden="true">&laquo;</span>
                                 </a>
                             </li>
@@ -157,7 +171,7 @@
                                 <c:if test="${(responseDTO.page_block_start+10)<=(responseDTO.total_page)}">
                             <li class="page-item">
                                 </c:if>
-                                <a class="page-link" href="/admin/notice/list${responseDTO.linked_params}&page=${responseDTO.page_block_start+10}" aria-label="Next">
+                                <a class="page-link" href="/admin/data/list${responseDTO.linked_params}&page=${responseDTO.page_block_start+10}" aria-label="Next">
                                     <span aria-hidden="true">&raquo;</span>
                                 </a>
                             </li>
@@ -202,5 +216,48 @@
     <!-- main js -->
     <script src="/resources/assets/js/main.js"></script>
 
+    <script>
+        function deleteOK(lec_idx) {
+            const frmDelete = document.querySelector("#frmDelete");
+            let deleteYN = confirm("정말 삭제하시겠습니까?");
+            if (deleteYN) {
+                deleteLecture(lec_idx)
+            }
+        }
+
+        function deleteLecture(lec_idx){
+            event.preventDefault();
+            event.stopPropagation();
+            $.ajax({
+                url:'/admin/lecture/delete', //Controller에서 요청 받을 주소
+                type:'post', //POST 방식으로 전달
+                data:{lec_idx},
+                dataType : 'text',
+                success:function(result){ //컨트롤러에서 넘어온 cnt값을 받는다
+                    window.location.reload();
+                    console.log(result);
+                },
+                error : function(xhr, status, error) {
+                    console.error("AJAX 요청 실패!");
+                    console.error("상태 코드: " + xhr.status); // HTTP 상태 코드
+                    console.error("상태 텍스트: " + xhr.statusText); // 상태 텍스트
+                    console.error("응답 텍스트: " + xhr.responseText); // 서버에서 반환된 응답 텍스트
+                    console.error("오류: " + error); // 오류 메시지
+                }
+            })
+
+        }
+        function searchType() {
+            let selectElement = document.getElementById("search_type"); // select 요소의 id로 변경
+            let selectedOption = selectElement.options[selectElement.selectedIndex].value;
+
+            if (selectedOption === "") {
+                alert("검색 구분을 선택해 주세요");
+            } else {
+                document.getElementById("frmSearch").submit();
+            }
+        }
+
+    </script>
 </body>
 </html>

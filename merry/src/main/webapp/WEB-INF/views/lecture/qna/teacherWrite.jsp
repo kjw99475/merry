@@ -43,16 +43,25 @@
 <!--================ 헤더 start =================-->
 <jsp:include page="/WEB-INF/views/common/header.jsp" />
 <!--================ 헤더 end =================-->
-
+<div class="breadcrumb-section breadcrumb-bg">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 offset-lg-2 text-center">
+                <div class="breadcrumb-text">
+                    <p><a href="/lecture/view?lec_idx=${qnaDTO.qna_lec_idx}"> 강의</a> </p>
+                    <h1>강의 QnA</h1>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 <!--================ 본문 start =================-->
 <!-- hero area -->
 <!-- end hero area -->
 
 <!-- 선생님 섹션 -->
 <div class="container pt-100 mb-5">
-    <div class="mt-5">
-        <h1 style="width: 75%; margin: 0 auto 20px; text-align: center;">강의 Q&A</h1>
-    </div>
+
     <div class="row">
         <div class="col-xl">
 

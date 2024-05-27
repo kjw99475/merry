@@ -2,10 +2,7 @@ package org.fullstack.merry.service;
 
 import lombok.RequiredArgsConstructor;
 import org.fullstack.merry.domain.QnaVO;
-import org.fullstack.merry.dto.MyQnaDTO;
-import org.fullstack.merry.dto.PageRequestDTO;
-import org.fullstack.merry.dto.PageResponseDTO;
-import org.fullstack.merry.dto.QnaDTO;
+import org.fullstack.merry.dto.*;
 import org.fullstack.merry.dto.lecture.LectureDTO;
 import org.fullstack.merry.mapper.MyeduMapper;
 import org.modelmapper.ModelMapper;
@@ -28,6 +25,21 @@ public class MyeduServiceImpl implements MyeduService {
         int total_count = myeduMapper.totalMyQna(pageRequestDTO);
 
         PageResponseDTO<MyQnaDTO> responseDTO = PageResponseDTO.<MyQnaDTO>withAll()
+                .requestDTO(pageRequestDTO)
+                .dtoList(dtoList)
+                .total_count(total_count)
+                .build();
+
+        return responseDTO;
+    }
+
+    @Override
+    public PageResponseDTO<MyReviewDTO> myReviewList(PageRequestDTO pageRequestDTO) {
+        List<MyReviewDTO> dtoList = myeduMapper.myReviewList(pageRequestDTO);
+
+        int total_count = myeduMapper.totalMyReview(pageRequestDTO);
+
+        PageResponseDTO<MyReviewDTO> responseDTO = PageResponseDTO.<MyReviewDTO>withAll()
                 .requestDTO(pageRequestDTO)
                 .dtoList(dtoList)
                 .total_count(total_count)

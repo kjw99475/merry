@@ -49,42 +49,36 @@
 
 <!-- 선생님 섹션 -->
 <div class="container pt-100 mb-5">
-    <div class="mt-5">
-        <h1 style="width: 75%; margin: 0 auto 20px; text-align: center;">선생님 Q&A</h1>
+    <div class="row mt-5">
+        <div class="col-lg-8 offset-lg-2 text-center">
+            <div class="section-title">
+                <h3>선생님 Q&A</h3>
+            </div>
+        </div>
     </div>
-    <div class="col-lg-12 text-right mt-3">
-        <a href="/teacher/regist" class="boxed-btn">글작성</a>
-    </div>
-    <table class="table">
-        <colgroup class="w-100">
-            <col class="w-5">
-            <col class="w-70">
-            <col class="w-10">
-            <col class="w-15">
-        </colgroup>
+    <div class="row">
+        <c:forEach var="list" items="${lecturelist}">
+            <div class="col-lg-3 col-md-6">
+                <div class="single-latest-news">
+                    <a href="/lecture/qna/list?lec_idx=${list.lec_idx}"><div class="latest-news-bg news-bg-1" style="background: url('/resources/uploads/lecture/${list.lec_img}'); background-size: 100% 100%">
+                    </div></a>
+                    <div class="news-text-box">
+                        <h3><a href="/lecture/qna/list?lec_idx=${list.lec_idx}">${list.lec_title}</a></h3>
+                        <p class="blog-meta border-bottom pb-1">
+                            <span class="author"><i class="fas fa-book-open"></i> ${list.lec_subject}</span>
+                            <span class="cart" onclick="addcart(${list.lec_idx})">
+                                <i class="fas fa-shopping-cart" id="cart${list.lec_idx}" <c:if test="${fn:contains(cartlist, list.lec_idx)}"> style="color: blue" </c:if>> </i>장바구니
+                            </span>
+                            <span class="zzim" onclick="addzzim(${list.lec_idx})">
+                                <i class="fas fa-heart" id="zzim${list.lec_idx}" <c:if test="${fn:contains(zzimlist, '28')}"> style="color:red" </c:if>></i>찜하기
+                            </span>
+                        </p>
 
-        <thead>
-        <tr>
-            <th>no</th>
-            <th>답변여부</th>
-            <th>제목</th>
-            <th>작성자</th>
-            <th>작성일</th>
-        </tr>
-        </thead>
-        <tbody>
-        <c:forEach var="list" items="${qnaList}" varStatus="i">
-            <tr>
-                <td>${i.count}</td>
-                <td><c:if test="${list.qna_answer_yn eq 'Y'}">답변완료</c:if>
-                    <c:if test="${list.qna_answer_yn eq 'N'}">답변대기</c:if></td>
-                <td>${list.qna_title}</td>
-                <td>${list.qna_member_name}</td>
-                <td>${fn:substring(list.qna_reg_date, 0, 10)}</td>
-            </tr>
+                    </div>
+                </div>
+            </div>
         </c:forEach>
-        </tbody>
-    </table>
+    </div>
     <div class="btn-toolbar justify-content-center" role="toolbar" aria-label="Toolbar with button groups">
         <div class="btn-group">
             <button type="button" class="btn btn-outline-merry">1</button>
@@ -100,7 +94,7 @@
 <!--================ 푸터 End =================-->
 
 <!-- jquery -->
-<script src="/resources/assets/js/jquery-1.11.3.min.js"></script>
+<script src="/resources/assets/js/jquery-3.7.1.min.js"></script>
 <!-- bootstrap -->
 <script src="/resources/assets/bootstrap/js/bootstrap.min.js"></script>
 <!-- count down -->
@@ -120,5 +114,55 @@
 <!-- main js -->
 <script src="/resources/assets/js/main.js"></script>
 
+<script>
+    function addcart(lecIdx){
+        if(lecIdx != 0) {
+            $.ajax({
+                type: "POST",            // HTTP method type(GET, POST) 형식이다.
+                url: "/mypage/addcart",      // 컨트롤러에서 대기중인 URL 주소이다.
+                data: {
+                    lec_idx: lecIdx,
+                    member_id: "${member_id}"
+                },            // Json 형식의 데이터이다.
+                success: function (result) { // 비동기통신의 성공일경우 success콜백으로 들어옵니다. 'res'는 응답받은 데이터이다.
+                    if(result == 0){
+                        if(confirm("장바구니에 상품이 존재합니다.\n장바구니로 이동하시겠습니까?")){
+                            window.location.href="/mypage/cart"
+                        }
+                    }else {
+                        if (confirm("장바구니에 추가되었습니다.\n장바구니로 이동하시겠습니까?")) {
+                            window.location.href = "/mypage/cart"
+                        }
+                    }
+                },
+                error: function (error) { // 비동기 통신이 실패할경우 error 콜백으로 들어옵니다.
+                    console.log(error);
+                }
+            });
+        }
+    }
+    function addzzim(lecIdx){
+        if(lecIdx != 0) {
+            $.ajax({
+                type: "POST",            // HTTP method type(GET, POST) 형식이다.
+                url: "/mypage/addzzim",      // 컨트롤러에서 대기중인 URL 주소이다.
+                data: {
+                    lec_idx: lecIdx
+                },            // Json 형식의 데이터이다.
+                success: function (result) { // 비동기통신의 성공일경우 success콜백으로 들어옵니다. 'res'는 응답받은 데이터이다.
+                    let color =  document.getElementById("zzim"+lecIdx).style.color;
+                    if(color == "red"){
+                        document.getElementById("zzim"+lecIdx).style.color="";
+                    }else{
+                        document.getElementById("zzim"+lecIdx).style.color="red";
+                    }
+                },
+                error: function (error) { // 비동기 통신이 실패할경우 error 콜백으로 들어옵니다.
+                    console.log(error);
+                }
+            });
+        }
+    }
+</script>
 </body>
 </html>
