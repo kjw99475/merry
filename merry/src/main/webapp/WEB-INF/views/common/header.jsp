@@ -36,7 +36,7 @@
                                         <li><a href="">나의 학습방</a>
                                             <ul class="sub-menu">
                                                 <li><a href="/myedu/lecture/list">나의 강의실</a></li>
-                                                <li><a href="/myedu/lecture/list">내가 쓴 글</a></li>
+                                                <li><a href="/myedu/write/list">내가 쓴 글</a></li>
                                                 <li><a href="/myedu/grade/list">성적표</a></li>
                                                 <li><a href="/myedu/plan/list">학습 계획표</a></li>
                                             </ul>
