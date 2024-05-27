@@ -58,4 +58,27 @@
         SELECT COUNT(*) FROM grade
         WHERE grade_teacher = #{grade_teacher}
     </select>
+
+    <insert id="teacherInfoRegist">
+        insert into teacher(member_idx, teacher_name, subject, intro, teacher_image)
+        values(#{member_idx}, #{teacher_name}, #{subject}, #{intro}, #{teacher_image})
+    </insert>
+
+    <update id="teacherInfoModify">
+        update teacher
+        set subject=#{subject}, intro=#{intro}, teacher_image=#{teacher_image}
+        where member_idx=#{member_idx}
+    </update>
+
+    <select id="infoPresent">
+        SELECT COUNT(*)
+        FROM teacher
+        WHERE member_idx = #{member_idx}
+    </select>
+
+    <select id="viewInfo" resultType="org.fullstack.merry.domain.TeacherVO">
+        select *
+        from teacher
+        where member_idx = #{member_idx}
+    </select>
 </mapper>

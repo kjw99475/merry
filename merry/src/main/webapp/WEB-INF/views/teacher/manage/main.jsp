@@ -67,6 +67,19 @@
             </div>
         </div>
     </div>
+
+    <div class="row mb-100">
+        <c:choose>
+            <c:when test="${present >= 1}">
+                <button type="button" class="btn bordered-btn orange-btn" onclick="location.href='/teacher/manage/info/modify'">선생님 정보 수정하기</button>
+            </c:when>
+            <c:otherwise>
+                <button type="button" class="btn bordered-btn orange-btn" onclick="location.href='/teacher/manage/info/regist'">선생님 정보 등록하기</button>
+            </c:otherwise>
+        </c:choose>
+
+    </div>
+
     <div class="row">
         <jsp:include page="/WEB-INF/views/common/teacher_sidebar.jsp">
             <jsp:param name="menuGubun" value="grade"/>
