@@ -64,7 +64,7 @@
             <div class="container mb-5">
 
                 <div class="row mt-5">
-                    <div class="col-lg-10 mb-5 mb-lg-0">
+                    <div class="col-lg-12 mb-5 mb-lg-0">
                         <div class="form-title">
                             <h2></h2>
 
@@ -75,6 +75,8 @@
                                     <input type="hidden" name="board_idx" value="${boardDTO.board_idx}">
 <%--                                <label for="board_title">제목</label>--%>
                                 <div><span class="font-weight-bold">제목 : </span>${boardDTO.board_title}</div>
+                                <div><span class="" >작성자 : </span>${boardDTO.board_writer}</div>
+                                <div><span class="" >작성일 : </span>${boardDTO.board_reg_date}</div>
 
                                 <div class="overflow-auto mt-4" style="max-height: 500px;">${boardDTO.board_content}</div>
 
@@ -107,12 +109,54 @@
                 </div>
 
 
+                <div class="mt-5">
+                    <h5>댓글 리스트</h5>
+                    <hr>
 
+                    <form action="/board/reply/registReply" id="replyRegist" method="post">
+                        <input type="hidden" value="${boardDTO.board_idx}"  name="board_idx">
+                        <input type="hidden" value="${sessionScope.member_idx}"  name="member_idx">
+                        <input type="hidden" value="${sessionScope.name}"  name="reply_writer">
+                        <div class="mb-3">
+                            <label class="form-label">댓글 </label>
+                            <input type="text" class="form-control" name="reply_comment" id="reply_comment" maxlength="100" placeholder="댓글을 입력하세요">
+                            <div id="div_err_reply_comment" style="display: none"></div>
+                        </div>
+                        <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                            <button class="btn btn-merry me-md-2 mb-2" id="replySubmit" type="submit">댓글등록</button>
+                        </div>
+                    </form>
+
+
+                    <ul style="list-style: none" class="p-0">
+                        <c:choose>
+                            <c:when test="${not empty replyDTOList}">
+                                <c:forEach items="${replyDTOList}" var="reply" varStatus="status">
+                                    <form action="/board/reply/deleteReply" method="post">
+                                        <input type="hidden" name="board_idx" value="${boardDTO.board_idx}">
+                                        <input type="hidden" name="reply_idx" value="${reply.reply_idx}">
+
+                                    <li class="border-top border-bottom">
+                                        <span>${reply.reply_writer}</span>
+                                        <p>${reply.reply_comment}</p>
+                                        <span style="font-size: smaller">${reply.reply_reg_date}</span>
+                                        <c:if test="${reply.member_idx eq sessionScope.member_idx or sessionScope.member_type eq 'A'}">
+                                        <button class="btn-danger"  type="submit" > 삭제 </button>
+                                        </c:if>
+                                    </li>
+                                    </form>
+                                </c:forEach>
+                            </c:when>
+                            <c:otherwise>
+                                <li style="color: rgb(0,0,0,0.5); text-align: center">등록된 댓글이 없습니다.</li>
+                            </c:otherwise>
+                        </c:choose>
+                    </ul>
+                </div>
 
 
             </div>
         </div>
-
     </div>
 
 
