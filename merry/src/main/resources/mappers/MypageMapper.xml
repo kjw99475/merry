@@ -26,6 +26,37 @@
           AND lec_idx = #{lecIdx}
     </delete>
 
+    <!--1:1 문의 -->
+    <select id="qnaList" resultType="org.fullstack.merry.domain.QnaVO">
+        SELECT qna_idx, qna_title, qna_content, qna_reg_date, m.member_idx, qna_member_name, qna_answer_name, qna_answer, qna_answer_yn, qna_answer_reg_date, qna_answer_idx
+        FROM qna q
+                 INNER JOIN member m ON q.member_idx = m.member_idx
+        WHERE qna_type = 'M' AND m.member_idx = #{member_idx}
+    </select>
+
+    <select id="viewQna" resultType="org.fullstack.merry.domain.QnaVO">
+        select *
+        from qna
+        where qna_idx=#{qna_idx}
+    </select>
+
+    <insert id="registQna" parameterType="org.fullstack.merry.domain.QnaVO" useGeneratedKeys="true" keyProperty="qna_idx" keyColumn="qna_idx">
+        insert into qna(qna_title, qna_content, member_idx, qna_member_name, qna_answer_idx, qna_answer_name, qna_type)
+        values(#{qna_title}, #{qna_content}, #{member_idx}, #{qna_member_name}, #{qna_answer_idx}, #{qna_answer_name}, 'M')
+    </insert>
+
+<!--    <update id="modifyQna">-->
+<!--        update qna-->
+<!--        set qna_title=#{qna_title}, qna_content=#{qna_content}, qna_modify_date=now()-->
+<!--        where qna_idx=#{qna_idx}-->
+<!--    </update>-->
+
+<!--    <delete id="deleteQna">-->
+<!--        delete from qna where qna_idx=#{qna_idx}-->
+<!--    </delete>-->
+
+
+
 <!--    <select id="noticeListByPage" resultType="org.fullstack4.bookstore.domain.NoticeVO">-->
 <!--        SELECT idx, title, writer, reg_date, content, org_file_name, save_file_name, fix_state-->
 <!--        FROM tbl_bbs_notice-->

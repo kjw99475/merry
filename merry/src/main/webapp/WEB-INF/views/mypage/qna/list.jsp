@@ -76,7 +76,7 @@
                     <div class="mb-1 text-right">
                         <button class="btn orange-btn bordered-btn ml-1" type="button" onclick="location.href='/mypage/qna/regist';">문의하기</button>
                     </div>
-                            <form class="cart-table-wrap" action="/mypage/payment">
+                            <form class="cart-table-wrap" action="/mypage/qna/list">
                                 <table class="cart-table">
                                     <thead class="cart-table-head">
                                     <tr class="table-head-row">
@@ -90,14 +90,14 @@
                                     <tbody>
                                     <tr class="table-body-row">
                                         <td class="p-2">2</td>
-                                        <td class="p-2"><a href="/mypage/qnaView?qna_type=M&qna_idx=1">강의가 재생되지 않아요.</a></td>
+                                        <td class="p-2"><a href="/mypage/qna/view?qna_type=M&qna_idx=1">강의가 재생되지 않아요.</a></td>
                                         <td class="p-2">답변전</td>
                                         <td class="p-2">2024-03-04</td>
                                         <td class="p-2">-</td>
                                     </tr>
                                     <tr class="table-body-row">
                                         <td class="p-2">1</td>
-                                        <td class="p-2"><a href="/mypage/qnaView?qna_type=M&qna_idx=1">환불 관련 문의합니다.</a></td>
+                                        <td class="p-2"><a href="/mypage/qna/view?qna_type=M&qna_idx=1">환불 관련 문의합니다.</a></td>
                                         <td class="p-2">답변완료</td>
                                         <td class="p-2">2024-03-01</td>
                                         <td class="p-2">2024-03-02</td>
