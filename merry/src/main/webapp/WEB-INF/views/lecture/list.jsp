@@ -1,5 +1,6 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" pageEncoding="UTF-8" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <!DOCTYPE HTML>
 <html>
 <head>
@@ -106,23 +107,39 @@
 
     <div class="row">
         <c:forEach var="lectureDTO" items="${responseDTO.dtoList}">
-            <c:if test="${lectureDTO.lec_status eq 'Y'}">
+
             <div class="col-lg-3 col-md-6 ${lectureDTO.lec_subject}">
                 <div class="single-latest-news">
                     <a href="/lecture/view?lec_idx=${lectureDTO.lec_idx}"><div class="latest-news-bg news-bg-1" style="background: url('/resources/uploads/lecture/${lectureDTO.lec_img}'); background-size: 100% 100%">
                     </div></a>
                     <div class="news-text-box">
-                        <h3><a href="#">${lectureDTO.lec_title}</a></h3>
+
+                        <h3><a href="/lecture/view?lec_idx=${lectureDTO.lec_idx}">
+                            <c:choose>
+                                <c:when test="${lectureDTO.lec_status eq 'N'}">
+                                    <span style="text-decoration:line-through; color:red">${lectureDTO.lec_title} </span>
+                                </c:when>
+                                <c:otherwise>
+                                    <span>${lectureDTO.lec_title}</span>
+                                </c:otherwise>
+                            </c:choose>
+                            <c:if test="">
+                            </c:if>
+                        </a></h3>
                         <p class="blog-meta border-bottom pb-1">
                             <span class="author"><i class="fas fa-book-open"></i> ${lectureDTO.lec_subject}</span>
-                            <span class="cart"><i class="fas fa-shopping-cart"></i>장바구니</span>
-                            <span class="cart"><i class="fas fa-heart"></i>찜하기</span>
+                            <span class="cart" onclick="addcart(${lectureDTO.lec_idx})">
+                                <i class="fas fa-shopping-cart" id="cart${lectureDTO.lec_idx}" <c:if test="${fn:contains(cartlist, lectureDTO.lec_idx)}"> style="color: blue" </c:if>> </i>장바구니
+                            </span>
+                            <span class="zzim" onclick="addzzim(${lectureDTO.lec_idx})">
+                                <i class="fas fa-heart" id="zzim${lectureDTO.lec_idx}" <c:if test="${fn:contains(zzimlist, lectureDTO.lec_idx)}"> style="color:red" </c:if>></i>찜하기
+                            </span>
                         </p>
 
                     </div>
                 </div>
             </div>
-        </c:if>
+
         </c:forEach>
     </div>
     <div class="row">
@@ -133,20 +150,20 @@
                         <!--a class="page-link" data-num="1" href="page=1">Previous</a-->
                         <a class="page-link"
                            data-num="<c:choose><c:when test="${responseDTO.prev_page_flag}">${responseDTO.page_block_start-1}</c:when><c:otherwise>1</c:otherwise></c:choose>"
-                           href="<c:choose><c:when test="${responseDTO.prev_page_flag}">${responseDTO.linkParams}&page=${responseDTO.page_block_start-10}</c:when><c:otherwise>#</c:otherwise></c:choose>">Prev</a>
+                           href="<c:choose><c:when test="${responseDTO.prev_page_flag}">${responseDTO.linked_params}&page=${responseDTO.page_block_start-10}</c:when><c:otherwise>#</c:otherwise></c:choose>">Prev</a>
                     </li>
                     <c:forEach begin="${responseDTO.page_block_start}"
                                end="${responseDTO.page_block_end}"
                                var="page_num">
                         <li class="page-item<c:if test="${responseDTO.page == page_num}"> active</c:if>">
                             <a class="page-link" data-num="${page_num}"
-                               href="<c:choose><c:when test="${responseDTO.page == page_num}">#</c:when><c:otherwise>${responseDTO.linkParams}&page=${page_num}</c:otherwise></c:choose>">${page_num}</a>
+                               href="<c:choose><c:when test="${responseDTO.page == page_num}">#</c:when><c:otherwise>${responseDTO.linked_params}&page=${page_num}</c:otherwise></c:choose>">${page_num}</a>
                         </li>
                     </c:forEach>
                     <li class="page-item<c:if test="${responseDTO.next_page_flag ne true}"> disabled</c:if>">
                         <a class="page-link"
                            data-num="<c:choose><c:when test="${responseDTO.next_page_flag}">${responseDTO.page_block_end+1}</c:when><c:otherwise>${responseDTO.page_block_end}</c:otherwise></c:choose>"
-                           href="<c:choose><c:when test="${responseDTO.next_page_flag}">${responseDTO.linkParams}&page=${responseDTO.page_block_end+1}</c:when><c:otherwise>#</c:otherwise></c:choose>">Next</a>
+                           href="<c:choose><c:when test="${responseDTO.next_page_flag}">${responseDTO.linked_params}&page=${responseDTO.page_block_end+1}</c:when><c:otherwise>#</c:otherwise></c:choose>">Next</a>
                     </li>
                 </ul>
             </div>
@@ -186,6 +203,57 @@
 <script src="/resources/assets/js/sticker.js"></script>
 <!-- main js -->
 <script src="/resources/assets/js/main.js"></script>
+
+<script>
+    function addcart(lecIdx){
+        if(lecIdx != 0) {
+            $.ajax({
+                type: "POST",            // HTTP method type(GET, POST) 형식이다.
+                url: "/mypage/addcart",      // 컨트롤러에서 대기중인 URL 주소이다.
+                data: {
+                    lec_idx: lecIdx,
+                    member_id: "${member_id}"
+                },            // Json 형식의 데이터이다.
+                success: function (result) { // 비동기통신의 성공일경우 success콜백으로 들어옵니다. 'res'는 응답받은 데이터이다.
+                    if(result == 0){
+                        if(confirm("장바구니에 상품이 존재합니다.\n장바구니로 이동하시겠습니까?")){
+                            window.location.href="/mypage/cart"
+                        }
+                    }else {
+                        if (confirm("장바구니에 추가되었습니다.\n장바구니로 이동하시겠습니까?")) {
+                            window.location.href = "/mypage/cart"
+                        }
+                    }
+                },
+                error: function (error) { // 비동기 통신이 실패할경우 error 콜백으로 들어옵니다.
+                    console.log(error);
+                }
+            });
+        }
+    }
+    function addzzim(lecIdx){
+        if(lecIdx != 0) {
+            $.ajax({
+                type: "POST",            // HTTP method type(GET, POST) 형식이다.
+                url: "/mypage/addzzim",      // 컨트롤러에서 대기중인 URL 주소이다.
+                data: {
+                    lec_idx: lecIdx
+                },            // Json 형식의 데이터이다.
+                success: function (result) { // 비동기통신의 성공일경우 success콜백으로 들어옵니다. 'res'는 응답받은 데이터이다.
+                    let color =  document.getElementById("zzim"+lecIdx).style.color;
+                    if(color == "red"){
+                        document.getElementById("zzim"+lecIdx).style.color="";
+                    }else{
+                        document.getElementById("zzim"+lecIdx).style.color="red";
+                    }
+                },
+                error: function (error) { // 비동기 통신이 실패할경우 error 콜백으로 들어옵니다.
+                    console.log(error);
+                }
+            });
+        }
+    }
+</script>
 
 </body>
 </html>

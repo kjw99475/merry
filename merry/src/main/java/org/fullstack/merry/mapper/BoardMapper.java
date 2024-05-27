@@ -9,7 +9,9 @@ import java.util.List;
 @Mapper
 public interface BoardMapper {
     List<BoardVO> ListByPage(PageRequestDTO requestDTO);
+    List<BoardVO> ListByPage2(PageRequestDTO requestDTO);
     int TotalCount(PageRequestDTO requestDTO);
+    int TotalCount2(PageRequestDTO requestDTO);
     BoardVO view(int board_idx);
     int regist(BoardVO board);
     int modify(BoardVO board);

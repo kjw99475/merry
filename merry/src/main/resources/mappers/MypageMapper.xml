@@ -25,4 +25,12 @@
         WHERE member_id = #{member_id}
           AND lec_idx = #{lecIdx}
     </delete>
+
+<!--    <select id="noticeListByPage" resultType="org.fullstack4.bookstore.domain.NoticeVO">-->
+<!--        SELECT idx, title, writer, reg_date, content, org_file_name, save_file_name, fix_state-->
+<!--        FROM tbl_bbs_notice-->
+<!--        <include refid="whereCondition"></include>-->
+<!--        ORDER BY fix_state ASC, idx DESC-->
+<!--        LIMIT #{page_skip_count}, #{page_size}-->
+<!--    </select>-->
 </mapper>

@@ -28,13 +28,27 @@
     <script src="/resources/assets/js/sticker.js"></script>
     <script src="/resources/assets/js/main.js"></script>
     <script src='https://cdn.jsdelivr.net/npm/fullcalendar@6.1.13/index.global.min.js'></script>
+
+    <style>
+        :root {
+            --fc-button-text-color: #fff;
+            --fc-button-bg-color: #dda745;
+            --fc-button-border-color: #2C3E50;
+            --fc-button-hover-bg-color: #a86f0b;
+            --fc-button-hover-border-color: #1a252f;
+            --fc-button-active-bg-color: #a86f0b;
+            --fc-button-active-border-color: #151e27;
+
+            --fc-event-border-color: #000000;
+        }
+    </style>
 </head>
 <body>
 
-<h1>학습 계획표</h1>
+<jsp:include page="/WEB-INF/views/common/header.jsp" />
 
 <!-- 달력 -->
-<div id="calendar" style="width: 800px; margin: 0 auto;"></div>
+<div id="calendar" class="pt-100 w-75 mx-auto my-3"></div>
 
 <!-- 일정 등록 모달 -->
 <div class="modal fade" id="calendarModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -145,6 +159,8 @@
     </div>
 </div>
 
+<jsp:include page="/WEB-INF/views/common/footer.jsp" />
+
 <script>
     // 상세 정보
     let viewId = document.getElementById("view_id");
@@ -175,9 +191,9 @@
             var calendar = new FullCalendar.Calendar(calendarEl, {
                 initialView: 'dayGridMonth',
                 headerToolbar: {
-                    left: 'prev next today addEventButton',
+                    left: 'prev next today',
                     center: 'title',
-                    right: 'dayGridMonth,dayGridWeek'
+                    right: 'addEventButton dayGridMonth,dayGridWeek'
                 },
                 selectable: true,
                 editable: true,
@@ -203,75 +219,9 @@
                             divBackgroundColor.value = data.backgroundColor;
                         }
                     });
-
-                    // // 일정 상세 -> 수정 버튼 눌렀을 때
-                    // $("#getModifyCalendar").on("click", function() {
-                    //     $("#calendarViewModal").modal("hide");
-                    //     $("#calendarModifyModal").modal("show");
-                    //
-                    //     let mTitle = document.getElementById("mTitle");
-                    //     let mWriter = document.getElementById("mWriter");
-                    //     let mStart = document.getElementById("mStart");
-                    //     let mEnd = document.getElementById("mEnd");
-                    //     let mTextColor = document.getElementById("mTextColor");
-                    //     let mBackgroundColor = document.getElementById("mBackgroundColor");
-                    //
-                    //     // 일정 수정 -> 선택한 일정 정보 가져오기
-                    //     $.ajax({
-                    //         url: "/myedu/plan/view",
-                    //         type: "GET",
-                    //         data: {id: id},
-                    //         success: function(data) {
-                    //             mTitle.value = data.title;
-                    //             mWriter.value = data.writer;
-                    //             mStart.value = data.start;
-                    //             mEnd.value = data.end;
-                    //             mTextColor.value = data.textColor;
-                    //             mBackgroundColor.value = data.backgroundColor;
-                    //         }
-                    //     });
-                    //
-                    //     // 일정 수정 post
-                    //     $("#modifyCalendar").on("click", function() {
-                    //         let mObj = readyToPost(mTitle.value, mWriter.value, mStart.value, mEnd.value, mTextColor.value, mBackgroundColor.value);
-                    //         mObj.id = id;
-                    //
-                    //         $.ajax({
-                    //             type: "POST",
-                    //             url: "/myedu/plan/modify",
-                    //             data: JSON.stringify(mObj),
-                    //             contentType: "application/json; charset=UTF-8",
-                    //             success: function(data) {
-                    //                 if(data != "fail") {
-                    //                     window.location.reload(data);
-                    //                 } else {
-                    //                     alert("일정 수정 실패\n다시 수정해주세요.");
-                    //                 }
-                    //             }
-                    //         });
-                    //     });
-                    // });
-
-                    // // 일정 삭제 버튼 클릭했을 때
-                    // $("#deleteCalendar").on("click", function() {
-                    //     let confirmFlag = confirm("일정을 삭제하시겠습니까?");
-                    //
-                    //     if(confirmFlag) {
-                    //         $.ajax({
-                    //             url: "/myedu/plan/delete",
-                    //             type: "POST",
-                    //             data: {id: id},
-                    //             success: function(data) {
-                    //                 console.log(data);
-                    //             }
-                    //         });
-                    //     } else {
-                    //         window.location.reload("/myedu")
-                    //     }
-                    // });
                 },
                 dateClick: function(arg) {
-                    console.log(arg);
+                    $("#calendarModal").modal("show");
                 },
                 customButtons: {
                     addEventButton: {

@@ -57,8 +57,8 @@ public class PageRequestDTO {
     private String search_word;
     private String search_data1;
     private String search_data2;
-    private LocalDate search_date1;
-    private LocalDate search_date2;
+    private String search_date1;
+    private String search_date2;
     private String category_code;
     private String class_code;
     private String subject_code;
@@ -68,6 +68,11 @@ public class PageRequestDTO {
     private String type2;
     private String member_id;
     private String page_flag;
+
+    private String grade_student;
+    private String grade_teacher;
+    private String lec_status;
+    private int member_idx;
 
     public int getPage_skip_count() {
         return  (this.page-1)*this.page_size;

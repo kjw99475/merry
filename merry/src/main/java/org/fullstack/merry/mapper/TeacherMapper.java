@@ -4,6 +4,7 @@ import org.fullstack.merry.domain.*;
 import org.fullstack.merry.domain.lecture.LectureVO;
 import org.fullstack.merry.dto.MemberDTO;
 import org.fullstack.merry.dto.NoticeDTO;
+import org.fullstack.merry.dto.PageRequestDTO;
 import org.fullstack.merry.dto.QnaDTO;
 
 import java.util.List;
@@ -16,4 +17,8 @@ public interface TeacherMapper {
     List<QnaVO> qnaList(String teacher_idx);
     List<Integer> cartList(String member_id);
     List<Integer> zzimList(String member_id);
+
+    int teacherGradeRegist(GradeVO gradeVO);
+    List<GradeVO> gradeList(PageRequestDTO pageRequestDTO);
+    int totalGrade(PageRequestDTO pageRequestDTO);
 }

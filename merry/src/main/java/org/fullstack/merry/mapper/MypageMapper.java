@@ -2,6 +2,7 @@ package org.fullstack.merry.mapper;
 
 import org.apache.ibatis.annotations.Param;
 import org.fullstack.merry.domain.ZzimVO;
+import org.fullstack.merry.dto.PageRequestDTO;
 
 import java.util.List;
 
@@ -10,6 +11,8 @@ public interface MypageMapper {
     void addzzim(@Param("member_id") String member_id, @Param("lecIdx") int lecIdx);
     void deleteCart(@Param("member_id") String member_id, @Param("lecIdx") int lecIdx);
     void deletezzim(@Param("member_id") String member_id, @Param("lecIdx") int lecIdx);
+
+    /* 작성게시글 */
 
 
     /* 찜 */

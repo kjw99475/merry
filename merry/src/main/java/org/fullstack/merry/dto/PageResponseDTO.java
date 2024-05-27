@@ -31,8 +31,8 @@ public class PageResponseDTO<E> {
     private String search_word;
     private String search_data1;
     private String search_data2;
-    private LocalDate search_date1;
-    private LocalDate search_date2;
+    private String search_date1;
+    private String search_date2;
     private String linked_params;
     private String class_code;
     private String subject_code;
@@ -42,6 +42,12 @@ public class PageResponseDTO<E> {
     private String type2;
     private String member_id;
     private String page_flag;
+
+    private String grade_student;
+    private String grade_teacher;
+    private String lec_status;
+    private int member_idx;
+
     PageResponseDTO() {}
 
     @Builder(builderMethodName = "withAll")
@@ -75,6 +81,11 @@ public class PageResponseDTO<E> {
         this.status = requestDTO.getStatus();
         this.sort = requestDTO.getSort();
         this.page_flag = requestDTO.getPage_flag();
+        this.grade_student = requestDTO.getGrade_student();
+        this.grade_teacher = requestDTO.getGrade_teacher();
+        this.lec_status = requestDTO.getLec_status();
+        this.member_idx = requestDTO.getMember_idx();
+
         StringBuilder sb = new StringBuilder("?page_size=" + this.page_size);
         if(search_type != null) sb.append("&search_type=" + search_type_st );
         if(search_word != null) sb.append("&search_word=" + search_word);
