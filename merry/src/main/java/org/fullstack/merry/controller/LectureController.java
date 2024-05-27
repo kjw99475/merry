@@ -9,6 +9,7 @@ import org.fullstack.merry.dto.*;
 import org.fullstack.merry.dto.lecture.ChapterDTO;
 import org.fullstack.merry.dto.lecture.LectureDTO;
 import org.fullstack.merry.dto.lecture.LectureReviewDTO;
+import org.fullstack.merry.service.TeacherServiceIf;
 import org.fullstack.merry.service.lecture.ChapterServiceIf;
 import org.fullstack.merry.service.lecture.LectureServiceIf;
 import org.springframework.stereotype.Controller;
@@ -32,6 +33,7 @@ import java.util.List;
 public class LectureController {
     private final LectureServiceIf lectureService;
     private final ChapterServiceIf chapterService;
+    private final TeacherServiceIf teacherService;
 
     @GetMapping("/regist")
     public void regist(HttpSession session, Model model) {
@@ -95,14 +97,21 @@ public class LectureController {
     }
 
     @GetMapping("/view")
-    public void view(@RequestParam(name="lec_idx", defaultValue = "0") int lec_idx, Model model) {
+    public void view(@RequestParam(name="lec_idx", defaultValue = "0") int lec_idx,
+                     HttpSession session,
+                     Model model) {
         LectureDTO lectureDTO = lectureService.view(lec_idx);
         List<ChapterVO> chapterDTOList = chapterService.chapterList(lec_idx);
         List<QnaDTO> qnaList = lectureService.qnaList(lec_idx);
         List<DataDTO> dataList = lectureService.dataList(lec_idx);
         List<NoticeDTO> noticeList = lectureService.noticeList(lec_idx);
         List<LectureReviewDTO> reviewList = lectureService.reviewList(lec_idx);
+        String member_id = (String)session.getAttribute("member_id");
+        List<Integer> cartlist = teacherService.cartList(member_id);
+        List<Integer> zzimlist = teacherService.zzimList(member_id);
 
+        model.addAttribute("zzimlist", zzimlist);
+        model.addAttribute("cartlist", cartlist);
         model.addAttribute("dataList", dataList);
         model.addAttribute("qnaList", qnaList);
         model.addAttribute("noticeList", noticeList);
@@ -112,11 +121,21 @@ public class LectureController {
     }
 
     @GetMapping("/list")
-    public void list(@Valid PageRequestDTO pageRequestDTO, BindingResult bindingResult, RedirectAttributes redirectAttributes,  Model model) {
+    public void list(@Valid PageRequestDTO pageRequestDTO, BindingResult bindingResult, RedirectAttributes redirectAttributes,
+                     HttpSession session, Model model) {
         if (bindingResult.hasErrors()) {
             log.info("LectureController >> list Error");
             redirectAttributes.addFlashAttribute("errors", bindingResult.getAllErrors());
         }
+        pageRequestDTO.setPage_size(12);
+        pageRequestDTO.setLec_status("Y");
+
+        String member_id = (String)session.getAttribute("member_id");
+        List<Integer> cartlist = teacherService.cartList(member_id);
+        List<Integer> zzimlist = teacherService.zzimList(member_id);
+
+        model.addAttribute("zzimlist", zzimlist);
+        model.addAttribute("cartlist", cartlist);
 
         PageResponseDTO<LectureDTO> responseDTO = lectureService.lectureList(pageRequestDTO);
         model.addAttribute("responseDTO", responseDTO);
@@ -642,11 +661,11 @@ public class LectureController {
         return "redirect:/lecture/view?lec_idx=" + lectureReviewDTO.getLec_idx();
     }
 
-  @PostMapping("/review/delete")
-    public String reviewDelete(@RequestParam("review_idx") int review_idx,
-                               @RequestParam("lec_idx") int lec_idx) {
+    @RequestMapping(value = "/review/delete", method = RequestMethod.POST, produces = "application/text;charset=UTF-8")
+    @ResponseBody
+    public String reviewDelete(@RequestParam("review_idx") int review_idx) {
         lectureService.deleteReview(review_idx);
-      return "redirect:/lecture/view?lec_idx=" + lec_idx;
+      return "ok";
   }
 
 }

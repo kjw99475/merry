@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.fullstack.merry.mapper.GradeMapper">
+
+    <sql id="whereCondition">
+        <trim>
+            <if test="search_type != null">
+                <foreach collection="search_type" item="type" >
+                    <trim prefix="AND">
+                        <choose>
+                            <when test="type == 't'.toString()">
+                                grade_title like concat('%', #{search_word},'%')
+                            </when>
+                        </choose>
+                    </trim>
+                </foreach>
+            </if>
+        </trim>
+    </sql>
+
+    <select id="gradeList">
+        SELECT * FROM grade
+        WHERE grade_student = #{grade_student}
+        <include refid="whereCondition"></include>
+        ORDER BY grade_idx DESC
+        LIMIT #{page_skip_count}, #{page_size}
+    </select>
+
+    <select id="totalGrade">
+        SELECT COUNT(*) FROM grade
+        WHERE grade_student = #{grade_student}
+        <include refid="whereCondition"></include>
+    </select>
+</mapper>

@@ -1,5 +1,6 @@
 package org.fullstack.merry.service;
 
+import org.fullstack.merry.domain.GradeVO;
 import org.fullstack.merry.dto.*;
 import org.fullstack.merry.dto.lecture.LectureDTO;
 
@@ -13,4 +14,7 @@ public interface TeacherServiceIf {
     List<QnaDTO> qnaList(String teacher_idx);
     List<Integer> cartList(String member_id);
     List<Integer> zzimList(String member_id);
+
+    int teacherGradeRegist(GradeDTO gradeDTO);
+    PageResponseDTO<GradeDTO> gradeList(PageRequestDTO pageRequestDTO);
 }

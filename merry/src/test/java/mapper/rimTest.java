@@ -88,8 +88,7 @@ public class rimTest {
         ChapterDTO chapterDTO = ChapterDTO.builder()
                 .chap_title("목차 테스트 제목")
                 .chap_video("목차테스트.mp4")
-                .chap_min("40")
-                .chap_second("00")
+                .chap_time("10분 이내")
                 .lec_idx(1)
                 .build();
 
@@ -110,8 +109,7 @@ public class rimTest {
                 .chap_idx(chapter_idx)
                 .chap_title("목차 제목 수정")
                 .chap_video("목차동영상수정.mp4")
-                .chap_min("50")
-                .chap_second("30")
+                .chap_time("10분 이내")
                 .build();
 
         chapterMapper.modify(chapterDTO);

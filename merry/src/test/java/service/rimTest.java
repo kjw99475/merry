@@ -1,6 +1,9 @@
 package service;
 
 import lombok.extern.log4j.Log4j2;
+import org.fullstack.merry.domain.lecture.LectureVO;
+import org.fullstack.merry.dto.PageRequestDTO;
+import org.fullstack.merry.dto.PageResponseDTO;
 import org.fullstack.merry.dto.lecture.ChapterDTO;
 import org.fullstack.merry.dto.lecture.LectureDTO;
 import org.fullstack.merry.service.lecture.ChapterServiceIf;
@@ -11,6 +14,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 @Log4j2
 @ExtendWith(SpringExtension.class)
 @ContextConfiguration(locations = "file:src/main/webapp/WEB-INF/root-context.xml")
@@ -19,6 +25,19 @@ public class rimTest {
     private LectureServiceIf lectureService;
     @Autowired(required = false)
     private ChapterServiceIf chapterService;
+
+    @Test
+    public void testLectyreList() {
+        PageRequestDTO requestDTO = PageRequestDTO.builder()
+                .page(1)
+                .page_size(10)
+                .build();
+
+        PageResponseDTO<LectureDTO> responseDTO = lectureService.lectureList(requestDTO);
+        responseDTO.getDtoList().forEach(
+                vo->log.info(vo)
+        );
+    }
 
     @Test
     public void testLectureRegist() {

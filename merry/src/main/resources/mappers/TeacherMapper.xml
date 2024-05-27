@@ -41,4 +41,21 @@
         FROM zzim
         WHERE member_id = #{member_id}
     </select>
+
+    <insert id="teacherGradeRegist">
+        INSERT INTO grade(grade_title, grade_student, grade_teacher, grade_score)
+        VALUES (#{grade_title}, #{grade_student}, #{grade_teacher}, #{grade_score})
+    </insert>
+
+    <select id="gradeList">
+        SELECT * FROM grade
+        WHERE grade_teacher = #{grade_teacher}
+        ORDER BY grade_idx DESC
+        LIMIT #{page_skip_count}, #{page_size}
+    </select>
+
+    <select id="totalGrade">
+        SELECT COUNT(*) FROM grade
+        WHERE grade_teacher = #{grade_teacher}
+    </select>
 </mapper>
