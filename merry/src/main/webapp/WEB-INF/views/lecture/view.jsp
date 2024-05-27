@@ -140,7 +140,16 @@
                                     <c:when test="${not empty ChapterList}">
                                         <ul>
                                         <c:forEach items="${ChapterList}" var="chapDTO">
-                                            <li><a onclick="javascript:Dalack_lab('/resources/uploads/lecture/${chapDTO.chap_video}')"> ${chapDTO.chap_title} (${chapDTO.chap_time})</a></li>
+                                            <c:choose>
+                                                <c:when test="${orderCnt >= 1 or sessionScope.member_idx eq lectureDTO.member_idx}">
+                                                    <span><strong>목차를 클릭하여 강의를 수강하세요!</strong></span>
+                                                    <li><a class="btn" onclick="javascript:Dalack_lab('/resources/uploads/lecture/${chapDTO.chap_video}')"> ${chapDTO.chap_title} (${chapDTO.chap_time})</a></li>
+                                                </c:when>
+                                                <c:otherwise>
+                                                    <li> ${chapDTO.chap_title} (${chapDTO.chap_time})</li>
+                                                </c:otherwise>
+                                            </c:choose>
+
                                         </c:forEach>
                                         </ul>
                                     </c:when>
@@ -336,7 +345,7 @@
                         <br>
                         <h4>강의 리뷰</h4>
                         <br>
-                        <c:if test="${not empty sessionScope.member_idx}">
+                        <c:if test="${not empty sessionScope.member_idx and orderCnt >= 1 and reviewCnt < 1}">
                             <%--                            구매조건 추가--%>
                             <form action="/lecture/review/regist" method="post">
                                 <input type="hidden" name="member_id" value="${sessionScope.member_id}" />
@@ -498,9 +507,9 @@
     }
 
     function Dalack_lab(data) {
-        let winW=500;
+        let winW=1000;
         let winH=650;
-        let vodW=400;
+        let vodW=1000;
         let vodH=600;
         let size="width="+winW+",height="+winH;
         let popup=window.open("","name",size);

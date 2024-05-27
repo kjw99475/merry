@@ -50,4 +50,10 @@ public interface LectureServiceIf {
     int modifyReview(LectureReviewDTO lectureReviewDTO);
     int deleteReview(int review_idx);
     List<LectureReviewDTO> reviewList(int lec_idx);
+
+    //결제내역 조회
+    int viewOrder(OrderDTO orderDTO);
+
+    //리뷰 작성여부 조회
+    int countReview(OrderDTO orderDTO);
 }

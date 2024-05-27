@@ -48,9 +48,7 @@
 </div>
 <div>
     <div class="container">
-        <div class="row" style="display: grid;
-    grid-template-columns: 280px 1fr;
-    height: 100vh;">
+        <div class="row" style="display: grid; grid-template-columns: 280px 1fr;">
             <jsp:include page="/WEB-INF/views/common/mypage_sidebar.jsp">
                 <jsp:param name="menuGubun" value="cart"/>
             </jsp:include>

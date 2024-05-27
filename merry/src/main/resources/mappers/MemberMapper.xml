@@ -31,4 +31,35 @@
     <!--        DELETE FROM tbl_member-->
     <!--        WHERE user_id = #{user_id}-->
     <!--    </delete>-->
+
+    <sql id="whereCondition">
+        <where>
+            member_type = #{member_type}
+            <if test="search_word != null">
+                <trim prefix="AND">
+                    (member_id like concat('%', trim(#{search_word}),'%') or name like concat('%', trim(#{search_word}),'%'))
+                </trim>
+            </if>
+        </where>
+    </sql>
+
+    <select id="memberList" resultType="org.fullstack.merry.domain.MemberVO">
+        select *
+        from member
+        <include refid="whereCondition"/>
+        order by member_idx desc
+        limit #{page_skip_count}, #{page_size}
+    </select>
+
+    <select id="totalMember">
+        select count(*)
+        from member
+        <include refid="whereCondition"/>
+    </select>
+
+    <update id="registTeacher">
+        update member
+        set member_type='T'
+        where member_idx=#{member_idx}
+    </update>
 </mapper>

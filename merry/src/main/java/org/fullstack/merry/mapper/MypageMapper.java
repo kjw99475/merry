@@ -16,6 +16,7 @@ public interface MypageMapper {
     void deletezzim(@Param("member_id") String member_id, @Param("lecIdx") int lecIdx);
 
     /* 1:1 문의 */
+    int qnaTotalCount (int member_idx);
     List<QnaVO> qnaList(int member_idx);
     QnaVO viewQna(int qna_idx);
     int registQna(QnaVO qnaVO);

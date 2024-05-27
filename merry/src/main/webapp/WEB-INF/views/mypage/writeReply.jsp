@@ -49,20 +49,18 @@
 </div>
 <div>
     <div class="container">
-        <div class="row" style="display: grid;
-    grid-template-columns: 280px 1fr;
-    height: 100vh;">
+        <div class="row" style="display: grid;grid-template-columns: 280px 1fr;">
             <jsp:include page="/WEB-INF/views/common/mypage_sidebar.jsp">
                 <jsp:param name="menuGubun" value="writeReply"/>
             </jsp:include>
             <div class="checkout-section mt-80 mb-150">
                 <div style="margin: 0 auto;">
-                    <form id="frmSearch" name="frmSearch" method="get" action="/mypage/payment">
+                    <form id="frmSearch" name="frmSearch" method="get" action="/mypage/writeReply">
                         <div class="row mx-5 justify-content-center">
                             <div class="col-auto d-flex justify-content-center">
-                                <input type="date" class="form-control col-4 mr-3" name="search_start_date" value="${responseDTO.search_word}">
+                                <input type="date" class="form-control col-4 mr-3" name="search_date1" value="${responseDTO.search_date1}">
                                 ~
-                                <input type="date" class="form-control col-4 ml-3" name="search_end_date" value="${responseDTO.search_word}">
+                                <input type="date" class="form-control col-4 ml-3" name="search_date2" value="${responseDTO.search_date2}">
                                 <div>
                                     <button class="btn orange-btn bordered-btn ml-1" type="submit">검색</button>
                                 </div>
@@ -73,7 +71,7 @@
                 <div class="container">
                     <div style="margin: 0 auto;">
                         <div class="col-auto">
-                            <form class="cart-table-wrap" action="/mypage/payment">
+                            <form class="cart-table-wrap" action="/mypage/writeReply">
                                 <table class="cart-table">
                                     <thead class="cart-table-head">
                                     <tr class="table-head-row">
@@ -83,11 +81,22 @@
                                     </tr>
                                     </thead>
                                     <tbody>
-                                    <tr class="table-body-row">
-                                        <td class="p-2">1</td>
-                                        <td class="p-2"><a href="/board/view?board_idx=1">저랑 똑같은 현상이네요..!</a></td>
-                                        <td class="p-2">2024-03-04</td>
-                                    </tr>
+                                    <c:choose>
+                                        <c:when test="${!empty responseDTO && responseDTO.total_count > 0}">
+                                            <c:forEach items="${responseDTO.dtoList}" var="list" varStatus="loop">
+                                                <tr class="table-body-row text-center">
+                                                    <td class="p-2">${responseDTO.total_count - responseDTO.page_skip_count - loop.index}</td>
+                                                    <td class="p-2"><a href="/board/view?board_idx=${list.board_idx}">${list.reply_comment}</a></td>
+                                                    <td class="p-2">${list.reply_reg_date}</td>
+                                                </tr>
+                                            </c:forEach>
+                                        </c:when>
+                                        <c:otherwise>
+                                            <tr class="table-body-row text-center">
+                                                <td class="p-2" colspan="3">작성한 댓글이 없습니다.</td>
+                                            </tr>
+                                        </c:otherwise>
+                                    </c:choose>
                                     </tbody>
                                 </table>
                             </form>

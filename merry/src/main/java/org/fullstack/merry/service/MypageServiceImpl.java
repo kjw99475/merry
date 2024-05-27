@@ -2,13 +2,12 @@ package org.fullstack.merry.service;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
+import org.fullstack.merry.domain.BoardReplyVO;
 import org.fullstack.merry.domain.BoardVO;
 import org.fullstack.merry.domain.QnaVO;
-import org.fullstack.merry.dto.BoardDTO;
-import org.fullstack.merry.dto.PageRequestDTO;
-import org.fullstack.merry.dto.PageResponseDTO;
-import org.fullstack.merry.dto.QnaDTO;
+import org.fullstack.merry.dto.*;
 import org.fullstack.merry.mapper.BoardMapper;
+import org.fullstack.merry.mapper.BoardReplyMapper;
 import org.fullstack.merry.mapper.MypageMapper;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
@@ -21,6 +20,7 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 public class MypageServiceImpl implements MypageServiceIf{
     private final BoardMapper boardMapper;
+    private final BoardReplyMapper boardReplyMapper;
     private final MypageMapper mypageMapper;
     private final ModelMapper modelMapper;
 
@@ -69,6 +69,35 @@ public class MypageServiceImpl implements MypageServiceIf{
     }
 
     @Override
+    public int writeReplyTotalCount(PageRequestDTO pageRequestDTO) {
+        int total_count = boardReplyMapper.TotalCount(pageRequestDTO);
+        return total_count;
+    }
+
+    @Override
+    public PageResponseDTO<BoardReplyDTO> writeReplyListByPage(PageRequestDTO pageRequestDTO) {
+        List<BoardReplyVO> voList = boardReplyMapper.ListByPage2(pageRequestDTO);
+        List<BoardReplyDTO> dtoList = voList.stream()
+                .map(vo->modelMapper.map(vo,BoardReplyDTO.class))
+                .collect(Collectors.toList());
+        int total_count = boardReplyMapper.TotalCount(pageRequestDTO);
+
+        PageResponseDTO<BoardReplyDTO> responseDTO = PageResponseDTO.<BoardReplyDTO>withAll()
+                .requestDTO(pageRequestDTO)
+                .dtoList(dtoList)
+                .total_count(total_count)
+                .build();
+
+        return responseDTO;
+    }
+
+    @Override
+    public int qnaTotalCount(int member_idx) {
+        int total_count = mypageMapper.qnaTotalCount(member_idx);
+        return total_count;
+    }
+
+    @Override
     public List<QnaDTO> qnaList(int member_idx) {
         List<QnaDTO> qnaDTOList = mypageMapper.qnaList(member_idx).stream()
                 .map(vo->modelMapper.map(vo, QnaDTO.class))
@@ -77,8 +106,10 @@ public class MypageServiceImpl implements MypageServiceIf{
     }
 
     @Override
-    public QnaDTO viewQna(int member_idx) {
-        return null;
+    public QnaDTO viewQna(int qna_idx) {
+        QnaVO qnaVO = mypageMapper.viewQna(qna_idx);
+        QnaDTO qnaDTO = modelMapper.map(qnaVO, QnaDTO.class);
+        return qnaDTO;
     }
 
     @Override

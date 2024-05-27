@@ -4,9 +4,14 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.fullstack.merry.domain.MemberVO;
 import org.fullstack.merry.dto.MemberDTO;
+import org.fullstack.merry.dto.PageRequestDTO;
+import org.fullstack.merry.dto.PageResponseDTO;
 import org.fullstack.merry.mapper.MemberMapper;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Log4j2
 @Service
@@ -38,6 +43,33 @@ public class MemberServiceImpl implements MemberServiceIf {
     @Override
     public int leave(String member_id) {
         int result = memberMapper.leave(member_id);
+        return result;
+    }
+
+    @Override
+    public PageResponseDTO<MemberDTO> memberList(PageRequestDTO pageRequestDTO) {
+
+        List<MemberVO> memberVOList = memberMapper.memberList(pageRequestDTO);
+        List<MemberDTO> memberDTOList = memberVOList.stream()
+                .map(vo->modelMapper.map(vo, MemberDTO.class))
+                .collect(Collectors.toList());
+
+        int totalMember = memberMapper.totalMember(pageRequestDTO);
+
+        PageResponseDTO<MemberDTO> responseDTO = PageResponseDTO.<MemberDTO>withAll()
+                .requestDTO(pageRequestDTO)
+                .dtoList(memberDTOList)
+                .total_count(totalMember)
+                .build();
+
+
+
+        return responseDTO;
+    }
+
+    @Override
+    public int registTeacher(int member_idx) {
+        int result = memberMapper.registTeacher(member_idx);
         return result;
     }
 
