@@ -21,7 +21,18 @@
             </if>
         </where>
     </sql>
-
+    <sql id="whereCondition2">
+        <where>
+            <trim prefix="and">
+                member_id = #{member_id}
+            </trim>
+            <if test="search_date1 != null and search_date2 != null and search_date1 != '' and search_date2 != ''">
+                <trim prefix="and">
+                    board_reg_date BETWEEN #{search_date1} AND #{search_date2}
+                </trim>
+            </if>
+        </where>
+    </sql>
 
     <select id="ListByPage" resultType="org.fullstack.merry.domain.BoardVO">
         SELECT board_idx, board_title, board_writer, board_content, board_reg_date, board_modify_date, member_idx
@@ -31,10 +42,24 @@
         LIMIT #{page_skip_count}, #{page_size}
     </select>
 
+    <select id="ListByPage2" resultType="org.fullstack.merry.domain.BoardVO">
+        SELECT board_idx, board_title, board_writer, board_content, board_reg_date, board_modify_date, member_id
+        FROM board AS b INNER JOIN member AS m ON b.member_idx = m.member_idx
+        <include refid="whereCondition2"></include>
+        ORDER BY board_idx DESC
+        LIMIT #{page_skip_count}, #{page_size}
+    </select>
+
     <select id="TotalCount">
         SELECT COUNT(*)
         FROM board
         <include refid="whereCondition"></include>
+    </select>
+
+    <select id="TotalCount2">
+        SELECT COUNT(*)
+        FROM board AS b INNER JOIN member AS m ON b.member_idx = m.member_idx
+        <include refid="whereCondition2"></include>
     </select>
 
     <select id="view" resultType="org.fullstack.merry.domain.BoardVO">
