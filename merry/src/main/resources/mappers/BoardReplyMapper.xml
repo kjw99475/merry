@@ -3,13 +3,40 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/schema/mybatis-3-mapper.dtd">
 <mapper namespace="org.fullstack.merry.mapper.BoardReplyMapper">
-
+    <sql id="whereCondition">
+        <where>
+            <trim prefix="and">
+                member_id = #{member_id}
+            </trim>
+            <if test="search_date1 != null and search_date2 != null and search_date1 != '' and search_date2 != ''">
+                <trim prefix="and">
+                    board_reg_date BETWEEN #{search_date1} AND #{search_date2}
+                </trim>
+            </if>
+        </where>
+    </sql>
     <select id="ListByPage" resultType="org.fullstack.merry.domain.BoardReplyVO">
         SELECT reply_idx, reply_comment, reply_writer, reply_reg_date, board_idx
         FROM board_reply
         WHERE board_idx = #{board_idx}
         ORDER BY board_idx DESC
     </select>
+
+    <select id="ListByPage2" resultType="org.fullstack.merry.domain.BoardReplyVO">
+        SELECT reply_idx, reply_comment, reply_writer, reply_reg_date, board_idx
+        FROM board_reply
+        <include refid="whereCondition"></include>
+        ORDER BY board_idx DESC
+        LIMIT #{page_skip_count}, #{page_size}
+    </select>
+
+    <select id="TotalCount">
+        SELECT COUNT(*)
+        FROM board_reply AS b INNER JOIN member AS m ON b.member_idx = m.member_idx
+        <include refid="whereCondition"></include>
+    </select>
+
+
 
     <insert id="reply_regist" parameterType="org.fullstack.merry.domain.BoardReplyVO" useGeneratedKeys="true" keyProperty="reply_idx" keyColumn="reply_idx">
         INSERT INTO board_reply (reply_comment, reply_writer, reply_reg_date, board_idx, member_idx)

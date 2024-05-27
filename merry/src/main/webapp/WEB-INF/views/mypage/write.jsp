@@ -49,9 +49,7 @@
 </div>
 <div>
     <div class="container">
-        <div class="row" style="display: grid;
-        grid-template-columns: 280px 1fr;
-        height: 100vh;">
+        <div class="row" style="display: grid;grid-template-columns: 280px 1fr;">
             <jsp:include page="/WEB-INF/views/common/mypage_sidebar.jsp">
                 <jsp:param name="menuGubun" value="writeBbs"/>
             </jsp:include>
@@ -93,7 +91,7 @@
                                         </c:forEach>
                                     </c:when>
                                     <c:otherwise>
-                                        <tr class="table-body-row">
+                                        <tr class="table-body-row text-center">
                                             <td class="p-2" colspan="3">작성한 게시글이 없습니다.</td>
                                         </tr>
                                     </c:otherwise>
