@@ -113,7 +113,7 @@
                     <a href="/lecture/view?lec_idx=${lectureDTO.lec_idx}"><div class="latest-news-bg news-bg-1" style="background: url('/resources/uploads/lecture/${lectureDTO.lec_img}'); background-size: 100% 100%">
                     </div></a>
                     <div class="news-text-box">
-                        <h3><a href="#">${lectureDTO.lec_title}</a></h3>
+                        <h3><a href="/lecture/view?lec_idx=${lectureDTO.lec_idx}">${lectureDTO.lec_title}</a></h3>
                         <p class="blog-meta border-bottom pb-1">
                             <span class="author"><i class="fas fa-book-open"></i> ${lectureDTO.lec_subject}</span>
                             <span class="cart" onclick="addcart(${lectureDTO.lec_idx})">
