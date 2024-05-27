@@ -8,7 +8,7 @@
             <div class="col-lg-12 col-sm-12 text-center">
                 <div class="main-menu-wrap">
                     <div class="site-logo">
-                        <a href="/">
+                        <a href="/main/main">
                             <img src="/resources/assets/img/merry_logo.png" style="height: 40px;" alt="">
                         </a>
                     </div>

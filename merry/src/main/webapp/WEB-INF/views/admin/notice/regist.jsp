@@ -85,6 +85,7 @@
                         <div class="contact-form">
                             <form id="frm_" name="frm_" method="post" action="/admin/notice/regist" enctype="multipart/form-data">
                                 <input type="hidden" name="member_idx" value="${sessionScope.member_idx}">
+                                <input type="hidden" name="notice_member_name" value="${sessionScope.name}">
 
 <%--                                <label for="notice_title">제목</label>--%>
                                 <input type="text" class="form-control" placeholder="제목을 입력해주세요" name="notice_title" id="notice_title">
