@@ -71,12 +71,21 @@
                         </div>
                         <div id="form_status"></div>
                         <div class="contact-form">
+                            <div class="card">
+                                <div class="card-body">
                             <form id="frm_" name="frm_" method="post" action="/board/delete">
                                     <input type="hidden" name="board_idx" value="${boardDTO.board_idx}">
 <%--                                <label for="board_title">제목</label>--%>
-                                <div><span class="font-weight-bold">제목 : </span>${boardDTO.board_title}</div>
-                                <div><span class="" >작성자 : </span>${boardDTO.board_writer}</div>
-                                <div><span class="" >작성일 : </span>${boardDTO.board_reg_date}</div>
+                                <div><span class="font-weight-bold">제목</span>
+                                    <input type="text" value="${boardDTO.board_title}" class="form-control col-12" readonly>
+
+                                </div>
+                                <div><span class="" >작성자</span>
+                                    <input type="text" value="${boardDTO.board_writer}" class="form-control col-12" readonly>
+                                </div>
+                                <div><span class="" >작성일</span>
+                                    <input type="text" value="${boardDTO.board_reg_date}" class="form-control col-12" readonly>
+                                </div>
 
                                 <div class="overflow-auto mt-4" style="max-height: 500px;">${boardDTO.board_content}</div>
 
@@ -103,13 +112,14 @@
                                     </div>
                                 </div>
                             </form>
+                            </div>
                         </div>
                     </div>
 
                 </div>
 
 
-                <div class="mt-5">
+                <div class="mt-5 col-12">
                     <h5>댓글 리스트</h5>
                     <hr>
 
