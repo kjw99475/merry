@@ -53,8 +53,6 @@ public class PageResponseDTO<E> {
 
     @Builder(builderMethodName = "withAll")
     public PageResponseDTO(PageRequestDTO requestDTO, List<E> dtoList, int total_count) {
-        log.info("-------------------");
-        log.info("PageResponseDTO Start");
         this.total_count = total_count; // 전체 게시글 수
         this.page = requestDTO.getPage(); // 현재 페이지 번호
         this.page_size = requestDTO.getPage_size(); // 한 페이지에 표시될 게시글 수
@@ -105,9 +103,6 @@ public class PageResponseDTO<E> {
 
 
         this.linked_params =  sb.toString();  // 쿼리스트링
-
-        log.info("PageResponseDTO End");
-        log.info("-------------------");
     }
 
     public int getTotal_page() {

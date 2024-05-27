@@ -30,6 +30,18 @@
 </head>
 <body>
 <jsp:include page="/WEB-INF/views/common/header.jsp" />
+<div class="breadcrumb-section breadcrumb-bg">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 offset-lg-2 text-center">
+                <div class="breadcrumb-text">
+                    <p>성적표</p>
+                    <h1>나의 성적</h1>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 
 <div class="pt-100">
     <div class="container">
@@ -37,7 +49,7 @@
             <!--================ 검색 start =================-->
             <div>
                 <form>
-                    <div class="row mx-5">
+                    <div class="row mx-5 justify-content-center">
                         <select name="search_type" class="form-control col-1" >
                             <option value="t">제목</option>
                         </select>
@@ -45,7 +57,7 @@
                         <div class="col-8">
                             <input type="text" class="form-control" placeholder="Search" name="search_word" style="width: 100%" value="${responseDTO.search_word}">
                         </div>
-                        <div class="col-3">
+                        <div>
                             <button type="submit" class="btn btn-merry" >검색</button>
                         </div>
                     </div>
