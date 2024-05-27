@@ -2,10 +2,7 @@ package org.fullstack.merry.controller;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
-import org.fullstack.merry.dto.BoardDTO;
-import org.fullstack.merry.dto.PageRequestDTO;
-import org.fullstack.merry.dto.PageResponseDTO;
-import org.fullstack.merry.dto.QnaDTO;
+import org.fullstack.merry.dto.*;
 import org.fullstack.merry.dto.lecture.LectureDTO;
 import org.fullstack.merry.service.BoardServiceIf;
 import org.fullstack.merry.service.MypageServiceIf;
@@ -77,8 +74,9 @@ public class MypageController {
         }
         pageRequestDTO.setMember_id((String)session.getAttribute("member_id"));
         pageRequestDTO.setPage_block_size(10);
-        PageResponseDTO<BoardDTO> responseDTO = mypageService.writeListByPage(pageRequestDTO);
+        PageResponseDTO<BoardReplyDTO> responseDTO = mypageService.writeReplyListByPage(pageRequestDTO);
         model.addAttribute("responseDTO", responseDTO);
+        log.info("responseDTO : " + responseDTO);
         log.info("=========================");
     }
 

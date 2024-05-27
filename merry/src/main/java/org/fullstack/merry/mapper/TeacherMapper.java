@@ -21,4 +21,9 @@ public interface TeacherMapper {
     int teacherGradeRegist(GradeVO gradeVO);
     List<GradeVO> gradeList(PageRequestDTO pageRequestDTO);
     int totalGrade(PageRequestDTO pageRequestDTO);
+
+    int teacherInfoRegist(TeacherVO teacherVO);
+    int teacherInfoModify(TeacherVO teacherVO);
+    int infoPresent(int member_idx);
+    TeacherVO viewInfo(int member_idx);
 }
