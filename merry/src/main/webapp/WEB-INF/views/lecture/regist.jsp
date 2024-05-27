@@ -83,29 +83,38 @@
     </div>
 </div>
 <div class="contact-form spad">
-    <div class="container">
+    <div class="container mb-5">
         <div class="row">
-            <form action="/lecture/regist" method="post" enctype="multipart/form-data">
+            <form action="/lecture/regist" method="post" enctype="multipart/form-data" class="col-12">
                     <input type="hidden" value="${sessionScope.name}" name="member_name">
                     <input type="hidden" value="${sessionScope.member_idx}" name="member_idx">
 
-                <div class="col-lg-12 col-md-12">
-                    <label>제목 : </label>
-                    <input type="text" name="lec_title" id="title" value="[${subject}]"><br>
+                <div class="mt-5 col-12">
+                    <label>제목</label>
+                    <input class="col-12" type="text" name="lec_title" id="title" value="[${subject}]"><br>
+                    <label>카테고리</label>
                 </div>
-                <label>카테고리</label>
 
-                <label>내용 </label>
-                <textarea name="lec_content" id="content"></textarea><br>
-                <div id="orgImg"></div>
-                <label>썸네일 : </label>
-                <input type="file" accept="image/png, image/jpeg" name="lecImg" onchange="readURL(this)"><br>
-                <label>가격 : </label>
-                <input type="text" name="lec_price"><br>
 
-                목차<br>
-                <div id="chap">
-                    <div>
+                <div class="col-12">
+                    <label>내용</label>
+                    <textarea name="lec_content" id="content"></textarea><br>
+                </div>
+
+                <div id="orgImg" class="col-12"></div>
+
+                <div class="col-12">
+                    <label>썸네일</label>
+                    <input type="file" class="col-12 form-control" accept="image/png, image/jpeg" name="lecImg" onchange="readURL(this)"><br>
+                </div>
+                <div class="col-12">
+                    <label>가격</label>
+                    <input type="text" class="col-12" name="lec_price" placeholder="숫자만 입력해주세요. ex)1000"><br>
+                </div>
+
+                <div id="chap" class="mt-5 col-12">
+                    <span style="font-size: large">목차</span>
+                    <div class="border-top">
                         <label>목차 제목 : </label>
                         <input type="text" name="chapters[0].chap_title"> <br>
                         <label>동영상 : </label>
@@ -120,14 +129,17 @@
                             <option value="60분 이내">60분 이내</option>
                             <option value="60분 이내">60분 이상</option>
                         </select>
+                        <hr>
                     </div>
                 </div>
 
-                <button type="button" onclick="createChap()">목차 추가</button>
-                <button type="button" onclick="deleteChap()">목차 삭제</button>
-
-                <button type="submit">등록하기</button>
-
+                <div class="row justify-content-between mt-4">
+                    <div>
+                        <button type="button" class="btn btn-success" onclick="createChap()">목차 추가</button>
+                        <button type="button" class="btn btn-danger" onclick="deleteChap()">목차 삭제</button>
+                    </div>
+                <button type="submit" class="btn btn-merry">등록하기</button>
+                </div>
             </form>
         </div>
     </div>
@@ -202,7 +214,8 @@
             +  "<option value='50분 이내'>50분 이내</option>"
             +  "<option value='60분 이내'>60분 이내</option>"
             +  "<option value='60분 이상'>60분 이상</option>"
-            + "</select>";
+            + "</select>"
+            + "<hr>";
 
         let chap = document.getElementById("chap");
         chap.append(chapMake);
