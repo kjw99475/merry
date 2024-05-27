@@ -127,6 +127,8 @@ public class LectureController {
             log.info("LectureController >> list Error");
             redirectAttributes.addFlashAttribute("errors", bindingResult.getAllErrors());
         }
+        pageRequestDTO.setPage_size(12);
+        pageRequestDTO.setLec_status("Y");
 
         String member_id = (String)session.getAttribute("member_id");
         List<Integer> cartlist = teacherService.cartList(member_id);

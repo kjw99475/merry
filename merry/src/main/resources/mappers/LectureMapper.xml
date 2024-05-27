@@ -7,6 +7,9 @@
     <sql id="whereCondition">
         <where>
             1=1
+            <if test="lec_status != null">
+                and lec_status=#{lec_status}
+            </if>
             <if test="search_type != null">
                 <foreach collection="search_type" item="type" >
                     <trim prefix="AND">
@@ -52,6 +55,8 @@
         select *
         from lecture
         <include refid="whereCondition"></include>
+        order by lec_idx desc
+        limit #{page_skip_count}, #{page_size}
 
     </select>
     <select id="totalLecture">

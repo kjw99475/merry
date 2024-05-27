@@ -107,13 +107,25 @@
 
     <div class="row">
         <c:forEach var="lectureDTO" items="${responseDTO.dtoList}">
-            <c:if test="${lectureDTO.lec_status eq 'Y'}">
+
             <div class="col-lg-3 col-md-6 ${lectureDTO.lec_subject}">
                 <div class="single-latest-news">
                     <a href="/lecture/view?lec_idx=${lectureDTO.lec_idx}"><div class="latest-news-bg news-bg-1" style="background: url('/resources/uploads/lecture/${lectureDTO.lec_img}'); background-size: 100% 100%">
                     </div></a>
                     <div class="news-text-box">
-                        <h3><a href="/lecture/view?lec_idx=${lectureDTO.lec_idx}">${lectureDTO.lec_title}</a></h3>
+
+                        <h3><a href="/lecture/view?lec_idx=${lectureDTO.lec_idx}">
+                            <c:choose>
+                                <c:when test="${lectureDTO.lec_status eq 'N'}">
+                                    <span style="text-decoration:line-through; color:red">${lectureDTO.lec_title} </span>
+                                </c:when>
+                                <c:otherwise>
+                                    <span>${lectureDTO.lec_title}</span>
+                                </c:otherwise>
+                            </c:choose>
+                            <c:if test="">
+                            </c:if>
+                        </a></h3>
                         <p class="blog-meta border-bottom pb-1">
                             <span class="author"><i class="fas fa-book-open"></i> ${lectureDTO.lec_subject}</span>
                             <span class="cart" onclick="addcart(${lectureDTO.lec_idx})">
@@ -127,7 +139,7 @@
                     </div>
                 </div>
             </div>
-        </c:if>
+
         </c:forEach>
     </div>
     <div class="row">
@@ -138,20 +150,20 @@
                         <!--a class="page-link" data-num="1" href="page=1">Previous</a-->
                         <a class="page-link"
                            data-num="<c:choose><c:when test="${responseDTO.prev_page_flag}">${responseDTO.page_block_start-1}</c:when><c:otherwise>1</c:otherwise></c:choose>"
-                           href="<c:choose><c:when test="${responseDTO.prev_page_flag}">${responseDTO.linkParams}&page=${responseDTO.page_block_start-10}</c:when><c:otherwise>#</c:otherwise></c:choose>">Prev</a>
+                           href="<c:choose><c:when test="${responseDTO.prev_page_flag}">${responseDTO.linked_params}&page=${responseDTO.page_block_start-10}</c:when><c:otherwise>#</c:otherwise></c:choose>">Prev</a>
                     </li>
                     <c:forEach begin="${responseDTO.page_block_start}"
                                end="${responseDTO.page_block_end}"
                                var="page_num">
                         <li class="page-item<c:if test="${responseDTO.page == page_num}"> active</c:if>">
                             <a class="page-link" data-num="${page_num}"
-                               href="<c:choose><c:when test="${responseDTO.page == page_num}">#</c:when><c:otherwise>${responseDTO.linkParams}&page=${page_num}</c:otherwise></c:choose>">${page_num}</a>
+                               href="<c:choose><c:when test="${responseDTO.page == page_num}">#</c:when><c:otherwise>${responseDTO.linked_params}&page=${page_num}</c:otherwise></c:choose>">${page_num}</a>
                         </li>
                     </c:forEach>
                     <li class="page-item<c:if test="${responseDTO.next_page_flag ne true}"> disabled</c:if>">
                         <a class="page-link"
                            data-num="<c:choose><c:when test="${responseDTO.next_page_flag}">${responseDTO.page_block_end+1}</c:when><c:otherwise>${responseDTO.page_block_end}</c:otherwise></c:choose>"
-                           href="<c:choose><c:when test="${responseDTO.next_page_flag}">${responseDTO.linkParams}&page=${responseDTO.page_block_end+1}</c:when><c:otherwise>#</c:otherwise></c:choose>">Next</a>
+                           href="<c:choose><c:when test="${responseDTO.next_page_flag}">${responseDTO.linked_params}&page=${responseDTO.page_block_end+1}</c:when><c:otherwise>#</c:otherwise></c:choose>">Next</a>
                     </li>
                 </ul>
             </div>
