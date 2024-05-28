@@ -40,7 +40,7 @@ public class BoardController {
             redirectAttributes.addFlashAttribute("errors", bindingResult.getAllErrors());
         }
         pageRequestDTO.setPage_block_size(10);
-
+        pageRequestDTO.setType2("0");
         PageResponseDTO<BoardDTO> responseDTO = boardServiceIf.ListByPage(pageRequestDTO);
 
         model.addAttribute("responseDTO", responseDTO);

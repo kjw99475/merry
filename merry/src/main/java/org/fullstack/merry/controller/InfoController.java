@@ -36,7 +36,7 @@ public class InfoController {
             redirectAttributes.addFlashAttribute("errors", bindingResult.getAllErrors());
         }
         pageRequestDTO.setPage_block_size(10);
-
+        pageRequestDTO.setType2("0");
         PageResponseDTO<InfoDTO> responseDTO = infoServiceIf.ListByPage(pageRequestDTO);
 
         model.addAttribute("responseDTO", responseDTO);
