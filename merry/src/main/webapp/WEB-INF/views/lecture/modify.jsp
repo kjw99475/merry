@@ -104,7 +104,7 @@
                 <input type="hidden" name="upload" value="${lectureDTO.lec_org_img}">
                 <input type="hidden" name="upload2" value="${lectureDTO.lec_img}">
                 <label>가격 : </label>
-                <input type="text" name="lec_price" value="${lectureDTO.lec_price}"><br>
+                <input type="number" name="lec_price" value="${lectureDTO.lec_price}"><br>
 
                 목차<br>
                 <div id="chap">
@@ -113,7 +113,7 @@
                             <div>
                                 <input type="hidden" value= id="chap_idx${i.index}">
                                 <label>목차 제목 : </label>
-                                <input type="text" name="chapters[${i.index}].chap_title" value="${chapterDTO.chap_title}" > <c:if test="${i.index != '0'}"> <button id="btnDeleteChapter" onclick="deleteC(${chapterDTO.chap_idx})">X</button> </c:if>  <br>
+                                <input type="text" name="chapters[${i.index}].chap_title" value="${chapterDTO.chap_title}" > <c:if test="${i.index != '0'}"> <button type="button" id="btnDeleteChapter" onclick="deleteOK(${chapterDTO.chap_idx});">X</button> </c:if>  <br>
                                 <span>현재 동영상 : ${chapterDTO.chap_org_video}</span><br>
                                 <label>수정할 동영상 : </label>
                                 <input type="file" accept="video/*" name="chapVideos"><br>
@@ -227,6 +227,13 @@
         chapterIndex--;
     }
 
+    function deleteOK(idx) {
+        let con = confirm("목차를 삭제하시겠습니까?");
+        if (con) {
+            deleteC(idx);
+        }
+    }
+
     function deleteC(idx){
         event.preventDefault();
         event.stopPropagation();
@@ -249,6 +256,11 @@
         })
 
     }
+
+    //목차 동영상
+    <c:if test="${not empty errorVideo}">
+    alert("${errorVideo}");
+    </c:if>
 
 </script>
 </body>

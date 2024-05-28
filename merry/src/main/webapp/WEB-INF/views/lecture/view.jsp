@@ -140,12 +140,20 @@
 
                                 <c:choose>
                                     <c:when test="${not empty ChapterList}">
+                                        <span><strong>목차를 클릭하여 강의를 수강하세요!</strong></span>
                                         <ul>
                                         <c:forEach items="${ChapterList}" var="chapDTO">
                                             <c:choose>
                                                 <c:when test="${orderCnt >= 1 or sessionScope.member_idx eq lectureDTO.member_idx}">
-                                                    <span><strong>목차를 클릭하여 강의를 수강하세요!</strong></span>
-                                                    <li><a class="btn" onclick="javascript:Dalack_lab('/resources/uploads/lecture/${chapDTO.chap_video}')"> ${chapDTO.chap_title} (${chapDTO.chap_time})</a></li>
+                                                    <c:choose>
+                                                        <c:when test="${not empty chapDTO.chap_video}">
+                                                            <li><a class="btn" onclick="javascript:Dalack_lab('/resources/uploads/lecture/${chapDTO.chap_video}')"> ${chapDTO.chap_title} (${chapDTO.chap_time})</a></li>
+                                                        </c:when>
+                                                        <c:otherwise>
+                                                            <li> ${chapDTO.chap_title} (${chapDTO.chap_time})</li>
+                                                        </c:otherwise>
+                                                    </c:choose>
+
                                                 </c:when>
                                                 <c:otherwise>
                                                     <li> ${chapDTO.chap_title} (${chapDTO.chap_time})</li>

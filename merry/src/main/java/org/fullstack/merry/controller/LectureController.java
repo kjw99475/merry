@@ -53,18 +53,22 @@ public class LectureController {
                          Model model) {
         log.info("registPost");
 
-//        if (bindingResult.hasErrors()) {
-//            redirectAttributes.addFlashAttribute("errors", bindingResult.getAllErrors());
-//            redirectAttributes.addFlashAttribute("lectureDTO", lectureDTO);
-//            log.info("valid 오류");
-//            return "redirect:/lecture/regist";
-//        }
+        if (bindingResult.hasErrors()) {
+            redirectAttributes.addFlashAttribute("errors", bindingResult.getAllErrors());
+            redirectAttributes.addFlashAttribute("lectureDTO", lectureDTO);
+            log.info("valid 오류");
+            return "redirect:/lecture/regist";
+        }
 
         String saveLecImg = "";
         if (lecImg != null && !lecImg.isEmpty()) {
             saveLecImg = FileUploadUtil.saveFile(lecImg, "D:\\java4\\merry\\merry\\src\\main\\webapp\\resources\\uploads\\lecture");
             lectureDTO.setLec_img(saveLecImg);
             lectureDTO.setLec_org_img(lecImg.getOriginalFilename());
+        } else {
+            redirectAttributes.addFlashAttribute("errorFile", "썸네일 사진을 등록해 주세요.");
+            log.info("썸네일 사진 이슈");
+            return "redirect:/lecture/regist";
         }
 
         int resultLectureIdx = lectureService.regist(lectureDTO);
@@ -83,7 +87,8 @@ public class LectureController {
                 }
                 else {
                     log.info("동영상 이슈");
-                    redirectAttributes.addFlashAttribute("errorVideo", "동영상을 넣어주세요.");
+                    lectureService.realDelete(resultLectureIdx);
+                    redirectAttributes.addFlashAttribute("errorVideo", "목차 동영상은 필수입니다.");
                     return "redirect:/lecture/regist";
                 }
                 chapterDTOList.get(i).setLec_idx(resultLectureIdx);
@@ -170,12 +175,12 @@ public class LectureController {
                          HttpSession session,
                          Model model) {
 
-//        if (bindingResult.hasErrors()) {
-//            redirectAttributes.addFlashAttribute("errors", bindingResult.getAllErrors());
-//            redirectAttributes.addFlashAttribute("lectureDTO", lectureDTO);
-//            log.info("valid 오류");
-//            return "redirect:/lecture/regist";
-//        }
+        if (bindingResult.hasErrors()) {
+            redirectAttributes.addFlashAttribute("errors", bindingResult.getAllErrors());
+            redirectAttributes.addFlashAttribute("lectureDTO", lectureDTO);
+            log.info("valid 오류");
+            return "redirect:/lecture/regist";
+        }
 
 
 
@@ -206,8 +211,6 @@ public class LectureController {
         }
 
         if (chapterDTOList != null && !chapterDTOList.isEmpty()) {
-
-
             chapterService.modifyAndDelete(lectureDTO.getLec_idx());
 
             for (int i=0; i<chapterDTOList.size(); i++) {
@@ -233,6 +236,10 @@ public class LectureController {
                 chapterDTOList.get(i).setLec_idx(lectureDTO.getLec_idx());
                 chapterService.regist(chapterDTOList.get(i));
             }
+        } else {
+            log.info("동영상 이슈");
+            redirectAttributes.addFlashAttribute("errorVideo", "목차 동영상은 필수입니다.");
+            return "redirect:/lecture/modify?lec_idx=" + lectureDTO.getLec_idx();
         }
 
         log.info(chapterDTOList);
