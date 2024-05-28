@@ -111,7 +111,7 @@ public class MypageController {
     @GetMapping("/qna/view")
     public void viewQnaGET(
             @RequestParam(name="qna_idx", defaultValue = "0") int qna_idx,
-               Model model
+            Model model
     ) {
         QnaDTO qnaDTO = mypageService.viewQna(qna_idx);
         model.addAttribute("qnaDTO", qnaDTO);
@@ -146,16 +146,16 @@ public class MypageController {
 
     @GetMapping("/qna/modify")
     public void modifyQnaGET(@RequestParam(name = "qna_idx", defaultValue="0") int qna_idx,
-                          Model model) {
+                             Model model) {
         QnaDTO qnaDTO = mypageService.viewQna(qna_idx);
         model.addAttribute("qnaDTO", qnaDTO);
     }
 
     @PostMapping("/qna/modify")
     public String modifyQnaPOST(@Valid QnaDTO qnaDTO,
-                            BindingResult bindingResult,
-                            RedirectAttributes redirectAttributes,
-                            Model model) {
+                                BindingResult bindingResult,
+                                RedirectAttributes redirectAttributes,
+                                Model model) {
         log.info("===========MapageController >> modifyQnaPOST =====");
         log.info("qnaDTO : " + qnaDTO);
 
@@ -225,7 +225,7 @@ public class MypageController {
     @ResponseBody
     @PostMapping("/addcart")
     public int addcart(@RequestParam(value = "lec_idx") int lecIdx,
-                        HttpSession session){
+                       HttpSession session){
         String member_id = (String)session.getAttribute("member_id");
         List<Integer> cartlist = teacherService.cartList(member_id);
         List<Integer> orderlist = teacherService.order_list(member_id);
@@ -268,12 +268,9 @@ public class MypageController {
 
     @ResponseBody
     @PostMapping("/deletezzim")
-    public String deleteZzimPOST(
-            @RequestParam(name="zzim_idx", defaultValue = "0") int zzim_idx,
-            HttpSession session
-    ) {
-        String member_id = (String)session.getAttribute("member_id");
-        mypageService.deletezzim(member_id, zzim_idx);
+    public String deleteZzimPOST(@RequestParam(name="lec_idx", defaultValue = "0") int lec_idx,
+                                 String member_id) {
+        mypageService.deletezzim(member_id, lec_idx);
         return "redirect:/mypage/zzim";
     }
 

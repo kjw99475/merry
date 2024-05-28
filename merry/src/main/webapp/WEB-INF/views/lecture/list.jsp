@@ -263,6 +263,7 @@
                     lec_idx: lecIdx
                 },            // Json 형식의 데이터이다.
                 success: function (result) { // 비동기통신의 성공일경우 success콜백으로 들어옵니다. 'res'는 응답받은 데이터이다.
+                    console.log(result);
                     let color =  document.getElementById("zzim"+lecIdx).style.color;
                     if(color == "red"){
                         document.getElementById("zzim"+lecIdx).style.color="";
