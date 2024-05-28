@@ -90,10 +90,6 @@ public class TeacherController {
         model.addAttribute("responseDTO", responseDTO);
     }
 
-    @GetMapping("/view")
-    public void view(int member_idx) {
-        log.info("member_idx : {}", member_idx);
-    }
     @GetMapping("/manage/list")
     public void manageList(@RequestParam(value = "teacheridx", defaultValue = "0") String teacheridx,
                            int member_idx,
