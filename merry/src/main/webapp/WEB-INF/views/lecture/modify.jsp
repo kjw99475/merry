@@ -106,8 +106,9 @@
                 <label>가격 : </label>
                 <input type="number" name="lec_price" value="${lectureDTO.lec_price}"><br>
 
-                목차<br>
+
                 <div id="chap">
+                    <span style="font-size: large">목차</span><hr>
                     <c:if test="${not empty ChapterList}">
                         <c:forEach items="${ChapterList}" var="chapterDTO" varStatus="i">
                             <div>
@@ -127,15 +128,21 @@
                                     <option value="60분 이내" <c:if test="${chapterDTO.chap_time eq '60분 이내'}">selected</c:if>>60분 이내</option>
                                     <option value="60분 이내" <c:if test="${chapterDTO.chap_time eq '60분 이상'}">selected</c:if>>60분 이상</option>
                                 </select>
+                                <hr>
                             </div>
                         </c:forEach>
                     </c:if>
                 </div>
-                    <button type="button" onclick="createChap()">목차 추가</button>
-                    <button type="button" onclick="deleteChap()">목차 삭제</button>
-
-                    <button type="submit">수정하기</button>
-                <button type="button" onclick="location.href='/lecture/list'">목록으로</button>
+                <div class="row justify-content-between mb-5">
+                    <div>
+                        <button type="button" onclick="createChap()" class="btn btn-success">목차 추가</button>
+                        <button type="button" onclick="deleteChap()" class="btn btn-danger">목차 삭제</button>
+                    </div>
+                    <div>
+                        <button type="button" onclick="location.href='/lecture/list'" class="btn btn-outline-merry">목록으로</button>
+                        <button type="submit" class="btn btn-merry">수정완료</button>
+                    </div>
+                </div>
             </form>
         </div>
 
