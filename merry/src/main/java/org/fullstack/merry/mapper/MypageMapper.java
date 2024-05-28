@@ -5,6 +5,7 @@ import org.fullstack.merry.domain.CartVO;
 import org.fullstack.merry.domain.OrderVO;
 import org.fullstack.merry.domain.QnaVO;
 import org.fullstack.merry.domain.ZzimVO;
+import org.fullstack.merry.domain.lecture.QnaAnswerDTO;
 import org.fullstack.merry.dto.PageRequestDTO;
 
 import java.util.List;
@@ -22,6 +23,9 @@ public interface MypageMapper {
     int qnaTotalCount2(PageRequestDTO requestDTO);
     QnaVO viewQna(int qna_idx);
     int registQna(QnaVO qnaVO);
+    int registReply(QnaAnswerDTO qnaAnswerDTO);
+    int modifyReply(QnaAnswerDTO qnaAnswerDTO);
+    int deleteReply(int qna_idx);
 
 
     /* 찜 */
