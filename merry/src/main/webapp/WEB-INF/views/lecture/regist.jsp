@@ -139,7 +139,10 @@
                         <button type="button" class="btn btn-success" onclick="createChap()">목차 추가</button>
                         <button type="button" class="btn btn-danger" onclick="deleteChap()">목차 삭제</button>
                     </div>
-                <button type="submit" class="btn btn-merry">등록하기</button>
+                    <div>
+                        <button type="button" class="btn btn-outline-merry" onclick="location.href='/lecture/list'">취소</button>
+                    <button type="submit" class="btn btn-merry">등록하기</button>
+                    </div>
                 </div>
             </form>
         </div>

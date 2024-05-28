@@ -117,10 +117,10 @@
     </div>
 
 
-    <div class="row mb-300">
+    <div class="row mb-3">
         <div class="col-md-3">
             <c:if test="${sessionScope.member_type == 'T' or sessionScope.member_type=='A'}">
-                <button onclick="location.href='/lecture/regist'">
+                <button onclick="location.href='/lecture/regist'" class="btn btn-merry">
                     강의 등록하기
                 </button>
             </c:if>
