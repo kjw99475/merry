@@ -61,7 +61,7 @@
 </div>
 <div class="container">
     <div class="row" style="display: grid; grid-template-columns: 280px 1fr;">
-        <jsp:include page="/WEB-INF/views/common/teacher_sidebar.jsp">
+        <jsp:include page="/WEB-INF/views/common/teacherEdu_sidebar.jsp">
             <jsp:param name="menuGubun" value="grade"/>
         </jsp:include>
         <div>
