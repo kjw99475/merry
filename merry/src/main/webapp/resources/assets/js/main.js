@@ -166,3 +166,32 @@
 
 
 }(jQuery));
+
+function addcart(lecIdx){
+    if(lecIdx != 0) {
+        $.ajax({
+            type: "POST",            // HTTP method type(GET, POST) 형식이다.
+            url: "/mypage/addcart",      // 컨트롤러에서 대기중인 URL 주소이다.
+            data: {
+                lec_idx: lecIdx,
+                member_id: "${member_id}"
+            },            // Json 형식의 데이터이다.
+            success: function (result) { // 비동기통신의 성공일경우 success콜백으로 들어옵니다. 'res'는 응답받은 데이터이다.
+                if(result == 0){
+                    if(confirm("장바구니에 상품이 존재합니다.\n장바구니로 이동하시겠습니까?")){
+                        window.location.href="/mypage/cart"
+                    }
+                }else if(result == 1){
+                    if (confirm("장바구니에 추가되었습니다.\n장바구니로 이동하시겠습니까?")) {
+                        window.location.href = "/mypage/cart"
+                    }
+                }else{
+                    alert("결제한 이력이 있는 강의 입니다.");
+                }
+            },
+            error: function (error) { // 비동기 통신이 실패할경우 error 콜백으로 들어옵니다.
+                console.log(error);
+            }
+        });
+    }
+}
