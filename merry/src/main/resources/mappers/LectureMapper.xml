@@ -212,4 +212,8 @@
         WHERE member_idx = #{member_idx} AND lec_idx = #{lec_idx}
     </select>
 
+    <delete id="realDelete">
+        delete from lecture
+        where lec_idx = #{lec_idx}
+    </delete>
 </mapper>

@@ -55,4 +55,6 @@ public interface LectureMapper {
 
     //리뷰 작성여부 조회
     int countReview(OrderDTO orderDTO);
+
+    int realDelete(int lec_idx);
 }

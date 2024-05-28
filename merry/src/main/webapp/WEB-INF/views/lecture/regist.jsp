@@ -88,6 +88,7 @@
             <form action="/lecture/regist" method="post" enctype="multipart/form-data" class="col-12">
                     <input type="hidden" value="${sessionScope.name}" name="member_name">
                     <input type="hidden" value="${sessionScope.member_idx}" name="member_idx">
+                <input type="hidden" name="lec_subject" value="${subject}"/>
 
                 <div class="mt-5 col-12">
                     <label>제목</label>
@@ -109,7 +110,7 @@
                 </div>
                 <div class="col-12">
                     <label>가격</label>
-                    <input type="text" class="col-12" name="lec_price" placeholder="숫자만 입력해주세요. ex)1000"><br>
+                    <input type="number" class="col-12" name="lec_price" ><br>
                 </div>
 
                 <div id="chap" class="mt-5 col-12">
@@ -208,12 +209,12 @@
             + "<label>동영상 길이 (대략)</label>"
             + "<select name='chapters[" + chapterIndex + "].chap_time'>"
             + "<option value='10분 이내'>10분 이내</option>"
-            +  "<option value='20분 이내'>20분 이내</option>"
-            +  "<option value='30분 이내'>30분 이내</option>"
-            +  "<option value='40분 이내'>40분 이내</option>"
-            +  "<option value='50분 이내'>50분 이내</option>"
-            +  "<option value='60분 이내'>60분 이내</option>"
-            +  "<option value='60분 이상'>60분 이상</option>"
+            + "<option value='20분 이내'>20분 이내</option>"
+            + "<option value='30분 이내'>30분 이내</option>"
+            + "<option value='40분 이내'>40분 이내</option>"
+            + "<option value='50분 이내'>50분 이내</option>"
+            + "<option value='60분 이내'>60분 이내</option>"
+            + "<option value='60분 이상'>60분 이상</option>"
             + "</select>"
             + "<hr>";
 
@@ -235,24 +236,25 @@
         chapterIndex--;
     }
 
-    <%--//유효성--%>
-    <%--const errors = ${errors};--%>
-    <%--console.log("errors : {}", errors);--%>
 
-    <%--let errMsg = "";--%>
-    <%--if (errors) {--%>
-    <%--    for (let i =0; i<errors.length; i++) {--%>
-    <%--        errMsg += `${errors[i].defaultMessage}\n`;--%>
-    <%--    }--%>
-    <%--    alert(errMsg);--%>
-    <%--}--%>
+    //유효성
+    <c:if test="${not empty errors}">
+    let errM = "";
+    <c:forEach items="${errors}" var="err">
+    errM += "${err.defaultMessage}" + "\n";
+    </c:forEach>
+    alert(errM);
+    </c:if>
 
-    <%--//동영상 유효성--%>
-    <%--const errorVideo = ${errorVideo};--%>
-    <%--console.log(errorVideo);--%>
-    <%--if (errorVideo) {--%>
-    <%--    alert(errorVideo);--%>
-    <%--}--%>
+    //목차 동영상
+    <c:if test="${not empty errorVideo}">
+    alert("${errorVideo}");
+    </c:if>
+
+    //썸네일 사진
+    <c:if test="${not empty errorFile}">
+    alert("${errorFile}");
+    </c:if>
 
 </script>
 </body>
