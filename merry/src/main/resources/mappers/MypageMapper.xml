@@ -66,7 +66,7 @@
     </select>
 
     <select id="qnaList" resultType="org.fullstack.merry.domain.QnaVO">
-        SELECT qna_idx, qna_title, qna_answer_yn, qna_member_name, qna_reg_date, member_id
+        SELECT qna_idx, qna_title, qna_answer_yn, qna_member_name, qna_reg_date, qna_answer_reg_date, member_id
         FROM qna AS q INNER JOIN member AS m ON q.member_idx = m.member_idx
         <include refid="whereCondition"></include>
         ORDER BY qna_idx DESC
@@ -80,7 +80,7 @@
     </select>
 
     <select id="qnaList2" resultType="org.fullstack.merry.domain.QnaVO">
-        SELECT qna_idx, qna_title, qna_answer_yn, qna_member_name, qna_reg_date
+        SELECT qna_idx, qna_title, qna_answer_yn, qna_member_name, qna_reg_date, qna_answer_reg_date
         FROM qna
         <include refid="whereCondition3"></include>
         ORDER BY qna_idx DESC
@@ -94,9 +94,27 @@
     </select>
 
     <insert id="registQna" parameterType="org.fullstack.merry.domain.QnaVO" useGeneratedKeys="true" keyProperty="qna_idx" keyColumn="qna_idx">
-        insert into qna(qna_title, qna_content, member_idx, qna_member_name, qna_answer_idx, qna_answer_name, qna_type)
-        values(#{qna_title}, #{qna_content}, #{member_idx}, #{qna_member_name}, #{qna_answer_idx}, #{qna_answer_name}, 'M')
+        insert into qna(qna_title, qna_content, member_idx, qna_member_name, qna_type)
+        values(#{qna_title}, #{qna_content}, #{member_idx}, #{qna_member_name}, 'M')
     </insert>
+
+    <update id="registReply">
+        UPDATE qna
+        SET qna_answer = #{qna_answer}, qna_answer_yn = 'Y', qna_answer_reg_date = now()
+        WHERE qna_idx = #{qna_idx}
+    </update>
+
+    <update id="modifyReply">
+        update qna
+        set qna_answer=#{qna_answer}, qna_answer_modify_date=now()
+        where qna_idx=#{qna_idx}
+    </update>
+
+    <update id="deleteReply">
+        update qna
+        set qna_answer=null, qna_answer_yn='N', qna_answer_reg_date=null
+        where qna_idx=#{qna_idx}
+    </update>
 
     <!-- 결제 내역 -->
     <select id="orderList" resultType="org.fullstack.merry.domain.OrderVO">
