@@ -205,6 +205,23 @@ public class MypageServiceImpl implements MypageServiceIf{
         return result;
     }
 
+    @Override
+    public List<OrderDetailDTO> order_detail(String order_idx) {
+        List<OrderDetailDTO> o_detailList = mypageMapper.order_detail(order_idx);
+        return o_detailList;
+    }
+
+    @Override
+    public void refund(String detail_idx) {
+        mypageMapper.refund(detail_idx);
+    }
+
+    @Override
+    public void viewCheck(String member_id, String lec_idx) {
+        String order_idx = mypageMapper.find_order_idx(lec_idx, member_id);
+        mypageMapper.viewCheck(order_idx);
+    }
+
     /* 찜 */
     @Override
     public int zzimTotalCount(PageRequestDTO pageRequestDTO) {
