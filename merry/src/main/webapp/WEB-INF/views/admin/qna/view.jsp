@@ -94,20 +94,32 @@
                                         <div class="p-3" style="min-height: 20vh;">
                                             ${qnaDTO.qna_content}
                                         </div>
+                                        <c:if test="${!empty qnaDTO.qna_answer}">
+                                        <div>
+                                            <table class="table no-wrap user-table mb-0 text-lg-start">
+                                                <tr class="table-light">
+                                                    <th>답변<span class="fas fa-book"></span></th>
+                                                    <td></td>
+                                                </tr>
+                                            </table>
+                                        </div>
+                                        <div class="p-3" style="min-height: 20vh;">
+                                                ${qnaDTO.qna_answer}
+                                        </div>
+                                        </c:if>
+                                        </div>
                                         <div class="row justify-content-end mt-3">
                                             <div>
                                                 <button type="button" class="btn black-outline-btn" onclick="location.href='/admin/qna/list'">목록</button>
                                                 <c:choose>
-                                                    <c:when test="${sessionScope.member_type == 'A'}">
-                                                        <button type="button" class="btn orange-outline-btn" onclick="location.href='/admin/qna/regist'">답변 등록</button>
+                                                    <c:when test="${empty qnaDTO.qna_answer}">
+                                                        <button type="button" class="btn orange-outline-btn" onclick="location.href='/admin/qna/replyRegist?qna_idx=${qnaDTO.qna_idx}'">답변 등록</button>
                                                     </c:when>
                                                     <c:otherwise>
-                                                        <button type="button" class="btn orange-outline-btn" onclick="location.href='/admin/qna/modify?qna_idx=${qnaDTO.qna_idx}'">수정</button>
+                                                        <button type="button" class="btn orange-outline-btn" onclick="location.href='/admin/qna/replyModify?qna_idx=${qnaDTO.qna_idx}'">답변 수정</button>
                                                     </c:otherwise>
                                                 </c:choose>
-
-
-                                                <button type="button" class="btn red-outline-btn" onclick="location.href='/admin/qna/delete?qna_idx=${qnaDTO.qna_idx}'">삭제</button>
+                                                <button type="button" class="btn red-outline-btn" onclick="location.href='/admin/qna/replyDelete?qna_idx=${qnaDTO.qna_idx}'">삭제</button>
                                             </div>
                                         </div>
                                     </div>

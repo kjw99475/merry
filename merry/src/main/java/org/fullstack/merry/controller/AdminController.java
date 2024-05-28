@@ -4,6 +4,7 @@ import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.fullstack.merry.Common.FileUploadUtil;
+import org.fullstack.merry.domain.lecture.QnaAnswerDTO;
 import org.fullstack.merry.dto.*;
 import org.fullstack.merry.dto.lecture.LectureDTO;
 import org.fullstack.merry.service.*;
@@ -133,6 +134,32 @@ public class AdminController {
         }
     }
 
+    @GetMapping("/qna/replyRegist")
+    public void replyRegistGET(
+            @RequestParam(name="qna_idx", defaultValue = "0") int qna_idx,
+            Model model
+    ) {
+        QnaDTO qnaDTO = mypageService.viewQna(qna_idx);
+        model.addAttribute("qnaDTO", qnaDTO);
+        log.info("qnaDTO ; " + qnaDTO);
+    }
+
+    @PostMapping("/qna/replyRegist")
+    public String replyRegistPOST(
+            QnaAnswerDTO qnaAnswerDTO,
+            @RequestParam(name="qna_idx", defaultValue = "0") int qna_idx,
+            Model model
+    ) {
+        int result = mypageService.registReply(qnaAnswerDTO);
+
+        if (result > 0) {
+            return "redirect:/admin/qna/list";
+        }
+        else {
+            return "redirect:/mypage/qna/replyRegist?qna_idx="+qna_idx;
+        }
+    }
+
     @GetMapping("/qna/modify")
     public void modifyQnaGET(@RequestParam(name = "qna_idx", defaultValue="0") int qna_idx,
                              Model model) {
@@ -167,10 +194,48 @@ public class AdminController {
         }
 
     }
+    @GetMapping("/qna/replyModify")
+    public void replyModifyGET(
+            @RequestParam(name="qna_idx", defaultValue = "0") int qna_idx,
+            Model model
+    ) {
+        QnaDTO qnaDTO = mypageService.viewQna(qna_idx);
+        model.addAttribute("qnaDTO", qnaDTO);
+        log.info("qnaDTO ; " + qnaDTO);
+    }
+
+    @PostMapping("/qna/replyModify")
+    public String replyModifyPOST(
+            QnaAnswerDTO qnaAnswerDTO,
+            @RequestParam(name="qna_idx", defaultValue = "0") int qna_idx,
+            Model model
+    ) {
+        int result = mypageService.registReply(qnaAnswerDTO);
+
+        if (result > 0) {
+            return "redirect:/admin/qna/list";
+        }
+        else {
+            return "redirect:/mypage/qna/replyRegist?qna_idx="+qna_idx;
+        }
+    }
+
     @GetMapping("/qna/delete")
     public String deleteQnaGET(@RequestParam(name="qna_idx", defaultValue = "0") int qna_idx) {
         lectureService.deleteQna(qna_idx);
-        return "redirect:/mypage/qna/list";
+        return "redirect:/admin/qna/list";
+    }
+
+    @GetMapping("/qna/replyDelete")
+    public String replyDeleteQnaGET(@RequestParam(name="qna_idx", defaultValue = "0") int qna_idx) {
+        int result = mypageService.deleteReply(qna_idx);
+
+        if (result > 0) {
+            return "redirect:/admin/qna/list";
+        }
+        else {
+            return "redirect:/mypage/qna/view?qna_idx="+qna_idx;
+        }
     }
 
     @GetMapping("/lecture/list")

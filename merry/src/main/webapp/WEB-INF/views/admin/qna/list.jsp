@@ -90,10 +90,10 @@
                                                 <tr class="table-body-row text-center">
                                                     <td class="p-2">${responseDTO.total_count - loop.index}</td>
                                                     <td class="p-2"><a href="/admin/qna/view?qna_idx=${list.qna_idx}">${list.qna_title}</a></td>
-                                                    <td class="p-2">${list.qna_answer_yn}</td>
+                                                    <td class="p-2"><c:out value="${list.qna_answer_yn == 'Y' ? '답변완료' : '답변대기'}" /></td>
                                                     <td class="p-2">${fn:substring(list.qna_reg_date, 0, 10)}</td>
                                                     <td class="p-2">
-                                                        <c:out value="${!empty qna_answer_reg_date ? fn:substring(list.qna_answer_reg_date, 0, 10) : '-'}"/>
+                                                        <c:out value="${!empty list.qna_answer_reg_date ? fn:substring(list.qna_answer_reg_date, 0, 10) : '-'}"/>
                                                     </td>
                                                 </tr>
                                             </c:forEach>
