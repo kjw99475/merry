@@ -22,4 +22,6 @@ public interface TeacherServiceIf {
     int teacherInfoModify(TeacherDTO teacherDTO);
     int infoPresent(int member_idx);
     TeacherDTO viewInfo(int member_idx);
+
+    List<Integer> order_list(String member_id);
 }

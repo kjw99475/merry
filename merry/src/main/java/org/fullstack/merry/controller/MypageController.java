@@ -228,11 +228,17 @@ public class MypageController {
                         HttpSession session){
         String member_id = (String)session.getAttribute("member_id");
         List<Integer> cartlist = teacherService.cartList(member_id);
+        List<Integer> orderlist = teacherService.order_list(member_id);
         if(cartlist.contains(lecIdx)){
             return 0;
         }else{
-            mypageService.addcart(member_id, lecIdx);
-            return 1;
+            if(orderlist.contains(lecIdx)){
+                return 2;
+            }
+            else {
+                mypageService.addcart(member_id, lecIdx);
+                return 1;
+            }
         }
     }
 

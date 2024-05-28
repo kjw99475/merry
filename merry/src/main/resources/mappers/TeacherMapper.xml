@@ -102,4 +102,12 @@
         from teacher
         where member_idx = #{member_idx}
     </select>
+
+    <select id="order_list">
+        SELECT DISTINCT lec_idx
+        FROM order_detail AS od
+                 INNER JOIN `order` AS o
+                            ON o.order_idx = od.order_idx
+        WHERE o.member_id = #{member_id}
+    </select>
 </mapper>
