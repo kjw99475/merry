@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ page trimDirectiveWhitespaces="true" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <html>
 <head>
     <meta charset="UTF-8">
@@ -9,12 +9,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="Responsive Bootstrap4 Shop Template, Created by Imran Hossain from https://imransdesign.com/">
 
-    <title>Merry</title>
+    <title>Order</title>
 
     <link rel="shortcut icon" type="image/x-icon" href="/resources/assets/img/merry_favicon.ico">
     <link rel="icon" type="image/x-icon" href="/resources/assets/img/merry_favicon.ico">
+
     <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,700" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Poppins:400,700&display=swap" rel="stylesheet">
+
     <link rel="stylesheet" href="/resources/assets/css/all.min.css">
     <link rel="stylesheet" href="/resources/assets/bootstrap/css/bootstrap.min.css">
     <link rel="stylesheet" href="/resources/assets/css/owl.carousel.css">
@@ -25,20 +27,22 @@
     <link rel="stylesheet" href="/resources/assets/css/responsive.css">
 </head>
 <body>
-
-<!--================ 헤더 start =================-->
 <jsp:include page="/WEB-INF/views/common/header.jsp" />
-<!--================ 헤더 end =================-->
-
-<!--================ 본문 start =================-->
-<!-- hero area -->
-<div class="container">
-    <div class="container-fluid page-header py-5">
-        <h1 class="text-center text-white display-6">Checkout</h1>
+<div class="breadcrumb-section breadcrumb-bg">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 offset-lg-2 text-center">
+                <div class="breadcrumb-text">
+                    <p>주문 페이지</p>
+                    <h1>주문 상세</h1>
+                </div>
+            </div>
+        </div>
     </div>
+</div>
+<div class="container">
     <div class="container-fluid py-5">
         <div class="container py-5">
-            <h1 class="mb-4">Billing details</h1>
             <div class="row g-5">
                 <div class="col-md-12 col-lg-9 col-xl-7">
                     <table class="table">
@@ -104,7 +108,7 @@
                     <form method="post" action="/order/order">
                         <input type="hidden" name="lec_idx" id="lec_idx" value="${lec_idx}"/>
                         <div class="row g-4 text-center align-items-center justify-content-center pt-4">
-                            <button class="btn border-secondary py-3 px-4 text-uppercase w-100 text-primary" type="submit">Place Order</button>
+                            <button class="btn orange-btn btn-lg w-100" type="submit">결제하기</button>
                         </div>
                     </form>
                 </div>
