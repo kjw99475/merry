@@ -55,7 +55,7 @@
         <div class="row">
             <div class="col-lg-8 offset-lg-2 text-center">
                 <div class="breadcrumb-text">
-                    <p>관리자 페이지</p>
+                    <p>관리자페이지</p>
                     <h1>자유게시판 관리</h1>
                 </div>
             </div>
@@ -122,6 +122,91 @@
                                 </div>
                             </div>
                         </div>
+                    </div>
+
+
+                    <div class="mt-5 col-12">
+                        <h5>댓글 리스트</h5>
+                        <hr>
+
+                        <form action="/board/reply/registReply" id="replyRegist" method="post">
+                            <input type="hidden" value="${boardDTO.board_idx}"  name="board_idx">
+                            <input type="hidden" value="${sessionScope.member_idx}"  name="member_idx">
+                            <input type="hidden" value="${sessionScope.name}"  name="reply_writer">
+                            <div class="mb-3">
+                                <label class="form-label">댓글 </label>
+                                <input type="text" class="form-control" name="reply_comment" id="reply_comment" maxlength="100" placeholder="댓글을 입력하세요">
+                                <div id="div_err_reply_comment" style="display: none"></div>
+                            </div>
+                            <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                                <button class="btn btn-merry me-md-2 mb-2" id="replySubmit" onclick="regist_reply(${boardDTO.board_idx})" type="button">댓글등록</button>
+                                <script>
+                                    function regist_reply(board_idx, reply_writer, member_idx) {
+                                        let comment = document.getElementById("reply_comment").value;
+                                        $.ajax({
+                                            type: "POST",            // HTTP method type(GET, POST) 형식이다.
+                                            url: "/board/reply/registReply",      // 컨트롤러에서 대기중인 URL 주소이다.
+                                            data: {
+                                                board_idx: board_idx,
+                                                reply_comment: comment
+                                            },            // Json 형식의 데이터이다.
+                                            success: function (result) { // 비동기통신의 성공일경우 success콜백으로 들어옵니다. 'res'는 응답받은 데이터이다.
+                                                window.location.reload();
+                                            },
+                                            error: function (error) { // 비동기 통신이 실패할경우 error 콜백으로 들어옵니다.
+                                                console.log(error);
+                                            }
+                                        });
+                                    }
+                                </script>
+                            </div>
+                        </form>
+
+
+                        <ul style="list-style: none" class="p-0">
+                            <c:choose>
+                                <c:when test="${not empty replyDTOList}">
+                                    <c:forEach items="${replyDTOList}" var="reply" varStatus="status">
+                                        <form action="/board/reply/deleteReply" method="post" id="frm_reply_delete">
+                                            <input type="hidden" name="board_idx" value="${boardDTO.board_idx}">
+                                            <input type="hidden" name="reply_idx" value="${reply.reply_idx}">
+
+                                            <li class="border-top border-bottom">
+                                                <span><span class="fas fa-user"></span> ${reply.reply_writer}</span>
+                                                <p>${reply.reply_comment}</p>
+                                                <span style="font-size: smaller">${reply.reply_reg_date}</span>
+                                                <c:if test="${reply.member_idx eq sessionScope.member_idx or sessionScope.member_type eq 'A'}">
+                                                    <button class="btn-danger" id="btn-danger" onclick="delete_reply(${boardDTO.board_idx}, ${reply.reply_idx})" type="button"> 삭제 </button>
+                                                    <script>
+                                                        function delete_reply(board_idx, reply_idx) {
+                                                            if (confirm("해당 댓글을 삭제하시겠습니까?")) {
+                                                                $.ajax({
+                                                                    type: "POST",            // HTTP method type(GET, POST) 형식이다.
+                                                                    url: "/board/reply/deleteReply",      // 컨트롤러에서 대기중인 URL 주소이다.
+                                                                    data: {
+                                                                        reply_idx: reply_idx,
+                                                                        board_idx: board_idx
+                                                                    },            // Json 형식의 데이터이다.
+                                                                    success: function (result) { // 비동기통신의 성공일경우 success콜백으로 들어옵니다. 'res'는 응답받은 데이터이다.
+                                                                        window.location.reload();
+                                                                    },
+                                                                    error: function (error) { // 비동기 통신이 실패할경우 error 콜백으로 들어옵니다.
+                                                                        console.log(error);
+                                                                    }
+                                                                });
+                                                            }
+                                                        }
+                                                    </script>
+                                                </c:if>
+                                            </li>
+                                        </form>
+                                    </c:forEach>
+                                </c:when>
+                                <c:otherwise>
+                                    <li style="color: rgb(0,0,0,0.5); text-align: center">등록된 댓글이 없습니다.</li>
+                                </c:otherwise>
+                            </c:choose>
+                        </ul>
                     </div>
 
 

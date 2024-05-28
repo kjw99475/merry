@@ -51,100 +51,67 @@
     </script>
 </head>
 <body>
-
-<!--================ 헤더 start =================-->
 <jsp:include page="/WEB-INF/views/common/header.jsp" />
-<!--================ 헤더 end =================-->
-
-<!--================ 본문 start =================-->
-
-
-
-<div style="height: 85px; background-color: black"></div>
-<div>
-
-    <div class="row" style="display: grid;
-    grid-template-columns: 280px 1fr;
-    height: 100vh;">
-
-        <!--================ 사이드바 start =================-->
-        <jsp:include page="/WEB-INF/views/common/admin_sidebar.jsp">
-            <jsp:param name="menuGubun" value="bbs_info"/>
-        </jsp:include>
-        <!--================ 사이드바 end =================-->
-
-
-        <div>
-            <div class="container">
-
-                <div class="row mt-5">
-                    <div class="col-lg-12 mb-5 mb-lg-0">
-                        <div class="form-title">
-                            <h2></h2>
-
-                        </div>
-                        <div class="contact-form">
-                            <form id="frm_" name="frm_" method="post" action="/admin/info/regist" enctype="multipart/form-data">
-                                <input type="hidden" name="member_idx" value="${sessionScope.member_idx}">
-
-<%--                                <label for="info_title">제목</label>--%>
-                                <input type="text" class="form-control" placeholder="제목을 입력해주세요" name="info_title" id="info_title">
-
-                                <textarea class="mt-3" name="info_content" id="content" ></textarea>
-
-                                <input type="file" name="file" id="file" multiple>
-
-                                <div class="row justify-content-end mt-3">
-                                    <div>
-                                        <button type="button" class="btn btn-outline-merry" onclick="location.href='/admin/info/list'">취소</button>
-                                        <button type="submit" class="btn btn-merry">등록</button>
-                                    </div>
-                                </div>
-                            </form>
-                        </div>
-                    </div>
-
+<div class="breadcrumb-section breadcrumb-bg">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 offset-lg-2 text-center">
+                <div class="breadcrumb-text">
+                    <p>관리자페이지</p>
+                    <h1>교육정보 관리</h1>
                 </div>
-
-
-
-
-
             </div>
         </div>
-
     </div>
+</div>
+<div>
+    <div class="container">
+        <div class="row" style="display: grid; grid-template-columns: 280px 1fr;">
+            <jsp:include page="/WEB-INF/views/common/admin_sidebar.jsp">
+                <jsp:param name="menuGubun" value="bbs_info"/>
+            </jsp:include>
+            <div class="checkout-section mb-150">
+                <div class="container">
+                    <div style="margin: 0 auto;">
+                        <div class="col-auto">
+                            <div class="row mt-5">
+                                <div class="mb-5 mb-lg-0">
+                                    <div class="contact-form">
+                                        <form id="frm_" name="frm_" method="post" action="/admin/info/regist" enctype="multipart/form-data">
+                                            <input type="hidden" name="member_idx" value="${sessionScope.member_idx}">
+                                            <input type="text" class="form-control" name="info_title" id="info_title" value="${infoDTO.info_title}">
+                                            <textarea class="mt-3" name="info_content" id="content">${infoDTO.info_content}</textarea>
+                                            <input type="file" name="file" id="file" multiple>
 
 
 
-
-
-    <!--================ 본문 end =================-->
-
-    <!--================ 푸터 Start =================-->
+                                            <div class="row justify-content-end mt-3">
+                                                <div>
+                                                    <button type="button" class="btn orange-outline-btn" onclick="location.href='/admin/info/list'">취소</button>
+                                                    <button type="submit" class="btn orange-btn">등록</button>
+                                                </div>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
     <jsp:include page="/WEB-INF/views/common/footer.jsp" />
     <!--================ 푸터 End =================-->
-
-    <!-- jquery -->
     <script src="/resources/assets/js/jquery-1.11.3.min.js"></script>
-    <!-- bootstrap -->
     <script src="/resources/assets/bootstrap/js/bootstrap.min.js"></script>
-    <!-- count down -->
     <script src="/resources/assets/js/jquery.countdown.js"></script>
-    <!-- isotope -->
     <script src="/resources/assets/js/jquery.isotope-3.0.6.min.js"></script>
-    <!-- waypoints -->
     <script src="/resources/assets/js/waypoints.js"></script>
-    <!-- owl carousel -->
     <script src="/resources/assets/js/owl.carousel.min.js"></script>
-    <!-- magnific popup -->
     <script src="/resources/assets/js/jquery.magnific-popup.min.js"></script>
-    <!-- mean menu -->
     <script src="/resources/assets/js/jquery.meanmenu.min.js"></script>
-    <!-- sticker js -->
     <script src="/resources/assets/js/sticker.js"></script>
-    <!-- main js -->
     <script src="/resources/assets/js/main.js"></script>
-
 </body>
 </html>
