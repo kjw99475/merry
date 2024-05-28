@@ -57,16 +57,15 @@
                 <div class="container">
                     <div class="row">
                         <div class="col-md-12">
-                            <form class="cart-table-wrap" action="/order/order">
+                            <form class="cart-table-wrap" id="frmOrder" >
                                 <table class="cart-table">
                                     <thead class="cart-table-head">
                                     <tr class="table-head-row">
-                                        <th class="product-remove">선택</th>
+                                        <th class="product-remove"><input type="checkbox" id="chkAll" onclick="selectAll(this)"/></th>
                                         <th class="product-image">강의이미지</th>
                                         <th>강의제목</th>
                                         <th>가격</th>
-                                        <th>주문</th>
-                                        <th>삭제</th>
+
                                     </tr>
                                     </thead>
                                     <tbody>
@@ -74,12 +73,11 @@
                                         <c:when test="${!empty responseDTO && responseDTO.total_count > 0}">
                                             <c:forEach items="${responseDTO.dtoList}" var="list" varStatus="loop">
                                                 <tr class="table-body-row text-center">
-                                                    <td><input type="checkbox" name="lec_idx" value="${list_lec_idx}"/></td>
+                                                    <td><input type="checkbox" name="lec_idx" value="${list.lec_idx}"/></td>
                                                     <td class="p-2 product-image"><img src="/resources/uploads/lecture/${list.lec_img}" width="50px"></td>
                                                     <td class="p-2"><a href="/lecture/view?lec_idx=${list.lec_idx}">${list.lec_title}</a></td>
                                                     <td class="p-2"><fmt:formatNumber type="number" maxFractionDigits="3" value="${list.lec_price}" /></td>
-                                                    <td class="p-2"><button class="btn orange-outline-btn bordered-btn" type="button" onclick="location='/order/order?lec_idx=${list.lec_idx}'">주문</button></td>
-                                                    <td class="p-2"><button class="btn red-outline-btn bordered-btn" type="button" onclick="deleteOK(${list.cart_idx})">삭제</button></td>
+                                                    
                                                 </tr>
                                             </c:forEach>
                                         </c:when>
@@ -91,16 +89,17 @@
                                     </c:choose>
                                     </tbody>
                                 </table>
+
                             </form>
                         </div>
                         <div class="col-md-4 text-left">
                             <div class="mb-3">
-                                <button class="btn btn-lg orange-outline-btn bordered-btn mr-1" type="button" >선택 주문</button>
-                                <button class="btn btn-lg orange-btn bordered-btn" type="button" onclick="selectAll()">전체 주문</button>
+                                <button class="btn btn-lg orange-outline-btn bordered-btn mr-1" type="button" onclick="chkOKAndOrder()">선택 주문</button>
+                                <button class="btn btn-lg orange-btn bordered-btn" type="button" onclick="selectAllandOrder()" >전체 주문</button>
                             </div>
                             <div>
-                                <button class="btn btn-lg red-outline-btn bordered-btn mr-1" type="button">선택 삭제</button>
-                                <button class="btn btn-lg red-btn bordered-btn" type="button">전체 삭제</button>
+                                <button class="btn btn-lg red-outline-btn bordered-btn mr-1" type="button" onclick="chkOKAndDelete()">선택 삭제</button>
+                                <button class="btn btn-lg red-btn bordered-btn" type="button" onclick="selectAllandDelete()">전체 삭제</button>
                             </div>
                         </div>
                         <div class="col-md-8">
@@ -149,10 +148,79 @@
 
     <script>
 
-        function selectAll() {
+        let chkAll = document.getElementById("chkAll");
+        let frm = document.getElementById("frmOrder");
 
+
+        //선택 주문
+        function chkOKAndOrder() {
+            var check = document.querySelectorAll("input[type ='checkbox']:checked");
+            console.log(check);
+            if (check.length == 0) {
+                alert("하나 이상 선택하세요.");
+            } else {
+                let ok = confirm("주문 하시겠습니까?");
+                if (ok) {
+                    frm.action = "/order/order";
+                    frm.method = "get";
+                    frm.submit();
+                    ok = "";
+                }
+            }
         }
 
+        //선택 삭제
+        function chkOKAndDelete() {
+            var check = document.querySelectorAll("input[type ='checkbox']:checked");
+            console.log(check);
+            if (check.length == 0) {
+                alert("하나 이상 선택하세요.");
+            } else {
+                let ok = confirm("삭제 하시겠습니까?");
+                if (ok) {
+                    frm.action = "/order/cartout";
+                    frm.method = "post";
+                    frm.submit();
+                }
+            }
+        }
+
+        // 전체 주문
+        function selectAllandOrder() {
+            var check = document.querySelectorAll("input[type ='checkbox']");
+            check.forEach((checkbox) => {
+                checkbox.checked = true;
+            });
+            let ok = confirm("전체 주문 하시겠습니까?");
+            if (ok) {
+                frm.action = "/order/order";
+                frm.method = "get";
+                frm.submit();
+            }
+        }
+
+        // 전체 삭제
+        function selectAllandDelete() {
+            var check = document.querySelectorAll("input[type ='checkbox']");
+            check.forEach((checkbox) => {
+                checkbox.checked = true;
+            });
+            let ok = confirm("전체 삭제 하시겠습니까?");
+            if (ok) {
+                frm.action = "/order/cartout";
+                frm.method = "post";
+                frm.submit();
+            }
+        }
+
+        //체크박스 전체 선택/해제
+        function selectAll(el) {
+            var check = document.querySelectorAll("input[type ='checkbox']");
+
+            check.forEach((checkbox) => {
+                checkbox.checked = el.checked;
+            });
+        }
 
         function deleteOK(cart_idx) {
             let confirmYN = confirm("장바구니를 삭제하시겠습니까?");
