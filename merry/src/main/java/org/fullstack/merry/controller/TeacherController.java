@@ -217,7 +217,7 @@ public class TeacherController {
         int registResult = teacherService.teacherInfoRegist(teacherDTO);
 
         if(registResult > 0) {
-            return "redirect:/teacher/manage/main";
+            return "redirect:/teacher/manage/list";
         }
         else {
             return "redirect:/teacher/manage/info/regist";
