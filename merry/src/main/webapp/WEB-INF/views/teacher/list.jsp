@@ -68,7 +68,7 @@
         <c:forEach var="list" items="${responseDTO.dtoList}">
             <div class="col-lg-3 col-md-6">
                 <div class="single-latest-news">
-                    <a href="manage/list?member_idx=${list.member_idx}"><div class="latest-news-bg news-bg-1" style="background: url('/resources/assets/img/${list.teacher_image}'); background-size: 100% 100%">
+                    <a href="manage/list?teacheridx=${list.member_idx}"><div class="latest-news-bg news-bg-1" style="background: url('/resources/assets/img/${list.teacher_image}'); background-size: 100% 100%">
                     </div>
                     <div class="news-text-box">
                         <h3>${list.intro}</h3>
