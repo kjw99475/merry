@@ -1,6 +1,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" pageEncoding="UTF-8" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!DOCTYPE HTML>
 <html>
 <head>
@@ -39,8 +40,33 @@
     <script src="/resources/assets/js/jquery-3.7.1.min.js"></script>
     <script src="https://cdn.tiny.cloud/1/wjuflumw0txwktnvnufwfo5lj04kqmup66rnaj1jf6pnwv5d/tinymce/7/tinymce.min.js"
             referrerpolicy="origin"></script>
+
+    <style>
+        .tbl_board {
+            margin-bottom: 20px;
+            border: 1px solid black;
+        }
+        .tbl_board th, .tbl_board tr {
+            border: 1px solid black;
+            padding: 20px;
+        }
+        .tbl_board td {
+            padding: 20px;
+        }
+        .tbl_board th {
+             background-color: #cccccc;
+         }
+        .tit_h4 {
+            margin-top: 20px;
+        }
+        .list_book {
+            list-style: none;
+            padding: 0px;
+        }
+
+    </style>
 </head>
-<body >
+<body>
 <!--================ 헤더 start =================-->
 <jsp:include page="/WEB-INF/views/common/header.jsp"/>
 <!--================ 헤더 end =================-->
@@ -68,15 +94,16 @@
             <div class="col-md-7">
                 <div class="single-product-content mb-100">
                     <h3>${lectureDTO.lec_title}<br></h3>
-                    <p class="single-product-pricing"><span>${lectureDTO.member_name}</span> $${lectureDTO.lec_price}</p>
+                    <p class="single-product-pricing"><span>${lectureDTO.member_name}</span> <fmt:formatNumber type="number" maxFractionDigits="3" value="${lectureDTO.lec_price}" />원</p>
+
 
                     <div class="single-product-form">
 
                         <input type="hidden" id="lecIdx" value="${lectureDTO.lec_idx}">
-                        <span class="cart" onclick="addcart(${lectureDTO.lec_idx})">
+                        <span class="cart mx-2" onclick="addcart(${lectureDTO.lec_idx})">
                                 <i class="fas fa-shopping-cart" id="cart${lectureDTO.lec_idx}" <c:if test="${fn:contains(cartlist, lectureDTO.lec_idx)}"> style="color: blue" </c:if>> </i>장바구니
                             </span>
-                        <span class="zzim" onclick="addzzim(${lectureDTO.lec_idx})">
+                        <span class="zzim mx-2" onclick="addzzim(${lectureDTO.lec_idx})">
                                 <i class="fas fa-heart" id="zzim${lectureDTO.lec_idx}" <c:if test="${fn:contains(zzimlist, lectureDTO.lec_idx)}"> style="color:red" </c:if>></i>찜하기
                             </span>
                         <c:if test="${orderCnt < 1}">
@@ -105,7 +132,7 @@
             <div class="col-lg-12">
                 <nav>
                     <div class="nav nav-tabs mb-3">
-                        <button class="nav-link active border-white border-bottom-0 letsmove" type="button" role="tab"
+                        <button class="nav-link active border border-bottom-0 letsmove" type="button" role="tab"
                                 id="box1" data-bs-toggle="tab" data-bs-target="#nav-about"
                                 aria-controls="nav-about" aria-selected="true">강의 설명</button>
                         <button class="nav-link border-white border-bottom-0 letsmove" type="button" role="tab"
@@ -127,13 +154,13 @@
                     </div>
                 </nav>
                 <div class="tab-content mb-5">
-                    <div class="box1" id="nav-about" role="tabpanel" aria-labelledby="nav-about-tab">
+                    <div class="box1 mt-5" id="nav-about1" role="tabpanel" aria-labelledby="nav-about-tab">
                         <br>
                         <h4>강의설명</h4>
                         <br>
                         <p>${lectureDTO.lec_content}</p>
                     </div>
-                    <div class="box2" id="nav-about" role="tabpanel" aria-labelledby="nav-about-tab">
+                    <div class="box2 mt-5" id="nav-about2" role="tabpanel" aria-labelledby="nav-about-tab">
                         <br>
                         <h4>강의목차</h4>
                         <br>
@@ -171,7 +198,7 @@
                     
 
                     </div>
-                    <div class="box3" id="nav-about" role="tabpanel" aria-labelledby="nav-about-tab">
+                    <div class="box3 mt-5" id="nav-about3" role="tabpanel" aria-labelledby="nav-about-tab">
                         <br>
                         <h4>공지사항</h4>
                         <br>
@@ -223,7 +250,7 @@
 
 
                     </div>
-                    <div class="box4" id="nav-about" role="tabpanel" aria-labelledby="nav-about-tab">
+                    <div class="box4 mt-5" id="nav-about4" role="tabpanel" aria-labelledby="nav-about-tab">
                         <br>
                         <h4>QnA</h4>
                         <br>
@@ -304,7 +331,7 @@
 
                     </div>
 
-                    <div class="box5" id="nav-about" role="tabpanel" aria-labelledby="nav-about-tab">
+                    <div class="box5 mt-5" id="nav-about5" role="tabpanel" aria-labelledby="nav-about-tab">
                         <br>
                         <h4>자료실</h4>
                         <br>
@@ -355,7 +382,7 @@
                         </c:choose>
 
                     </div>
-                    <div class="box6" id="nav-about" role="tabpanel" aria-labelledby="nav-about-tab">
+                    <div class="box6 mt-5" id="nav-about7" role="tabpanel" aria-labelledby="nav-about-tab">
                         <br>
                         <h4>강의 리뷰</h4>
                         <br>
@@ -385,16 +412,14 @@
                             <c:when test="${not empty reviewList}">
                                 <c:forEach var="list" items="${reviewList}" varStatus="rev">
                                     <div id="review${rev.index}" >
-                                        <div class="col-lg-12">
-                                            <div class="border-bottom rounded">
+                                        <div class="col-lg-12 border-top border-bottom">
+                                            <div>
                                                  작성자 : ${list.review_writer}
                                                 <c:if test="${sessionScope.member_idx eq list.member_idx}">
-                                                    <button type="button" onclick="askDelete(${rev.index}, '${list.review_idx}')">리뷰 삭제하기</button>
+                                                    <button type="button" class="btn-danger" onclick="askDelete(${rev.index}, '${list.review_idx}')">리뷰 삭제하기</button>
                                                 </c:if>
                                             </div>
-                                        </div>
-                                        <div class="col-lg-12">
-                                            <div class="border-bottom rounded my-4">
+                                            <div>
                                                 리뷰 : ${list.comment}
                                             </div>
                                         </div>
