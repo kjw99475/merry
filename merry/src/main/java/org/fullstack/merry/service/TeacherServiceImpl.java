@@ -122,4 +122,10 @@ public class TeacherServiceImpl implements TeacherServiceIf {
         TeacherDTO teacherDTO = modelMapper.map(teacherVO, TeacherDTO.class);
         return teacherDTO;
     }
+
+    @Override
+    public List<Integer> order_list(String member_id) {
+        List<Integer> order_list = teacherMapper.order_list(member_id);
+        return order_list;
+    }
 }

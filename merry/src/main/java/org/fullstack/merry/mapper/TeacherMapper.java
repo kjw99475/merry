@@ -26,4 +26,6 @@ public interface TeacherMapper {
     int teacherInfoModify(TeacherVO teacherVO);
     int infoPresent(int member_idx);
     TeacherVO viewInfo(int member_idx);
+
+    List<Integer> order_list(String member_id);
 }
