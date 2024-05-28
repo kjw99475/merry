@@ -36,7 +36,7 @@ public class DataController {
             redirectAttributes.addFlashAttribute("errors", bindingResult.getAllErrors());
         }
         pageRequestDTO.setPage_block_size(10);
-
+        pageRequestDTO.setType2("0");
         PageResponseDTO<DataDTO> responseDTO = dataServiceIf.ListByPage(pageRequestDTO);
 
         model.addAttribute("responseDTO", responseDTO);

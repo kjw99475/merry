@@ -79,6 +79,7 @@
                                     <div class="contact-form">
                                         <form id="frm_" name="frm_" method="post" action="/admin/notice/regist" enctype="multipart/form-data">
                                             <input type="hidden" name="member_idx" value="${sessionScope.member_idx}">
+                                            <input type="hidden" name="notice_member_name" value="${sessionScope.name}">
                                             <input type="text" class="form-control" name="notice_title" id="notice_title" value="${noticeDTO.notice_title}">
                                             <textarea class="mt-3" name="notice_content" id="content">${noticeDTO.notice_content}</textarea>
                                             <input type="file" name="file" id="file" multiple>

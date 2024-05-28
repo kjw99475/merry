@@ -15,12 +15,15 @@
                     </when>
                 </choose>
             </if>
+            <if test="type2 == 0">
+                AND info_type is NULL
+            </if>
         </where>
     </sql>
 
 
     <select id="ListByPage" resultType="org.fullstack.merry.domain.InfoVO">
-        SELECT info_idx, info_title, info_content, info_org_file_name, info_save_file_name, info_type, info_reg_date, info_modify_date, member_idx
+        SELECT info_idx, info_title, info_content, info_org_file_name, info_save_file_name, info_type, info_reg_date, info_modify_date, member_idx, info_type
         FROM info
         <include refid="whereCondition"></include>
         ORDER BY info_idx DESC

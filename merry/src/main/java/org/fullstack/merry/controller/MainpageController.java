@@ -42,6 +42,7 @@ public class MainpageController {
 
         //강의 list
         PageRequestDTO pageRequestDTO = PageRequestDTO.builder()
+                .type2("0")
                 .page_size(3)
                 .build();
         PageResponseDTO<LectureDTO> lecturelist = lectureServiceif.lectureList(pageRequestDTO);

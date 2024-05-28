@@ -15,12 +15,15 @@
                     </when>
                 </choose>
             </if>
+            <if test="type2 == 0">
+                AND notice_type is NULL
+            </if>
         </where>
     </sql>
 
 
     <select id="ListByPage" resultType="org.fullstack.merry.domain.NoticeVO">
-        SELECT notice_idx, notice_title, notice_content, notice_org_file_name, notice_save_file_name, notice_type, notice_reg_date, notice_modify_date, member_idx, notice_member_name
+        SELECT notice_idx, notice_title, notice_content, notice_org_file_name, notice_save_file_name, notice_type, notice_reg_date, notice_modify_date, member_idx, notice_member_name, notice_type
         FROM notice
         <include refid="whereCondition"></include>
         ORDER BY notice_idx DESC

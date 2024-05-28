@@ -79,6 +79,7 @@
                                     <div class="contact-form">
                                         <form id="frm_" name="frm_" method="post" action="/admin/data/regist" enctype="multipart/form-data">
                                             <input type="hidden" name="member_idx" value="${sessionScope.member_idx}">
+                                            <input type="hidden" name="data_member_name" value="${sessionScope.name}">
                                             <input type="text" class="form-control" name="data_title" id="data_title" value="${dataDTO.data_title}">
                                             <textarea class="mt-3" name="data_content" id="content">${dataDTO.data_content}</textarea>
                                             <input type="file" name="file" id="file" multiple>
