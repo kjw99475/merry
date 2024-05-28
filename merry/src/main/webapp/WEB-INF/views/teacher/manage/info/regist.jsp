@@ -64,17 +64,14 @@
   <div>
     <div class="container-fluid">
       <div class="container mb-5">
-        <div class="row mt-5">
-          <jsp:include page="/WEB-INF/views/common/teacher_sidebar.jsp">
-            <jsp:param name="menu" value="regist"/>
-          </jsp:include>
+        <div class="row mt-5 justify-content-center">
           <div class="col-lg-9 text-center">
           <form name="frmJoin" id="frmJoin" method="post" action="/teacher/manage/info/regist" enctype="multipart/form-data">
             <input type="hidden" name="member_idx" value="${sessionScope.member_idx}">
             <div class="list-group mt-5 mb-150">
               <div style="margin-bottom: 24px;" aria-current="true">
                 <div class="d-flex w-100 justify-content-center" style="margin-bottom: 8px; padding-bottom: 4px;">
-                  <div class="mb-1">
+                  <div class="mb-1 w-100">
                     <div class="mb-3">
                       <div class="input-group">
                         <span class="input-group-text">이름</span>

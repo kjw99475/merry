@@ -219,7 +219,7 @@ public class TeacherController {
         } else {
             redirectAttributes.addFlashAttribute("errorFile", "썸네일 사진을 등록해 주세요.");
             log.info("썸네일 사진 이슈");
-            return "redirect:/lecture/regist";
+            return "redirect:/teacher/manage/info/regist";
         }
 
         int registResult = teacherService.teacherInfoRegist(teacherDTO);
@@ -268,9 +268,10 @@ public class TeacherController {
         }
 
         int modifyResult = teacherService.teacherInfoModify(teacherDTO);
+        String member_idx = session.getAttribute("member_idx").toString();
 
         if (modifyResult > 0) {
-            return "redirect:/teacher/manage/main";
+            return "redirect:/teacher/manage/list?teacheridx="+member_idx;
         }
         else {
             return "redirect:/teacher/manage/info/modify";
