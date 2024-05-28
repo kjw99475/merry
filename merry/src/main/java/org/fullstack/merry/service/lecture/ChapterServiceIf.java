@@ -15,4 +15,6 @@ public interface ChapterServiceIf {
     List<ChapterVO> chapterList(int lec_idx);
     int totalChapter(int lec_idx);
     int realDelete(int chap_idx);
+
+    ChapterDTO myLectureOneChapter(int lec_idx, int chap_idx);
 }

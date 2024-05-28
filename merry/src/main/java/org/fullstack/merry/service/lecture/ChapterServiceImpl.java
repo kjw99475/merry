@@ -74,4 +74,12 @@ public class ChapterServiceImpl implements ChapterServiceIf{
     public int realDelete(int chap_idx){
         return chapterMapper.realDelete(chap_idx);
     }
+
+    @Override
+    public ChapterDTO myLectureOneChapter(int lec_idx, int chap_idx) {
+        ChapterVO chapterVO = chapterMapper.myLectureOneChapter(lec_idx, chap_idx);
+        ChapterDTO chapterDTO = modelMapper.map(chapterVO, ChapterDTO.class);
+
+        return chapterDTO;
+    }
 }

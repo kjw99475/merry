@@ -20,15 +20,27 @@
     </sql>
 
     <sql id="reviewWhereCondition">
-            <if test="search_type != null">
-                <foreach collection="search_type" item="type" >
-                    <trim prefix="AND">
-                        <if test="type == 't'.toString()">
-                            comment like concat('%', #{search_word},'%')
-                        </if>
-                    </trim>
-                </foreach>
-            </if>
+        <if test="search_type != null">
+            <foreach collection="search_type" item="type" >
+                <trim prefix="AND">
+                    <if test="type == 't'.toString()">
+                        comment like concat('%', #{search_word},'%')
+                    </if>
+                </trim>
+            </foreach>
+        </if>
+    </sql>
+
+    <sql id="lectureWhereCondition">
+        <if test="search_type != null">
+            <foreach collection="search_type" item="type" >
+                <trim prefix="AND">
+                    <if test="type == 't'.toString()">
+                        lec_title like concat('%', #{search_word},'%')
+                    </if>
+                </trim>
+            </foreach>
+        </if>
     </sql>
 
     <select id="myQnaList">
@@ -55,5 +67,25 @@
         SELECT COUNT(*) FROM lecture_review
         WHERE member_idx = #{member_idx}
         <include refid="reviewWhereCondition"></include>
+    </select>
+
+    <select id="myLectureList">
+        SELECT lt.* FROM `order` AS ord
+        INNER JOIN order_detail AS od ON od.order_idx = ord.order_idx
+        INNER JOIN member AS mb ON mb.member_id = ord.member_id
+        INNER JOIN lecture AS lt ON lt.lec_idx = od.lec_idx
+        WHERE ord.member_id = #{member_id}
+        <include refid="lectureWhereCondition"></include>
+        GROUP BY lt.lec_idx
+        ORDER BY lt.lec_idx DESC
+    </select>
+
+    <select id="totalMyLecture">
+        SELECT COUNT(*) FROM `order` AS ord
+        INNER JOIN order_detail AS od ON od.order_idx = ord.order_idx
+        INNER JOIN member AS mb ON mb.member_id = ord.member_id
+        INNER JOIN lecture AS lt ON lt.lec_idx = od.lec_idx
+        WHERE ord.member_id = #{member_id}
+        <include refid="lectureWhereCondition"></include>
     </select>
 </mapper>

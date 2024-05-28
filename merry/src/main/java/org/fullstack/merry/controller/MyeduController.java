@@ -2,11 +2,16 @@ package org.fullstack.merry.controller;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
+import org.fullstack.merry.Common.FileUploadUtil;
 import org.fullstack.merry.domain.Calendar;
+import org.fullstack.merry.domain.lecture.ChapterVO;
 import org.fullstack.merry.dto.*;
+import org.fullstack.merry.dto.lecture.ChapterDTO;
+import org.fullstack.merry.dto.lecture.LectureDTO;
 import org.fullstack.merry.service.CalendarService;
 import org.fullstack.merry.service.GradeService;
 import org.fullstack.merry.service.MyeduService;
+import org.fullstack.merry.service.lecture.ChapterServiceIf;
 import org.json.simple.JSONObject;
 import org.json.simple.JSONArray;
 import org.springframework.stereotype.Controller;
@@ -30,6 +35,7 @@ public class MyeduController {
     private final CalendarService calendarService;
     private final GradeService gradeService;
     private final MyeduService myeduService;
+    private final ChapterServiceIf chapterService;
 
     @GetMapping("/plan/list")
     public void planList() {
@@ -159,4 +165,28 @@ public class MyeduController {
             model.addAttribute("responseDTO", responseDTO);
         }
     }
+
+    @GetMapping("/lecture/list")
+    public void myLectureList(@Valid PageRequestDTO pageRequestDTO,
+                              BindingResult bindingResult,
+                              RedirectAttributes redirectAttributes,
+                              HttpSession session,
+                              Model model) {
+        pageRequestDTO.setMember_id(session.getAttribute("member_id").toString());
+
+        PageResponseDTO<LectureDTO> responseDTO = myeduService.myLectureList(pageRequestDTO);
+
+        model.addAttribute("responseDTO", responseDTO);
+    }
+
+    @GetMapping("/lecture/view")
+    public void myLectureView(int lec_idx, Model model) {
+        List<ChapterVO> chapterDTOList = chapterService.chapterList(lec_idx);
+        ChapterDTO chapterDTO = chapterService.myLectureOneChapter(lec_idx, chapterDTOList.get(0).getChap_idx());
+
+        log.info("chapterDTO: {}", chapterDTO);
+        model.addAttribute("lec_idx", lec_idx);
+        model.addAttribute("chapterDTOList", chapterDTOList);
+        model.addAttribute("chapterDTO", chapterDTO);
+    };
 }

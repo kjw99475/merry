@@ -258,4 +258,9 @@ public class LectureServiceImpl implements LectureServiceIf{
         return result;
     }
 
+    @Override
+    public int realDelete(int lec_idx) {
+        return lectureMapper.realDelete(lec_idx);
+    }
+
 }

@@ -130,10 +130,12 @@
                         if(confirm("장바구니에 상품이 존재합니다.\n장바구니로 이동하시겠습니까?")){
                             window.location.href="/mypage/cart"
                         }
-                    }else {
+                    }else if(result == 1){
                         if (confirm("장바구니에 추가되었습니다.\n장바구니로 이동하시겠습니까?")) {
                             window.location.href = "/mypage/cart"
                         }
+                    }else{
+                        alert("결제한 이력이 있는 강의 입니다.");
                     }
                 },
                 error: function (error) { // 비동기 통신이 실패할경우 error 콜백으로 들어옵니다.
