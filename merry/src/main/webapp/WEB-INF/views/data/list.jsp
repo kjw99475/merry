@@ -108,7 +108,7 @@
                             <c:forEach items="${responseDTO.dtoList}" var="bbsDTO" varStatus="loop">
                                 <tr>
                                     <th>${total_count -responseDTO.page_skip_count -loop.index}</th>
-                                    <td><a href="/data/view?data_idx=${bbsDTO.data_idx}" class="black-text">${bbsDTO.data_title}</a><c:if test="${bbsDTO.data_org_file_name != null and bbsDTO.data_org_file_name != '' }" ><i class="fas fa-pen"></i></c:if> </td>
+                                    <td><a href="/data/view?data_idx=${bbsDTO.data_idx}" class="black-text">${bbsDTO.data_title}</a><c:if test="${bbsDTO.data_org_file_name != null and bbsDTO.data_org_file_name != '' }" ><i class="fas fa-file"></i></c:if> </td>
                                     <td>${bbsDTO.data_reg_date}</td>
                                 </tr>
                             </c:forEach>
