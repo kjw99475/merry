@@ -130,7 +130,7 @@
 
     <div class="row">
         <c:forEach var="lectureDTO" items="${responseDTO.dtoList}">
-
+            <c:set var="ltitle" value="${lectureDTO.lec_title}"/>
             <div class="col-lg-3 col-md-6 ${lectureDTO.lec_subject}">
                 <div class="single-latest-news">
                     <a href="/lecture/view?lec_idx=${lectureDTO.lec_idx}"><div class="latest-news-bg news-bg-1" style="background: url('/resources/uploads/lecture/${lectureDTO.lec_img}'); background-size: 100% 100%">
@@ -140,10 +140,24 @@
                         <h3><a href="/lecture/view?lec_idx=${lectureDTO.lec_idx}">
                             <c:choose>
                                 <c:when test="${lectureDTO.lec_status eq 'N'}">
-                                    <span style="text-decoration:line-through; color:red">${lectureDTO.lec_title} </span>
+                                    <c:choose>
+                                        <c:when test="${fn:length(ltitle) > 20}">
+                                            <span style="text-decoration:line-through; color:red">${fn:substring(ltitle, 0, 20)}... </span>
+                                        </c:when>
+                                        <c:otherwise>
+                                            <span style="text-decoration:line-through; color:red">${ltitle} </span>
+                                        </c:otherwise>
+                                    </c:choose>
                                 </c:when>
                                 <c:otherwise>
-                                    <span>${lectureDTO.lec_title}</span>
+                                    <c:choose>
+                                        <c:when test="${fn:length(ltitle) > 20}">
+                                            <span>${fn:substring(ltitle, 0, 20)}...</span>
+                                        </c:when>
+                                        <c:otherwise>
+                                            <span>${ltitle}</span>
+                                        </c:otherwise>
+                                    </c:choose>
                                 </c:otherwise>
                             </c:choose>
                             <c:if test="">
@@ -242,10 +256,12 @@
                         if(confirm("장바구니에 상품이 존재합니다.\n장바구니로 이동하시겠습니까?")){
                             window.location.href="/mypage/cart"
                         }
-                    }else {
+                    }else if(result == 1){
                         if (confirm("장바구니에 추가되었습니다.\n장바구니로 이동하시겠습니까?")) {
                             window.location.href = "/mypage/cart"
                         }
+                    }else{
+                        alert("결제한 이력이 있는 강의 입니다.");
                     }
                 },
                 error: function (error) { // 비동기 통신이 실패할경우 error 콜백으로 들어옵니다.
