@@ -178,15 +178,4 @@ public class MyeduController {
 
         model.addAttribute("responseDTO", responseDTO);
     }
-
-    @GetMapping("/lecture/view")
-    public void myLectureView(int lec_idx, Model model) {
-        List<ChapterVO> chapterDTOList = chapterService.chapterList(lec_idx);
-        ChapterDTO chapterDTO = chapterService.myLectureOneChapter(lec_idx, chapterDTOList.get(0).getChap_idx());
-
-        log.info("chapterDTO: {}", chapterDTO);
-        model.addAttribute("lec_idx", lec_idx);
-        model.addAttribute("chapterDTOList", chapterDTOList);
-        model.addAttribute("chapterDTO", chapterDTO);
-    };
 }
