@@ -209,8 +209,9 @@ public class TeacherController {
 
         int registResult = teacherService.teacherInfoRegist(teacherDTO);
 
+        String member_idx = session.getAttribute("member_idx").toString();
         if(registResult > 0) {
-            return "redirect:/teacher/manage/list";
+            return "redirect:/teacher/manage/list?teacheridx="+member_idx;
         }
         else {
             return "redirect:/teacher/manage/info/regist";
