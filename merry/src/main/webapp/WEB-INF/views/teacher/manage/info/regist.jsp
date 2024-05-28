@@ -160,6 +160,20 @@
         document.getElementById('preview').src = "";
       }
     }
+
+    //유효성
+    <c:if test="${not empty errors}">
+    let errM = "";
+    <c:forEach items="${errors}" var="err">
+    errM += "${err.defaultMessage}" + "\n";
+    </c:forEach>
+    alert(errM);
+    </c:if>
+
+    //썸네일 사진
+    <c:if test="${not empty errorFile}">
+    alert("${errorFile}");
+    </c:if>
   </script>
 
   <script src="/resources/assets/js/jquery-1.11.3.min.js"></script>
