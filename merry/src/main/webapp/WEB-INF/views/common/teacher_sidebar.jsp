@@ -9,7 +9,7 @@
                 <h4>Categories</h4>
                 <div class="empty"></div>
                 <ul class="list-unstyled ps-0 fruite-categorie M01" >
-                    <c:if test="${requestScope.member_idx == sessionScope.member_idx}">
+                    <c:if test="${teacheridx == sessionScope.member_idx}">
                         <c:choose>
                             <c:when test="${present >= 1}">
                                 <li><a class="nav-link black-text<c:if test="${param.menu eq 'modify'}"> active</c:if>" href="/teacher/manage/info/modify">선생님 정보 수정하기</a></li>

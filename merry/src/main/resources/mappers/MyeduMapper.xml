@@ -47,12 +47,15 @@
         SELECT * FROM qna as q
         INNER JOIN lecture as l ON l.lec_idx = q.qna_lec_idx
         WHERE q.member_idx = #{member_idx}
+        AND qna_type = 'l'
         <include refid="qnaWhereCondition"></include>
+        LIMIT #{page_skip_count}, #{page_size}
     </select>
 
     <select id="totalMyQna">
         SELECT COUNT(*) FROM qna
         WHERE member_idx = #{member_idx}
+        AND qna_type = 'l'
         <include refid="qnaWhereCondition"></include>
     </select>
 
@@ -61,6 +64,7 @@
         INNER JOIN lecture as l ON l.lec_idx = lr.lec_idx
         WHERE lr.member_idx = #{member_idx}
         <include refid="reviewWhereCondition"></include>
+        LIMIT #{page_skip_count}, #{page_size}
     </select>
 
     <select id="totalMyReview">
