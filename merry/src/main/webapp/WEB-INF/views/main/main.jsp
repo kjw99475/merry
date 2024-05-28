@@ -72,7 +72,7 @@
                         <div class="single-testimonial-slider">
 
                                 <div class="client-avater">
-                                    <img src="/resources/assets/img/${teacher.teacher_image}" alt="teacher_img">
+                                    <img src="/resources/assets/img/${teacher.teacher_image}" alt="teacher_img" style="max-height: 120px;">
                                 </div>
                                 <div class="client-meta">
                                     <h3>${teacher.teacher_name} 선생님<span>${teacher.subject}</span></h3>
