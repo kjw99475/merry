@@ -23,4 +23,6 @@ public class BoardDTO {
     private LocalDate board_reg_date;
     private LocalDate board_modify_date;
     private int member_idx;
+
+    private int reply_count;
 }

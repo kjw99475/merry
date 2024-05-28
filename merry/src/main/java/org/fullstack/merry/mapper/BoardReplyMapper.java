@@ -18,6 +18,7 @@ public interface BoardReplyMapper {
 
     int deleteReply(int reply_idx);
     int dedate_reply_cnt(int board_idx);
+    int countReply(int board_idx);
 
     List<BoardReplyVO> ListByPage2(PageRequestDTO requestDTO);
     int TotalCount(PageRequestDTO requestDTO);

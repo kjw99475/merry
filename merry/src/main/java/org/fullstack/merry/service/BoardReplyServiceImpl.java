@@ -50,4 +50,10 @@ public class BoardReplyServiceImpl implements BoardReplyServiceIf{
         return 0;
     }
 
+    @Override
+    public int countReply(int board_idx) {
+        int result = 0;
+        result = boardReplyMapper.countReply(board_idx);
+        return result;
+    }
 }

@@ -43,6 +43,11 @@ public class BoardController {
         pageRequestDTO.setType2("0");
         PageResponseDTO<BoardDTO> responseDTO = boardServiceIf.ListByPage(pageRequestDTO);
 
+//        ==================== 댓글 개수 count
+        responseDTO.getDtoList().stream()
+                .forEach(boardDTO -> boardDTO.setReply_count(boardReplyServiceIf.countReply(boardDTO.getBoard_idx())));
+
+
         model.addAttribute("responseDTO", responseDTO);
     }
 

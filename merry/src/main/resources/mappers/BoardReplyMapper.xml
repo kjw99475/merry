@@ -56,4 +56,10 @@
         WHERE reply_idx = #{reply_idx}
     </delete>
 
+    <select id="countReply">
+        select count(*)
+        from board_reply
+        where board_idx = #{board_idx}
+    </select>
+
 </mapper>
