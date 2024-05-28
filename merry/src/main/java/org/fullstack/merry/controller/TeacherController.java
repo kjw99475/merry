@@ -85,14 +85,11 @@ public class TeacherController {
 
         PageResponseDTO<TeacherDTO> responseDTO = teacherService.teacherPageList(pageRequestDTO);
 
-        log.info("responseDTO: {}", responseDTO);
-
         model.addAttribute("responseDTO", responseDTO);
     }
 
     @GetMapping("/manage/list")
     public void manageList(@RequestParam(value = "teacheridx", defaultValue = "0") String teacheridx,
-                           int member_idx,
                            HttpSession session,
                            Model model){
         String member_id = (String)session.getAttribute("member_id");
@@ -111,12 +108,12 @@ public class TeacherController {
         List<Integer> cartlist = teacherService.cartList(member_id);
         List<Integer> zzimlist = teacherService.zzimList(member_id);
 
-        model.addAttribute("member_idx", member_idx);
         model.addAttribute("zzimlist", zzimlist);
         model.addAttribute("cartlist", cartlist);
         model.addAttribute("lecturelist", lecturelist);
         model.addAttribute("teacheridx", teacheridx);
     }
+
     @GetMapping("/manage/materials")
     public void materials(@RequestParam(value = "teacheridx", defaultValue = "0") String teacheridx,
                           HttpSession session,
