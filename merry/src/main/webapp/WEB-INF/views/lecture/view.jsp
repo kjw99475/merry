@@ -174,7 +174,7 @@
                                                 <c:when test="${orderCnt >= 1 or sessionScope.member_idx eq lectureDTO.member_idx}">
                                                     <c:choose>
                                                         <c:when test="${not empty chapDTO.chap_video}">
-                                                            <li><a class="btn" onclick="javascript:Dalack_lab('/resources/uploads/lecture/${chapDTO.chap_video}')"> ${chapDTO.chap_title} (${chapDTO.chap_time})</a></li>
+                                                            <li><a class="btn" onclick="javascript:Dalack_lab('/resources/uploads/lecture/${chapDTO.chap_video}', ${lectureDTO.lec_idx})"> ${chapDTO.chap_title} (${chapDTO.chap_time})</a></li>
                                                         </c:when>
                                                         <c:otherwise>
                                                             <li> ${chapDTO.chap_title} (${chapDTO.chap_time})</li>
@@ -545,7 +545,7 @@
         }
     }
 
-    function Dalack_lab(data) {
+    function Dalack_lab(data, lec_idx) {
         let winW=1000;
         let winH=650;
         let vodW=1000;
@@ -558,6 +558,19 @@
         popup.document.write("<center><embed src='"+data+"' width='"+vodW+"' height='"+vodH+"' name=name></embed>");
         popup.document.write("</center>");
         popup.document.write("</body></html>"); popup.document.close();
+        $.ajax({
+            type: "POST",            // HTTP method type(GET, POST) 형식이다.
+            url: "/mypage/viewCheck",      // 컨트롤러에서 대기중인 URL 주소이다.
+            data: {
+                lec_idx: lec_idx
+            },            // Json 형식의 데이터이다.
+            success: function (result) { // 비동기통신의 성공일경우 success콜백으로 들어옵니다. 'res'는 응답받은 데이터이다.
+                
+            },
+            error: function (error) { // 비동기 통신이 실패할경우 error 콜백으로 들어옵니다.
+                console.log(error);
+            }
+        });
     }
 
 

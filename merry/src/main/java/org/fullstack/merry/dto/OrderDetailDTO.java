@@ -17,6 +17,12 @@ public class OrderDetailDTO {
     private int idx;
     private int order_idx;
     private int lec_idx;
+    private String view_check;
+    private String return_yn;
 
     private int member_idx;
+    
+    private String lec_title;
+    private String lec_content;
+    private int lec_price;
 }
