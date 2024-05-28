@@ -1,6 +1,7 @@
 package org.fullstack.merry.mapper;
 
 import org.fullstack.merry.domain.QnaVO;
+import org.fullstack.merry.domain.lecture.LectureVO;
 import org.fullstack.merry.dto.MyQnaDTO;
 import org.fullstack.merry.dto.MyReviewDTO;
 import org.fullstack.merry.dto.PageRequestDTO;
@@ -14,4 +15,7 @@ public interface MyeduMapper {
 
     List<MyReviewDTO> myReviewList(PageRequestDTO pageRequestDTO);
     int totalMyReview(PageRequestDTO pageRequestDTO);
+
+    List<LectureVO> myLectureList(PageRequestDTO pageRequestDTO);
+    int totalMyLecture(PageRequestDTO pageRequestDTO);
 }

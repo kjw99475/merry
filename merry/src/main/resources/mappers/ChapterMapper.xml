@@ -42,4 +42,10 @@
     <delete id="realDelete">
         delete from chapter where chap_idx=#{chap_idx}
     </delete>
+
+    <select id="myLectureOneChapter">
+        SELECT * FROM chapter
+        WHERE lec_idx = #{lec_idx}
+        AND chap_idx = #{chap_idx}
+    </select>
 </mapper>
