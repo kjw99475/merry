@@ -35,6 +35,26 @@ public class TeacherServiceImpl implements TeacherServiceIf {
                 .collect(Collectors.toList());
         return memberList;
     }
+
+    @Override
+    public PageResponseDTO<TeacherDTO> teacherPageList(PageRequestDTO pageRequestDTO) {
+        List<TeacherVO> voList = teacherMapper.teacherPageList(pageRequestDTO);
+
+        List<TeacherDTO> dtoList = voList.stream()
+                .map(vo -> modelMapper.map(vo, TeacherDTO.class))
+                .collect(Collectors.toList());
+
+        int total_count = teacherMapper.totalTeacher();
+
+        PageResponseDTO<TeacherDTO> responseDTO = PageResponseDTO.<TeacherDTO>withAll()
+                .requestDTO(pageRequestDTO)
+                .dtoList(dtoList)
+                .total_count(total_count)
+                .build();
+
+        return responseDTO;
+    }
+
     @Override
     public List<LectureDTO> lectureList(String teacherIdx){
         List<LectureDTO> LectureList = teacherMapper.lecturelist(teacherIdx).stream()

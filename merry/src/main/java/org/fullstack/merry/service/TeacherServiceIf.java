@@ -1,6 +1,7 @@
 package org.fullstack.merry.service;
 
 import org.fullstack.merry.domain.GradeVO;
+import org.fullstack.merry.domain.TeacherVO;
 import org.fullstack.merry.dto.*;
 import org.fullstack.merry.dto.lecture.LectureDTO;
 
@@ -9,6 +10,7 @@ import java.util.List;
 public interface TeacherServiceIf {
     List<NoticeDTO> noticeList(String memberIdx);
     List<TeacherDTO> teacherlist();
+    PageResponseDTO<TeacherDTO> teacherPageList(PageRequestDTO pageRequestDTO);
     List<LectureDTO> lectureList(String teacherIdx);
     List<DataDTO> dataList(String teacherIdx);
     List<QnaDTO> qnaList(String teacher_idx);

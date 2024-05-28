@@ -41,10 +41,19 @@
 <!--================ 헤더 start =================-->
 <jsp:include page="/WEB-INF/views/common/header.jsp" />
 <!--================ 헤더 end =================-->
-
+<div class="breadcrumb-section breadcrumb-bg">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 offset-lg-2 text-center">
+                <div class="breadcrumb-text">
+                    <p>선생님</p>
+                    <h1>선생님 목록</h1>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 <!--================ 본문 start =================-->
-<!-- hero area -->
-<!-- end hero area -->
 
 <!-- 선생님 섹션 -->
 <div class="container pt-100 mb-5">
@@ -56,27 +65,67 @@
         </div>
     </div>
     <div class="row">
-        <c:forEach var="list" items="${teacherlist}">
+        <c:forEach var="list" items="${responseDTO.dtoList}">
             <div class="col-lg-3 col-md-6">
                 <div class="single-latest-news">
-                    <a href="manage/list?teacheridx=${list.member_idx}"><div class="latest-news-bg news-bg-1" style="background: url('/resources/assets/img/${list.teacher_image}'); background-size: 100% 100%">
-                    </div></a>
+                    <a href="manage/list?member_idx=${list.member_idx}"><div class="latest-news-bg news-bg-1" style="background: url('/resources/assets/img/${list.teacher_image}'); background-size: 100% 100%">
+                    </div>
                     <div class="news-text-box">
-                        <h3><a href="#">${list.intro}</a></h3>
+                        <h3>${list.intro}</h3>
                         <p class="blog-meta border-bottom pb-1">
                             <span class="author"><i class="fas fa-user"></i> ${list.teacher_name}</span>
                             <span class="date"><i class="fas fa-calendar"></i>${list.subject}</span>
                         </p>
                     </div>
+                    </a>
                 </div>
             </div>
         </c:forEach>
     </div>
-    <div class="btn-toolbar justify-content-center" role="toolbar" aria-label="Toolbar with button groups">
-        <div class="btn-group">
-            <button type="button" class="btn btn-outline-merry">1</button>
-        </div>
+    <!--================ 페이징 start =================-->
+    <div class="pagination-wrap">
+        <nav class="blog-pagination justify-content-center d-flex">
+            <ul class="pagination">
+                <c:if test="${responseDTO.page<=10}">
+                <li class="page-item disabled">
+                    </c:if>
+                    <c:if test="${responseDTO.page>10}">
+                <li class="page-item">
+                    </c:if>
+                    <a class="page-link" href="/admin/board/list${responseDTO.linked_params}&page=${responseDTO.page_block_end-10}" aria-label="Previous">
+                        <span aria-hidden="true">&laquo;</span>
+                    </a>
+                </li>
+                <c:forEach begin="${responseDTO.page_block_start}"
+                           end="${responseDTO.page_block_end}"
+                           var="page_num">
+                    <c:choose>
+                        <c:when test="${responseDTO.page == page_num}">
+                            <li class="page-item active">
+                                <a href="#" class="page-link">${page_num}</a>
+                            </li>
+                        </c:when>
+                        <c:otherwise>
+                            <li class="page-item">
+                                <a href="${responseDTO.linked_params}&page=${page_num}" class="page-link">${page_num}</a>
+                            </li>
+                        </c:otherwise>
+                    </c:choose>
+                </c:forEach>
+                <c:if test="${(responseDTO.page_block_start+10)>(responseDTO.total_page)}">
+                <li class="page-item disabled">
+                    </c:if>
+                    <c:if test="${(responseDTO.page_block_start+10)<=(responseDTO.total_page)}">
+                <li class="page-item">
+                    </c:if>
+                    <a class="page-link" href="/admin/board/list${responseDTO.linked_params}&page=${responseDTO.page_block_start+10}" aria-label="Next">
+                        <span aria-hidden="true">&raquo;</span>
+                    </a>
+                </li>
+            </ul>
+        </nav>
     </div>
+    <!--================ 페이징 end =================-->
 </div>
 <!-- //커뮤니티 섹션 -->
 
