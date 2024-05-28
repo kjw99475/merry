@@ -57,7 +57,7 @@
                 <div class="container">
                     <div class="row">
                         <div class="col-md-12">
-                            <form class="cart-table-wrap" action="/mypage/payment">
+                            <form class="cart-table-wrap" action="/order/order">
                                 <table class="cart-table">
                                     <thead class="cart-table-head">
                                     <tr class="table-head-row">
@@ -96,7 +96,7 @@
                         <div class="col-md-4 text-left">
                             <div class="mb-3">
                                 <button class="btn btn-lg orange-outline-btn bordered-btn mr-1" type="button" >선택 주문</button>
-                                <button class="btn btn-lg orange-btn bordered-btn" type="button" onclick="location='/order/order?lec_idx=25,38,47'">전체 주문</button>
+                                <button class="btn btn-lg orange-btn bordered-btn" type="button" onclick="selectAll()">전체 주문</button>
                             </div>
                             <div>
                                 <button class="btn btn-lg red-outline-btn bordered-btn mr-1" type="button">선택 삭제</button>
@@ -148,6 +148,12 @@
     <script src="/resources/assets/js/main.js"></script>
 
     <script>
+
+        function selectAll() {
+
+        }
+
+
         function deleteOK(cart_idx) {
             let confirmYN = confirm("장바구니를 삭제하시겠습니까?");
             if (confirmYN) {

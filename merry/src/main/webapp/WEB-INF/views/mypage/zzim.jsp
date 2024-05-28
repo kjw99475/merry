@@ -79,8 +79,8 @@
                                                     <td class="p-2 product-image"><img src="/resources/uploads/lecture/${list.lec_img}" width="50px"></td>
                                                     <td class="p-2"><a href="/lecture/view?lec_idx=${list.lec_idx}">${list.lec_title}</a></td>
                                                     <td class="p-2"><fmt:formatNumber type="number" maxFractionDigits="3" value="${list.lec_price}" /></td>
-                                                    <td class="p-2"><button class="btn orange-outline-btn bordered-btn" type="button">추가</button></td>
-                                                    <td class="p-2"><button class="btn red-outline-btn bordered-btn" type="button" onclick="location.href='/mypage/deletezzim?zzim_idx=${list.zzim_idx}'">삭제</button></td>
+                                                    <td class="p-2"><button class="btn orange-outline-btn bordered-btn" type="button" onclick="addcart(${list.lec_idx})">추가</button></td>
+                                                    <td class="p-2"><button class="btn red-outline-btn bordered-btn" type="button" onclick="deleteMyZzim(${list.lec_idx})">삭제</button></td>
                                                 </tr>
                                             </c:forEach>
                                         </c:when>
@@ -152,8 +152,8 @@
         </div>
     </div>
 
-
     <jsp:include page="/WEB-INF/views/common/footer.jsp" />
+
     <script src="/resources/assets/js/jquery-1.11.3.min.js"></script>
     <script src="/resources/assets/bootstrap/js/bootstrap.min.js"></script>
     <script src="/resources/assets/js/jquery.countdown.js"></script>
@@ -164,5 +164,29 @@
     <script src="/resources/assets/js/jquery.meanmenu.min.js"></script>
     <script src="/resources/assets/js/sticker.js"></script>
     <script src="/resources/assets/js/main.js"></script>
+
+    <script>
+        function deleteMyZzim(lec_idx) {
+            const flag = confirm("찜에서 삭제하시겠습니까?");
+
+            if(flag) {
+                $.ajax({
+                    url: "/mypage/deletezzim/",
+                    type: "POST",
+                    data: {
+                        lec_idx: lec_idx,
+                        member_id: "${member_id}"
+                    },
+                    success: function(result) {
+                        if(result != "fail") {
+                            window.location.reload(result);
+                        } else {
+                            alert("찜 삭제 실패");
+                        }
+                    }
+                });
+            }
+        }
+    </script>
 </body>
 </html>

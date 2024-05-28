@@ -5,10 +5,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotEmpty;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.PositiveOrZero;
+import javax.validation.constraints.*;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -19,6 +16,7 @@ import java.util.List;
 public class LectureDTO {
     private int lec_idx;
     @NotBlank(message = "제목을 입력해 주세요.")
+    @Size( max=100, message = "제목은 100자 이내로 작성해 주세요.")
     private String lec_title;
     @NotBlank(message = "내용을 입력해 주세요.")
     private String lec_content;

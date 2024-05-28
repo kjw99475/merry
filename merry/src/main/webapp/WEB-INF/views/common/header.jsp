@@ -17,7 +17,7 @@
                             <li><a href="/teacher/list">선생님</a></li>
                             <li><a href="/lecture/list">강의</a></li>
 
-                            <li><a href="#">커뮤니티</a>
+                            <li><a href="/notice/list">커뮤니티</a>
                                 <ul class="sub-menu">
                                     <li><a href="/notice/list">공지사항</a></li>
                                     <li><a href="/info/list">교육정보</a></li>
