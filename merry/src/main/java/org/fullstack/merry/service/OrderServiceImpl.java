@@ -40,4 +40,9 @@ public class OrderServiceImpl implements OrderServiceIf {
                 .collect(Collectors.toList());
         return orderlist;
     }
+
+    @Override
+    public void cartout(String member_id, String lec_idx) {
+        orderMapper.cartout(member_id, lec_idx);
+    }
 }

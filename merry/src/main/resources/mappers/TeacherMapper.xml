@@ -34,6 +34,16 @@
         FROM teacher
     </select>
 
+    <select id="teacherPageList" resultType="org.fullstack.merry.domain.TeacherVO">
+        SELECT *
+        FROM teacher
+        LIMIT #{page_skip_count}, #{page_size}
+    </select>
+    <select id="totalTeacher">
+        SELECT COUNT(*)
+        FROM teacher
+    </select>
+
     <select id="lecturelist" resultType="org.fullstack.merry.domain.lecture.LectureVO">
         SELECT lec_idx, lec_title, lec_img, lec_subject
         FROM lecture

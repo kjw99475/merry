@@ -8,4 +8,5 @@ public interface OrderServiceIf {
     void order(String member_id, int order_total, String lec_idx);
     int order_total(String lec_idx);
     List<LectureDTO> orderlist(String lec_idx);
+    void cartout(String member_id, String lec_idx);
 }
