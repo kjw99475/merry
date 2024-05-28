@@ -90,7 +90,7 @@
                                             <c:forEach items="${responseDTO.dtoList}" var="bbsDTO" varStatus="loop">
                                                 <tr class="table-body-row text-center">
                                                     <td>${total_count -responseDTO.page_skip_count -loop.index}</td>
-                                                    <td class="p-2"><a href="/admin/notice/view?notice_idx=${bbsDTO.notice_idx}" class="black-text">${bbsDTO.notice_title}</a><c:if test="${bbsDTO.notice_org_file_name != null and bbsDTO.notice_org_file_name != '' }" ><i class="fas fa-pen"></i></c:if> </td>
+                                                    <td class="p-2"><a href="/admin/notice/view?notice_idx=${bbsDTO.notice_idx}" class="black-text">${bbsDTO.notice_title}</a><c:if test="${bbsDTO.notice_org_file_name != null and bbsDTO.notice_org_file_name != '' }" ><i class="fas fa-file"></i></c:if> </td>
                                                     <td class="p-2">${bbsDTO.notice_reg_date}</td>
                                                 </tr>
                                             </c:forEach>
