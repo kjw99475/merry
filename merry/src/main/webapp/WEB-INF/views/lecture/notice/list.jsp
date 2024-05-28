@@ -84,7 +84,7 @@
         </thead>
         <tbody>
         <c:choose>
-            <c:when test="${not empty qnaList}">
+            <c:when test="${not empty noticeList}">
                 <c:forEach var="list" items="${noticeList}" varStatus="i">
                     <tr>
                         <td>${i.count}</td>
@@ -105,7 +105,11 @@
                 </c:forEach>
             </c:when>
             <c:otherwise>
-                등록된 게시글이 없습니다.
+                <tr>
+                    <td colspan="5" class="text-center">
+                        등록된 게시글이 없습니다.
+                    </td>
+                </tr>
             </c:otherwise>
         </c:choose>
 
