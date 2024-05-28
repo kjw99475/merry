@@ -9,7 +9,8 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
-@WebFilter(urlPatterns = {"/admin/*", "/mypage/*", "/lecture/view", "/lecture/modify", "/lecture/regist", "/member/modify", "/member/view", "/myedu/*", "/teacher/*", "/order/*"})
+@WebFilter(urlPatterns = {"/admin/*", "/mypage/*", "/lecture/view/*", "/lecture/modify", "/lecture/regist", "/member/modify", "/member/view",
+        "/myedu/*", "/order/*", "/board/view/*", "/board/regist/*", "/board/modify/*", "/data/view/*", "/data/modify/*", "/data/regist/*", "/teacher/manage/*"})
 public class LoginCheckFilter implements Filter {
 
     @Override
