@@ -79,12 +79,24 @@ public class TeacherController {
         model.addAttribute("teacheridx", teacheridx);
     }
     @GetMapping("/list")
-    public void list(Model model){
-        List<TeacherDTO> teacherlist = teacherService.teacherlist();
-        model.addAttribute("teacherlist", teacherlist);
+    public void list(PageRequestDTO pageRequestDTO,
+                     Model model){
+        pageRequestDTO.setPage_size(4);
+
+        PageResponseDTO<TeacherDTO> responseDTO = teacherService.teacherPageList(pageRequestDTO);
+
+        log.info("responseDTO: {}", responseDTO);
+
+        model.addAttribute("responseDTO", responseDTO);
+    }
+
+    @GetMapping("/view")
+    public void view(int member_idx) {
+        log.info("member_idx : {}", member_idx);
     }
     @GetMapping("/manage/list")
     public void manageList(@RequestParam(value = "teacheridx", defaultValue = "0") String teacheridx,
+                           int member_idx,
                            HttpSession session,
                            Model model){
         String member_id = (String)session.getAttribute("member_id");
@@ -103,6 +115,7 @@ public class TeacherController {
         List<Integer> cartlist = teacherService.cartList(member_id);
         List<Integer> zzimlist = teacherService.zzimList(member_id);
 
+        model.addAttribute("member_idx", member_idx);
         model.addAttribute("zzimlist", zzimlist);
         model.addAttribute("cartlist", cartlist);
         model.addAttribute("lecturelist", lecturelist);
