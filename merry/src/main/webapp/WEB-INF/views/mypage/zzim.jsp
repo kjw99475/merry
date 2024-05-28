@@ -62,7 +62,7 @@
                                 <table class="cart-table">
                                     <thead class="cart-table-head">
                                     <tr class="table-head-row">
-                                        <th class="product-remove">선택</th>
+
                                         <th class="product-image">강의이미지</th>
                                         <th>강의제목</th>
                                         <th>가격</th>
@@ -75,7 +75,7 @@
                                         <c:when test="${!empty responseDTO && responseDTO.total_count > 0}">
                                             <c:forEach items="${responseDTO.dtoList}" var="list" varStatus="loop">
                                                 <tr class="table-body-row text-center">
-                                                    <td><input type="checkbox"/></td>
+
                                                     <td class="p-2 product-image"><img src="/resources/uploads/lecture/${list.lec_img}" width="50px"></td>
                                                     <td class="p-2"><a href="/lecture/view?lec_idx=${list.lec_idx}">${list.lec_title}</a></td>
                                                     <td class="p-2"><fmt:formatNumber type="number" maxFractionDigits="3" value="${list.lec_price}" /></td>
@@ -93,16 +93,6 @@
                                     </tbody>
                                 </table>
                             </form>
-                        </div>
-                        <div class="d-flex col-10 justify-content-between" style="margin: 0 auto;">
-                            <div class="cart-buttons">
-                                <button class="btn btn-lg orange-outline-btn bordered-btn" type="button">선택 추가</button>
-                                <button class="btn btn-lg orange-btn bordered-btn" type="button">전체 추가</button>
-                            </div>
-                            <div class="cart-buttons">
-                                <button class="btn btn-lg red-outline-btn bordered-btn" type="button">선택 삭제</button>
-                                <button class="btn btn-lg red-btn bordered-btn" type="button">전체 삭제</button>
-                            </div>
                         </div>
                         <div class="pagination-wrap">
                             <nav class="blog-pagination justify-content-center d-flex">
@@ -166,6 +156,35 @@
     <script src="/resources/assets/js/main.js"></script>
 
     <script>
+        function addcart(lecIdx){
+            if(lecIdx != 0) {
+                $.ajax({
+                    type: "POST",            // HTTP method type(GET, POST) 형식이다.
+                    url: "/mypage/addcart",      // 컨트롤러에서 대기중인 URL 주소이다.
+                    data: {
+                        lec_idx: lecIdx,
+                        member_id: "${member_id}"
+                    },            // Json 형식의 데이터이다.
+                    success: function (result) { // 비동기통신의 성공일경우 success콜백으로 들어옵니다. 'res'는 응답받은 데이터이다.
+                        if(result == 0){
+                            if(confirm("장바구니에 상품이 존재합니다.\n장바구니로 이동하시겠습니까?")){
+                                window.location.href="/mypage/cart"
+                            }
+                        }else if(result == 1){
+                            if (confirm("장바구니에 추가되었습니다.\n장바구니로 이동하시겠습니까?")) {
+                                window.location.href = "/mypage/cart"
+                            }
+                        }else{
+                            alert("결제한 이력이 있는 강의 입니다.");
+                        }
+                    },
+                    error: function (error) { // 비동기 통신이 실패할경우 error 콜백으로 들어옵니다.
+                        console.log(error);
+                    }
+                });
+            }
+        }
+
         function deleteMyZzim(lec_idx) {
             const flag = confirm("찜에서 삭제하시겠습니까?");
 
@@ -187,6 +206,7 @@
                 });
             }
         }
+
     </script>
 </body>
 </html>

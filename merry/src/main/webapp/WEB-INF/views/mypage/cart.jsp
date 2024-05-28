@@ -65,8 +65,7 @@
                                         <th class="product-image">강의이미지</th>
                                         <th>강의제목</th>
                                         <th>가격</th>
-                                        <th>주문</th>
-                                        <th>삭제</th>
+
                                     </tr>
                                     </thead>
                                     <tbody>
@@ -78,8 +77,7 @@
                                                     <td class="p-2 product-image"><img src="/resources/uploads/lecture/${list.lec_img}" width="50px"></td>
                                                     <td class="p-2"><a href="/lecture/view?lec_idx=${list.lec_idx}">${list.lec_title}</a></td>
                                                     <td class="p-2"><fmt:formatNumber type="number" maxFractionDigits="3" value="${list.lec_price}" /></td>
-                                                    <td class="p-2"><button class="btn orange-outline-btn bordered-btn" type="button" onclick="location='/order/order?lec_idx=${list.lec_idx}'">주문</button></td>
-                                                    <td class="p-2"><button class="btn red-outline-btn bordered-btn" type="button" onclick="deleteOK(${list.cart_idx})">삭제</button></td>
+                                                    
                                                 </tr>
                                             </c:forEach>
                                         </c:when>
