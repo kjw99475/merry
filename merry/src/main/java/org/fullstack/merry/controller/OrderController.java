@@ -66,4 +66,12 @@ public class OrderController {
             out.close();
         }
     }
+    @PostMapping("/cartout")
+    public String cartOutReal(@RequestParam(value = "lec_idx", defaultValue = "") String lec_idx,
+            HttpSession session) {
+
+        String member_id = session.getAttribute("member_id").toString();
+        orderService.cartout(member_id, lec_idx);
+        return "redirect:/mypage/cart";
+    }
 }
