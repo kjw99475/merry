@@ -16,4 +16,5 @@ public interface BoardReplyServiceIf {
     List<BoardReplyDTO> reply_list(int board_idx);
     int deleteReply(int reply_idx, int board_idx);
     int dedate_reply_cnt(int board_idx);
+    int countReply(int board_idx);
 }

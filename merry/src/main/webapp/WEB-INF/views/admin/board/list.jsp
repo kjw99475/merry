@@ -92,7 +92,9 @@
                                             <c:forEach items="${responseDTO.dtoList}" var="bbsDTO" varStatus="loop">
                                                 <tr class="table-body-row text-center">
                                                     <td>${total_count -responseDTO.page_skip_count -loop.index}</td>
-                                                    <td class="p-2"><a href="/admin/board/view?board_idx=${bbsDTO.board_idx}" class="black-text">${bbsDTO.board_title}</a></td>
+                                                    <td class="p-2"><a href="/admin/board/view?board_idx=${bbsDTO.board_idx}" class="black-text">${bbsDTO.board_title}</a>
+                                                        <c:if test="${bbsDTO.reply_count ne 0}"><span style="font-size: small; color: #6c757d">(${bbsDTO.reply_count})</span></c:if>
+                                                    </td>
                                                     <td class="p-2">${bbsDTO.board_writer}</td>
                                                     <td class="p-2">${bbsDTO.board_reg_date}</td>
                                                 </tr>
