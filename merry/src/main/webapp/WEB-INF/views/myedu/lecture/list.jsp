@@ -85,7 +85,7 @@
                     <c:forEach items="${responseDTO.dtoList}" var="lectureDTO" varStatus="loop">
                         <tr class="text-center">
                             <th>${total_count -responseDTO.page_skip_count -loop.index}</th>
-                            <td id="lecture_title${lectureDTO.lec_idx}"><a href="#">${lectureDTO.lec_title}</a></td>
+                            <td><a href="/lecture/view?lec_idx=${lectureDTO.lec_idx}">${lectureDTO.lec_title}</a></td>
                             <td>${lectureDTO.lec_price}</td>
                             <td>${lectureDTO.member_name}</td>
                         </tr>
@@ -93,7 +93,7 @@
                 </c:when>
                 <c:otherwise>
                     <tr class="bg-white text-center">
-                        <td colspan="4">등록된 글이 없습니다.</td>
+                        <td colspan="4">결제한 강의가 없습니다.</td>
                     </tr>
                 </c:otherwise>
             </c:choose>
@@ -148,12 +148,5 @@
 
 <jsp:include page="/WEB-INF/views/common/footer.jsp" />
 
-<script>
-<c:forEach items="${responseDTO.dtoList}" var="lectureDTO">
-    document.getElementById("lecture_title${lectureDTO.lec_idx}").addEventListener("click", function() {
-        window.open("/myedu/lecture/view?lec_idx=${lectureDTO.lec_idx}", "_blank");
-    });
-</c:forEach>
-</script>
 </body>
 </html>
