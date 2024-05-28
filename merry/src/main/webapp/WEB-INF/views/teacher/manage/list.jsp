@@ -51,7 +51,9 @@
 <div class="container-fluid">
     <div class="container pt-100 mb-5">
         <div class="row mt-5">
-            <jsp:include page="/WEB-INF/views/common/teacher_sidebar.jsp"/>
+            <jsp:include page="/WEB-INF/views/common/teacher_sidebar.jsp">
+                <jsp:param name="menu" value="lec"/>
+            </jsp:include>
             <div class="col-lg-9 text-center">
                 <div class="section-title">
                     <h3>선생님 강의</h3>

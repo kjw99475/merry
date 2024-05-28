@@ -21,6 +21,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 import java.util.List;
+import java.util.Vector;
 
 @Log4j2
 @Controller
@@ -33,12 +34,20 @@ public class TeacherController {
                        HttpSession session,
                        Model model){
         String member_id = (String)session.getAttribute("member_id");
+        List<LectureDTO> lecturelist = new Vector<>();
+
+        if(teacheridx.equals("0")){
+            int x = (int)session.getAttribute("member_idx");
+            teacheridx = String.valueOf(x);
+            lecturelist = teacherService.lectureList(teacheridx);
+            teacheridx = null;
+        }else{
+            lecturelist = teacherService.lectureList(teacheridx);
+        }
+
         List<Integer> cartlist = teacherService.cartList(member_id);
         List<Integer> zzimlist = teacherService.zzimList(member_id);
-        log.info("cartlist : {}", cartlist);
-        log.info("zzimlist : {}", zzimlist);
-        List<LectureDTO> lecturelist = teacherService.lectureList(teacheridx);
-        log.info("lecturelist : {}", lecturelist);
+
         model.addAttribute("zzimlist", zzimlist);
         model.addAttribute("cartlist", cartlist);
         model.addAttribute("lecturelist", lecturelist);
@@ -50,12 +59,20 @@ public class TeacherController {
                     HttpSession session,
                     Model model){
         String member_id = (String)session.getAttribute("member_id");
+        List<LectureDTO> lecturelist = new Vector<>();
+
+        if(teacheridx.equals("0")){
+            int x = (int)session.getAttribute("member_idx");
+            teacheridx = String.valueOf(x);
+            lecturelist = teacherService.lectureList(teacheridx);
+            teacheridx = null;
+        }else{
+            lecturelist = teacherService.lectureList(teacheridx);
+        }
+
         List<Integer> cartlist = teacherService.cartList(member_id);
         List<Integer> zzimlist = teacherService.zzimList(member_id);
-        log.info("cartlist : {}", cartlist);
-        log.info("zzimlist : {}", zzimlist);
-        List<LectureDTO> lecturelist = teacherService.lectureList(teacheridx);
-        log.info("lecturelist : {}", lecturelist);
+
         model.addAttribute("zzimlist", zzimlist);
         model.addAttribute("cartlist", cartlist);
         model.addAttribute("lecturelist", lecturelist);
@@ -71,12 +88,21 @@ public class TeacherController {
                            HttpSession session,
                            Model model){
         String member_id = (String)session.getAttribute("member_id");
+
+        List<LectureDTO> lecturelist = new Vector<>();
+
+        if(teacheridx.equals("0")){
+            int x = (int)session.getAttribute("member_idx");
+            teacheridx = String.valueOf(x);
+            lecturelist = teacherService.lectureList(teacheridx);
+            teacheridx = null;
+        }else{
+            lecturelist = teacherService.lectureList(teacheridx);
+        }
+
         List<Integer> cartlist = teacherService.cartList(member_id);
         List<Integer> zzimlist = teacherService.zzimList(member_id);
-        log.info("cartlist : {}", cartlist);
-        log.info("zzimlist : {}", zzimlist);
-        List<LectureDTO> lecturelist = teacherService.lectureList(teacheridx);
-        log.info("lecturelist : {}", lecturelist);
+
         model.addAttribute("zzimlist", zzimlist);
         model.addAttribute("cartlist", cartlist);
         model.addAttribute("lecturelist", lecturelist);
@@ -87,12 +113,20 @@ public class TeacherController {
                           HttpSession session,
                           Model model){
         String member_id = (String)session.getAttribute("member_id");
+        List<LectureDTO> lecturelist = new Vector<>();
+
+        if(teacheridx.equals("0")){
+            int x = (int)session.getAttribute("member_idx");
+            teacheridx = String.valueOf(x);
+            lecturelist = teacherService.lectureList(teacheridx);
+            teacheridx = null;
+        }else{
+            lecturelist = teacherService.lectureList(teacheridx);
+        }
+
         List<Integer> cartlist = teacherService.cartList(member_id);
         List<Integer> zzimlist = teacherService.zzimList(member_id);
-        log.info("cartlist : {}", cartlist);
-        log.info("zzimlist : {}", zzimlist);
-        List<LectureDTO> lecturelist = teacherService.lectureList(teacheridx);
-        log.info("lecturelist : {}", lecturelist);
+
         model.addAttribute("zzimlist", zzimlist);
         model.addAttribute("cartlist", cartlist);
         model.addAttribute("lecturelist", lecturelist);
