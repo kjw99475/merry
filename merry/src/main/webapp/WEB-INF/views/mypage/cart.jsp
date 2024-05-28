@@ -73,10 +73,10 @@
                                         <c:when test="${!empty responseDTO && responseDTO.total_count > 0}">
                                             <c:forEach items="${responseDTO.dtoList}" var="list" varStatus="loop">
                                                 <tr class="table-body-row text-center">
-                                                    <td><input type="checkbox" name="lec_idx" value="${list.lec_idx}"/></td>
+                                                    <td><input type="checkbox" name="lec_idx" value="${list.lec_idx}" onclick="checkLec();"/></td>
                                                     <td class="p-2 product-image"><img src="/resources/uploads/lecture/${list.lec_img}" width="50px"></td>
                                                     <td class="p-2"><a href="/lecture/view?lec_idx=${list.lec_idx}">${list.lec_title}</a></td>
-                                                    <td class="p-2"><fmt:formatNumber type="number" maxFractionDigits="3" value="${list.lec_price}" /></td>
+                                                    <td class="p-2 total_value" id="total_value${loop.count}">${list.lec_price}</td>
                                                     
                                                 </tr>
                                             </c:forEach>
@@ -108,21 +108,15 @@
                                     <thead class="total-table-head">
                                     <tr class="table-total-row">
                                         <th>Total</th>
-                                        <th>Price</th>
+                                        <th class="col-5">Price</th>
                                     </tr>
                                     </thead>
                                     <tbody>
+
+
                                     <tr class="total-data">
-                                        <td><strong>총 상품금액</strong></td>
-                                        <td>&#8361; 500</td>
-                                    </tr>
-                                    <tr class="total-data">
-                                        <td><strong>총 할인금액</strong></td>
-                                        <td>&#8361; 0</td>
-                                    </tr>
-                                    <tr class="total-data">
-                                        <td><strong>최종 결제금액</strong></td>
-                                        <td>&#8361; 455</td>
+                                        <td><strong>주문 합계</strong></td>
+                                        <td id="total">&#8361; 0</td>
                                     </tr>
                                     </tbody>
                                 </table>
@@ -151,6 +145,26 @@
         let chkAll = document.getElementById("chkAll");
         let frm = document.getElementById("frmOrder");
 
+
+        function checkLec(){
+            let total_value = document.getElementsByName("lec_idx");
+            let total_price = 0;
+            let count = 0;
+            let uncheck = 0;
+            total_value.forEach((row, index) => {
+                count = count +1;
+                if(row.checked){
+                    total_price = total_price+parseInt(document.getElementById("total_value"+(index+1)).innerHTML);
+                }else{
+                    uncheck = uncheck + 1;
+                }
+            })
+            document.getElementById("total").innerHTML = "&#8361; " + total_price;
+            if(uncheck == count) {
+                document.getElementById("total").innerHTML = "&#8361; 0";
+            }
+
+        }
 
         //선택 주문
         function chkOKAndOrder() {
@@ -216,10 +230,19 @@
         //체크박스 전체 선택/해제
         function selectAll(el) {
             var check = document.querySelectorAll("input[type ='checkbox']");
-
+            let total_value = document.querySelectorAll(".total_value");
+            let product_total = 0;
             check.forEach((checkbox) => {
                 checkbox.checked = el.checked;
             });
+            if(el.checked == true) {
+                total_value.forEach((row) => {
+                    product_total = product_total + parseInt(row.innerHTML);
+                });
+                document.getElementById("total").innerHTML ="&#8361; " +  product_total;
+            }else{
+                document.getElementById("total").innerHTML = "&#8361; 0";
+            }
         }
 
         function deleteOK(cart_idx) {
