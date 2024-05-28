@@ -28,7 +28,11 @@
     <link rel="stylesheet" href="/resources/assets/css/responsive.css">
 </head>
 <body>
+<%--===================== 헤더 start ======================--%>
 <jsp:include page="/WEB-INF/views/common/header.jsp" />
+<%--===================== 헤더 end ======================--%>
+
+<%--===================== breadcrumble start ======================--%>
 <div class="breadcrumb-section breadcrumb-bg">
     <div class="container">
         <div class="row">
@@ -41,6 +45,7 @@
         </div>
     </div>
 </div>
+<%--===================== breadcrumble end ======================--%>
 <div>
     <div>
         <div class="container">
@@ -106,6 +111,7 @@
                             </div>
                         </div>
                     </div>
+                    <%--===================== 페이징 start ======================--%>
                     <div class="pagination-wrap">
                         <nav class="blog-pagination justify-content-center d-flex">
                             <ul class="pagination">
@@ -148,10 +154,13 @@
                             </ul>
                         </nav>
                     </div>
+                    <%--===================== 페이징 end ======================--%>
                 </div>
             </div>
         </div>
+        <%--===================== 푸터 start ======================--%>
         <jsp:include page="/WEB-INF/views/common/footer.jsp" />
+        <%--===================== 푸터 end ======================--%>
 
         <script src="/resources/assets/js/jquery-1.11.3.min.js"></script>
         <script src="/resources/assets/bootstrap/js/bootstrap.min.js"></script>

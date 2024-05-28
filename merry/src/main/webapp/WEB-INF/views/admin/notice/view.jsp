@@ -55,7 +55,7 @@
         <div class="row">
             <div class="col-lg-8 offset-lg-2 text-center">
                 <div class="breadcrumb-text">
-                    <p>관리자 페이지</p>
+                    <p>관리자페이지</p>
                     <h1>공지사항 관리</h1>
                 </div>
             </div>
