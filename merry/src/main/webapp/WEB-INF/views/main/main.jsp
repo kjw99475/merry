@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ page trimDirectiveWhitespaces="true" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
 <html>
 <head>
@@ -63,7 +64,6 @@
                 </div>
             </div>
         </div>
-        <%--모든 선생님을 랜덤으로 보여주기, 자동 슬라이드 적용되어 있음, 클릭 시 해당 선생님 상세로 이동 --%>
         <div class="row">
             <div class="col-lg-10 offset-lg-1 text-center">
                 <div class="testimonial-sliders">
@@ -110,20 +110,14 @@
             <div class="col-lg-4 col-md-6 text-center">
                 <div class="single-product-item">
                     <div class="product-image">
-                        <a href="/lecture/view?lec_idx=${lectureDTO.lec_idx}"><img src="/resources/uploads/lecture/${lectureDTO.lec_img}" alt="lecture_image"></a>
+                        <a href="/lecture/view?lec_idx=${lectureDTO.lec_idx}"><img src="/resources/uploads/lecture/${lectureDTO.lec_img}" alt="lecture_image" style="max-height: 120px;"></a>
                     </div>
                     <h3>${lectureDTO.lec_title}</h3>
-                    <p class="product-price"><span>${lectureDTO.member_name} 선생님</span>${lectureDTO.lec_price}원</p>
-                    <a href="cart.html" class="cart-btn"><i class="fas fa-shopping-cart"></i> Add to Cart</a>
+                    <p class="product-price"><span>${lectureDTO.member_name} 선생님</span><fmt:formatNumber type="number" maxFractionDigits="3" value="${lectureDTO.lec_price}" />원</p>
+                    <a href="/lecture/view?lec_idx=${lectureDTO.lec_idx}" class="cart-btn">강의 보러가기</a>
                 </div>
             </div>
             </c:forEach>
-
-        </div>
-        <div class="row justify-content-center">
-            <div class="col-lg-12 text-center">
-                <a href="/lecture/list" class="boxed-btn">강의 더보기</a>
-            </div>
         </div>
     </div>
 </div>
