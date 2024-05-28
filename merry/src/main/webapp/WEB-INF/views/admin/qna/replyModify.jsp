@@ -8,6 +8,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ page trimDirectiveWhitespaces="true" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -16,7 +17,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="Responsive Bootstrap4 Shop Template, Created by Imran Hossain from https://imransdesign.com/">
 
-    <title>Mypage >> qna >> regist</title>
+    <title>Admin >> qna >> view</title>
 
     <link rel="shortcut icon" type="image/x-icon" href="/resources/assets/img/merry_favicon.ico">
     <link rel="icon" type="image/x-icon" href="/resources/assets/img/merry_favicon.ico">
@@ -32,7 +33,6 @@
     <link rel="stylesheet" href="/resources/assets/css/meanmenu.min.css">
     <link rel="stylesheet" href="/resources/assets/css/main.css">
     <link rel="stylesheet" href="/resources/assets/css/responsive.css">
-
     <script src="https://cdn.tiny.cloud/1/wjuflumw0txwktnvnufwfo5lj04kqmup66rnaj1jf6pnwv5d/tinymce/7/tinymce.min.js" referrerpolicy="origin"></script>
     <script>
         tinymce.init({
@@ -55,8 +55,8 @@
         <div class="row">
             <div class="col-lg-8 offset-lg-2 text-center">
                 <div class="breadcrumb-text">
-                    <p>마이페이지</p>
-                    <h1>1:1 문의</h1>
+                    <p>관리자 페이지</p>
+                    <h1>1:1 문의 관리</h1>
                 </div>
             </div>
         </div>
@@ -65,32 +65,66 @@
 <div>
     <div class="container">
         <div class="row" style="display: grid; grid-template-columns: 280px 1fr;">
-            <jsp:include page="/WEB-INF/views/common/mypage_sidebar.jsp">
+            <jsp:include page="/WEB-INF/views/common/admin_sidebar.jsp">
                 <jsp:param name="menuGubun" value="qna"/>
             </jsp:include>
-            <div class="checkout-section mb-150">
+            <div class="checkout-section mt-80 mb-150">
                 <div class="container">
                     <div style="margin: 0 auto;">
                         <div class="col-auto">
-                            <div class="row mt-5">
-                                <div class="mb-5 mb-lg-0">
-                                    <div class="contact-form">
-                                        <form id="frm_" name="frm_" method="post" action="/mypage/qna/regist">
-                                            <input type="hidden" name="member_idx" value="${sessionScope.member_idx}">
-                                            <input type="text" class="form-control" placeholder="제목을 입력해주세요" name="qna_title" id="qna_title">
-                                            <textarea class="mt-3" name="qna_content" id="content"></textarea>
-                                            <div class="row justify-content-end mt-3">
-                                                <div>
-                                                    <button type="button" class="btn btn-outline-merry" onclick="location.href='/mypage/qna/list'">취소</button>
-                                                    <button type="submit" class="btn btn-merry">등록</button>
+                            <div class="row text-left">
+                                <div class="full-width site-content col-md-12">
+                                    <div>
+                                        <div>
+                                            <table class="table no-wrap user-table mb-0 text-lg-start">
+                                                <tr class="table-light">
+                                                    <th style="width: 120px;">제목<span class="fas fa-pencil-alt"></span></th>
+                                                    <td>${qnaDTO.qna_title}</td>
+                                                </tr>
+                                                <tr class="table-light">
+                                                    <th>작성일<span class="fas fa-calendar"></span></th>
+                                                    <td>${fn:substring(qnaDTO.qna_reg_date, 0, 10)}</td>
+                                                </tr>
+                                                <tr class="table-light">
+                                                    <th>내용<span class="fas fa-book"></span></th>
+                                                    <td></td>
+                                                </tr>
+                                            </table>
+                                        </div>
+                                        <div class="p-3" style="min-height: 20vh;">
+                                            ${qnaDTO.qna_content}
+                                        </div>
+                                        <div>
+                                            <table class="table no-wrap user-table mb-0 text-lg-start">
+                                                <tr class="table-light">
+                                                    <th>답변<span class="fas fa-book"></span></th>
+                                                    <td></td>
+                                                </tr>
+                                            </table>
+                                        </div>
+                                        <div class="contact-form">
+                                            <form id="frm_" name="frm_" method="post" action="/admin/qna/replyModify">
+                                                <input type="hidden" name="qna_idx" value="${qnaDTO.qna_idx}">
+                                                <textarea class="mt-3" name="qna_answer" id="content">
+                                                    [기존 답변]<br/>
+                                                    ${qnaDTO.qna_answer}<hr/>
+                                                    [새로운 답변]<br/>
+                                                </textarea>
+                                                <div class="row justify-content-end mt-3">
+                                                    <div>
+                                                        <button type="button" class="btn orange-outline-btn" onclick="location.href='/admin/qna/list'">취소</button>
+                                                        <button type="submit" class="btn orange-btn">등록</button>
+                                                    </div>
                                                 </div>
-                                            </div>
-                                        </form>
+                                            </form>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
+
+
                 </div>
             </div>
         </div>

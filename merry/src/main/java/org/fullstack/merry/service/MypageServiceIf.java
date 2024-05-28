@@ -1,5 +1,7 @@
 package org.fullstack.merry.service;
 
+import org.fullstack.merry.domain.QnaVO;
+import org.fullstack.merry.domain.lecture.QnaAnswerDTO;
 import org.fullstack.merry.dto.*;
 
 import java.util.ArrayList;
@@ -23,6 +25,10 @@ public interface MypageServiceIf {
    PageResponseDTO<QnaDTO> qnaList2(PageRequestDTO pageRequestDTO);
    QnaDTO viewQna(int qna_idx);
    int registQna(QnaDTO qnaDTO);
+   int registReply(QnaAnswerDTO qnaAnswerDTO);
+   int modifyReply(QnaAnswerDTO qnaAnswerDTO);
+   int deleteReply(int qna_idx);
+
 
    // 결제내역
    int orderTotalCount(PageRequestDTO pageRequestDTO);
