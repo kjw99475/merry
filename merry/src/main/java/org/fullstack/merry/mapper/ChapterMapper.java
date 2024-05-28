@@ -1,5 +1,6 @@
 package org.fullstack.merry.mapper;
 
+import org.apache.ibatis.annotations.Param;
 import org.fullstack.merry.domain.lecture.ChapterVO;
 import org.fullstack.merry.dto.lecture.ChapterDTO;
 
@@ -14,4 +15,6 @@ public interface ChapterMapper {
     List<ChapterVO> chapterList(int lec_idx);
     int totalChapter(int lec_idx);
     int realDelete(int chap_idx);
+
+    ChapterVO myLectureOneChapter(@Param(value = "lec_idx") int lec_idx, @Param(value= "chap_idx") int chap_idx);
 }
