@@ -118,7 +118,7 @@
 
 
                 <div class="mt-5 col-12">
-                    <h5>댓글 리스트</h5>
+                    <h5>댓글 리스트<c:if test="${boardDTO.reply_count ne 0}">(${boardDTO.reply_count})</c:if></h5>
                     <hr>
 
                     <form action="/board/reply/registReply" id="replyRegist" method="post">

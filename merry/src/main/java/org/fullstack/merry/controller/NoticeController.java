@@ -58,7 +58,7 @@ public class NoticeController {
     ) {
         NoticeDTO noticeDTO = noticeServiceIf.view(notice_idx);
 
-        FileUploadUtil.download(req, resp, noticeDTO.getNotice_org_file_name(), noticeDTO.getNotice_save_file_name(), "uploads\\notice");
+        FileUploadUtil.download(req, resp, noticeDTO.getNotice_org_file_name(), noticeDTO.getNotice_save_file_name(), "D:\\java4\\merry\\merry\\src\\main\\webapp\\resources\\uploads\\bbs");
     }
 
     @RequestMapping(value = "/deleteFile", method = RequestMethod.POST, produces = "application/text;charset=UTF-8")
@@ -66,7 +66,7 @@ public class NoticeController {
     public String NoticedeleteFilePOST(@RequestParam int notice_idx) {
         NoticeDTO noticeDTO = noticeServiceIf.view(notice_idx);
         log.info("noticeDTO >>> " + noticeDTO.getNotice_save_file_name());
-        FileUploadUtil.deleteFile(noticeDTO.getNotice_save_file_name(), "uploads\\notice");
+        FileUploadUtil.deleteFile(noticeDTO.getNotice_save_file_name(), "D:\\java4\\merry\\merry\\src\\main\\webapp\\resources\\uploads\\bbs");
         noticeDTO.setNotice_org_file_name("");
         noticeDTO.setNotice_save_file_name("");
         noticeServiceIf.modify(noticeDTO);
@@ -100,7 +100,7 @@ public class NoticeController {
         }
         String saveFileName = "";
         if(multipartFile!= null && !multipartFile.isEmpty()) {
-            saveFileName = FileUploadUtil.saveFile(multipartFile, "uploads\\notice");
+            saveFileName = FileUploadUtil.saveFile(multipartFile, "D:\\java4\\merry\\merry\\src\\main\\webapp\\resources\\uploads\\bbs");
             noticeDTO.setNotice_org_file_name(multipartFile.getOriginalFilename());
             noticeDTO.setNotice_save_file_name(saveFileName);
         }
@@ -145,10 +145,10 @@ public class NoticeController {
         String saveFileName = "";
 
         if(file!= null && !file.isEmpty()) {
-            saveFileName = FileUploadUtil.saveFile(file, "uploads\\notice");
+            saveFileName = FileUploadUtil.saveFile(file, "D:\\java4\\merry\\merry\\src\\main\\webapp\\resources\\uploads\\bbs");
             noticeDTO.setNotice_org_file_name(file.getOriginalFilename());
             noticeDTO.setNotice_save_file_name(saveFileName);
-            FileUploadUtil.deleteFile(upload2, "uploads\\notice");
+            FileUploadUtil.deleteFile(upload2, "D:\\java4\\merry\\merry\\src\\main\\webapp\\resources\\uploads\\bbs");
         } else {
             noticeDTO.setNotice_org_file_name(upload);
             noticeDTO.setNotice_save_file_name(upload2);

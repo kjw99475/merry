@@ -56,6 +56,7 @@ public class BoardController {
                              Model model
     ) {
         BoardDTO boardDTO = boardServiceIf.view(board_idx);
+        boardDTO.setReply_count(boardReplyServiceIf.countReply(board_idx));
         model.addAttribute("boardDTO", boardDTO);
         log.info("boardDTO >> " + boardDTO);
 

@@ -58,19 +58,17 @@ public class DataController {
     ) {
         DataDTO dataDTO = dataServiceIf.view(data_idx);
 
-        FileUploadUtil.download(req, resp, dataDTO.getData_org_file_name(), dataDTO.getData_save_file_name(), "uploads\\data");
+        FileUploadUtil.download(req, resp, dataDTO.getData_org_file_name(), dataDTO.getData_save_file_name(), "D:\\java4\\merry\\merry\\src\\main\\webapp\\resources\\uploads\\bbs");
     }
 
     @RequestMapping(value = "/deleteFile", method = RequestMethod.POST, produces = "application/text;charset=UTF-8")
     @ResponseBody
     public String DatadeleteFilePOST(@RequestParam int data_idx) {
         DataDTO dataDTO = dataServiceIf.view(data_idx);
-        log.info("dataDTO >>> " + dataDTO.getData_save_file_name());
-        FileUploadUtil.deleteFile(dataDTO.getData_save_file_name(), "uploads\\data");
+        FileUploadUtil.deleteFile(dataDTO.getData_save_file_name(), "D:\\java4\\merry\\merry\\src\\main\\webapp\\resources\\uploads\\bbs");
         dataDTO.setData_org_file_name("");
         dataDTO.setData_save_file_name("");
         dataServiceIf.modify(dataDTO);
-        log.info("dataDTO >>> " + dataDTO.getData_save_file_name());
         return "ok";
     }
 
@@ -100,7 +98,7 @@ public class DataController {
         }
         String saveFileName = "";
         if(multipartFile!= null && !multipartFile.isEmpty()) {
-            saveFileName = FileUploadUtil.saveFile(multipartFile, "uploads\\data");
+            saveFileName = FileUploadUtil.saveFile(multipartFile, "D:\\java4\\merry\\merry\\src\\main\\webapp\\resources\\uploads\\bbs");
             dataDTO.setData_org_file_name(multipartFile.getOriginalFilename());
             dataDTO.setData_save_file_name(saveFileName);
         }
@@ -145,10 +143,10 @@ public class DataController {
         String saveFileName = "";
 
         if(file!= null && !file.isEmpty()) {
-            saveFileName = FileUploadUtil.saveFile(file, "uploads\\data");
+            saveFileName = FileUploadUtil.saveFile(file, "D:\\java4\\merry\\merry\\src\\main\\webapp\\resources\\uploads\\bbs");
             dataDTO.setData_org_file_name(file.getOriginalFilename());
             dataDTO.setData_save_file_name(saveFileName);
-            FileUploadUtil.deleteFile(upload2, "uploads\\data");
+            FileUploadUtil.deleteFile(upload2, "D:\\java4\\merry\\merry\\src\\main\\webapp\\resources\\uploads\\bbs");
         } else {
             dataDTO.setData_org_file_name(upload);
             dataDTO.setData_save_file_name(upload2);
