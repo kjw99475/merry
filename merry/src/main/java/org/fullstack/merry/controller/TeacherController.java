@@ -48,6 +48,9 @@ public class TeacherController {
         List<Integer> cartlist = teacherService.cartList(member_id);
         List<Integer> zzimlist = teacherService.zzimList(member_id);
 
+        int member_idx = (int) session.getAttribute("member_idx");
+        int present = teacherService.infoPresent(member_idx);
+        model.addAttribute("present", present);
         model.addAttribute("zzimlist", zzimlist);
         model.addAttribute("cartlist", cartlist);
         model.addAttribute("lecturelist", lecturelist);
@@ -72,7 +75,9 @@ public class TeacherController {
 
         List<Integer> cartlist = teacherService.cartList(member_id);
         List<Integer> zzimlist = teacherService.zzimList(member_id);
-
+        int member_idx = (int) session.getAttribute("member_idx");
+        int present = teacherService.infoPresent(member_idx);
+        model.addAttribute("present", present);
         model.addAttribute("zzimlist", zzimlist);
         model.addAttribute("cartlist", cartlist);
         model.addAttribute("lecturelist", lecturelist);
@@ -85,14 +90,11 @@ public class TeacherController {
 
         PageResponseDTO<TeacherDTO> responseDTO = teacherService.teacherPageList(pageRequestDTO);
 
-        log.info("responseDTO: {}", responseDTO);
-
         model.addAttribute("responseDTO", responseDTO);
     }
 
     @GetMapping("/manage/list")
     public void manageList(@RequestParam(value = "teacheridx", defaultValue = "0") String teacheridx,
-                           int member_idx,
                            HttpSession session,
                            Model model){
         String member_id = (String)session.getAttribute("member_id");
@@ -111,12 +113,16 @@ public class TeacherController {
         List<Integer> cartlist = teacherService.cartList(member_id);
         List<Integer> zzimlist = teacherService.zzimList(member_id);
 
-        model.addAttribute("member_idx", member_idx);
+        int member_idx = (int) session.getAttribute("member_idx");
+        int present = teacherService.infoPresent(member_idx);
+        model.addAttribute("present", present);
+
         model.addAttribute("zzimlist", zzimlist);
         model.addAttribute("cartlist", cartlist);
         model.addAttribute("lecturelist", lecturelist);
         model.addAttribute("teacheridx", teacheridx);
     }
+
     @GetMapping("/manage/materials")
     public void materials(@RequestParam(value = "teacheridx", defaultValue = "0") String teacheridx,
                           HttpSession session,
@@ -135,6 +141,9 @@ public class TeacherController {
 
         List<Integer> cartlist = teacherService.cartList(member_id);
         List<Integer> zzimlist = teacherService.zzimList(member_id);
+        int member_idx = (int) session.getAttribute("member_idx");
+        int present = teacherService.infoPresent(member_idx);
+        model.addAttribute("present", present);
 
         model.addAttribute("zzimlist", zzimlist);
         model.addAttribute("cartlist", cartlist);
@@ -197,23 +206,27 @@ public class TeacherController {
                            HttpSession session,
                            Model model) {
 
-        //        if (bindingResult.hasErrors()) {
-//            redirectAttributes.addFlashAttribute("errors", bindingResult.getAllErrors());
-//            redirectAttributes.addFlashAttribute("lectureDTO", lectureDTO);
-//            log.info("valid 오류");
-//            return "redirect:/lecture/regist";
-//        }
+        if (bindingResult.hasErrors()) {
+            redirectAttributes.addFlashAttribute("errors", bindingResult.getAllErrors());
+            log.info("valid 오류");
+            return "redirect:/teacher/manage/info/regist";
+        }
 
         String teachImg = "";
         if (teacherImg != null && !teacherImg.isEmpty()) {
             teachImg = FileUploadUtil.saveFile(teacherImg, "D:\\java4\\merry\\merry\\src\\main\\webapp\\resources\\assets\\img");
             teacherDTO.setTeacher_image(teachImg);
+        } else {
+            redirectAttributes.addFlashAttribute("errorFile", "썸네일 사진을 등록해 주세요.");
+            log.info("썸네일 사진 이슈");
+            return "redirect:/lecture/regist";
         }
 
         int registResult = teacherService.teacherInfoRegist(teacherDTO);
 
+        String member_idx = session.getAttribute("member_idx").toString();
         if(registResult > 0) {
-            return "redirect:/teacher/manage/list";
+            return "redirect:/teacher/manage/list?teacheridx="+member_idx;
         }
         else {
             return "redirect:/teacher/manage/info/regist";
@@ -237,6 +250,12 @@ public class TeacherController {
                                  HttpSession session,
                                  Model model) {
 
+
+        if (bindingResult.hasErrors()) {
+            redirectAttributes.addFlashAttribute("errors", bindingResult.getAllErrors());
+            log.info("valid 오류");
+            return "redirect:/teacher/manage/info/modify";
+        }
 
         String teachImg = "";
         if (teacherImg != null && !teacherImg.isEmpty()) {
