@@ -168,4 +168,33 @@
         WHERE c.member_id = #{member_id}
     </select>
 
+    <select id="order_detail" resultType="org.fullstack.merry.dto.OrderDetailDTO">
+        SELECT od.idx, l.lec_title, l.lec_price, od.view_check, od.return_yn
+        FROM lecture AS l
+            INNER JOIN order_detail AS od
+                ON l.lec_idx = od.lec_idx
+        WHERE od.order_idx = #{order_idx}
+    </select>
+
+    <update id="refund">
+        update order_detail
+        set return_yn = 'Y'
+        where idx = #{detail_idx}
+    </update>
+
+    <select id="find_order_idx">
+        SELECT od.idx
+        FROM order_detail AS od
+                 INNER JOIN `order` AS o
+                            ON od.order_idx = o.order_idx
+        WHERE od.lec_idx = #{lec_idx}
+          AND o.member_id = #{member_id}
+          AND od.return_YN != 'Y'
+    </select>
+
+    <update id="viewCheck">
+        UPDATE order_detail
+        SET view_check = 'Y'
+        WHERE idx = #{order_idx}
+    </update>
 </mapper>

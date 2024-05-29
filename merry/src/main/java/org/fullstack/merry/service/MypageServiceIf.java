@@ -35,6 +35,9 @@ public interface MypageServiceIf {
    PageResponseDTO<OrderDTO> orderListByPage(PageRequestDTO pageRequestDTO);
 //   int getLecIdx(PageRequestDTO pageRequestDTO);
    int orderUpdateState(int order_idx);
+   List<OrderDetailDTO> order_detail(String order_idx);
+   void refund(String detail_idx);
+   void viewCheck(String member_id, String lec_idx);
 
    // 찜
    int zzimTotalCount(PageRequestDTO pageRequestDTO);

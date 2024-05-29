@@ -71,7 +71,7 @@
                     <a href="manage/list?teacheridx=${list.member_idx}"><div class="latest-news-bg news-bg-1" style="background: url('/resources/assets/img/${list.teacher_image}'); background-size: 100% 100%">
                     </div>
                     <div class="news-text-box">
-                        <h3>${list.intro}</h3>
+                        <h3 style="height: 50px;">${list.intro}</h3>
                         <p class="blog-meta border-bottom pb-1">
                             <span class="author"><i class="fas fa-user"></i> ${list.teacher_name}</span>
                             <span class="date"><i class="fas fa-calendar"></i>${list.subject}</span>

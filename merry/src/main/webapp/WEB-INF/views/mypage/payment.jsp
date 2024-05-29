@@ -34,10 +34,29 @@
     <link rel="stylesheet" href="/resources/assets/css/meanmenu.min.css">
     <link rel="stylesheet" href="/resources/assets/css/main.css">
     <link rel="stylesheet" href="/resources/assets/css/responsive.css">
+    <link rel="stylesheet" href="/resources/assets/css/modal.css">
 </head>
 <body>
 <jsp:include page="/WEB-INF/views/common/header.jsp" />
 <!-- breadcrumb-section -->
+<div id="modalContainer" class="hidden">
+    <div id="modalContent">
+        <button class="btn-close" type="button" id="modalCloseButton" data-bs-dismiss="modal" aria-label="Close">X</button>
+        <table class="cart-table" id = "modal-table">
+            <thead class="cart-table-head">
+            <tr class="table-head-row">
+                <th>강의정보</th>
+                <th>가격</th>
+                <th>상태</th>
+                <th>환불</th>
+            </tr>
+            </thead>
+            <tbody id="modal_body">
+
+            </tbody>
+        </table>
+    </div>
+</div>
 <div class="breadcrumb-section breadcrumb-bg">
     <div class="container">
         <div class="row">
@@ -81,8 +100,6 @@
                                     <tr class="table-head-row">
                                         <th>No</th>
                                         <th>결제일</th>
-                                        <th class="product-image">강의이미지</th>
-                                        <th>강의정보</th>
                                         <th>가격</th>
                                         <th>상태</th>
                                         <th>구매확정</th>
@@ -96,13 +113,11 @@
                                                 <tr class="table-body-row text-center">
                                                     <td class="p-2">${responseDTO.total_count - loop.index}</td>
                                                     <td class="p-2">${list.order_date}</td>
-                                                    <td class="p-2"><a href="/mypage/paymentView?order_idx=${list.order_idx}">1</a></td>
-                                                    <td class="p-2">${fn:substring(list.order_date, 0, 10)}</td>
                                                     <td class="p-2"><fmt:formatNumber type="number" maxFractionDigits="3" value="${list.order_total}" /></td>
                                                     <c:if test="${list.order_state == 'A'}">
                                                         <td class="p-2">결제완료</td>
                                                         <td class="p-2"><button class="btn orange-outline-btn bordered-btn" type="button" onclick="confirmOK(${list.order_idx})">신청</button></td>
-                                                        <td class="p-2"><button class="btn red-outline-btn bordered-btn" type="button">요청</button></td>
+                                                        <td class="p-2"><button class="btn red-outline-btn bordered-btn modal-btn" type="button" id="orderDetail" onclick="orderDetails(${list.order_idx}, this)">요청</button></td>
                                                     </c:if>
                                                     <c:if test="${list.order_state == 'B'}">
                                                         <td class="p-2">구매확정</td>
@@ -118,6 +133,11 @@
                                                         <td class="p-2">환불완료</td>
                                                         <td class="p-2"><button class="btn orange-btn bordered-btn" type="button" disabled>불가</button></td>
                                                         <td class="p-2"><button class="btn red-btn bordered-btn" type="button" disabled>완료</button></td>
+                                                    </c:if>
+                                                    <c:if test="${list.order_state == 'E'}">
+                                                        <td class="p-2">환불완료</td>
+                                                        <td class="p-2"><button class="btn orange-btn bordered-btn" type="button" disabled>불가</button></td>
+                                                        <td class="p-2"><button class="btn red-btn bordered-btn" type="button" disabled>부분 환불</button></td>
                                                     </c:if>
                                                 </tr>
                                             </c:forEach>
@@ -191,6 +211,7 @@
     <script src="/resources/assets/js/jquery.meanmenu.min.js"></script>
     <script src="/resources/assets/js/sticker.js"></script>
     <script src="/resources/assets/js/main.js"></script>
+    <script src="/resources/assets/js/modal.js"></script>
 
     <script>
         function confirmOK(order_idx) {
@@ -222,6 +243,66 @@
 
         }
 
+        function orderDetails(order_idx, el){
+            $.ajax({
+                type: "POST",            // HTTP method type(GET, POST) 형식이다.
+                url: "/mypage/orderdetail",      // 컨트롤러에서 대기중인 URL 주소이다.
+                data: {
+                    order_idx: order_idx
+                },            // Json 형식의 데이터이다.
+                success: function (result) { // 비동기통신의 성공일경우 success콜백으로 들어옵니다. 'res'는 응답받은 데이터이다.
+                    document.getElementById("modal_body").innerHTML = "";
+                    $.each(result, function(idx, val) {
+                        let trEl = document.createElement("tr");
+                        let title = document.createElement("td");
+                        let price = document.createElement("td");
+                        let viewYn = document.createElement("td");
+                        let orderreturn = document.createElement("td");
+                        title.innerHTML = val.lec_title;
+                        price.innerHTML = val.lec_price;
+                        if(val.view_check == "Y"){
+                            viewYn.innerHTML = "환불 불가";
+                            orderreturn.innerHTML = "<button class='btn red-outline-btn bordered-btn' disabled>불가</button>";
+                        }else if(val.view_check == "N"&&val.return_yn == "N"){
+                            viewYn.innerHTML = "환불 가능";
+                            orderreturn.innerHTML = "<button class='btn red-outline-btn bordered-btn' onclick='refund("+val.idx+")'>환불</button>";
+                        }else{
+                            viewYn.innerHTML = "환불 신청";
+                            orderreturn.innerHTML = "<button class='btn orange-outline-btn bordered-btn' disabled>신청완료</button>";
+                        }
+                        trEl.append(title);
+                        trEl.append(price);
+                        trEl.append(viewYn);
+                        trEl.append(orderreturn);
+                        document.getElementById("modal_body").append(trEl);
+                    });
+                },
+                error: function (error) { // 비동기 통신이 실패할경우 error 콜백으로 들어옵니다.
+                    console.log(error);
+                    console.log("실패");
+                }
+            });
+        }
+
+        function refund(detail_idx){
+            if(confirm("해당 강의를 환불하시겠습니까?")) {
+                $.ajax({
+                    type: "POST",            // HTTP method type(GET, POST) 형식이다.
+                    url: "/mypage/refund",      // 컨트롤러에서 대기중인 URL 주소이다.
+                    data: {
+                        detail_idx: detail_idx
+                    },            // Json 형식의 데이터이다.
+                    success: function (result) { // 비동기통신의 성공일경우 success콜백으로 들어옵니다. 'res'는 응답받은 데이터이다.
+                        alert("환불 신청을 성공하였습니다");
+                        window.location.reload();
+                    },
+                    error: function (error) { // 비동기 통신이 실패할경우 error 콜백으로 들어옵니다.
+                        console.log(error);
+                        console.log("실패");
+                    }
+                });
+            }
+        }
 
     </script>
 </body>

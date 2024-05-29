@@ -22,6 +22,7 @@ import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Vector;
 
 
 @Log4j2
@@ -323,4 +324,22 @@ public class MypageController {
         log.info("=========================");
     }
 
+    @ResponseBody
+    @PostMapping("/orderdetail")
+    public List<OrderDetailDTO> orderdetail(@RequestParam(value = "order_idx") String order_idx){
+        List<OrderDetailDTO> detailList = mypageService.order_detail(order_idx);
+        return detailList;
+    }
+    @ResponseBody
+    @PostMapping("/refund")
+    public void refund(@RequestParam(value = "detail_idx") String detail_idx){
+        mypageService.refund(detail_idx);
+    }
+    @ResponseBody
+    @PostMapping("/viewCheck")
+    public void viewCheck(@RequestParam(value = "lec_idx") String lec_idx,
+                          HttpSession session){
+        String member_id = (String)session.getAttribute("member_id");
+        mypageService.viewCheck(member_id, lec_idx);
+    }
 }
