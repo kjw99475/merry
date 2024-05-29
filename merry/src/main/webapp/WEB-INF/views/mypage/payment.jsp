@@ -100,8 +100,6 @@
                                     <tr class="table-head-row">
                                         <th>No</th>
                                         <th>결제일</th>
-                                        <th class="product-image">강의이미지</th>
-                                        <th>강의정보</th>
                                         <th>가격</th>
                                         <th>상태</th>
                                         <th>구매확정</th>
@@ -115,8 +113,6 @@
                                                 <tr class="table-body-row text-center">
                                                     <td class="p-2">${responseDTO.total_count - loop.index}</td>
                                                     <td class="p-2">${list.order_date}</td>
-                                                    <td class="p-2"><a href="/mypage/paymentView?order_idx=${list.order_idx}">1</a></td>
-                                                    <td class="p-2">${fn:substring(list.order_date, 0, 10)}</td>
                                                     <td class="p-2"><fmt:formatNumber type="number" maxFractionDigits="3" value="${list.order_total}" /></td>
                                                     <c:if test="${list.order_state == 'A'}">
                                                         <td class="p-2">결제완료</td>
