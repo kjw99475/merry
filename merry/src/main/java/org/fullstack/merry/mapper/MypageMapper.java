@@ -6,6 +6,7 @@ import org.fullstack.merry.domain.OrderVO;
 import org.fullstack.merry.domain.QnaVO;
 import org.fullstack.merry.domain.ZzimVO;
 import org.fullstack.merry.domain.lecture.QnaAnswerDTO;
+import org.fullstack.merry.dto.OrderDetailDTO;
 import org.fullstack.merry.dto.PageRequestDTO;
 
 import java.util.List;
@@ -44,6 +45,10 @@ public interface MypageMapper {
     int getLecIdx(PageRequestDTO requestDTO);
     int orderUpdateState(@Param(value = "order_idx") int order_idx);
 
+    List<OrderDetailDTO> order_detail(String order_idx);
+    void refund(String detail_idx);
 
+    String find_order_idx(@Param(value = "lec_idx") String lec_idx, @Param(value = "member_id") String member_id);
+    void viewCheck(String order_idx);
 
 }
