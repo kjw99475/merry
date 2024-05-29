@@ -24,31 +24,31 @@ public class MemberDTO {
     @NotBlank(message = "비밀번호는 필수 입력사항입니다.")
     @Pattern(regexp = "^(?=.*[a-z])(?=.*[!@#$%^*+=-])(?=.*[0-9]).{8,}", message = "8자 이상의 영문 소문자, 숫자, 특수문자를 조합해 주세요.")
     private String pwd;
-    @NotBlank(message = "이메일은 필수 입력사항입니다.")
-    @Pattern(regexp = "^[a-zA-Z0-9_+&*-]+(?:\\.[a-zA-Z0-9_+&*-]+)*@(?:[a-zA-Z0-9-]+\\.)+[a-zA-Z]{2,7}$", message = "email@email.com 형식으로 입력해주세요")
     private String email;
+    @NotBlank(message = "이메일은 필수 입력사항입니다.")
+    private String email_id;
+    @NotBlank(message = "이메일은 필수 입력사항입니다.")
+    private String email_domain;
     @NotBlank(message = "생년월일은 필수 입력사항입니다.")
     private String birthday;
     @NotBlank(message = "주소는 필수 입력사항입니다.")
     private String addr;
     private String addr_detail;
     @NotNull(message = "우편번호는 필수 입력사항입니다.")
-    private int zipcode;
-    @NotBlank(message = "핸드폰번호는 필수 입력사항입니다")
+    private Integer zipcode;
     private String phone;
+    @NotBlank(message = "핸드폰번호는 필수 입력사항입니다")
+    private String phone_0;
+    @NotBlank(message = "핸드폰번호는 필수 입력사항입니다")
+    private String phone_1;
+    @NotBlank(message = "핸드폰번호는 필수 입력사항입니다")
+    private String phone_2;
     private LocalDate reg_date;
     private LocalDate modify_date;
     private String member_type;
     private String member_state;
     private String subject;
-
-
-    private String phone_0;
-    private String phone_1;
-    private String phone_2;
-
-    private String email_id;
-    private String email_domain;
+    
     public String getPhone_0(String phone) {return phone.substring(0, 3);}
     public String getPhone_1(String phone) {
         if (phone.length() == 12) {
