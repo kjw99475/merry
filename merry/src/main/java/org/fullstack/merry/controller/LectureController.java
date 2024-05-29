@@ -635,7 +635,7 @@ public class LectureController {
         FileUploadUtil.deleteFile(dataDTO.getData_save_file_name(), "D:\\java4\\merry\\merry\\src\\main\\webapp\\resources\\uploads\\lecture");
         dataDTO.setData_save_file_name("");
         dataDTO.setData_org_file_name("");
-        lectureService.registData(dataDTO);
+        lectureService.modifyData(dataDTO);
         return "ok";
     }
 

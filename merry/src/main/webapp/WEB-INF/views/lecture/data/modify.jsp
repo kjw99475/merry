@@ -80,9 +80,9 @@
             <div class="mt-4">
                 <span id="fileView">
                      <label>첨부파일 : </label>${dataDTO.data_org_file_name}<button class="btn text-danger" type="button" id="btnDelete" onclick="askDelete()">X</button>
+                    <input type="hidden" name="upload" id="upload" value="${dataDTO.data_org_file_name}">
+                    <input type="hidden" name="upload2" id="upload2" value="${dataDTO.data_save_file_name}">
                 </span>
-                <input type="hidden" name="upload" id="upload" value="${dataDTO.data_org_file_name}">
-                <input type="hidden" name="upload2" id="upload2" value="${dataDTO.data_save_file_name}">
             </div>
         </c:if>
         <div class="mb-3">
